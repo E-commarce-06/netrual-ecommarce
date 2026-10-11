@@ -93,7 +93,7 @@ These files contain the **visual presentation only** for a specific theme. They 
 **Current theme overrides:**
 
 ```
-templates/storefront/general/cartxis-default/blocks/
+templates/storefront/general/bulbula-default/blocks/
   ProductsGridBlock.vue
   CategoriesGridBlock.vue
 ```
@@ -243,8 +243,8 @@ The block name in the layout JSON must be the snake_case version: `promo_banner`
 | Block resolver | `resources/js/components/UIEditor/UIBlockRenderer.vue` |
 | Shared fallback blocks | `resources/js/components/UIEditor/blocks/` |
 | Shared composables | `resources/js/composables/` |
-| cartxis-default theme blocks | `themes/cartxis-default/blocks/` |
+| bulbula-default theme blocks | `themes/bulbula-default/blocks/` |
 | Vite alias config | `vite.config.ts` → `@themes` → `/themes` |
 | Theme slug (runtime) | `usePage().props.theme?.slug` (shared by `ShareFrontendData` middleware) |
-| Shop API routes | `packages/Cartxis/Shop/src/Routes/api.php` |
-| Shop service provider | `packages/Cartxis/Shop/src/Providers/ShopServiceProvider.php` |
+| Shop API routes | `packages/Bulbula/Shop/src/Routes/api.php` |
+| Shop service provider | `packages/Bulbula/Shop/src/Providers/ShopServiceProvider.php` |

@@ -1,0 +1,19 @@
+{
+  "name": "bulbula/stripe",
+  "description": "Stripe payment gateway extension for Bulbula Commerce",
+  "type": "bulbula-extension",
+  "require": {
+    "php": "^8.3",
+    "stripe/stripe-php": "^18.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "Bulbula\\Stripe\\": "src/"
+    }
+  },
+  "extra": {
+    "bulbula": {
+      "provider": "Bulbula\\Stripe\\Providers\\StripeServiceProvider"
+    }
+  }
+}

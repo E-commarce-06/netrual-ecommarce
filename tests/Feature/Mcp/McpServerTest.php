@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 use App\Models\User;
-use Cartxis\Core\Services\SettingService;
+use Bulbula\Core\Services\SettingService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 uses(RefreshDatabase::class);
@@ -82,7 +82,7 @@ test('mcp update settings refuses secret keys', function () {
         'id' => 10,
         'method' => 'tools/call',
         'params' => [
-            'name' => 'cartxis_update_settings',
+            'name' => 'bulbula_update_settings',
             'arguments' => [
                 'key' => 'ai.providers',
                 'value' => ['secret' => true],
@@ -110,7 +110,7 @@ test('mcp can create and list a product', function () {
         'id' => 11,
         'method' => 'tools/call',
         'params' => [
-            'name' => 'cartxis_create_product',
+            'name' => 'bulbula_create_product',
             'arguments' => [
                 'name' => 'MCP Test Product',
                 'sku' => 'MCP-TEST-001',
@@ -133,7 +133,7 @@ test('mcp can create and list a product', function () {
         'id' => 12,
         'method' => 'tools/call',
         'params' => [
-            'name' => 'cartxis_list_products',
+            'name' => 'bulbula_list_products',
             'arguments' => [
                 'search' => 'MCP-TEST-001',
             ],
@@ -166,7 +166,7 @@ test('mcp initialize and tools list succeed with valid token', function () {
     ]);
 
     $init->assertOk()
-        ->assertJsonPath('result.serverInfo.name', 'cartxis-mcp')
+        ->assertJsonPath('result.serverInfo.name', 'bulbula-mcp')
         ->assertJsonPath('result.protocolVersion', '2024-11-05');
 
     $list = $this->postJson('/mcp', [
@@ -183,14 +183,14 @@ test('mcp initialize and tools list succeed with valid token', function () {
     expect($tools)->toBeArray()->and(count($tools))->toBeGreaterThanOrEqual(20);
 
     $names = collect($tools)->pluck('name')->all();
-    expect($names)->toContain('cartxis_store_info')
-        ->and($names)->toContain('cartxis_list_templates')
-        ->and($names)->toContain('cartxis_create_page')
-        ->and($names)->toContain('cartxis_update_page_layout')
-        ->and($names)->toContain('cartxis_list_editor_blocks');
+    expect($names)->toContain('bulbula_store_info')
+        ->and($names)->toContain('bulbula_list_templates')
+        ->and($names)->toContain('bulbula_create_page')
+        ->and($names)->toContain('bulbula_update_page_layout')
+        ->and($names)->toContain('bulbula_list_editor_blocks');
 });
 
-test('mcp tools call cartxis_store_info works', function () {
+test('mcp tools call bulbula_store_info works', function () {
     enableMcp();
     app(SettingService::class)->set('store_name', 'Pest Store', 'string', 'store');
     app(SettingService::class)->set('site_name', 'Pest Site', 'string', 'general');
@@ -203,7 +203,7 @@ test('mcp tools call cartxis_store_info works', function () {
         'id' => 3,
         'method' => 'tools/call',
         'params' => [
-            'name' => 'cartxis_store_info',
+            'name' => 'bulbula_store_info',
             'arguments' => [],
         ],
     ], [
@@ -282,7 +282,7 @@ test('mcp can create page and save ui editor layout', function () {
         'id' => 20,
         'method' => 'tools/call',
         'params' => [
-            'name' => 'cartxis_create_page',
+            'name' => 'bulbula_create_page',
             'arguments' => [
                 'title' => 'MCP Landing',
                 'url_key' => 'mcp-landing',
@@ -303,7 +303,7 @@ test('mcp can create page and save ui editor layout', function () {
         'id' => 21,
         'method' => 'tools/call',
         'params' => [
-            'name' => 'cartxis_list_editor_blocks',
+            'name' => 'bulbula_list_editor_blocks',
             'arguments' => [],
         ],
     ], [
@@ -319,7 +319,7 @@ test('mcp can create page and save ui editor layout', function () {
         'id' => 22,
         'method' => 'tools/call',
         'params' => [
-            'name' => 'cartxis_update_page_layout',
+            'name' => 'bulbula_update_page_layout',
             'arguments' => [
                 'page_id' => $pageId,
                 'publish' => true,
@@ -361,7 +361,7 @@ test('mcp can create page and save ui editor layout', function () {
         'id' => 23,
         'method' => 'tools/call',
         'params' => [
-            'name' => 'cartxis_get_page_layout',
+            'name' => 'bulbula_get_page_layout',
             'arguments' => ['page_id' => $pageId],
         ],
     ], [
@@ -383,7 +383,7 @@ test('mcp can list templates', function () {
         'id' => 30,
         'method' => 'tools/call',
         'params' => [
-            'name' => 'cartxis_list_templates',
+            'name' => 'bulbula_list_templates',
             'arguments' => [],
         ],
     ], [

@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\ServiceProvider;
 use Inertia\Inertia;
 use Laravel\Fortify\Fortify;
-use Cartxis\Core\Services\ThemeViewResolver;
+use Bulbula\Core\Services\ThemeViewResolver;
 
 class FortifyServiceProvider extends ServiceProvider
 {

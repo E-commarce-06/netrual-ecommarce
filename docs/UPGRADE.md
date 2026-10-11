@@ -1,8 +1,8 @@
-# Cartxis Upgrade Guide
+# Bulbula Upgrade Guide
 
-This document covers platform upgrades for existing Cartxis installations.
+This document covers platform upgrades for existing Bulbula installations.
 
-## Laravel 13 (Cartxis 1.1+)
+## Laravel 13 (Bulbula 1.1+)
 
 **Released:** March 2026  
 **Minimum PHP:** 8.3 (PHP 8.2 is no longer supported)
@@ -20,7 +20,7 @@ This document covers platform upgrades for existing Cartxis installations.
 
 1. **Upgrade PHP** to 8.3+ on your server or local environment.
 2. **Back up** your database and `storage/` directory.
-3. Pull the latest Cartxis release (or merge the `upgrade/laravel-13` branch).
+3. Pull the latest Bulbula release (or merge the `upgrade/laravel-13` branch).
 4. Update dependencies:
 
 ```bash
@@ -57,7 +57,7 @@ Laravel 13 drops PHP 8.2. Update hosting, Docker images, and CI before deploying
 
 #### CSRF middleware rename
 
-Laravel renamed `VerifyCsrfToken` / `ValidateCsrfToken` to `PreventRequestForgery`. Cartxis updates `config/sanctum.php` accordingly. If you customized middleware exclusions in tests or routes, use:
+Laravel renamed `VerifyCsrfToken` / `ValidateCsrfToken` to `PreventRequestForgery`. Bulbula updates `config/sanctum.php` accordingly. If you customized middleware exclusions in tests or routes, use:
 
 ```php
 use Illuminate\Foundation\Http\Middleware\PreventRequestForgery;
@@ -69,7 +69,7 @@ Laravel 13 adds `serializable_classes => false` in `config/cache.php` to harden 
 
 #### Session / cache key prefixes
 
-Laravel 13 changes default cache and session cookie name patterns. Cartxis keeps explicit `CACHE_PREFIX` and `SESSION_COOKIE` defaults in config for backward compatibility with existing sessions.
+Laravel 13 changes default cache and session cookie name patterns. Bulbula keeps explicit `CACHE_PREFIX` and `SESSION_COOKIE` defaults in config for backward compatibility with existing sessions.
 
 #### Spatie Laravel Backup 10
 
@@ -85,18 +85,18 @@ Compare your changes with the new defaults before overwriting.
 
 - Require `php: ^8.3` and `laravel/framework: ^13.0` in extension `composer.json` / `extension.json`.
 - Avoid deprecated CSRF middleware class names in custom Sanctum or route middleware config.
-- Re-run `php artisan cartxis:extension:sync` after upgrading.
+- Re-run `php artisan bulbula:extension:sync` after upgrading.
 
 ### Rollback
 
 If you need to roll back:
 
 1. Restore your database and files backup.
-2. Check out the previous Cartxis tag or branch.
+2. Check out the previous Bulbula tag or branch.
 3. Run `composer install` and `npm run build` against the older lock file.
 
 ---
 
 ## Laravel 12
 
-Cartxis 1.0.x targets Laravel 12 with PHP 8.2+. See [Laravel 12 upgrade guide](https://laravel.com/docs/12.x/upgrade) for framework-level changes when upgrading from Laravel 11 or earlier.
+Bulbula 1.0.x targets Laravel 12 with PHP 8.2+. See [Laravel 12 upgrade guide](https://laravel.com/docs/12.x/upgrade) for framework-level changes when upgrading from Laravel 11 or earlier.

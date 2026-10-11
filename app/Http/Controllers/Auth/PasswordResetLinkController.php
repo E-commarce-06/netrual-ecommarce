@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Password;
 use Inertia\Inertia;
 use Inertia\Response;
-use Cartxis\Core\Services\ThemeViewResolver;
+use Bulbula\Core\Services\ThemeViewResolver;
 
 class PasswordResetLinkController extends Controller
 {

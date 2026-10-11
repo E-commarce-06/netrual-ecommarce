@@ -1,10 +1,10 @@
 # Shared Hosting Guide
 
-Cartxis is designed so merchants on **shared hosting** (cPanel, Plesk, AlwaysData, etc.) can install **without Node.js**. Frontend assets ship inside the Shared Hosting release zip.
+Bulbula is designed so merchants on **shared hosting** (cPanel, Plesk, AlwaysData, etc.) can install **without Node.js**. Frontend assets ship inside the Shared Hosting release zip.
 
 ## Preferred path (no Node)
 
-1. Download the latest **`cartxis-{version}-shared-hosting.zip`** from [GitHub Releases](https://github.com/E-commarce-06/netrual-ecommarce/releases).
+1. Download the latest **`bulbula-{version}-shared-hosting.zip`** from [GitHub Releases](https://github.com/E-commarce-06/netrual-ecommarce/releases).
 2. Upload and extract on your host.
 3. Point the **document root** to the `public/` directory (not the project root). This is required for Laravel security and correct asset URLs.
 4. Copy `.env.example` → `.env`. Set at least:
@@ -17,7 +17,7 @@ Cartxis is designed so merchants on **shared hosting** (cPanel, Plesk, AlwaysDat
 
 ```bash
 php artisan key:generate
-php artisan cartxis:install
+php artisan bulbula:install
 ```
 
 If Node is missing but `public/build/manifest.json` is present (it is, in this zip), the installer prints:
@@ -61,7 +61,7 @@ On a machine with Node and Composer:
 ```bash
 npm ci && npm run build
 ./scripts/package-release.sh --with-vendor
-# → dist/cartxis-{version}-shared-hosting.zip
+# → dist/bulbula-{version}-shared-hosting.zip
 ```
 
 Flags:
@@ -78,16 +78,16 @@ For contributing or local development:
 
 ```bash
 git clone https://github.com/E-commarce-06/netrual-ecommarce
-cd cartxis
+cd bulbula
 composer install
 npm install && npm run build
 cp .env.example .env
-php artisan cartxis:install
+php artisan bulbula:install
 ```
 
 `public/build` is gitignored; without `npm run build` (or the Shared Hosting zip), `/setup` and the admin UI will not load.
 
-CI/dev only: `php artisan cartxis:install --skip-assets` allows an incomplete asset tree. Do **not** use that for production browser traffic.
+CI/dev only: `php artisan bulbula:install --skip-assets` allows an incomplete asset tree. Do **not** use that for production browser traffic.
 
 ## Troubleshooting
 

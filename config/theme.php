@@ -22,7 +22,7 @@ return [
     | have a required view, the resolver will fall back to this theme.
     |
     */
-    'default' => 'cartxis-default',
+    'default' => 'bulbula-default',
 
     /*
     |--------------------------------------------------------------------------
@@ -42,28 +42,28 @@ return [
     | Remote Template Catalog (optional)
     |--------------------------------------------------------------------------
     |
-    | When set, Cartxis merges templates from this registry URL with the local
-    | catalog. Intended for https://cartxis.com marketplace feeds.
+    | When set, Bulbula merges templates from this registry URL with the local
+    | catalog. Intended for https://example.com marketplace feeds.
     |
     */
-    'catalog_remote_url' => env('CARTXIS_TEMPLATE_CATALOG_URL'),
+    'catalog_remote_url' => env('BULBULA_TEMPLATE_CATALOG_URL'),
 
     /*
     |--------------------------------------------------------------------------
-    | Cartxis Theme Directory (cartxis-home API)
+    | Bulbula Theme Directory (bulbula-home API)
     |--------------------------------------------------------------------------
     |
-    | Browse and one-click install themes from the official Cartxis directory.
-    | Set CARTXIS_THEME_DIRECTORY_URL to the cartxis-home API base (e.g. https://cartxis.com/api)
-    | and CARTXIS_THEME_API_KEY to a key generated in the cartxis-home admin.
+    | Browse and one-click install themes from the official Bulbula directory.
+    | Set BULBULA_THEME_DIRECTORY_URL to the bulbula-home API base (e.g. https://example.com/api)
+    | and BULBULA_THEME_API_KEY to a key generated in the bulbula-home admin.
     |
     */
     'directory' => [
-        'url' => env('CARTXIS_THEME_DIRECTORY_URL')
-            ?: env('CARTXIS_TEMPLATE_CATALOG_URL')
+        'url' => env('BULBULA_THEME_DIRECTORY_URL')
+            ?: env('BULBULA_TEMPLATE_CATALOG_URL')
             ?: '',
-        'api_key' => env('CARTXIS_THEME_API_KEY'),
-        'cache_ttl' => (int) env('CARTXIS_THEME_DIRECTORY_CACHE_TTL', 3600),
+        'api_key' => env('BULBULA_THEME_API_KEY'),
+        'cache_ttl' => (int) env('BULBULA_THEME_DIRECTORY_CACHE_TTL', 3600),
     ],
 
     /*
@@ -75,6 +75,6 @@ return [
     | theme, npm run build must run so the storefront can load its pages.
     |
     */
-    'rebuild_assets_on_install' => (bool) env('CARTXIS_THEME_REBUILD_ASSETS', true),
-    'rebuild_assets_timeout' => (int) env('CARTXIS_THEME_REBUILD_TIMEOUT', 300),
+    'rebuild_assets_on_install' => (bool) env('BULBULA_THEME_REBUILD_ASSETS', true),
+    'rebuild_assets_timeout' => (int) env('BULBULA_THEME_REBUILD_TIMEOUT', 300),
 ];

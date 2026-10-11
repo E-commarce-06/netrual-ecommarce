@@ -1,0 +1,33 @@
+<?php
+
+namespace Bulbula\Sales\Providers;
+
+use Illuminate\Support\ServiceProvider;
+
+class SalesServiceProvider extends ServiceProvider
+{
+    public function register(): void
+    {
+        // Register repositories
+        $this->app->singleton(\Bulbula\Sales\Repositories\OrderRepository::class);
+        $this->app->singleton(\Bulbula\Sales\Repositories\InvoiceRepository::class);
+        $this->app->singleton(\Bulbula\Sales\Repositories\TransactionRepository::class);
+        
+        // Register services
+        $this->app->singleton(\Bulbula\Sales\Services\OrderService::class);
+        $this->app->singleton(\Bulbula\Sales\Services\InvoiceService::class);
+        $this->app->singleton(\Bulbula\Sales\Services\TransactionService::class);
+    }
+
+    public function boot(): void
+    {
+        // Load migrations
+        $this->loadMigrationsFrom(__DIR__.'/../Database/Migrations');
+        
+        // Load routes
+        $this->loadRoutesFrom(__DIR__.'/../Routes/admin.php');
+        
+        // Load views
+        $this->loadViewsFrom(__DIR__.'/../resources/views', 'sales');
+    }
+}

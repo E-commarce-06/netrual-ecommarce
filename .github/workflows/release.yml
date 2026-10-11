@@ -59,7 +59,7 @@ jobs:
           if [ -z "$VERSION" ]; then
             VERSION="$(php -r 'echo json_decode(file_get_contents("composer.json"))->version;')"
           fi
-          ZIP="dist/cartxis-${VERSION}-shared-hosting.zip"
+          ZIP="dist/bulbula-${VERSION}-shared-hosting.zip"
           test -f "$ZIP"
           echo "version=${VERSION}" >> "$GITHUB_OUTPUT"
           echo "zip=${ZIP}" >> "$GITHUB_OUTPUT"
@@ -68,7 +68,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          name: cartxis-shared-hosting-${{ steps.meta.outputs.version }}
+          name: bulbula-shared-hosting-${{ steps.meta.outputs.version }}
           path: ${{ steps.meta.outputs.zip }}
           if-no-files-found: error
 

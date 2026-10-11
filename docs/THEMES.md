@@ -1,12 +1,12 @@
 # Storefront Themes & Template Zone
 
-This guide covers installing, activating, and troubleshooting Cartxis storefront themes (templates).
+This guide covers installing, activating, and troubleshooting Bulbula storefront themes (templates).
 
 ---
 
 ## How themes are stored
 
-Cartxis uses a **single template layout** — there is no separate legacy `themes/` folder for new installs.
+Bulbula uses a **single template layout** — there is no separate legacy `themes/` folder for new installs.
 
 | Location | Purpose |
 |----------|---------|
@@ -14,7 +14,7 @@ Cartxis uses a **single template layout** — there is no separate legacy `theme
 | `public/templates/{slug}/` | Published assets copied at install/activate (`css/theme.css`, `assets/*`, screenshots) |
 | `public/build/` | Vite bundle — must include theme Vue pages (built with `npm run build`) |
 
-**Bundled with OSS:** `templates/storefront/general/cartxis-default/`  
+**Bundled with OSS:** `templates/storefront/general/bulbula-default/`  
 **Optional themes** (e.g. Dmart Electronics): install from **Admin → Appearance → Browse Themes** or the remote theme directory.
 
 ---
@@ -24,15 +24,15 @@ Cartxis uses a **single template layout** — there is no separate legacy `theme
 ### 1. Run the installer
 
 ```bash
-composer create-project cartxis/cartxis my-store
+composer create-project bulbula/bulbula my-store
 cd my-store
-php artisan cartxis:install
+php artisan bulbula:install
 ```
 
 The installer will:
 
 - Create/configure `.env`
-- Register a **theme directory API key** (when `https://cartxis.com/api` is reachable)
+- Register a **theme directory API key** (when `https://example.com/api` is reachable)
 - Run migrations and seed the default theme
 - Prompt you to build frontend assets
 
@@ -40,14 +40,14 @@ If you see **“Could not register theme directory key”** during install, the 
 
 ### 2. Theme directory `.env` keys
 
-Auto-written by `cartxis:install` when registration succeeds:
+Auto-written by `bulbula:install` when registration succeeds:
 
 ```env
-CARTXIS_THEME_DIRECTORY_URL=https://cartxis.com/api
-CARTXIS_THEME_API_KEY=ctx_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+BULBULA_THEME_DIRECTORY_URL=https://example.com/api
+BULBULA_THEME_API_KEY=ctx_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 ```
 
-> **Important:** Use `https://cartxis.com/api` — **not** `https://www.cartxis.com/api`. The `www` host redirects POST requests and breaks API key registration (HTTP 405).
+> **Important:** Use `https://example.com/api` — **not** `https://example.com/api`. The `www` host redirects POST requests and breaks API key registration (HTTP 405).
 
 Recover or verify registration:
 
@@ -65,13 +65,13 @@ php artisan theme:directory:register --force   # new key if needed
 3. Click **Install** on the theme you want
 4. Optionally check **Activate** during install
 
-Cartxis automatically:
+Bulbula automatically:
 
 1. Downloads/copies the template to `templates/storefront/{category}/{slug}/`
 2. Registers it in the database
 3. Publishes static assets to `public/templates/{slug}/`
 4. Runs `php artisan optimize:clear`
-5. Runs `npm run build` (when `CARTXIS_THEME_REBUILD_ASSETS=true`, the default)
+5. Runs `npm run build` (when `BULBULA_THEME_REBUILD_ASSETS=true`, the default)
 
 After install, **hard-refresh** the storefront (`Cmd+Shift+R` / `Ctrl+Shift+R`).
 
@@ -80,7 +80,7 @@ After install, **hard-refresh** the storefront (`Cmd+Shift+R` / `Ctrl+Shift+R`).
 ```bash
 php artisan template:install dmart-electronics --activate
 php artisan theme:list
-php artisan theme:activate cartxis-default
+php artisan theme:activate bulbula-default
 ```
 
 ---
@@ -95,7 +95,7 @@ php artisan theme:activate cartxis-default
 | UI Editor homepage | **Admin → UI Editor** (themes using block layouts) |
 | Import demo data | **Appearance → Import theme data** |
 
-When you **activate** a theme from admin, Cartxis runs the same post-activate steps as install (discover, cache clear, asset rebuild).
+When you **activate** a theme from admin, Bulbula runs the same post-activate steps as install (discover, cache clear, asset rebuild).
 
 ---
 
@@ -115,7 +115,7 @@ When you **activate** a theme from admin, Cartxis runs the same post-activate st
 
 ## Theme directory API
 
-Remote catalog is hosted at **[cartxis.com](https://cartxis.com)**. See [THEME_DIRECTORY_API.md](./THEME_DIRECTORY_API.md) for API details.
+Remote catalog is hosted at **[example.com](https://example.com)**. See [THEME_DIRECTORY_API.md](./THEME_DIRECTORY_API.md) for API details.
 
 **Browse** (public): categories and theme list  
 **Install** (authenticated): downloads ZIP with integrity hash (`X-Theme-Hash`)
@@ -132,7 +132,7 @@ Remote catalog is hosted at **[cartxis.com](https://cartxis.com)**. See [THEME_D
 
 ```bash
 # 1. Set correct URL in .env (no www)
-CARTXIS_THEME_DIRECTORY_URL=https://cartxis.com/api
+BULBULA_THEME_DIRECTORY_URL=https://example.com/api
 
 # 2. Register key
 php artisan theme:directory:register
@@ -141,7 +141,7 @@ php artisan theme:directory:register
 php artisan theme:directory:register   # should say "already saved"
 ```
 
-Check network access to `https://cartxis.com/api/theme-categories`.
+Check network access to `https://example.com/api/theme-categories`.
 
 ---
 
@@ -179,7 +179,7 @@ npm run build
 php artisan optimize:clear
 ```
 
-Ensure `CARTXIS_THEME_REBUILD_ASSETS=true` in `.env` (default) so future installs rebuild automatically.
+Ensure `BULBULA_THEME_REBUILD_ASSETS=true` in `.env` (default) so future installs rebuild automatically.
 
 ---
 
@@ -209,17 +209,17 @@ php artisan template:install dmart-electronics --activate
 **Fix B — switch back to default:**
 
 ```bash
-php artisan theme:activate cartxis-default
+php artisan theme:activate bulbula-default
 php artisan optimize:clear
 ```
 
-On the next request, Cartxis also **auto-falls back** to `cartxis-default` when the active theme’s files are missing (see `ThemeService::reconcileActiveTheme()`).
+On the next request, Bulbula also **auto-falls back** to `bulbula-default` when the active theme’s files are missing (see `ThemeService::reconcileActiveTheme()`).
 
 ---
 
 ### `npm run build` fails after remote theme install
 
-Remote ZIPs sometimes include macOS junk (`__MACOSX/`, `._*.vue`). Cartxis removes these on discover/install; if build still fails:
+Remote ZIPs sometimes include macOS junk (`__MACOSX/`, `._*.vue`). Bulbula removes these on discover/install; if build still fails:
 
 ```bash
 find templates/storefront -name '__MACOSX' -exec rm -rf {} +
@@ -248,8 +248,8 @@ Static images live in the theme’s `assets/` folder and are copied to `public/t
 
 ```bash
 php artisan theme:discover
-ls templates/storefront/general/cartxis-default/assets/
-ls public/templates/cartxis-default/assets/
+ls templates/storefront/general/bulbula-default/assets/
+ls public/templates/bulbula-default/assets/
 ```
 
 ---

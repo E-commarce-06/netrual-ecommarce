@@ -1,42 +1,42 @@
 # Theme Directory API
 
-External theme directory API hosted on **cartxis-home** (`https://cartxis.com`). The open-source Cartxis app uses these routes for **Appearance → Browse Themes** and one-click installs.
+External theme directory API hosted on **bulbula-home** (`https://example.com`). The open-source Bulbula app uses these routes for **Appearance → Browse Themes** and one-click installs.
 
-See also: [THEMES.md](./THEMES.md) (merchant install & troubleshooting guide) · cartxis-home theme API docs (external)
+See also: [THEMES.md](./THEMES.md) (merchant install & troubleshooting guide) · bulbula-home theme API docs (external)
 
 ## Base URL
 
 | Environment | Base URL |
 |-------------|----------|
-| Production | `https://cartxis.com/api` |
-| Local cartxis-home (developers) | `https://cartxis-home.test/api` |
+| Production | `https://example.com/api` |
+| Local bulbula-home (developers) | `https://example.test/api` |
 
-> **Do not use `https://www.cartxis.com/api`** — the `www` host redirects POST requests and breaks API key registration (HTTP 405).
+> **Do not use `https://example.com/api`** — the `www` host redirects POST requests and breaks API key registration (HTTP 405).
 
 ---
 
 ## Environment variables (this app)
 
-Set in your Cartxis store `.env`. Auto-populated by `php artisan cartxis:install`.
+Set in your Bulbula store `.env`. Auto-populated by `php artisan bulbula:install`.
 
 | Variable | Required | Default | Purpose |
 |----------|----------|---------|---------|
-| `CARTXIS_THEME_DIRECTORY_URL` | Yes | `https://cartxis.com/api` | cartxis-home API base URL |
-| `CARTXIS_THEME_API_KEY` | Yes* | *(empty)* | Bearer token for theme installs |
-| `CARTXIS_THEME_DIRECTORY_CACHE_TTL` | No | `3600` | Cache remote catalog (seconds) |
-| `CARTXIS_THEME_REBUILD_ASSETS` | No | `true` | Run `npm run build` after theme install/activate |
+| `BULBULA_THEME_DIRECTORY_URL` | Yes | `https://example.com/api` | bulbula-home API base URL |
+| `BULBULA_THEME_API_KEY` | Yes* | *(empty)* | Bearer token for theme installs |
+| `BULBULA_THEME_DIRECTORY_CACHE_TTL` | No | `3600` | Cache remote catalog (seconds) |
+| `BULBULA_THEME_REBUILD_ASSETS` | No | `true` | Run `npm run build` after theme install/activate |
 
 \* Auto-generated during install via `POST /api/theme-keys/register`. Recover with `php artisan theme:directory:register`.
 
-**Legacy alias:** `CARTXIS_TEMPLATE_CATALOG_URL`
+**Legacy alias:** `BULBULA_TEMPLATE_CATALOG_URL`
 
 **Example `.env`:**
 
 ```env
-CARTXIS_THEME_DIRECTORY_URL=https://cartxis.com/api
-CARTXIS_THEME_API_KEY=ctx_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-# CARTXIS_THEME_DIRECTORY_CACHE_TTL=3600
-# CARTXIS_THEME_REBUILD_ASSETS=true
+BULBULA_THEME_DIRECTORY_URL=https://example.com/api
+BULBULA_THEME_API_KEY=ctx_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+# BULBULA_THEME_DIRECTORY_CACHE_TTL=3600
+# BULBULA_THEME_REBUILD_ASSETS=true
 ```
 
 ### Registration commands
@@ -54,7 +54,7 @@ php artisan theme:directory:register --force  # new key even if one exists
 |--------|-------|-------------|
 | `GET` | `/api/theme-categories` | List active categories |
 | `GET` | `/api/themes` | List themes (`categories[]`, `search`, `page`, `per_page`) |
-| `POST` | `/api/theme-keys/register` | Register install key (used by `cartxis:install`) |
+| `POST` | `/api/theme-keys/register` | Register install key (used by `bulbula:install`) |
 
 ### `GET /api/themes` query params
 
@@ -69,7 +69,7 @@ php artisan theme:directory:register --force  # new key even if one exists
 
 ```json
 {
-  "name": "Cartxis install: My Store",
+  "name": "Bulbula install: My Store",
   "app_url": "https://shop.example.com"
 }
 ```
@@ -88,7 +88,7 @@ Response `201`:
 ## Protected routes (Bearer token) — 10 req/min
 
 ```
-Authorization: Bearer {CARTXIS_THEME_API_KEY}
+Authorization: Bearer {BULBULA_THEME_API_KEY}
 ```
 
 | Method | Route | Description |
@@ -105,13 +105,13 @@ Errors: `401` (bad key), `404` (theme missing), `429` (rate limit).
 
 | Problem | Solution |
 |---------|----------|
-| Install wizard: “Could not register theme directory key” | Use `https://cartxis.com/api` (no `www`); run `php artisan theme:directory:register` |
-| Browse Themes empty but API works | Check `CARTXIS_THEME_DIRECTORY_URL`; run `php artisan optimize:clear` |
-| Install button disabled | Set `CARTXIS_THEME_API_KEY`; run `theme:directory:register` |
+| Install wizard: “Could not register theme directory key” | Use `https://example.com/api` (no `www`); run `php artisan theme:directory:register` |
+| Browse Themes empty but API works | Check `BULBULA_THEME_DIRECTORY_URL`; run `php artisan optimize:clear` |
+| Install button disabled | Set `BULBULA_THEME_API_KEY`; run `theme:directory:register` |
 | Theme installed but storefront broken | See [THEMES.md](./THEMES.md) — run `theme:discover`, `optimize:clear`, `npm run build` |
 
 ---
 
 ## Full documentation
 
-For request/response examples, admin routes, and flow diagrams, see **`docs/theme-directory-api.md`** in the cartxis-home repository.
+For request/response examples, admin routes, and flow diagrams, see **`docs/theme-directory-api.md`** in the bulbula-home repository.

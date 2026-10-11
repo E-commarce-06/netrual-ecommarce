@@ -46,7 +46,7 @@ const removeMobileAuthLogo = ref(false)
 
 const form = useForm({
   // Site Information
-  site_name: props.settings['site_name'] || 'Cartxis Shop',
+  site_name: props.settings['site_name'] || 'Bulbula Shop',
   site_tagline: props.settings['site_tagline'] || '',
   admin_email: props.settings['admin_email'] || '',
   contact_phone: props.settings['contact_phone'] || '',

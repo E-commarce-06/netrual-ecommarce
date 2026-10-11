@@ -500,7 +500,7 @@ onUnmounted(() => {
             <div class="w-9 h-9 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-xl flex items-center justify-center flex-shrink-0 shadow-lg shadow-blue-500/20">
               <span class="text-white font-bold text-lg">{{ adminConfig?.site_name?.charAt(0) || 'C' }}</span>
             </div>
-            <span v-if="!sidebarCollapsed" class="text-white font-semibold text-lg truncate transition-opacity duration-200">{{ adminConfig?.site_name || 'Cartxis' }}</span>
+            <span v-if="!sidebarCollapsed" class="text-white font-semibold text-lg truncate transition-opacity duration-200">{{ adminConfig?.site_name || 'Bulbula' }}</span>
           </template>
         </Link>
       </div>

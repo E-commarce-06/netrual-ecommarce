@@ -166,7 +166,7 @@ const buildRemoteSnippet = (url: string) => {
   if (remoteEnv.value) {
     server.env = remoteEnv.value
   }
-  return JSON.stringify({ mcpServers: { cartxis: server } }, null, 2)
+  return JSON.stringify({ mcpServers: { bulbula: server } }, null, 2)
 }
 
 const platforms = computed(() => [
@@ -179,7 +179,7 @@ const platforms = computed(() => [
     fileHint: '.cursor/mcp.json',
     snippet: JSON.stringify({
       mcpServers: {
-        cartxis: {
+        bulbula: {
           url: props.endpointUrl,
           headers: {
             Authorization: 'Bearer YOUR_MCP_TOKEN',
@@ -211,7 +211,7 @@ const platforms = computed(() => [
     fileHint: '.vscode/mcp.json',
     snippet: JSON.stringify({
       servers: {
-        cartxis: {
+        bulbula: {
           type: 'http',
           url: props.endpointUrl,
           headers: {
@@ -241,7 +241,7 @@ const platforms = computed(() => [
     fileHint: 'mcp.json',
     snippet: JSON.stringify({
       mcpServers: {
-        cartxis: {
+        bulbula: {
           url: props.endpointUrl,
           headers: {
             Authorization: 'Bearer YOUR_MCP_TOKEN',

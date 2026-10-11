@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# package-release.sh — Build a Shared Hosting zip for Cartxis (includes public/build).
+# package-release.sh — Build a Shared Hosting zip for Bulbula (includes public/build).
 #
 # Usage:
 #   ./scripts/package-release.sh [--with-vendor|--no-vendor] [--skip-npm]
@@ -34,11 +34,11 @@ done
 
 VERSION="$(php -r 'echo json_decode(file_get_contents("composer.json"))->version ?? "0.0.0";')"
 DIST_DIR="$ROOT/dist"
-STAGE_NAME="cartxis-${VERSION}-shared-hosting"
+STAGE_NAME="bulbula-${VERSION}-shared-hosting"
 STAGE_DIR="$DIST_DIR/$STAGE_NAME"
 ZIP_PATH="$DIST_DIR/${STAGE_NAME}.zip"
 
-echo "==> Cartxis shared-hosting package v${VERSION}"
+echo "==> Bulbula shared-hosting package v${VERSION}"
 
 # ── Frontend assets ──────────────────────────────────────────────────────────
 if [[ -f public/build/manifest.json ]]; then
@@ -172,7 +172,7 @@ fi
 
 # ── Install instructions inside zip ──────────────────────────────────────────
 cat > "$STAGE_DIR/INSTALL-SHARED-HOSTING.txt" <<EOF
-Cartxis ${VERSION} — Shared Hosting Install
+Bulbula ${VERSION} — Shared Hosting Install
 ==========================================
 
 Requirements
@@ -185,12 +185,12 @@ Requirements
 Upload steps
 ------------
 1. Upload and extract this zip on your host (e.g. AlwaysData, cPanel, Plesk).
-2. Set the web document root to:  .../cartxis/public
+2. Set the web document root to:  .../bulbula/public
 3. Copy .env.example to .env and edit DB_* / APP_URL.
 4. Generate an app key (SSH or host terminal):
      php artisan key:generate
 5. Install / migrate (preferred if SSH is available):
-     php artisan cartxis:install
+     php artisan bulbula:install
    Or open https://YOUR-DOMAIN/setup in the browser after configuring .env
    and running migrations manually if your panel only allows limited CLI.
 

@@ -1,8 +1,8 @@
 <?php
 
-use Cartxis\Core\Services\RemoteThemeDirectoryClient;
-use Cartxis\Core\Services\TemplateCatalogService;
-use Cartxis\Core\Services\ThemeDirectoryRegistrationService;
+use Bulbula\Core\Services\RemoteThemeDirectoryClient;
+use Bulbula\Core\Services\TemplateCatalogService;
+use Bulbula\Core\Services\ThemeDirectoryRegistrationService;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Http;
 
@@ -24,7 +24,7 @@ test('remote theme directory does not cache failed fetch responses', function ()
                     'name' => 'Dmart Electronics',
                     'version' => '1.0.0',
                     'description' => 'Electronics theme',
-                    'author' => 'Cartxis',
+                    'author' => 'Bulbula',
                     'supports' => [],
                     'categories' => [['slug' => 'electronics', 'name' => 'Electronics']],
                     'screenshot_url' => 'https://themes.test/preview.png',
@@ -58,7 +58,7 @@ test('remote theme directory client fetches categories and themes without api ke
                     'name' => 'Fashion Pro',
                     'version' => '1.0.0',
                     'description' => 'A fashion storefront theme',
-                    'author' => 'Cartxis',
+                    'author' => 'Bulbula',
                     'supports' => ['menus'],
                     'categories' => [['slug' => 'featured', 'name' => 'Featured']],
                     'screenshot_url' => 'https://themes.test/storage/previews/fashion-pro.png',
@@ -87,7 +87,7 @@ test('template catalog merges remote themes with local catalog', function () {
                     'name' => 'Remote Theme',
                     'version' => '2.0.0',
                     'description' => 'From directory',
-                    'author' => 'Cartxis',
+                    'author' => 'Bulbula',
                     'supports' => [],
                     'categories' => [['slug' => 'general', 'name' => 'General']],
                     'screenshot_url' => 'https://themes.test/preview.png',

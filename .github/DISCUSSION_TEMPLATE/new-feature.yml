@@ -5,7 +5,7 @@ body:
     attributes:
       value: |
         ## 💡 New Feature Request
-        Have an idea that would make Cartxis better? We'd love to hear it! Please fill out this form to share your feature request with the community and maintainers.
+        Have an idea that would make Bulbula better? We'd love to hear it! Please fill out this form to share your feature request with the community and maintainers.
 
   - type: input
     id: feature-title
@@ -20,7 +20,7 @@ body:
     id: feature-area
     attributes:
       label: Feature Area
-      description: Which area of Cartxis does this feature relate to?
+      description: Which area of Bulbula does this feature relate to?
       options:
         - "🛒 Cart & Checkout"
         - "📦 Product Management"
@@ -45,7 +45,7 @@ body:
     attributes:
       label: Problem / Motivation
       description: What problem does this feature solve? Why is it needed?
-      placeholder: "Currently, Cartxis does not support X, which means users must Y manually..."
+      placeholder: "Currently, Bulbula does not support X, which means users must Y manually..."
     validations:
       required: true
 
@@ -71,7 +71,7 @@ body:
       label: Priority
       description: How important is this feature to you?
       options:
-        - "🔴 Critical — blocks my use of Cartxis"
+        - "🔴 Critical — blocks my use of Bulbula"
         - "🟠 High — significantly impacts my workflow"
         - "🟡 Medium — would be a nice improvement"
         - "🟢 Low — minor enhancement"

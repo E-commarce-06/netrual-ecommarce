@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Frontend assets missing — Cartxis</title>
+    <title>Frontend assets missing — Bulbula</title>
     <style>
         :root {
             --bg: #0f1419;
@@ -99,7 +99,7 @@
         <div class="badge">Setup required</div>
         <h1>Frontend assets are missing</h1>
         <p>
-            Cartxis could not find <code>public/build/manifest.json</code>.
+            Bulbula could not find <code>public/build/manifest.json</code>.
             The admin panel and setup wizard need pre-built Vite assets.
             Shared hosts typically do not include Node.js, so cloning the git repo alone is not enough.
         </p>
@@ -116,7 +116,7 @@
                 <strong>Or build assets yourself</strong> (Node.js 18+ on your machine or CI):
                 <br><code>npm install &amp;&amp; npm run build</code>
                 <br>Then upload the generated <code>public/build</code> folder, or run
-                <code>php artisan cartxis:install</code> again.
+                <code>php artisan bulbula:install</code> again.
             </li>
         </ol>
 
@@ -127,7 +127,7 @@
 
         <p class="note">
             HTTP 503 — temporary until assets are present. After fixing, refresh this page or visit
-            <code>/setup</code>. Developers may use <code>php artisan cartxis:install --skip-assets</code>
+            <code>/setup</code>. Developers may use <code>php artisan bulbula:install --skip-assets</code>
             only for non-browser CI/dev workflows.
         </p>
     </main>

@@ -9,14 +9,14 @@
         "ecommerce",
         "inertia",
         "vue",
-        "cartxis"
+        "bulbula"
     ],
     "homepage": "https://github.com/E-commarce-06/netrual-ecommarce",
     "license": "MIT",
     "repositories": [
         {
             "type": "path",
-            "url": "packages/Cartxis/PhonePe/sdk"
+            "url": "packages/Bulbula/PhonePe/sdk"
         }
     ],
     "require": {
@@ -49,39 +49,39 @@
     },
     "autoload": {
         "files": [
-            "packages/Cartxis/Core/src/Helpers/hooks.php"
+            "packages/Bulbula/Core/src/Helpers/hooks.php"
         ],
         "psr-4": {
             "App\\": "app/",
             "Database\\Factories\\": "database/factories/",
             "Database\\Seeders\\": "database/seeders/",
-            "Cartxis\\Core\\": "packages/Cartxis/Core/src/",
-            "Cartxis\\Core\\Database\\Seeders\\": "packages/Cartxis/Core/src/Database/Seeders/",
-            "Cartxis\\Admin\\": "packages/Cartxis/Admin/src/",
-            "Cartxis\\Admin\\Database\\Seeders\\": "packages/Cartxis/Admin/src/Database/Seeders/",
-            "Cartxis\\Product\\": "packages/Cartxis/Product/src/",
-            "Cartxis\\Product\\Database\\Seeders\\": "packages/Cartxis/Product/src/Database/Seeders/",
-            "Cartxis\\Cart\\": "packages/Cartxis/Cart/src/",
-            "Cartxis\\Shop\\": "packages/Cartxis/Shop/src/",
-            "Cartxis\\Shop\\Database\\Seeders\\": "packages/Cartxis/Shop/src/Database/Seeders/",
-            "Cartxis\\Settings\\": "packages/Cartxis/Settings/src/",
-            "Cartxis\\Settings\\Database\\Seeders\\": "packages/Cartxis/Settings/src/Database/Seeders/",
-            "Cartxis\\Stripe\\": "packages/Cartxis/Stripe/src/",
-            "Cartxis\\Razorpay\\": "packages/Cartxis/Razorpay/src/",
-            "Cartxis\\PayPal\\": "packages/Cartxis/PayPal/src/",
-            "Cartxis\\PayUMoney\\": "packages/Cartxis/PayUMoney/src/",
-            "Cartxis\\PhonePe\\": "packages/Cartxis/PhonePe/src/",
-            "Cartxis\\Sales\\": "packages/Cartxis/Sales/src/",
-            "Cartxis\\Customer\\": "packages/Cartxis/Customer/src/",
-            "Cartxis\\CMS\\": "packages/Cartxis/CMS/src/",
-            "Cartxis\\UIEditor\\": "packages/Cartxis/UIEditor/src/",
-            "Cartxis\\System\\": "packages/Cartxis/System/src/",
-            "Cartxis\\Reports\\": "packages/Cartxis/Reports/src/",
-            "Cartxis\\Marketing\\": "packages/Cartxis/Marketing/src/",
-            "Cartxis\\API\\": "packages/Cartxis/API/",
-            "Cartxis\\Setup\\": "packages/Cartxis/Setup/src/",
-            "Cartxis\\Setup\\Database\\Seeders\\": "packages/Cartxis/Setup/src/Database/Seeders/",
-            "Cartxis\\Blog\\": "packages/Cartxis/Blog/src/"
+            "Bulbula\\Core\\": "packages/Bulbula/Core/src/",
+            "Bulbula\\Core\\Database\\Seeders\\": "packages/Bulbula/Core/src/Database/Seeders/",
+            "Bulbula\\Admin\\": "packages/Bulbula/Admin/src/",
+            "Bulbula\\Admin\\Database\\Seeders\\": "packages/Bulbula/Admin/src/Database/Seeders/",
+            "Bulbula\\Product\\": "packages/Bulbula/Product/src/",
+            "Bulbula\\Product\\Database\\Seeders\\": "packages/Bulbula/Product/src/Database/Seeders/",
+            "Bulbula\\Cart\\": "packages/Bulbula/Cart/src/",
+            "Bulbula\\Shop\\": "packages/Bulbula/Shop/src/",
+            "Bulbula\\Shop\\Database\\Seeders\\": "packages/Bulbula/Shop/src/Database/Seeders/",
+            "Bulbula\\Settings\\": "packages/Bulbula/Settings/src/",
+            "Bulbula\\Settings\\Database\\Seeders\\": "packages/Bulbula/Settings/src/Database/Seeders/",
+            "Bulbula\\Stripe\\": "packages/Bulbula/Stripe/src/",
+            "Bulbula\\Razorpay\\": "packages/Bulbula/Razorpay/src/",
+            "Bulbula\\PayPal\\": "packages/Bulbula/PayPal/src/",
+            "Bulbula\\PayUMoney\\": "packages/Bulbula/PayUMoney/src/",
+            "Bulbula\\PhonePe\\": "packages/Bulbula/PhonePe/src/",
+            "Bulbula\\Sales\\": "packages/Bulbula/Sales/src/",
+            "Bulbula\\Customer\\": "packages/Bulbula/Customer/src/",
+            "Bulbula\\CMS\\": "packages/Bulbula/CMS/src/",
+            "Bulbula\\UIEditor\\": "packages/Bulbula/UIEditor/src/",
+            "Bulbula\\System\\": "packages/Bulbula/System/src/",
+            "Bulbula\\Reports\\": "packages/Bulbula/Reports/src/",
+            "Bulbula\\Marketing\\": "packages/Bulbula/Marketing/src/",
+            "Bulbula\\API\\": "packages/Bulbula/API/",
+            "Bulbula\\Setup\\": "packages/Bulbula/Setup/src/",
+            "Bulbula\\Setup\\Database\\Seeders\\": "packages/Bulbula/Setup/src/Database/Seeders/",
+            "Bulbula\\Blog\\": "packages/Bulbula/Blog/src/"
         }
     },
     "autoload-dev": {
@@ -123,7 +123,7 @@
         ],
         "post-create-project-cmd": [
             "@php artisan key:generate --ansi",
-            "@php -r \"echo PHP_EOL . '════════════════════════════════════════════════════' . PHP_EOL . '  Cartxis installed! Run: php artisan cartxis:install' . PHP_EOL . '════════════════════════════════════════════════════' . PHP_EOL;\""
+            "@php -r \"echo PHP_EOL . '════════════════════════════════════════════════════' . PHP_EOL . '  Bulbula installed! Run: php artisan bulbula:install' . PHP_EOL . '════════════════════════════════════════════════════' . PHP_EOL;\""
         ],
         "pre-package-uninstall": [
             "Illuminate\\Foundation\\ComposerScripts::prePackageUninstall"

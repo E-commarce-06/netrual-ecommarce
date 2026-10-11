@@ -3,9 +3,9 @@
 use App\Http\Middleware\FrontendMaintenanceMode;
 use App\Http\Middleware\HandleAppearance;
 use App\Http\Middleware\HandleInertiaRequests;
-use Cartxis\Admin\Http\Middleware\PreventAdminFrontendAccess;
-use Cartxis\Admin\Http\Middleware\PreventUserAdminAccess;
-use Cartxis\Core\Http\Middleware\SecurityHeaders;
+use Bulbula\Admin\Http\Middleware\PreventAdminFrontendAccess;
+use Bulbula\Admin\Http\Middleware\PreventUserAdminAccess;
+use Bulbula\Core\Http\Middleware\SecurityHeaders;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;

@@ -1,0 +1,23 @@
+{
+    "name": "bulbula/api",
+    "description": "RESTful API package for Bulbula eCommerce platform - Mobile app backend",
+    "type": "library",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Bulbula\\API\\": ""
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Bulbula\\API\\Providers\\APIServiceProvider"
+            ]
+        }
+    },
+    "require": {
+        "php": "^8.3",
+        "laravel/framework": "^13.0",
+        "laravel/sanctum": "^4.0"
+    }
+}

@@ -42,7 +42,7 @@
         @php
             $themeStylesheet = null;
             try {
-                $activeTheme = \Cartxis\Core\Models\Theme::active();
+                $activeTheme = \Bulbula\Core\Models\Theme::active();
                 if ($activeTheme) {
                     $publicThemeCss = public_path("templates/{$activeTheme->slug}/css/theme.css");
                     if (file_exists($publicThemeCss)) {
@@ -61,9 +61,9 @@
     </head>
     <body class="font-sans antialiased" data-force-light="{{ ($forceLightStorefront ?? false) ? '1' : '0' }}">
         @inertia        @php
-            if (app()->bound('cartxis.hook')) {
+            if (app()->bound('bulbula.hook')) {
                 ob_start();
-                app('cartxis.hook')->doAction('storefront.body.end');
+                app('bulbula.hook')->doAction('storefront.body.end');
                 echo ob_get_clean();
             }
         @endphp    </body>

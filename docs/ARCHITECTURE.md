@@ -1,10 +1,10 @@
-# Cartxis Architecture
+# Bulbula Architecture
 
 > High-level reference for contributors, extension authors, and agent-assisted development.
 
 ## Overview
 
-Cartxis is a **modular Laravel 12 eCommerce monolith** with a **Vue 3 + TypeScript + Inertia.js** admin and storefront, **MySQL 8**, and optional **REST API** for the open-source mobile app.
+Bulbula is a **modular Laravel 12 eCommerce monolith** with a **Vue 3 + TypeScript + Inertia.js** admin and storefront, **MySQL 8**, and optional **REST API** for the open-source mobile app.
 
 ```
 ┌─────────────────────────────────────────────────────────────────────────┐
@@ -16,10 +16,10 @@ Cartxis is a **modular Laravel 12 eCommerce monolith** with a **Vue 3 + TypeScri
 │                    Laravel HTTP Kernel + Middleware                      │
 │  Fortify (auth) · Sanctum (API) · Separate admin session cookie          │
 ├─────────────────────────────────────────────────────────────────────────┤
-│                    packages/Cartxis/* (domain packages)                  │
+│                    packages/Bulbula/* (domain packages)                  │
 ├─────────────────────────────────────────────────────────────────────────┤
-│  Core services: cartxis.hook · cartxis.menu · cartxis.setting ·             │
-│                 cartxis.extension · cartxis.theme · cartxis.payment.gateway │
+│  Core services: bulbula.hook · bulbula.menu · bulbula.setting ·             │
+│                 bulbula.extension · bulbula.theme · bulbula.payment.gateway │
 ├─────────────────────────────────────────────────────────────────────────┤
 │                         MySQL 8 (settings, catalog, orders)              │
 └─────────────────────────────────────────────────────────────────────────┘
@@ -42,12 +42,12 @@ Cartxis is a **modular Laravel 12 eCommerce monolith** with a **Vue 3 + TypeScri
 ## Repository Layout
 
 ```
-cartxis/
+bulbula/
 ├── app/                    # Thin Laravel app shell (Fortify, middleware)
-├── bootstrap/providers.php # Registers all Cartxis service providers
-├── packages/Cartxis/       # All domain logic (PSR-4 Cartxis\*)
+├── bootstrap/providers.php # Registers all Bulbula service providers
+├── packages/Bulbula/       # All domain logic (PSR-4 Bulbula\*)
 ├── resources/js/           # Admin + shared Vue (pages, UI Editor, components)
-├── templates/storefront/   # Storefront template packages (cartxis-default, …)
+├── templates/storefront/   # Storefront template packages (bulbula-default, …)
 ├── routes/                 # Core web, auth, settings only
 ├── database/               # App-level seeders/factories
 ├── extension/              # Optional third-party extensions (gitignored clones)
@@ -60,7 +60,7 @@ Each package owns migrations, routes (via its `*ServiceProvider`), models, and a
 
 | Package | Responsibility |
 |---------|----------------|
-| **Core** | Installer (`cartxis:install`), hooks, extensions, themes, settings store, payment gateway manager, tax/shipping base, RBAC |
+| **Core** | Installer (`bulbula:install`), hooks, extensions, themes, settings store, payment gateway manager, tax/shipping base, RBAC |
 | **Setup** | First-run wizard (must load before CMS catch-all routes) |
 | **Admin** | Admin shell, dashboard, notifications |
 | **Product** | Catalog, variants, attributes, inventory, reviews, AI product descriptions |
@@ -84,7 +84,7 @@ Payment gateways register with `PaymentGatewayManager` in Core; credentials live
 
 ### Storefront (Inertia)
 
-1. `ShopServiceProvider` loads `packages/Cartxis/Shop/src/Routes/web.php`
+1. `ShopServiceProvider` loads `packages/Bulbula/Shop/src/Routes/web.php`
 2. `ShareFrontendData` middleware shares cart, currency, theme data
 3. Controllers return `Inertia::render()` — theme resolves views via `ThemeViewResolver`
 4. CMS pages with published UI layouts use `UIBlockRenderer` (shared in `resources/js`)
@@ -92,7 +92,7 @@ Payment gateways register with `PaymentGatewayManager` in Core; credentials live
 ### Admin
 
 1. Prefix `/admin`, guard `admin`, separate session cookie (`SetAdminSessionCookie`)
-2. Each package registers `Routes/admin.php` and menu items via `cartxis.menu`
+2. Each package registers `Routes/admin.php` and menu items via `bulbula.menu`
 3. Pages live under `resources/js/pages/Admin/`
 
 ### REST API (Mobile)
@@ -100,22 +100,22 @@ Payment gateways register with `PaymentGatewayManager` in Core; credentials live
 - Base: `/api/v1`
 - Public: products, categories, search, banners, auth register/login
 - Authenticated (Sanctum): cart, checkout, orders, wishlist, profile
-- See `packages/Cartxis/API/Routes/api.php` and `packages/Cartxis/API/INSTALLATION.md`
+- See `packages/Bulbula/API/Routes/api.php` and `packages/Bulbula/API/INSTALLATION.md`
 
 ## Extensibility
 
 ### Hooks (WordPress-style)
 
-Global helpers in `packages/Cartxis/Core/src/Helpers/hooks.php`:
+Global helpers in `packages/Bulbula/Core/src/Helpers/hooks.php`:
 
 - `add_action` / `do_action`
 - `add_filter` / `apply_filters`
 
-Backed by `app('cartxis.hook')` singleton.
+Backed by `app('bulbula.hook')` singleton.
 
 ### Extensions
 
-- CLI: `php artisan cartxis:extension:make`, `extensions:install`, `extensions:activate`
+- CLI: `php artisan bulbula:extension:make`, `extensions:install`, `extensions:activate`
 - Registry table `extensions`; menu/settings keyed by `extension_code`
 - Frontend pages: `resources/js/pages/Extensions/{ExtensionName}/...` resolved in `resources/js/app.ts`
 - Guide: `specificationandtask/EXTENSION-DEVELOPMENT-GUIDE.md`
@@ -125,11 +125,11 @@ Backed by `app('cartxis.hook')` singleton.
 - `templates/storefront/{category}/{slug}/` with `resources/views/pages`, layouts, components
 - Published assets: `public/templates/{slug}/` (css, images — copied on discover/install)
 - Active theme: resolved from **database** at runtime (`Theme::active()`), not hard-coded in config
-- **Browse Themes:** Admin → Appearance → Browse Themes (remote catalog via `CARTXIS_THEME_*` env)
+- **Browse Themes:** Admin → Appearance → Browse Themes (remote catalog via `BULBULA_THEME_*` env)
 - **Docs:** [THEMES.md](./THEMES.md), [THEME_DIRECTORY_API.md](./THEME_DIRECTORY_API.md)
 - Commands: `theme:discover`, `template:install`, `theme:activate`, `theme:directory:register`
 - Post install/activate: discover → `optimize:clear` → `npm run build` (automatic via `ThemeLifecycleService`)
-- **Templates (OSS)**: bundled `cartxis-default`; optional themes via Template Zone. `theme.json` + optional `data/theme-data.json` for demo import (`theme:import-data`).
+- **Templates (OSS)**: bundled `bulbula-default`; optional themes via Template Zone. `theme.json` + optional `data/theme-data.json` for demo import (`theme:import-data`).
 
 ## Data Model (Conceptual)
 
@@ -192,9 +192,9 @@ php artisan queue:work      # Supervisor in prod
 
 | Concern | Cursor agent |
 |---------|----------------|
-| Store downtime banner, backups, cache (`System` package) | `@cartxis-core` |
-| Laravel / Composer / NPM version upgrades | `@cartxis-upgrades` |
-| Release changelog and OSS PR after upgrade | `@cartxis-oss` |
+| Store downtime banner, backups, cache (`System` package) | `@bulbula-core` |
+| Laravel / Composer / NPM version upgrades | `@bulbula-upgrades` |
+| Release changelog and OSS PR after upgrade | `@bulbula-oss` |
 
 ## Roadmap Touchpoints (from README)
 
@@ -207,4 +207,4 @@ Upcoming work areas agents should respect:
 - [README.md](../README.md) — install, features, roadmap
 - [USER_GUIDE.md](./USER_GUIDE.md) — admin user documentation
 - [EXTENSION-DEVELOPMENT-GUIDE.md](../specificationandtask/EXTENSION-DEVELOPMENT-GUIDE.md)
-- [API INSTALLATION](../packages/Cartxis/API/INSTALLATION.md)
+- [API INSTALLATION](../packages/Bulbula/API/INSTALLATION.md)

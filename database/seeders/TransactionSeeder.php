@@ -3,8 +3,8 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use Cartxis\Sales\Models\Transaction;
-use Cartxis\Shop\Models\Order;
+use Bulbula\Sales\Models\Transaction;
+use Bulbula\Shop\Models\Order;
 
 class TransactionSeeder extends Seeder
 {

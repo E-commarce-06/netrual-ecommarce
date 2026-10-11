@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace Tests\Feature\Customer;
 
 use Tests\TestCase;
-use Cartxis\Customer\Models\Customer;
-use Cartxis\Customer\Models\CustomerAddress;
-use Cartxis\Customer\Models\CustomerGroup;
+use Bulbula\Customer\Models\Customer;
+use Bulbula\Customer\Models\CustomerAddress;
+use Bulbula\Customer\Models\CustomerGroup;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class CustomerAddressTest extends TestCase

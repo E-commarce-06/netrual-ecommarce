@@ -1,8 +1,8 @@
-# Cartxis E-Commerce Platform — User Guide
+# Bulbula E-Commerce Platform — User Guide
 
 **Version:** 1.0.13
 **Last Updated:** June 2026
-**Platform:** Cartxis E-Commerce Platform
+**Platform:** Bulbula E-Commerce Platform
 **Stack:** Laravel 12 · Inertia.js · Vue 3 · TypeScript · Tailwind CSS
 
 ---
@@ -69,7 +69,7 @@
 
 ## 1. Introduction
 
-Cartxis is a modern, full-featured e-commerce platform built on **Laravel 12** with **Inertia.js**, **Vue 3**, **TypeScript**, and **Tailwind CSS**. It provides a comprehensive admin panel for managing every aspect of an online store — from product catalogs and order processing to marketing campaigns, content management, reporting, and system-level configuration.
+Bulbula is a modern, full-featured e-commerce platform built on **Laravel 12** with **Inertia.js**, **Vue 3**, **TypeScript**, and **Tailwind CSS**. It provides a comprehensive admin panel for managing every aspect of an online store — from product catalogs and order processing to marketing campaigns, content management, reporting, and system-level configuration.
 
 ### Key Capabilities
 
@@ -87,7 +87,7 @@ Cartxis is a modern, full-featured e-commerce platform built on **Laravel 12** w
 
 ## 2. Installation & Setup
 
-Cartxis supports two install paths. **Shared hosting merchants should use the release zip** (no Node.js). Developers cloning from git still need Node to build Vite assets.
+Bulbula supports two install paths. **Shared hosting merchants should use the release zip** (no Node.js). Developers cloning from git still need Node to build Vite assets.
 
 ### Path A — Shared Hosting (recommended for merchants)
 
@@ -103,11 +103,11 @@ No Node.js required. Download the pre-built zip that includes `public/build` and
 Full steps: **[SHARED_HOSTING.md](./SHARED_HOSTING.md)**
 
 ```text
-1. Download cartxis-{version}-shared-hosting.zip from GitHub Releases
+1. Download bulbula-{version}-shared-hosting.zip from GitHub Releases
 2. Upload & extract; set document root to public/
 3. Copy .env.example → .env and set APP_URL + DB_*
 4. php artisan key:generate
-5. php artisan cartxis:install   # or open /setup after DB is ready
+5. php artisan bulbula:install   # or open /setup after DB is ready
 ```
 
 ### Path B — Developer / source install (needs Node)
@@ -126,8 +126,8 @@ Full steps: **[SHARED_HOSTING.md](./SHARED_HOSTING.md)**
 
 ```bash
 # 1. Clone the repository
-git clone <repository-url> cartxis
-cd cartxis
+git clone <repository-url> bulbula
+cd bulbula
 
 # 2. Install PHP dependencies
 composer install
@@ -143,12 +143,12 @@ php artisan key:generate
 #    DB_CONNECTION=mysql
 #    DB_HOST=127.0.0.1
 #    DB_PORT=3306
-#    DB_DATABASE=cartxis
+#    DB_DATABASE=bulbula
 #    DB_USERNAME=root
 #    DB_PASSWORD=
 
 # 6. Run the installer (migrations, seed, assets)
-php artisan cartxis:install
+php artisan bulbula:install
 
 #    Or manually:
 #    php artisan migrate --seed
@@ -161,13 +161,13 @@ php artisan cartxis:install
 
 ### Theme directory (Browse Themes)
 
-During `php artisan cartxis:install`, Cartxis registers a theme catalog API key when `https://cartxis.com/api` is reachable. This enables **Admin → Appearance → Browse Themes** for optional storefront templates.
+During `php artisan bulbula:install`, Bulbula registers a theme catalog API key when `https://example.com/api` is reachable. This enables **Admin → Appearance → Browse Themes** for optional storefront templates.
 
 Add to `.env` (usually auto-written by the installer):
 
 ```env
-CARTXIS_THEME_DIRECTORY_URL=https://cartxis.com/api
-CARTXIS_THEME_API_KEY=
+BULBULA_THEME_DIRECTORY_URL=https://example.com/api
+BULBULA_THEME_API_KEY=
 ```
 
 If install shows **“Could not register theme directory key”**, run after go-live:
@@ -176,7 +176,7 @@ If install shows **“Could not register theme directory key”**, run after go-
 php artisan theme:directory:register
 ```
 
-Use the **non-www** URL (`cartxis.com`, not `www.cartxis.com`). See [THEMES.md](./THEMES.md) for full theme installation and troubleshooting.
+Use the **non-www** URL (`example.com`, not `example.com`). See [THEMES.md](./THEMES.md) for full theme installation and troubleshooting.
 
 ### Post-Installation
 
@@ -355,7 +355,7 @@ Assign the product to one or more categories by checking the corresponding check
 
 ### 5.2 Product Types
 
-Cartxis supports four product types, each tailored to a different kind of merchandise:
+Bulbula supports four product types, each tailored to a different kind of merchandise:
 
 #### Simple Product
 
@@ -1175,7 +1175,7 @@ Channels represent distinct storefronts or sales channels, each with its own con
 | **Default** | Whether this is the default channel |
 | **Actions** | Edit, Configure |
 
-Channels allow you to run multiple storefronts (e.g., different regions or brands) from a single Cartxis installation.
+Channels allow you to run multiple storefronts (e.g., different regions or brands) from a single Bulbula installation.
 
 ---
 
@@ -1188,12 +1188,12 @@ Configure the payment gateways available to customers at checkout.
 | Method | Code | Description |
 |---|---|---|
 | **Cash on Delivery** | `cod` | Customer pays upon delivery |
-| **Razorpay** | `cartxis-razorpay` | Indian payment gateway (UPI, cards, wallets, net banking) |
+| **Razorpay** | `bulbula-razorpay` | Indian payment gateway (UPI, cards, wallets, net banking) |
 | **Bank Transfer** | — | Manual bank transfer with order confirmation |
-| **Stripe** | `cartxis-stripe` | Global payment processing (cards, Apple Pay, Google Pay) |
-| **PhonePe** | `cartxis-phonepe` | Indian UPI and digital wallet payments |
-| **PayPal** | `cartxis-paypal` | Global PayPal payments and credit card processing |
-| **PayUMoney** | `cartxis-payumoney` | Indian payment gateway |
+| **Stripe** | `bulbula-stripe` | Global payment processing (cards, Apple Pay, Google Pay) |
+| **PhonePe** | `bulbula-phonepe` | Indian UPI and digital wallet payments |
+| **PayPal** | `bulbula-paypal` | Global PayPal payments and credit card processing |
+| **PayUMoney** | `bulbula-payumoney` | Indian payment gateway |
 
 #### Configuration
 
@@ -1487,7 +1487,7 @@ Installing a theme automatically publishes assets, clears caches, and rebuilds f
 
 **Navigation:** Appearance → Themes
 
-Shows installed themes with activate, export, import demo data, and delete actions. The **default** theme (`cartxis-default`) cannot be deleted.
+Shows installed themes with activate, export, import demo data, and delete actions. The **default** theme (`bulbula-default`) cannot be deleted.
 
 #### Appearance customization
 
@@ -1572,7 +1572,7 @@ Each cache type displays its **size** and **key count**, with individual:
 
 ### 12.3 Extensions
 
-Manage installable extensions that add functionality to Cartxis.
+Manage installable extensions that add functionality to Bulbula.
 
 #### Extension Listing
 
@@ -1589,11 +1589,11 @@ Manage installable extensions that add functionality to Cartxis.
 
 | Extension | Code | Description |
 |---|---|---|
-| **PayPal Payment Gateway** | `cartxis-paypal` | PayPal checkout integration |
-| **PayUMoney Payment Gateway** | `cartxis-payumoney` | PayUMoney payment processing |
-| **PhonePe Payment Gateway** | `cartxis-phonepe` | PhonePe UPI payments |
-| **Razorpay Payment Gateway** | `cartxis-razorpay` | Razorpay payment processing |
-| **Stripe Payment Gateway** | `cartxis-stripe` | Stripe payment processing |
+| **PayPal Payment Gateway** | `bulbula-paypal` | PayPal checkout integration |
+| **PayUMoney Payment Gateway** | `bulbula-payumoney` | PayUMoney payment processing |
+| **PhonePe Payment Gateway** | `bulbula-phonepe` | PhonePe UPI payments |
+| **Razorpay Payment Gateway** | `bulbula-razorpay` | Razorpay payment processing |
+| **Stripe Payment Gateway** | `bulbula-stripe` | Stripe payment processing |
 
 Click **Sync Extensions** to refresh extension manifests and detect newly installed or updated extensions.
 
@@ -1657,7 +1657,7 @@ A **Maintenance History** log provides a record of all past maintenance events.
 
 ### 12.7 API Sync
 
-Monitor and manage synchronization between the Cartxis admin and connected mobile applications.
+Monitor and manage synchronization between the Bulbula admin and connected mobile applications.
 
 | Metric | Description |
 |---|---|
@@ -1745,7 +1745,7 @@ See **[THEMES.md](./THEMES.md)** for the full guide. Common fixes:
 |---------|-----|
 | Broken CSS or layout after theme change | Hard-refresh browser; **Appearance → Themes → Activate** again, or run `php artisan optimize:clear && npm run build` |
 | “Template page not found” on storefront | `npm run build` — theme Vue pages are bundled at build time |
-| Browse Themes install disabled | Run `php artisan theme:directory:register`; verify `CARTXIS_THEME_DIRECTORY_URL=https://cartxis.com/api` |
+| Browse Themes install disabled | Run `php artisan theme:directory:register`; verify `BULBULA_THEME_DIRECTORY_URL=https://example.com/api` |
 | Theme directory failed during install | Same as above — use non-www URL |
 | Shop sidebar missing | **Appearance → Layout** → set Shop Sidebar to Left/Right; check desktop width |
 | Hero/slider images 404 | `php artisan theme:discover` to republish `public/templates/{slug}/assets/` |
@@ -1754,11 +1754,11 @@ See **[THEMES.md](./THEMES.md)** for the full guide. Common fixes:
 #### Theme directory API key
 
 ```bash
-grep CARTXIS_THEME .env
+grep BULBULA_THEME .env
 php artisan theme:directory:register
 ```
 
-Expected: `CARTXIS_THEME_DIRECTORY_URL=https://cartxis.com/api` and a `ctx_...` API key.
+Expected: `BULBULA_THEME_DIRECTORY_URL=https://example.com/api` and a `ctx_...` API key.
 
 ### Performance Optimization
 
@@ -1882,4 +1882,4 @@ The following features appear in the admin sidebar but currently return 404:
 
 ---
 
-*Cartxis E-Commerce Platform — Version 1.0.4 — February 2026*
+*Bulbula E-Commerce Platform — Version 1.0.4 — February 2026*

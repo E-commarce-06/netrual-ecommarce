@@ -1,0 +1,31 @@
+﻿{
+    "name": "bulbula/cms",
+    "description": "Content Management System for Bulbula Commerce",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Bulbula Team",
+            "email": "dev@example.com"
+        }
+    ],
+    "require": {
+        "php": "^8.3",
+        "laravel/framework": "^13.0",
+        "mews/purifier": "^3.4"
+    },
+    "autoload": {
+        "psr-4": {
+            "Bulbula\\CMS\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Bulbula\\CMS\\Providers\\CMSServiceProvider"
+            ]
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}

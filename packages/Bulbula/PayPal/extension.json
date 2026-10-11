@@ -1,0 +1,10 @@
+{
+    "code": "bulbula-paypal",
+    "name": "PayPal Payment Gateway",
+    "description": "Accept payments worldwide using PayPal. Supports credit cards, PayPal balance, and local payment methods.",
+    "version": "1.0.0",
+    "author": "Bulbula Team",
+    "provider": "Bulbula\\PayPal\\Providers\\PayPalServiceProvider",
+    "type": "extension",
+    "category": "payment-gateway"
+}

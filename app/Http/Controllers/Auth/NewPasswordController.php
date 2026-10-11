@@ -13,7 +13,7 @@ use Illuminate\Validation\Rules;
 use Illuminate\Validation\ValidationException;
 use Inertia\Inertia;
 use Inertia\Response;
-use Cartxis\Core\Services\ThemeViewResolver;
+use Bulbula\Core\Services\ThemeViewResolver;
 
 class NewPasswordController extends Controller
 {

@@ -4,7 +4,7 @@ import { test, expect, type Page } from '@playwright/test'
 
 async function adminLogin(page: Page) {
   await page.goto('/admin/login')
-  await page.fill('input[name="email"]', 'admin@wontonee.com')
+  await page.fill('input[name="email"]', 'admin@example.com')
   await page.fill('input[name="password"]', 'admin123')
   await page.click('button[type="submit"]')
   await page.waitForURL('**/admin/dashboard')

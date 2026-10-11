@@ -111,7 +111,7 @@ const installTemplate = () => {
   if (isRemoteTheme() && props.remoteInstallEnabled === false) {
     openConfirm({
       title: 'API key required',
-      message: 'Set CARTXIS_THEME_API_KEY in your .env file to install themes from the Cartxis directory. It is auto-generated when you run php artisan cartxis:install.',
+      message: 'Set BULBULA_THEME_API_KEY in your .env file to install themes from the Bulbula directory. It is auto-generated when you run php artisan bulbula:install.',
       confirmText: 'Got it',
       variant: 'warning',
       onConfirm: () => {},
@@ -120,9 +120,9 @@ const installTemplate = () => {
   }
 
   openConfirm({
-    title: isRemoteTheme() ? 'Install from Cartxis Directory' : 'Install theme',
+    title: isRemoteTheme() ? 'Install from Bulbula Directory' : 'Install theme',
     message: isRemoteTheme()
-      ? `Install "${props.template.name}" from the Cartxis theme directory? The package will be downloaded securely and activated on your store.`
+      ? `Install "${props.template.name}" from the Bulbula theme directory? The package will be downloaded securely and activated on your store.`
       : `Install "${props.template.name}" and activate it as the storefront theme?`,
     confirmText: 'Install & Activate',
     variant: 'primary',
@@ -188,7 +188,7 @@ const activateTemplate = () => {
                 v-if="isRemoteTheme()"
                 class="inline-flex items-center gap-1 px-3 py-1 rounded-full text-sm font-medium bg-purple-100 text-purple-700"
               >
-                Cartxis Directory
+                Bulbula Directory
               </span>
               <span
                 v-if="template.is_active"

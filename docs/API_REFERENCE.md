@@ -1,8 +1,8 @@
-# Cartxis API Reference
+# Bulbula API Reference
 
 **Version 1.0.4** | **Base URL**: `/api/v1` | **Last Updated**: February 2026
 
-A complete REST API reference for Cartxis mobile app integration.
+A complete REST API reference for Bulbula mobile app integration.
 
 ---
 
@@ -37,7 +37,7 @@ A complete REST API reference for Cartxis mobile app integration.
 
 ## Introduction
 
-The Cartxis API provides a RESTful interface for mobile applications to interact with the e-commerce platform. It supports user authentication, product browsing, shopping cart management, checkout, order tracking, and more.
+The Bulbula API provides a RESTful interface for mobile applications to interact with the e-commerce platform. It supports user authentication, product browsing, shopping cart management, checkout, order tracking, and more.
 
 ### Base URL
 
@@ -65,7 +65,7 @@ Authorization: Bearer {token}
 
 ## Authentication
 
-Cartxis uses **Laravel Sanctum** for API authentication with bearer tokens.
+Bulbula uses **Laravel Sanctum** for API authentication with bearer tokens.
 
 ### Obtaining a Token
 
@@ -230,7 +230,7 @@ POST /api/v1/auth/register
 ```json
 {
   "success": true,
-  "message": "Registration successful. Welcome to Cartxis!",
+  "message": "Registration successful. Welcome to Bulbula!",
   "data": {
     "user": {
       "id": 1,
@@ -1807,7 +1807,7 @@ interface Order {
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-class CartxisApi {
+class BulbulaApi {
   static const String baseUrl = 'https://your-domain/api/v1';
   String? _token;
 
@@ -1889,7 +1889,7 @@ class CartxisApi {
 ```javascript
 const API_BASE = 'https://your-domain/api/v1';
 
-class CartxisApi {
+class BulbulaApi {
   constructor() {
     this.token = null;
   }
@@ -1938,7 +1938,7 @@ class CartxisApi {
   }
 }
 
-export default new CartxisApi();
+export default new BulbulaApi();
 ```
 
 ---
@@ -1949,8 +1949,8 @@ export default new CartxisApi();
 
 Import the included Postman collection for testing:
 
-- `packages/Cartxis/API/Cartxis-API.postman_collection.json`
-- `packages/Cartxis/API/Cartxis-API.postman_environment.json`
+- `packages/Bulbula/API/Bulbula-API.postman_collection.json`
+- `packages/Bulbula/API/Bulbula-API.postman_environment.json`
 
 ### cURL Examples
 
@@ -1990,8 +1990,8 @@ curl -X POST http://localhost:8000/api/v1/cart/add \
 ## Support
 
 - **API Issues**: [GitHub Issues](https://github.com/E-commarce-06/netrual-ecommarce/issues)
-- **Documentation**: Check `packages/Cartxis/API/` folder
+- **Documentation**: Check `packages/Bulbula/API/` folder
 
 ---
 
-**Cartxis API v1.0.4** | Built with Laravel Sanctum | MIT License
+**Bulbula API v1.0.4** | Built with Laravel Sanctum | MIT License

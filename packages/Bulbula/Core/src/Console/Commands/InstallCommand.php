@@ -1,0 +1,466 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Bulbula\Core\Console\Commands;
+
+use Bulbula\Admin\Services\AdminMenuSyncService;
+use Bulbula\Core\Services\ThemeDirectoryEnvConfigurator;
+use Bulbula\Core\Support\FrontendAssetManifest;
+use Illuminate\Console\Command;
+use Illuminate\Support\Facades\DB;
+use PDO;
+use PDOException;
+
+class InstallCommand extends Command
+{
+    protected $signature = 'bulbula:install
+                            {--skip-assets : Allow incomplete frontend assets (CI/dev only; not for production browser use)}';
+
+    protected $description = 'Run the Bulbula installation wizard';
+
+    public function handle(): int
+    {
+        $this->renderWelcomeBanner();
+
+        // Remove any stale Vite dev-server hot file so the app never tries
+        // to load assets from a non-existent Vite dev server.
+        $hotFile = public_path('hot');
+        if (file_exists($hotFile)) {
+            unlink($hotFile);
+        }
+
+        // ── Step 1: .env ────────────────────────────────────────────────────
+        $this->ensureEnvFile();
+
+        // ── Step 2: App settings ─────────────────────────────────────────────
+        $appName = $this->ask('App name', 'Bulbula');
+        $appUrl = $this->ask('App URL', 'http://localhost:8000');
+        $this->writeEnvValue('APP_NAME', $appName);
+        $this->writeEnvValue('APP_URL', $appUrl);
+
+        $this->registerThemeDirectoryAccess($appName, $appUrl);
+
+        $this->newLine();
+
+        // ── Step 3: Database ─────────────────────────────────────────────────
+        $this->line('<fg=yellow>━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</fg=yellow>');
+        $this->line('<fg=yellow>  Database Configuration</fg=yellow>');
+        $this->line('<fg=yellow>━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</fg=yellow>');
+
+        $dbConnected = false;
+
+        while (! $dbConnected) {
+            $dbHost = $this->ask('DB host', '127.0.0.1');
+            $dbPort = $this->ask('DB port', '3306');
+            $dbName = $this->ask('DB database');
+            $dbUser = $this->ask('DB username', 'root');
+            $dbPassword = $this->secret('DB password (leave blank for none)') ?? '';
+
+            $dbConnected = $this->testDatabaseConnection($dbHost, (int) $dbPort, $dbName, $dbUser, $dbPassword);
+
+            if (! $dbConnected) {
+                $this->error('Could not connect to the database. Please check your credentials and try again.');
+
+                if (! $this->confirm('Try again?', true)) {
+                    $this->error('Installation aborted.');
+
+                    return self::FAILURE;
+                }
+            }
+        }
+
+        $this->writeEnvValue('DB_HOST', $dbHost);
+        $this->writeEnvValue('DB_PORT', $dbPort);
+        $this->writeEnvValue('DB_DATABASE', $dbName);
+        $this->writeEnvValue('DB_USERNAME', $dbUser);
+        $this->writeEnvValue('DB_PASSWORD', $dbPassword);
+
+        $this->line('  <fg=green>✔</fg=green> Database connection successful');
+        $this->newLine();
+
+        // ── Step 4: App key ──────────────────────────────────────────────────
+        if (empty(config('app.key'))) {
+            $this->call('key:generate', ['--ansi' => true]);
+        } else {
+            $this->line('  <fg=green>✔</fg=green> App key already set, skipping');
+        }
+
+        // Reload config so DB connection uses new values
+        $this->resetDatabaseConfig($dbHost, (int) $dbPort, $dbName, $dbUser, $dbPassword);
+
+        // ── Step 5: Migrations ───────────────────────────────────────────────
+        $this->newLine();
+        $this->line('<fg=yellow>━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</fg=yellow>');
+        $this->line('<fg=yellow>  Running Migrations</fg=yellow>');
+        $this->line('<fg=yellow>━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</fg=yellow>');
+        $this->call('migrate', ['--force' => true]);
+
+        // ── Step 6: Admin credentials ────────────────────────────────────────
+        $this->newLine();
+        $this->line('<fg=yellow>━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</fg=yellow>');
+        $this->line('<fg=yellow>  Admin Account</fg=yellow>');
+        $this->line('<fg=yellow>━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</fg=yellow>');
+
+        $adminName = $this->ask('Admin name', 'Admin');
+        $adminEmail = $this->ask('Admin email', 'admin@example.com');
+        $adminPassword = $this->askForPassword();
+
+        // Write temp env vars so AdminUserSeeder can pick them up
+        $this->writeEnvValue('BULBULA_ADMIN_NAME', $adminName);
+        $this->writeEnvValue('BULBULA_ADMIN_EMAIL', $adminEmail);
+        $this->writeEnvValue('BULBULA_ADMIN_PASSWORD', $adminPassword);
+
+        // Also inject into the current process environment so env() resolves
+        // them immediately (writeEnvValue only updates the .env file on disk).
+        putenv("BULBULA_ADMIN_NAME={$adminName}");
+        putenv("BULBULA_ADMIN_EMAIL={$adminEmail}");
+        putenv("BULBULA_ADMIN_PASSWORD={$adminPassword}");
+
+        // ── Step 7: Seed ─────────────────────────────────────────────────────
+        $this->newLine();
+        $this->line('<fg=yellow>━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</fg=yellow>');
+        $this->line('<fg=yellow>  Seeding Database</fg=yellow>');
+        $this->line('<fg=yellow>━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</fg=yellow>');
+        $this->call('db:seed', ['--class' => 'Bulbula\\Core\\Database\\Seeders\\DatabaseSeeder', '--force' => true]);
+
+        app(AdminMenuSyncService::class)->sync();
+        $this->line('  <fg=green>✔</fg=green> Admin navigation menu synced');
+
+        // Remove temp admin env vars (they've been used by the seeder)
+        $this->removeEnvValue('BULBULA_ADMIN_NAME');
+        $this->removeEnvValue('BULBULA_ADMIN_EMAIL');
+        $this->removeEnvValue('BULBULA_ADMIN_PASSWORD');
+
+        // Clear from process environment too
+        putenv('BULBULA_ADMIN_NAME');
+        putenv('BULBULA_ADMIN_EMAIL');
+        putenv('BULBULA_ADMIN_PASSWORD');
+
+        // ── Step 8: Storage link ─────────────────────────────────────────────
+        $this->newLine();
+        $this->call('storage:link');
+
+        // ── Step 9: Frontend assets ──────────────────────────────────────────
+        $assetResult = $this->ensureFrontendAssets();
+
+        if ($assetResult['status'] === 'failed') {
+            return self::FAILURE;
+        }
+
+        // ── Done ─────────────────────────────────────────────────────────────
+        $this->renderSuccessBanner(
+            $appUrl,
+            $adminEmail,
+            $adminPassword,
+            $assetResult['status'],
+        );
+
+        return self::SUCCESS;
+    }
+
+    /**
+     * Ensure production Vite assets exist (npm build or shared-hosting prebuild).
+     *
+     * @return array{status: 'built'|'prebuilt'|'skipped'|'failed'}
+     */
+    private function ensureFrontendAssets(): array
+    {
+        $this->newLine();
+        $this->line('<fg=yellow>━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</fg=yellow>');
+        $this->line('<fg=yellow>  Frontend Assets</fg=yellow>');
+        $this->line('<fg=yellow>━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</fg=yellow>');
+
+        $skipAssets = (bool) $this->option('skip-assets');
+        $npmBin = $this->detectNodePackageManager();
+
+        // Ensure the binary name is from the known-good allowlist before passing to shell
+        if (! in_array($npmBin, ['pnpm', 'yarn', 'npm'], true)) {
+            $npmBin = null;
+        }
+
+        if ($npmBin) {
+            $this->line("  Using <fg=cyan>{$npmBin}</fg=cyan> to build frontend assets...");
+
+            // Delete any stale pre-built assets so the new build is clean.
+            // If the build fails, we fail hard below unless --skip-assets.
+            $buildDir = public_path('build');
+            if (is_dir($buildDir)) {
+                $this->line('  Removing stale build files...');
+                passthru('rm -rf '.escapeshellarg($buildDir));
+            }
+
+            $installCode = 1;
+            $buildCode = 1;
+
+            $this->line("  Running {$npmBin} install...");
+            passthru("{$npmBin} install", $installCode);
+            $this->newLine();
+            $this->line("  Running {$npmBin} run build...");
+            passthru("{$npmBin} run build", $buildCode);
+            $this->newLine();
+
+            if (FrontendAssetManifest::exists() && $installCode === 0 && $buildCode === 0) {
+                $this->line('  <fg=green>✔</fg=green> Frontend assets built');
+
+                return ['status' => 'built'];
+            }
+
+            $this->error('  Frontend asset build failed or public/build/manifest.json is missing.');
+            $this->line('  Run <fg=cyan>npm install && npm run build</fg=cyan>, or download the Shared Hosting release zip.');
+
+            if ($skipAssets) {
+                $this->warn('  Continuing because --skip-assets was passed (CI/dev only).');
+
+                return ['status' => 'skipped'];
+            }
+
+            return ['status' => 'failed'];
+        }
+
+        // No Node/npm — shared hosting or incomplete source checkout
+        if (FrontendAssetManifest::exists()) {
+            $this->line('  <fg=green>✔</fg=green> Using pre-built frontend assets (shared hosting package)');
+
+            return ['status' => 'prebuilt'];
+        }
+
+        $this->newLine();
+        $this->line('<fg=red>━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</fg=red>');
+        $this->line('<fg=red>  ⚠  Frontend assets missing (no Node.js / npm)</fg=red>');
+        $this->line('<fg=red>━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</fg=red>');
+        $this->line('  public/build/manifest.json was not found. The admin panel and');
+        $this->line('  storefront cannot load in a browser without built assets.');
+        $this->newLine();
+        $this->line('  Preferred (shared hosting — no Node required):');
+        $this->line('    Download the <fg=cyan>Shared Hosting</fg=cyan> release zip from GitHub Releases');
+        $this->line('    (includes public/build). See <fg=cyan>docs/SHARED_HOSTING.md</fg=cyan>.');
+        $this->newLine();
+        $this->line('  Or build on a machine with Node.js 18+:');
+        $this->line('      <fg=cyan>npm install && npm run build</fg=cyan>');
+        $this->newLine();
+
+        if ($skipAssets) {
+            $this->warn('  Continuing because --skip-assets was passed (CI/dev only).');
+
+            return ['status' => 'skipped'];
+        }
+
+        $this->error('  Installation incomplete for browser use. Fix assets, then re-run or open /setup.');
+
+        return ['status' => 'failed'];
+    }
+
+    // ── Helpers ───────────────────────────────────────────────────────────────
+
+    private function renderWelcomeBanner(): void
+    {
+        $this->newLine();
+        $this->line('<fg=cyan> ██████╗ █████╗ ██████╗ ████████╗██╗  ██╗██╗███████╗</fg=cyan>');
+        $this->line('<fg=cyan>██╔════╝██╔══██╗██╔══██╗╚══██╔══╝╚██╗██╔╝██║██╔════╝</fg=cyan>');
+        $this->line('<fg=cyan>██║     ███████║██████╔╝   ██║    ╚███╔╝ ██║███████╗</fg=cyan>');
+        $this->line('<fg=cyan>██║     ██╔══██║██╔══██╗   ██║    ██╔██╗ ██║╚════██║</fg=cyan>');
+        $this->line('<fg=cyan>╚██████╗██║  ██║██║  ██║   ██║   ██╔╝ ██╗██║███████║</fg=cyan>');
+        $this->line('<fg=cyan> ╚═════╝╚═╝  ╚═╝╚═╝  ╚═╝   ╚═╝   ╚═╝  ╚═╝╚═╝╚══════╝</fg=cyan>');
+        $this->newLine();
+        $this->line('<fg=green>  Open Source Laravel eCommerce Platform</fg=green>');
+        $this->line('<fg=gray>  Version '.config('app.version', '1.0.0').'  •  https://example.com</fg=gray>');
+        $this->newLine();
+        $this->line('<fg=yellow>════════════════════════════════════════════════════</fg=yellow>');
+        $this->line('<fg=yellow>   Welcome to the Bulbula Installation Wizard</fg=yellow>');
+        $this->line('<fg=yellow>════════════════════════════════════════════════════</fg=yellow>');
+        $this->newLine();
+    }
+
+    /**
+     * @param  'built'|'prebuilt'|'skipped'|'failed'  $assetStatus
+     */
+    private function renderSuccessBanner(
+        string $appUrl,
+        string $adminEmail,
+        string $adminPassword,
+        string $assetStatus = 'built',
+    ): void {
+        $this->newLine();
+        $this->line('<fg=green>════════════════════════════════════════════════════</fg=green>');
+        $this->line('<fg=green>  ✔  Bulbula installation complete!</fg=green>');
+        $this->line('<fg=green>════════════════════════════════════════════════════</fg=green>');
+        $this->newLine();
+        $this->line('  Admin panel : <fg=cyan>'.rtrim($appUrl, '/').'/admin/login</fg=cyan>');
+        $this->line('  Email       : <fg=cyan>'.$adminEmail.'</fg=cyan>');
+        $this->line('  Password    : <fg=cyan>'.$adminPassword.'</fg=cyan>');
+        $this->newLine();
+
+        if ($assetStatus === 'prebuilt') {
+            $this->line('  Pre-built assets detected (shared hosting package).');
+            $this->line('  Next step: open <fg=cyan>'.rtrim($appUrl, '/').'/setup</fg=cyan> in your browser');
+            $this->line('  to finish the storefront setup wizard.');
+            $this->newLine();
+
+            return;
+        }
+
+        if ($assetStatus === 'skipped') {
+            $this->line('<fg=yellow>  ⚠  Frontend assets were skipped (--skip-assets).</fg=yellow>');
+            $this->line('<fg=yellow>     Do not use this install for production browser traffic.</fg=yellow>');
+            $this->newLine();
+        }
+
+        $this->line('  To start the development server run:');
+        $this->line('  <fg=cyan>  composer run dev</fg=cyan>');
+        $this->newLine();
+    }
+
+    private function registerThemeDirectoryAccess(string $appName, string $appUrl): void
+    {
+        $this->line('<fg=yellow>━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</fg=yellow>');
+        $this->line('<fg=yellow>  Theme Directory</fg=yellow>');
+        $this->line('<fg=yellow>━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</fg=yellow>');
+
+        $result = app(ThemeDirectoryEnvConfigurator::class)->ensureConfigured($appName, $appUrl);
+
+        if ($result['status'] === 'already_configured') {
+            $this->line('  <fg=green>✔</fg=green> Theme directory API key already configured');
+        } elseif ($result['status'] === 'registered') {
+            $this->line('  <fg=green>✔</fg=green> Theme directory API key generated and saved to .env');
+        } else {
+            $this->line('  <fg=yellow>!</fg=yellow> '.$result['message']);
+            if (! empty($result['directory_url'])) {
+                $this->line('    URL: <fg=cyan>'.$result['directory_url'].'</fg=cyan>');
+            }
+            if (! empty($result['error'])) {
+                $this->line('    Detail: '.$result['error']);
+            }
+            $this->line('    Run <fg=cyan>php artisan theme:directory:register</fg=cyan> after go-live, or set <fg=cyan>BULBULA_THEME_API_KEY</fg=cyan> manually.');
+        }
+    }
+
+    private function ensureEnvFile(): void
+    {
+        $envPath = base_path('.env');
+        $examplePath = base_path('.env.example');
+
+        if (! file_exists($envPath)) {
+            if (file_exists($examplePath)) {
+                copy($examplePath, $envPath);
+                $this->line('  <fg=green>✔</fg=green> Created .env from .env.example');
+            } else {
+                file_put_contents($envPath, '');
+                $this->line('  <fg=yellow>!</fg=yellow> No .env.example found, created empty .env');
+            }
+        } else {
+            $this->line('  <fg=green>✔</fg=green> .env file already exists');
+        }
+
+        $this->newLine();
+    }
+
+    private function testDatabaseConnection(
+        string $host,
+        int $port,
+        string $database,
+        string $username,
+        string $password
+    ): bool {
+        try {
+            new PDO(
+                "mysql:host={$host};port={$port};dbname={$database};charset=utf8mb4",
+                $username,
+                $password,
+                [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION, PDO::ATTR_TIMEOUT => 5]
+            );
+
+            return true;
+        } catch (PDOException) {
+            return false;
+        }
+    }
+
+    private function resetDatabaseConfig(
+        string $host,
+        int $port,
+        string $database,
+        string $username,
+        string $password
+    ): void {
+        config([
+            'database.connections.mysql.host' => $host,
+            'database.connections.mysql.port' => $port,
+            'database.connections.mysql.database' => $database,
+            'database.connections.mysql.username' => $username,
+            'database.connections.mysql.password' => $password,
+        ]);
+
+        DB::purge('mysql');
+        DB::reconnect('mysql');
+    }
+
+    private function writeEnvValue(string $key, string $value): void
+    {
+        $envPath = base_path('.env');
+        $content = file_exists($envPath) ? file_get_contents($envPath) : '';
+
+        // Escape double quotes in value
+        $safeValue = str_contains($value, ' ') ? '"'.addslashes($value).'"' : $value;
+        $line = "{$key}={$safeValue}";
+
+        if (preg_match("/^{$key}=.*/m", $content)) {
+            $content = preg_replace("/^{$key}=.*/m", $line, $content);
+        } else {
+            $content .= PHP_EOL.$line;
+        }
+
+        file_put_contents($envPath, $content);
+    }
+
+    private function removeEnvValue(string $key): void
+    {
+        $envPath = base_path('.env');
+
+        if (! file_exists($envPath)) {
+            return;
+        }
+
+        $content = file_get_contents($envPath);
+        $content = preg_replace("/^{$key}=.*\n?/m", '', $content);
+        file_put_contents($envPath, $content);
+    }
+
+    private function askForPassword(): string
+    {
+        while (true) {
+            $password = $this->secret('Admin password (min 8 characters)');
+
+            if (! $password || strlen($password) < 8) {
+                $this->error('Password must be at least 8 characters.');
+
+                continue;
+            }
+
+            $confirm = $this->secret('Confirm admin password');
+
+            if ($password !== $confirm) {
+                $this->error('Passwords do not match. Try again.');
+
+                continue;
+            }
+
+            return $password;
+        }
+    }
+
+    private function detectNodePackageManager(): ?string
+    {
+        foreach (['pnpm', 'yarn', 'npm'] as $bin) {
+            exec("which {$bin} 2>/dev/null", $output, $code);
+
+            if ($code === 0 && ! empty($output)) {
+                return $bin;
+            }
+
+            $output = [];
+        }
+
+        return null;
+    }
+}

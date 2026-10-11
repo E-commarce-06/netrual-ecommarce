@@ -1,7 +1,7 @@
 <?php
 
-use Cartxis\Core\Services\ThemeDirectoryEnvConfigurator;
-use Cartxis\Core\Services\ThemeDirectoryRegistrationService;
+use Bulbula\Core\Services\ThemeDirectoryEnvConfigurator;
+use Bulbula\Core\Services\ThemeDirectoryRegistrationService;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Http;
 
@@ -37,8 +37,8 @@ test('theme directory configurator registers api key into env file on fresh inst
     $content = file_get_contents($envPath);
 
     expect($content)
-        ->toContain('CARTXIS_THEME_DIRECTORY_URL=https://themes.test/api')
-        ->toContain('CARTXIS_THEME_API_KEY=ctx_generated_install_key_123456789012345678901234');
+        ->toContain('BULBULA_THEME_DIRECTORY_URL=https://themes.test/api')
+        ->toContain('BULBULA_THEME_API_KEY=ctx_generated_install_key_123456789012345678901234');
 
     @unlink($envPath);
 });
@@ -50,7 +50,7 @@ test('theme directory configurator skips registration when api key already exist
     Config::set('theme.directory.api_key', null);
 
     $envPath = themeDirectoryTestEnvPath();
-    file_put_contents($envPath, "CARTXIS_THEME_API_KEY=ctx_existing_key_123456789012345678901234\n");
+    file_put_contents($envPath, "BULBULA_THEME_API_KEY=ctx_existing_key_123456789012345678901234\n");
 
     $configurator = new ThemeDirectoryEnvConfigurator(
         app(ThemeDirectoryRegistrationService::class),
@@ -78,7 +78,7 @@ test('theme directory configurator treats empty api key env value as not configu
     Config::set('theme.directory.api_key', null);
 
     $envPath = themeDirectoryTestEnvPath();
-    file_put_contents($envPath, "CARTXIS_THEME_API_KEY=\n");
+    file_put_contents($envPath, "BULBULA_THEME_API_KEY=\n");
 
     $configurator = new ThemeDirectoryEnvConfigurator(
         app(ThemeDirectoryRegistrationService::class),

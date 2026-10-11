@@ -1,6 +1,6 @@
-# Cartxis — Developer Guide
+# Bulbula — Developer Guide
 
-> Architecture reference for the Cartxis e-commerce platform.  
+> Architecture reference for the Bulbula e-commerce platform.  
 > **Version**: 1.0.4 &nbsp;|&nbsp; **Stack**: Laravel 12 · Vue 3.5 · Inertia.js · TailwindCSS 4.1
 
 ---
@@ -61,7 +61,7 @@
 ## 2. Project Structure
 
 ```
-cartxis/
+bulbula/
 ├── app/                    # Laravel application layer
 │   ├── Events/             # Application events
 │   ├── Http/
@@ -71,7 +71,7 @@ cartxis/
 │   ├── Models/             # User model only — domain models live in packages
 │   └── Providers/          # AppServiceProvider, FortifyServiceProvider, ThemeServiceProvider
 │
-├── packages/Cartxis/       # ★ CORE — 19 modular domain packages (see §3)
+├── packages/Bulbula/       # ★ CORE — 19 modular domain packages (see §3)
 │
 ├── resources/
 │   ├── js/                 # Vue 3 frontend source
@@ -89,7 +89,7 @@ cartxis/
 │   ├── css/                # Global stylesheets
 │   └── views/              # Blade templates (app.blade.php root)
 │
-├── themes/                 # Theme packages (cartxis-default)
+├── themes/                 # Theme packages (bulbula-default)
 ├── extension/              # Extension development guide & templates
 ├── routes/                 # App-level route files
 ├── config/                 # Laravel & package configuration
@@ -103,13 +103,13 @@ cartxis/
 
 ### Key Principle
 
-**The `app/` directory is intentionally thin.** All domain logic — models, controllers, services, repositories, routes, migrations — lives inside `packages/Cartxis/`. The `app/` layer handles only framework bootstrapping, user authentication, and Inertia middleware.
+**The `app/` directory is intentionally thin.** All domain logic — models, controllers, services, repositories, routes, migrations — lives inside `packages/Bulbula/`. The `app/` layer handles only framework bootstrapping, user authentication, and Inertia middleware.
 
 ---
 
 ## 3. Package Architecture
 
-The platform is organized into **19 self-contained packages** under `packages/Cartxis/`. Each package owns its:
+The platform is organized into **19 self-contained packages** under `packages/Bulbula/`. Each package owns its:
 
 - **Models** — Eloquent models for its domain
 - **Controllers** — Admin and/or web controllers
@@ -126,7 +126,7 @@ Packages follow one of two directory layouts:
 
 **Flat layout** (older packages — Core, Admin, Product, Cart, Shop, Settings, API):
 ```
-packages/Cartxis/Product/
+packages/Bulbula/Product/
 ├── Config/
 ├── Database/
 │   ├── Migrations/
@@ -140,7 +140,7 @@ packages/Cartxis/Product/
 
 **`src/` layout** (newer packages — Sales, Customer, CMS, System, Reports, Marketing, Setup, payment gateways):
 ```
-packages/Cartxis/Sales/
+packages/Bulbula/Sales/
 └── src/
     ├── Database/
     ├── Http/Controllers/Admin/
@@ -152,7 +152,7 @@ packages/Cartxis/Sales/
     └── Services/
 ```
 
-> The namespace mapping is handled in `composer.json` PSR-4 autoload — flat packages map to `packages/Cartxis/PackageName/`, `src/`-based packages map to `packages/Cartxis/PackageName/src/`.
+> The namespace mapping is handled in `composer.json` PSR-4 autoload — flat packages map to `packages/Bulbula/PackageName/`, `src/`-based packages map to `packages/Bulbula/PackageName/src/`.
 
 ---
 
@@ -164,24 +164,24 @@ Providers are registered in `bootstrap/providers.php` in a deliberate sequence:
  1. App\Providers\AppServiceProvider         # Laravel defaults
  2. App\Providers\FortifyServiceProvider     # Fortify auth (2FA, registration, password reset)
  3. App\Providers\ThemeServiceProvider       # Theme view paths + Inertia share
- 4. Cartxis\Core\CoreServiceProvider         # ★ Core singletons (hook, menu, setting, extension, theme, payment gateway)
- 5. Cartxis\Core\MailConfigServiceProvider   # Dynamic mail config from DB
- 6. Cartxis\Admin\AdminServiceProvider       # Admin auth, middleware, routes
- 7. Cartxis\Product\ProductServiceProvider   # Products, categories, attributes, brands, reviews
- 8. Cartxis\Cart\CartServiceProvider         # Cart logic, tax/shipping calculators
- 9. Cartxis\Shop\ShopServiceProvider         # Storefront — repositories, services, frontend middleware
-10. Cartxis\Settings\SettingsServiceProvider # Admin settings pages
-11. Cartxis\Stripe\StripeServiceProvider     # Stripe payment gateway (extension)
-12. Cartxis\Razorpay\RazorpayServiceProvider # Razorpay gateway (extension)
-13. Cartxis\PhonePe\PhonePeServiceProvider   # PhonePe gateway (extension)
-14. Cartxis\Sales\SalesServiceProvider       # Orders, invoices, shipments, credit memos, transactions
-15. Cartxis\Customer\CustomerServiceProvider # Customer management, groups, addresses, wishlists
-16. Cartxis\Setup\SetupServiceProvider       # ★ Must be before CMS — prevents catch-all route conflict
-17. Cartxis\CMS\CMSServiceProvider           # Pages, blocks, media library, storefront menus
-18. Cartxis\System\SystemServiceProvider     # Cache, extensions UI, permissions, maintenance, backups
-19. Cartxis\Reports\ReportsServiceProvider   # Sales/product/customer reports
-20. Cartxis\Marketing\MarketingServiceProvider # Coupons, promotions
-21. Cartxis\API\APIServiceProvider           # REST API v1
+ 4. Bulbula\Core\CoreServiceProvider         # ★ Core singletons (hook, menu, setting, extension, theme, payment gateway)
+ 5. Bulbula\Core\MailConfigServiceProvider   # Dynamic mail config from DB
+ 6. Bulbula\Admin\AdminServiceProvider       # Admin auth, middleware, routes
+ 7. Bulbula\Product\ProductServiceProvider   # Products, categories, attributes, brands, reviews
+ 8. Bulbula\Cart\CartServiceProvider         # Cart logic, tax/shipping calculators
+ 9. Bulbula\Shop\ShopServiceProvider         # Storefront — repositories, services, frontend middleware
+10. Bulbula\Settings\SettingsServiceProvider # Admin settings pages
+11. Bulbula\Stripe\StripeServiceProvider     # Stripe payment gateway (extension)
+12. Bulbula\Razorpay\RazorpayServiceProvider # Razorpay gateway (extension)
+13. Bulbula\PhonePe\PhonePeServiceProvider   # PhonePe gateway (extension)
+14. Bulbula\Sales\SalesServiceProvider       # Orders, invoices, shipments, credit memos, transactions
+15. Bulbula\Customer\CustomerServiceProvider # Customer management, groups, addresses, wishlists
+16. Bulbula\Setup\SetupServiceProvider       # ★ Must be before CMS — prevents catch-all route conflict
+17. Bulbula\CMS\CMSServiceProvider           # Pages, blocks, media library, storefront menus
+18. Bulbula\System\SystemServiceProvider     # Cache, extensions UI, permissions, maintenance, backups
+19. Bulbula\Reports\ReportsServiceProvider   # Sales/product/customer reports
+20. Bulbula\Marketing\MarketingServiceProvider # Coupons, promotions
+21. Bulbula\API\APIServiceProvider           # REST API v1
 ```
 
 > **Important:** Setup must load before CMS. CMS registers a catch-all `/{slug}` route for dynamic pages — if loaded first, it would intercept the setup wizard routes.
@@ -190,26 +190,26 @@ Providers are registered in `bootstrap/providers.php` in a deliberate sequence:
 
 ## 5. Core Package — The Kernel
 
-`Cartxis\Core` is the foundational package. It registers 7 singletons that other packages depend on:
+`Bulbula\Core` is the foundational package. It registers 7 singletons that other packages depend on:
 
 | Container Key | Class | Purpose |
 |--------------|-------|---------|
-| `cartxis.hook` | `HookService` | Event hook system for extensions |
-| `cartxis.menu` | `MenuService` | Dynamic admin & shop menu builder |
-| `cartxis.setting` | `SettingService` | Database-backed key/value settings |
-| `cartxis.extension` | `ExtensionService` | Extension discovery, install, activate lifecycle |
-| `cartxis.theme` | `ThemeService` | Theme management |
-| `cartxis.theme.resolver` | `ThemeViewResolver` | Theme-aware Inertia page resolution |
-| `cartxis.payment.gateway` | `PaymentGatewayManager` | Payment gateway registry |
+| `bulbula.hook` | `HookService` | Event hook system for extensions |
+| `bulbula.menu` | `MenuService` | Dynamic admin & shop menu builder |
+| `bulbula.setting` | `SettingService` | Database-backed key/value settings |
+| `bulbula.extension` | `ExtensionService` | Extension discovery, install, activate lifecycle |
+| `bulbula.theme` | `ThemeService` | Theme management |
+| `bulbula.theme.resolver` | `ThemeViewResolver` | Theme-aware Inertia page resolution |
+| `bulbula.payment.gateway` | `PaymentGatewayManager` | Payment gateway registry |
 
 ### Core Facades
 
 | Facade | Singleton |
 |--------|-----------|
-| `Extension` | `cartxis.extension` |
-| `Hook` | `cartxis.hook` |
-| `Menu` | `cartxis.menu` |
-| `Setting` | `cartxis.setting` |
+| `Extension` | `bulbula.extension` |
+| `Hook` | `bulbula.hook` |
+| `Menu` | `bulbula.menu` |
+| `Setting` | `bulbula.setting` |
 
 ### Core Models (20)
 
@@ -219,13 +219,13 @@ Channel, Currency, EmailConfiguration, EmailTemplate, Extension, Locale, MenuIte
 
 | Command | Purpose |
 |---------|---------|
-| `cartxis:extension:make` | Scaffold a new filesystem extension from template (interactive or fast mode) |
-| `cartxis:extensions:list` | List all discovered extensions |
-| `cartxis:extensions:sync` | Sync filesystem extensions to database |
-| `cartxis:extensions:install` | Install an extension |
-| `cartxis:extensions:activate` | Activate an installed extension |
-| `cartxis:extensions:deactivate` | Deactivate an extension |
-| `cartxis:extensions:uninstall` | Remove an extension |
+| `bulbula:extension:make` | Scaffold a new filesystem extension from template (interactive or fast mode) |
+| `bulbula:extensions:list` | List all discovered extensions |
+| `bulbula:extensions:sync` | Sync filesystem extensions to database |
+| `bulbula:extensions:install` | Install an extension |
+| `bulbula:extensions:activate` | Activate an installed extension |
+| `bulbula:extensions:deactivate` | Deactivate an extension |
+| `bulbula:extensions:uninstall` | Remove an extension |
 
 ### Extension Boot
 
@@ -235,7 +235,7 @@ During `CoreServiceProvider::boot()`, all **active** extensions are dynamically 
 
 ## 6. Package Catalog
 
-### Product — `Cartxis\Product`
+### Product — `Bulbula\Product`
 
 | Component | Items |
 |-----------|-------|
@@ -244,7 +244,7 @@ During `CoreServiceProvider::boot()`, all **active** extensions are dynamically 
 | **Services** | AiProductDescriptionService |
 | **Routes** | admin.php, web.php |
 
-### Cart — `Cartxis\Cart`
+### Cart — `Bulbula\Cart`
 
 | Component | Items |
 |-----------|-------|
@@ -253,7 +253,7 @@ During `CoreServiceProvider::boot()`, all **active** extensions are dynamically 
 | **Services** (2) | CartShippingCalculator, CartTaxCalculator |
 | **Routes** | web.php, api.php |
 
-### Shop — `Cartxis\Shop`
+### Shop — `Bulbula\Shop`
 
 | Component | Items |
 |-----------|-------|
@@ -267,7 +267,7 @@ During `CoreServiceProvider::boot()`, all **active** extensions are dynamically 
 
 > Shop is the only package that fully implements the **Repository Pattern with Contracts** — interfaces are bound to implementations via `ServiceProvider::registerRepositories()`.
 
-### Admin — `Cartxis\Admin`
+### Admin — `Bulbula\Admin`
 
 | Component | Items |
 |-----------|-------|
@@ -276,7 +276,7 @@ During `CoreServiceProvider::boot()`, all **active** extensions are dynamically 
 | **Config** | admin.php |
 | **Routes** | admin.php |
 
-### Settings — `Cartxis\Settings`
+### Settings — `Bulbula\Settings`
 
 | Component | Items |
 |-----------|-------|
@@ -284,7 +284,7 @@ During `CoreServiceProvider::boot()`, all **active** extensions are dynamically 
 | **Admin Controllers** (12) | GeneralSettingsController, StoreConfigurationController, AiSettingsController, LocalesController, ChannelsController, PaymentMethodsController, ShippingMethodsController, TaxClassesController, TaxRatesController, TaxRulesController, TaxZonesController, EmailController |
 | **Routes** | admin.php |
 
-### Sales — `Cartxis\Sales`
+### Sales — `Bulbula\Sales`
 
 | Component | Items |
 |-----------|-------|
@@ -295,7 +295,7 @@ During `CoreServiceProvider::boot()`, all **active** extensions are dynamically 
 | **Mail** | Email templates for order/invoice notifications |
 | **Routes** | admin.php |
 
-### Customer — `Cartxis\Customer`
+### Customer — `Bulbula\Customer`
 
 | Component | Items |
 |-----------|-------|
@@ -303,7 +303,7 @@ During `CoreServiceProvider::boot()`, all **active** extensions are dynamically 
 | **Controllers** (3) | CustomerController, CustomerAddressController, CustomerGroupController |
 | **Routes** | customer.php |
 
-### CMS — `Cartxis\CMS`
+### CMS — `Bulbula\CMS`
 
 | Component | Items |
 |-----------|-------|
@@ -314,7 +314,7 @@ During `CoreServiceProvider::boot()`, all **active** extensions are dynamically 
 | **Repositories** (3) | PageRepository, BlockRepository, MediaRepository |
 | **Routes** | admin.php, web.php |
 
-### Marketing — `Cartxis\Marketing`
+### Marketing — `Bulbula\Marketing`
 
 | Component | Items |
 |-----------|-------|
@@ -323,7 +323,7 @@ During `CoreServiceProvider::boot()`, all **active** extensions are dynamically 
 | **Services** (3) | CouponService, PromotionService, DiscountCalculator |
 | **Routes** | admin.php, shop.php |
 
-### Reports — `Cartxis\Reports`
+### Reports — `Bulbula\Reports`
 
 | Component | Items |
 |-----------|-------|
@@ -332,7 +332,7 @@ During `CoreServiceProvider::boot()`, all **active** extensions are dynamically 
 | **Repositories** (3) | SalesReportRepository, ProductReportRepository, CustomerReportRepository |
 | **Routes** | admin.php |
 
-### System — `Cartxis\System`
+### System — `Bulbula\System`
 
 | Component | Items |
 |-----------|-------|
@@ -343,7 +343,7 @@ During `CoreServiceProvider::boot()`, all **active** extensions are dynamically 
 | **Console Commands** | Migration commands |
 | **Routes** | system.php |
 
-### API — `Cartxis\API`
+### API — `Bulbula\API`
 
 | Component | Items |
 |-----------|-------|
@@ -354,7 +354,7 @@ During `CoreServiceProvider::boot()`, all **active** extensions are dynamically 
 | **Docs** | Postman collection + environment files |
 | **Routes** | api.php |
 
-### Setup — `Cartxis\Setup`
+### Setup — `Bulbula\Setup`
 
 | Component | Items |
 |-----------|-------|
@@ -369,11 +369,11 @@ Each follows the same structure and extension pattern:
 
 | Package | Namespace |
 |---------|-----------|
-| Stripe | `Cartxis\Stripe` |
-| RazorPay | `Cartxis\Razorpay` |
-| PayPal | `Cartxis\PayPal` |
-| PayUMoney | `Cartxis\PayUMoney` |
-| PhonePe | `Cartxis\PhonePe` |
+| Stripe | `Bulbula\Stripe` |
+| RazorPay | `Bulbula\Razorpay` |
+| PayPal | `Bulbula\PayPal` |
+| PayUMoney | `Bulbula\PayUMoney` |
+| PhonePe | `Bulbula\PhonePe` |
 
 Each contains: `extension.json`, Config/, Http/Controllers/, Providers/, Routes/ (admin.php + web.php), Services/ (gateway implementation).
 
@@ -432,13 +432,13 @@ Routes are loaded from two sources: **app-level** (`routes/`) and **package-leve
 |-----------|----------|---------|
 | `HandleInertiaRequests` | `app/Http/Middleware/` | Shares auth, menu, currency, flash, theme, sidebar state to all Inertia pages |
 | `HandleAppearance` | `app/Http/Middleware/` | Dark/light mode handling |
-| `IsAdmin` | `Cartxis\Admin` | Verifies admin guard |
-| `PreventAdminFrontendAccess` | `Cartxis\Admin` | Blocks admin users from customer frontend |
-| `PreventUserAdminAccess` | `Cartxis\Admin` | Blocks customers from admin panel |
-| `RedirectIfAdminAuthenticated` | `Cartxis\Admin` | Redirects authenticated admins from login |
-| `ShareFrontendData` | `Cartxis\Shop` | Shares storefront-specific data |
-| `ThemeInertiaResponseFactory` | `Cartxis\Core` | Theme-aware Inertia responses |
-| `TrackApiSync` | `Cartxis\API` | Auto-updates API connectivity status on auth requests |
+| `IsAdmin` | `Bulbula\Admin` | Verifies admin guard |
+| `PreventAdminFrontendAccess` | `Bulbula\Admin` | Blocks admin users from customer frontend |
+| `PreventUserAdminAccess` | `Bulbula\Admin` | Blocks customers from admin panel |
+| `RedirectIfAdminAuthenticated` | `Bulbula\Admin` | Redirects authenticated admins from login |
+| `ShareFrontendData` | `Bulbula\Shop` | Shares storefront-specific data |
+| `ThemeInertiaResponseFactory` | `Bulbula\Core` | Theme-aware Inertia responses |
+| `TrackApiSync` | `Bulbula\API` | Auto-updates API connectivity status on auth requests |
 
 ---
 
@@ -559,7 +559,7 @@ Storefront themes are **template packages** under `templates/storefront/{categor
 ### Structure
 
 ```
-templates/storefront/general/cartxis-default/
+templates/storefront/general/bulbula-default/
 ├── theme.json              # Manifest — name, slug, version, settings
 ├── template.json           # Optional — catalog metadata for Browse Themes
 ├── hooks.php               # Theme lifecycle hooks
@@ -577,11 +577,11 @@ templates/storefront/general/cartxis-default/
 
 | Env var | Purpose |
 |---------|---------|
-| `CARTXIS_THEME_DIRECTORY_URL` | API base — `https://cartxis.com/api` (no `www`) |
-| `CARTXIS_THEME_API_KEY` | Bearer token for `POST /api/themes/{slug}/install` |
-| `CARTXIS_THEME_REBUILD_ASSETS` | Run `npm run build` after install/activate (default `true`) |
+| `BULBULA_THEME_DIRECTORY_URL` | API base — `https://example.com/api` (no `www`) |
+| `BULBULA_THEME_API_KEY` | Bearer token for `POST /api/themes/{slug}/install` |
+| `BULBULA_THEME_REBUILD_ASSETS` | Run `npm run build` after install/activate (default `true`) |
 
-Registered by `php artisan cartxis:install` or `php artisan theme:directory:register`.
+Registered by `php artisan bulbula:install` or `php artisan theme:directory:register`.
 
 ### How page resolution works
 
@@ -611,7 +611,7 @@ Registered by `php artisan cartxis:install` or `php artisan theme:directory:regi
 
 ### Creating a theme
 
-1. Copy `templates/storefront/general/cartxis-default` to `templates/storefront/{category}/{slug}/`.
+1. Copy `templates/storefront/general/bulbula-default` to `templates/storefront/{category}/{slug}/`.
 2. Edit `theme.json` and add `template.json` for catalog listing.
 3. Run `php artisan theme:discover && npm run build`.
 4. Activate in **Admin → Appearance**.
@@ -628,7 +628,7 @@ Extensions are database-backed plugins with a filesystem discovery mechanism. Th
 
 | Source | Path | Example |
 |--------|------|---------|
-| **Bundled** (first-party) | `packages/Cartxis/*/extension.json` | Payment gateways |
+| **Bundled** (first-party) | `packages/Bulbula/*/extension.json` | Payment gateways |
 | **Filesystem** (third-party) | `extensions/*/extension.json` | User-installed |
 
 ### Extension Lifecycle
@@ -648,10 +648,10 @@ Discoverable → Installed → Active
     "name": "Stripe Payment Gateway",
     "version": "1.0.0",
     "description": "Accept payments via Stripe",
-    "author": "Cartxis Team",
+    "author": "Bulbula Team",
     "icon": "credit-card",
     "requires": [],
-    "provider": "Cartxis\\Stripe\\Providers\\StripeServiceProvider",
+    "provider": "Bulbula\\Stripe\\Providers\\StripeServiceProvider",
     "provider_file": "src/Providers/StripeServiceProvider.php",
     "category": "payment-gateway"
 }
@@ -669,7 +669,7 @@ Discoverable → Installed → Active
 
 ### Extension Discovery Flow
 
-1. `ExtensionService::discover()` scans both `extensions/` and `packages/Cartxis/` for `extension.json` files.
+1. `ExtensionService::discover()` scans both `extensions/` and `packages/Bulbula/` for `extension.json` files.
 2. Validated manifests are matched against the `extensions` database table.
 3. During boot, `CoreServiceProvider::bootExtensions()` loads the ServiceProvider of every **active** extension.
 4. Bundled extensions use PSR-4 autoloading; filesystem extensions use `require_once` on `provider_file`.
@@ -682,7 +682,7 @@ An extension template is provided at `extension/templates/payment-gateway/` with
 
 ## 11. Payment Gateway Pattern
 
-Payment gateways implement `Cartxis\Core\Contracts\PaymentGatewayInterface`:
+Payment gateways implement `Bulbula\Core\Contracts\PaymentGatewayInterface`:
 
 ```php
 interface PaymentGatewayInterface
@@ -704,7 +704,7 @@ interface PaymentGatewayInterface
 1. Gateway package implements `PaymentGatewayInterface` in its Service class.
 2. Gateway's `ServiceProvider::boot()` registers itself with `PaymentGatewayManager`:
    ```php
-   $gatewayManager = app('cartxis.payment.gateway');
+   $gatewayManager = app('bulbula.payment.gateway');
    $gatewayManager->register(new StripeGateway());
    ```
 3. Gateway seeds a record into the `payment_methods` table.
@@ -729,7 +729,7 @@ interface PaymentGatewayInterface
 | Source | Count | Location |
 |--------|-------|----------|
 | App-level | 5 | `database/migrations/` |
-| Package-level | ~72 | `packages/Cartxis/*/Database/Migrations/` |
+| Package-level | ~72 | `packages/Bulbula/*/Database/Migrations/` |
 | **Total** | **~77** | — |
 
 App-level migrations handle the User model and framework tables (cache, jobs). All domain tables are defined in their respective package migrations.
@@ -754,7 +754,7 @@ App-level migrations handle the User model and framework tables (cache, jobs). A
 | Location | Seeders |
 |----------|---------|
 | `database/seeders/` | DatabaseSeeder, MobileHeroBannersSeeder, TestUserSeeder, TransactionSeeder |
-| Package seeders | Each package contributes seeders via `packages/Cartxis/*/Database/Seeders/` |
+| Package seeders | Each package contributes seeders via `packages/Bulbula/*/Database/Seeders/` |
 
 ---
 
@@ -794,16 +794,16 @@ $this->app->singleton(CheckoutService::class, function ($app) {
 
 ### 3. Singleton Container Bindings
 
-Core services use `cartxis.*` naming convention, bound via `$this->app->singleton()` with companion class bindings:
+Core services use `bulbula.*` naming convention, bound via `$this->app->singleton()` with companion class bindings:
 
 ```php
-$this->app->singleton('cartxis.theme', fn ($app) => new ThemeService());
-$this->app->bind(ThemeService::class, fn ($app) => $app->make('cartxis.theme'));
+$this->app->singleton('bulbula.theme', fn ($app) => new ThemeService());
+$this->app->bind(ThemeService::class, fn ($app) => $app->make('bulbula.theme'));
 ```
 
 ### 4. Facade Pattern
 
-Core provides 4 facades (Extension, Hook, Menu, Setting) that resolve `cartxis.*` singletons.
+Core provides 4 facades (Extension, Hook, Menu, Setting) that resolve `bulbula.*` singletons.
 
 ### 5. Extension/Plugin Architecture
 
@@ -850,10 +850,10 @@ All page navigation goes through Laravel routes → controllers return `Inertia:
 | Core | `core` | extensions_path, bundled_extensions_path |
 | Admin | `admin` | Admin-specific settings |
 | Shop | `shop` | Homepage settings, featured products count, hero block config |
-| API | `cartxis-api` | Rate limits (60 guest / 300 auth / 10 payment / 5 login per min), token expiry (24hr), pagination (20/page, max 100), feature flags, upload limits, search config, cache TTLs |
+| API | `bulbula-api` | Rate limits (60 guest / 300 auth / 10 payment / 5 login per min), token expiry (24hr), pagination (20/page, max 100), feature flags, upload limits, search config, cache TTLs |
 | Stripe | `stripe` | Stripe API keys, webhook secret |
 
-### API Feature Flags (`config('cartxis-api.features')`)
+### API Feature Flags (`config('bulbula-api.features')`)
 
 | Flag | Status |
 |------|--------|
@@ -887,13 +887,13 @@ tests/
     └── ExampleTest.php
 ```
 
-Additional package-specific tests exist in `packages/Cartxis/Shop/Tests/` and `packages/Cartxis/Reports/src/Tests/`.
+Additional package-specific tests exist in `packages/Bulbula/Shop/Tests/` and `packages/Bulbula/Reports/src/Tests/`.
 
 ### Test Environment
 
 | Setting | Value |
 |---------|-------|
-| DB | MySQL `cartxis` (127.0.0.1:3306) |
+| DB | MySQL `bulbula` (127.0.0.1:3306) |
 | Cache | array |
 | Mail | array |
 | Session | array |
@@ -941,26 +941,26 @@ composer test
 
 | Command | Purpose |
 |---------|---------|
-| `php artisan cartxis:extension:make --interactive` | Scaffold a new extension (guided prompts) |
-| `php artisan cartxis:extension:make {name} --code={code}` | Scaffold a new extension (fast mode) |
-| `php artisan cartxis:extensions:list` | Show all discovered extensions |
-| `php artisan cartxis:extensions:sync` | Sync filesystem to database |
-| `php artisan cartxis:extensions:install {code}` | Install an extension |
-| `php artisan cartxis:extensions:activate {code}` | Activate an extension |
-| `php artisan cartxis:extensions:deactivate {code}` | Deactivate an extension |
-| `php artisan cartxis:extensions:uninstall {code}` | Remove an extension |
+| `php artisan bulbula:extension:make --interactive` | Scaffold a new extension (guided prompts) |
+| `php artisan bulbula:extension:make {name} --code={code}` | Scaffold a new extension (fast mode) |
+| `php artisan bulbula:extensions:list` | Show all discovered extensions |
+| `php artisan bulbula:extensions:sync` | Sync filesystem to database |
+| `php artisan bulbula:extensions:install {code}` | Install an extension |
+| `php artisan bulbula:extensions:activate {code}` | Activate an extension |
+| `php artisan bulbula:extensions:deactivate {code}` | Deactivate an extension |
+| `php artisan bulbula:extensions:uninstall {code}` | Remove an extension |
 
-**`cartxis:extension:make` usage:**
+**`bulbula:extension:make` usage:**
 
 ```bash
 # Interactive — step-by-step prompts for template, name, code, vendor, author
-php artisan cartxis:extension:make --interactive
+php artisan bulbula:extension:make --interactive
 
 # Fast mode — all values supplied up front, no prompts
-php artisan cartxis:extension:make "My Extension" --code=my-extension
+php artisan bulbula:extension:make "My Extension" --code=my-extension
 
 # Full options
-php artisan cartxis:extension:make "My Extension" \
+php artisan bulbula:extension:make "My Extension" \
     --code=my-extension \
     --template=payment-gateway \
     --vendor=MyVendor \
@@ -975,8 +975,8 @@ php artisan cartxis:extension:make "My Extension" \
 ### Initial Setup
 
 ```bash
-git clone <repo-url> cartxis
-cd cartxis
+git clone <repo-url> bulbula
+cd bulbula
 composer setup
 # Configure .env (APP_URL, DB credentials, payment gateway keys)
 ```
@@ -992,7 +992,7 @@ composer dev
 
 ### Adding a New Package
 
-1. Create directory: `packages/Cartxis/NewPackage/`
+1. Create directory: `packages/Bulbula/NewPackage/`
 2. Add ServiceProvider in `Providers/`
 3. Add namespace to `composer.json` PSR-4 autoload
 4. Register provider in `bootstrap/providers.php`
@@ -1007,11 +1007,11 @@ composer dev
 4. Register gateway in ServiceProvider with `PaymentGatewayManager`
 5. Seed payment method record
 6. Add admin config routes for managing API keys
-7. Install and activate via CLI: `php artisan cartxis:extensions:install {code} && php artisan cartxis:extensions:activate {code}`
+7. Install and activate via CLI: `php artisan bulbula:extensions:install {code} && php artisan bulbula:extensions:activate {code}`
 
 ### Creating a Theme
 
-1. Copy `templates/storefront/general/cartxis-default` to `templates/storefront/{category}/{slug}/`
+1. Copy `templates/storefront/general/bulbula-default` to `templates/storefront/{category}/{slug}/`
 2. Edit `theme.json`; add `template.json` for Browse Themes catalog
 3. Override pages in `resources/views/pages/` and components in `resources/views/components/`
 4. Run `php artisan theme:discover && npm run build`
@@ -1041,23 +1041,23 @@ composer test
 | Namespace | Path |
 |-----------|------|
 | `App\` | `app/` |
-| `Cartxis\Core\` | `packages/Cartxis/Core/` |
-| `Cartxis\Admin\` | `packages/Cartxis/Admin/` |
-| `Cartxis\Product\` | `packages/Cartxis/Product/` |
-| `Cartxis\Cart\` | `packages/Cartxis/Cart/` |
-| `Cartxis\Shop\` | `packages/Cartxis/Shop/` |
-| `Cartxis\Settings\` | `packages/Cartxis/Settings/` |
-| `Cartxis\Sales\` | `packages/Cartxis/Sales/src/` |
-| `Cartxis\Customer\` | `packages/Cartxis/Customer/src/` |
-| `Cartxis\CMS\` | `packages/Cartxis/CMS/src/` |
-| `Cartxis\System\` | `packages/Cartxis/System/src/` |
-| `Cartxis\Reports\` | `packages/Cartxis/Reports/src/` |
-| `Cartxis\Marketing\` | `packages/Cartxis/Marketing/src/` |
-| `Cartxis\API\` | `packages/Cartxis/API/` |
-| `Cartxis\Setup\` | `packages/Cartxis/Setup/src/` |
-| `Cartxis\Stripe\` | `packages/Cartxis/Stripe/src/` |
-| `Cartxis\Razorpay\` | `packages/Cartxis/Razorpay/src/` |
-| `Cartxis\PayPal\` | `packages/Cartxis/PayPal/src/` |
-| `Cartxis\PayUMoney\` | `packages/Cartxis/PayUMoney/src/` |
-| `Cartxis\PhonePe\` | `packages/Cartxis/PhonePe/src/` |
+| `Bulbula\Core\` | `packages/Bulbula/Core/` |
+| `Bulbula\Admin\` | `packages/Bulbula/Admin/` |
+| `Bulbula\Product\` | `packages/Bulbula/Product/` |
+| `Bulbula\Cart\` | `packages/Bulbula/Cart/` |
+| `Bulbula\Shop\` | `packages/Bulbula/Shop/` |
+| `Bulbula\Settings\` | `packages/Bulbula/Settings/` |
+| `Bulbula\Sales\` | `packages/Bulbula/Sales/src/` |
+| `Bulbula\Customer\` | `packages/Bulbula/Customer/src/` |
+| `Bulbula\CMS\` | `packages/Bulbula/CMS/src/` |
+| `Bulbula\System\` | `packages/Bulbula/System/src/` |
+| `Bulbula\Reports\` | `packages/Bulbula/Reports/src/` |
+| `Bulbula\Marketing\` | `packages/Bulbula/Marketing/src/` |
+| `Bulbula\API\` | `packages/Bulbula/API/` |
+| `Bulbula\Setup\` | `packages/Bulbula/Setup/src/` |
+| `Bulbula\Stripe\` | `packages/Bulbula/Stripe/src/` |
+| `Bulbula\Razorpay\` | `packages/Bulbula/Razorpay/src/` |
+| `Bulbula\PayPal\` | `packages/Bulbula/PayPal/src/` |
+| `Bulbula\PayUMoney\` | `packages/Bulbula/PayUMoney/src/` |
+| `Bulbula\PhonePe\` | `packages/Bulbula/PhonePe/src/` |
 | `Tests\` | `tests/` |

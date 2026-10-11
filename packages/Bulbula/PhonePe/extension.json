@@ -1,0 +1,17 @@
+{
+    "code": "bulbula-phonepe",
+    "name": "PhonePe Payment Gateway",
+    "description": "Accept payments via PhonePe - UPI, credit cards, debit cards, net banking, and wallets for Indian customers",
+    "version": "1.0.0",
+    "author": "Bulbula Commerce",
+    "author_url": "https://example.com",
+    "icon": "smartphone",
+    "type": "extension",
+    "category": "payment-gateway",
+    "requires": {
+        "bulbula/core": "^1.0",
+        "php": "^8.2",
+        "phonepe/pg-php-sdk-v2": "^2.0"
+    },
+    "provider": "Bulbula\\PhonePe\\Providers\\PhonePeServiceProvider"
+}

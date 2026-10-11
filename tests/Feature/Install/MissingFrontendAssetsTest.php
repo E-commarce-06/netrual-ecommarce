@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-use Cartxis\Core\Support\FrontendAssetManifest;
+use Bulbula\Core\Support\FrontendAssetManifest;
 use Illuminate\Contracts\Debug\ExceptionHandler;
 use Illuminate\Foundation\ViteManifestNotFoundException;
 
 test('frontend asset manifest reports present when file exists', function () {
-    $dir = sys_get_temp_dir().'/cartxis-assets-'.uniqid('', true);
+    $dir = sys_get_temp_dir().'/bulbula-assets-'.uniqid('', true);
     mkdir($dir.'/build', 0755, true);
     file_put_contents($dir.'/build/manifest.json', '{}');
 
@@ -20,7 +20,7 @@ test('frontend asset manifest reports present when file exists', function () {
 });
 
 test('frontend asset manifest reports missing when file absent', function () {
-    $dir = sys_get_temp_dir().'/cartxis-assets-missing-'.uniqid('', true);
+    $dir = sys_get_temp_dir().'/bulbula-assets-missing-'.uniqid('', true);
     mkdir($dir, 0755, true);
 
     expect(FrontendAssetManifest::exists($dir))->toBeFalse();

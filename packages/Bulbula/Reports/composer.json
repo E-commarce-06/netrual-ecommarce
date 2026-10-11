@@ -1,0 +1,22 @@
+{
+    "name": "bulbula/reports",
+    "description": "Reports and Analytics Module for Bulbula E-commerce Platform",
+    "type": "library",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Bulbula\\Reports\\": "src/"
+        }
+    },
+    "require": {
+        "php": "^8.3",
+        "laravel/framework": "^13.0"
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Bulbula\\Reports\\ReportsServiceProvider"
+            ]
+        }
+    }
+}

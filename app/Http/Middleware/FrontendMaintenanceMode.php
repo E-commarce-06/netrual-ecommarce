@@ -2,7 +2,7 @@
 
 namespace App\Http\Middleware;
 
-use Cartxis\Settings\Models\Setting;
+use Bulbula\Settings\Models\Setting;
 use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;

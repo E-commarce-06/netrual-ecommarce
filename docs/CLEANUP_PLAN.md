@@ -1,13 +1,13 @@
 # Codebase Cleanup & Architecture Fix Plan
 
 > Generated: March 7, 2026  
-> Based on full dead-code and architecture audit of the Cartxis monorepo.
+> Based on full dead-code and architecture audit of the Bulbula monorepo.
 
 ---
 
 ## Background
 
-During a routes architecture fix (moving shop API endpoints from the core `routes/api.php` into the Shop package's own `packages/Cartxis/Shop/src/Routes/api.php`), a full application audit was also performed. The audit identified **14 items** spanning critical runtime bugs, dead frontend files, dead backend code, and architectural issues.
+During a routes architecture fix (moving shop API endpoints from the core `routes/api.php` into the Shop package's own `packages/Bulbula/Shop/src/Routes/api.php`), a full application audit was also performed. The audit identified **14 items** spanning critical runtime bugs, dead frontend files, dead backend code, and architectural issues.
 
 ---
 
@@ -15,14 +15,14 @@ During a routes architecture fix (moving shop API endpoints from the core `route
 
 | Item | Description | Status |
 |------|-------------|--------|
-| Routes architecture | Moved all 4 shop endpoints from `routes/api.php` → `packages/Cartxis/Shop/src/Routes/api.php` under `/api/shop/` prefix with `throttle:60,1` | ✅ Done |
+| Routes architecture | Moved all 4 shop endpoints from `routes/api.php` → `packages/Bulbula/Shop/src/Routes/api.php` under `/api/shop/` prefix with `throttle:60,1` | ✅ Done |
 | Vue components | Updated `ProductsGridBlock.vue` and `CategoriesGridBlock.vue` to use `/api/shop/*` URLs | ✅ Done |
 | **#1** Critical bug fix | Moved `resources/admin/Pages/Users/Index.vue` + `Edit.vue` → `resources/js/pages/Admin/Users/`; fixed `@/Layouts` → `@/layouts` imports | ✅ Done |
 | **#2** Duplicate Themes pages | Deleted `resources/admin/Pages/Themes/Index.vue` + `Settings.vue` | ✅ Done |
 | **#3** PlaceholderPattern.vue | Deleted `resources/js/components/PlaceholderPattern.vue` | ✅ Done |
 | **#4** Stale `.backup` files | Deleted 3 `.backup` files in StoreConfiguration and Coupons | ✅ Done |
 | **#5** Orphaned Vite CSS entry | Removed `resources/admin/css/styles.css` from `vite.config.ts` input; deleted the file; removed dead `import` from `Login.vue` | ✅ Done |
-| **#9** Empty Product `web.php` | Deleted `packages/Cartxis/Product/src/Routes/web.php`; removed `loadRoutesFrom` call from `ProductServiceProvider` | ✅ Done |
+| **#9** Empty Product `web.php` | Deleted `packages/Bulbula/Product/src/Routes/web.php`; removed `loadRoutesFrom` call from `ProductServiceProvider` | ✅ Done |
 | **#11** `@/Layouts` alias casing | Removed the `^@\/Layouts` regex alias from `vite.config.ts`; all active files already use lowercase `@/layouts` | ✅ Done |
 | **#12** Demo images in git | Added `/resources/admin/media` to `.gitignore` | ✅ Done |
 
@@ -81,31 +81,31 @@ During a routes architecture fix (moving shop API endpoints from the core `route
 
 - **Problem:** `Block.php`, `BlockRepository.php`, and `BlockService.php` are registered as singletons in `CMSServiceProvider`, and a `@block()` Blade directive is wired up. However, no admin controller or CRUD routes exist — blocks cannot be created or managed through the UI.
 - **Files:**
-  - `packages/Cartxis/CMS/src/Models/Block.php`
-  - `packages/Cartxis/CMS/src/Repositories/BlockRepository.php`
-  - `packages/Cartxis/CMS/src/Services/BlockService.php`
+  - `packages/Bulbula/CMS/src/Models/Block.php`
+  - `packages/Bulbula/CMS/src/Repositories/BlockRepository.php`
+  - `packages/Bulbula/CMS/src/Services/BlockService.php`
 - **Decision Required:**
   - **Option A (Restore):** Add `BlocksController` + admin routes to bring the feature back.
   - **Option B (Remove):** Delete model, repository, service, and associated migrations; remove singleton bindings from `CMSServiceProvider`.
 
 #### #7 — `SearchController` unreachable
 
-- **Problem:** `packages/Cartxis/Shop/src/Http/Controllers/Api/SearchController.php` exists, but both routes pointing to it are commented out in the Shop `api.php`.
+- **Problem:** `packages/Bulbula/Shop/src/Http/Controllers/Api/SearchController.php` exists, but both routes pointing to it are commented out in the Shop `api.php`.
 - **Decision Required:**
   - **Option A:** Uncomment the routes to enable search.
   - **Option B:** Delete the controller.
 
 #### #8 — Wishlist API unreachable
 
-- **Problem:** Wishlist CRUD routes in `packages/Cartxis/Shop/src/Routes/api.php` are commented out. The corresponding controller is dead code.
+- **Problem:** Wishlist CRUD routes in `packages/Bulbula/Shop/src/Routes/api.php` are commented out. The corresponding controller is dead code.
 - **Decision Required:**
   - **Option A:** Uncomment the routes to enable wishlist functionality.
   - **Option B:** Delete the controller and remove the commented routes.
 
 #### #9 — Empty `Product/web.php` loaded on every boot
 
-- **Problem:** `packages/Cartxis/Product/src/Routes/web.php` contains only comments — no actual routes. `ProductServiceProvider` still calls `loadRoutesFrom` on it, adding unnecessary overhead on every request.
-- **Files:** `packages/Cartxis/Product/src/Routes/web.php`, `packages/Cartxis/Product/src/Providers/ProductServiceProvider.php`
+- **Problem:** `packages/Bulbula/Product/src/Routes/web.php` contains only comments — no actual routes. `ProductServiceProvider` still calls `loadRoutesFrom` on it, adding unnecessary overhead on every request.
+- **Files:** `packages/Bulbula/Product/src/Routes/web.php`, `packages/Bulbula/Product/src/Providers/ProductServiceProvider.php`
 - **Fix:** Delete `web.php` and remove the `loadRoutesFrom` call from `ProductServiceProvider`.
 
 #### #10 — `uieditor_saved_blocks` table orphaned
@@ -153,7 +153,7 @@ During a routes architecture fix (moving shop API endpoints from the core `route
 - [x] **#3** Delete `resources/js/components/PlaceholderPattern.vue`
 - [x] **#4** Delete 3 `.backup` files in Settings/StoreConfiguration and Marketing/Coupons
 - [x] **#5** Remove `resources/admin/css/styles.css` Vite entry from `vite.config.ts`; deleted file; removed dead `import` from `Login.vue`
-- [x] **#9** Delete `packages/Cartxis/Product/src/Routes/web.php`; remove `loadRoutesFrom` from `ProductServiceProvider`
+- [x] **#9** Delete `packages/Bulbula/Product/src/Routes/web.php`; remove `loadRoutesFrom` from `ProductServiceProvider`
 - [x] **#11** `@/Layouts` regex alias removed from `vite.config.ts`; all active files already used lowercase
 - [x] **#12** `/resources/admin/media` added to `.gitignore`
 

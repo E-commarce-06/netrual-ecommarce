@@ -5,14 +5,14 @@ body:
     attributes:
       value: |
         ## 📢 Announcement
-        Use this template to share official announcements about Cartxis — including releases, breaking changes, deprecations, and other important updates.
+        Use this template to share official announcements about Bulbula — including releases, breaking changes, deprecations, and other important updates.
 
   - type: input
     id: announcement-title
     attributes:
       label: Announcement Title
       description: Provide a concise title for this announcement.
-      placeholder: "e.g., Cartxis v2.0.0 Released"
+      placeholder: "e.g., Bulbula v2.0.0 Released"
     validations:
       required: true
 
@@ -45,13 +45,13 @@ body:
     attributes:
       label: Action Required (if any)
       description: What steps should users take in response to this announcement?
-      placeholder: "e.g., Update your composer.json to require cartxis/core ^2.0, then run composer update."
+      placeholder: "e.g., Update your composer.json to require bulbula/core ^2.0, then run composer update."
 
   - type: input
     id: affected-versions
     attributes:
       label: Affected Versions
-      description: Which versions of Cartxis are affected?
+      description: Which versions of Bulbula are affected?
       placeholder: "e.g., v1.x and earlier"
 
   - type: input

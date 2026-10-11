@@ -225,7 +225,7 @@ const activeSocials = computed(() =>
         </div>
 
         <p v-else-if="editorMode" style="font-size:12px;color:#4b5563;font-style:italic;margin:0;">
-          Powered by Cartxis
+          Powered by Bulbula
         </p>
       </div>
     </div>

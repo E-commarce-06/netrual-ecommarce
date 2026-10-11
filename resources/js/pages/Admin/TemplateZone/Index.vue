@@ -169,7 +169,7 @@ const installTemplate = (template: TemplateItem) => {
   if (!canInstallRemote(template)) {
     openConfirm({
       title: 'API key required',
-      message: 'Set CARTXIS_THEME_API_KEY in your .env file to install themes from the Cartxis directory. It is auto-generated when you run php artisan cartxis:install.',
+      message: 'Set BULBULA_THEME_API_KEY in your .env file to install themes from the Bulbula directory. It is auto-generated when you run php artisan bulbula:install.',
       confirmText: 'Got it',
       variant: 'warning',
       onConfirm: () => {},
@@ -180,9 +180,9 @@ const installTemplate = (template: TemplateItem) => {
   const remote = isRemoteTheme(template)
 
   openConfirm({
-    title: remote ? 'Install from Cartxis Directory' : 'Install theme',
+    title: remote ? 'Install from Bulbula Directory' : 'Install theme',
     message: remote
-      ? `Install "${template.name}" from the Cartxis theme directory? The package will be downloaded securely and activated on your store.`
+      ? `Install "${template.name}" from the Bulbula theme directory? The package will be downloaded securely and activated on your store.`
       : `Install "${template.name}" into your store and activate it as the storefront theme?`,
     confirmText: 'Install & Activate',
     variant: 'primary',
@@ -219,7 +219,7 @@ const downloadTemplate = (slug: string) => {
             Browse Themes
           </h1>
           <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">
-            Search the Cartxis theme directory, preview storefront themes, and install with one click.
+            Search the Bulbula theme directory, preview storefront themes, and install with one click.
           </p>
         </div>
 
@@ -247,10 +247,10 @@ const downloadTemplate = (slug: string) => {
       >
         <p class="text-sm text-amber-900 dark:text-amber-100">
           Theme directory URL is not configured. Set
-          <code class="font-mono text-xs">CARTXIS_THEME_DIRECTORY_URL</code> in your
+          <code class="font-mono text-xs">BULBULA_THEME_DIRECTORY_URL</code> in your
           <code class="font-mono text-xs">.env</code> or run
-          <code class="font-mono text-xs">php artisan cartxis:install</code>
-          to browse themes from cartxis.com.
+          <code class="font-mono text-xs">php artisan bulbula:install</code>
+          to browse themes from example.com.
         </p>
       </div>
 
@@ -261,7 +261,7 @@ const downloadTemplate = (slug: string) => {
         <p class="text-sm text-red-900 dark:text-red-100">
           Could not reach the theme directory at
           <code class="font-mono text-xs">{{ directoryUrl }}</code>.
-          {{ remoteProbe.error || 'Check that cartxis-home is running and the URL includes /api.' }}
+          {{ remoteProbe.error || 'Check that bulbula-home is running and the URL includes /api.' }}
         </p>
       </div>
 
@@ -286,16 +286,16 @@ const downloadTemplate = (slug: string) => {
 
       <div v-else-if="remoteInstallEnabled === false" class="bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-xl p-4">
         <p class="text-sm text-amber-900 dark:text-amber-100">
-          You can browse the Cartxis theme directory, but one-click installs require
-          <code class="font-mono text-xs">CARTXIS_THEME_API_KEY</code> in your
+          You can browse the Bulbula theme directory, but one-click installs require
+          <code class="font-mono text-xs">BULBULA_THEME_API_KEY</code> in your
           <code class="font-mono text-xs">.env</code> (auto-generated during
-          <code class="font-mono text-xs">cartxis:install</code>).
+          <code class="font-mono text-xs">bulbula:install</code>).
         </p>
       </div>
 
       <div v-else class="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-xl p-4">
         <p class="text-sm text-blue-900 dark:text-blue-100">
-          Themes from the official Cartxis directory install securely — packages are downloaded server-side and activated in one step.
+          Themes from the official Bulbula directory install securely — packages are downloaded server-side and activated in one step.
         </p>
       </div>
 
@@ -386,7 +386,7 @@ const downloadTemplate = (slug: string) => {
                       v-if="isRemoteTheme(template)"
                       class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold bg-purple-100 text-purple-800 ring-1 ring-purple-600/10"
                     >
-                      Cartxis Directory
+                      Bulbula Directory
                     </span>
                     <span
                       v-if="template.is_active"

@@ -1,6 +1,6 @@
-# Cartxis MCP (Model Context Protocol)
+# Bulbula MCP (Model Context Protocol)
 
-Cartxis ships a **remote MCP server** so AI clients (Cursor, Claude Code, VS Code Copilot, ChatGPT connectors, Grok, etc.) can manage store catalog, orders, customers, and safe settings over HTTP.
+Bulbula ships a **remote MCP server** so AI clients (Cursor, Claude Code, VS Code Copilot, ChatGPT connectors, Grok, etc.) can manage store catalog, orders, customers, and safe settings over HTTP.
 
 ## What it is
 
@@ -25,7 +25,7 @@ Create or edit `.cursor/mcp.json` (project) or `~/.cursor/mcp.json` (user):
 ```json
 {
   "mcpServers": {
-    "cartxis": {
+    "bulbula": {
       "url": "https://your-store.test/mcp",
       "headers": {
         "Authorization": "Bearer YOUR_MCP_TOKEN"
@@ -46,12 +46,12 @@ Use the **mcp-remote** bridge and point Node at the Herd CA (or skip verificatio
 ```json
 {
   "mcpServers": {
-    "cartxis": {
+    "bulbula": {
       "command": "npx",
       "args": [
         "-y",
         "mcp-remote",
-        "https://cartxis.test/mcp",
+        "https://example.test/mcp",
         "--header",
         "Authorization: Bearer YOUR_MCP_TOKEN"
       ],
@@ -73,7 +73,7 @@ If your Cursor build prefers a stdio bridge without local TLS issues (production
 ```json
 {
   "mcpServers": {
-    "cartxis": {
+    "bulbula": {
       "command": "npx",
       "args": [
         "-y",
@@ -98,7 +98,7 @@ Use the same `mcp-remote` pattern in Claude Desktop MCP config, or Claude Code M
 ```json
 {
   "servers": {
-    "cartxis": {
+    "bulbula": {
       "type": "http",
       "url": "https://your-store.test/mcp",
       "headers": {
@@ -135,43 +135,43 @@ OAuth is **not** supported in this MVP.
 
 | Tool | Description |
 |------|-------------|
-| `cartxis_store_info` | Store name, URL, locale/currency summary |
-| `cartxis_list_products` | Paginated product list (`search`, `page`, `per_page` ≤ 50) |
-| `cartxis_get_product` | Product by `id` or `sku` |
-| `cartxis_create_product` | Create product (`name`, `sku`, `price`, `status`, …) |
-| `cartxis_update_product` | Update product fields by `id` |
-| `cartxis_list_orders` | Paginated orders (`status`, `page`, `per_page`) |
-| `cartxis_get_order` | Order by `id` or `increment_id` / `order_number` |
-| `cartxis_update_order_status` | Status transitions (invalid transitions refused) |
-| `cartxis_get_settings` | Safe `general` / `store` settings only |
-| `cartxis_update_settings` | Update one whitelisted key |
-| `cartxis_list_customers` | Paginated customers (`search`, `page`) |
-| `cartxis_search` | Unified search across products, orders, customers |
+| `bulbula_store_info` | Store name, URL, locale/currency summary |
+| `bulbula_list_products` | Paginated product list (`search`, `page`, `per_page` ≤ 50) |
+| `bulbula_get_product` | Product by `id` or `sku` |
+| `bulbula_create_product` | Create product (`name`, `sku`, `price`, `status`, …) |
+| `bulbula_update_product` | Update product fields by `id` |
+| `bulbula_list_orders` | Paginated orders (`status`, `page`, `per_page`) |
+| `bulbula_get_order` | Order by `id` or `increment_id` / `order_number` |
+| `bulbula_update_order_status` | Status transitions (invalid transitions refused) |
+| `bulbula_get_settings` | Safe `general` / `store` settings only |
+| `bulbula_update_settings` | Update one whitelisted key |
+| `bulbula_list_customers` | Paginated customers (`search`, `page`) |
+| `bulbula_search` | Unified search across products, orders, customers |
 
 ### Storefront templates (themes)
 
 | Tool | Description |
 |------|-------------|
-| `cartxis_list_templates` | Installed themes (`discover`, `active_only`) |
-| `cartxis_get_template` | Theme details + config by `slug` |
-| `cartxis_activate_template` | Activate installed theme by `slug` |
+| `bulbula_list_templates` | Installed themes (`discover`, `active_only`) |
+| `bulbula_get_template` | Theme details + config by `slug` |
+| `bulbula_activate_template` | Activate installed theme by `slug` |
 
-### Cartxis UI / template editor (pages + layouts)
+### Bulbula UI / template editor (pages + layouts)
 
 These tools drive the same **UI Editor** used in Admin → Content → Pages (sections → columns → blocks).
 
 | Tool | Description |
 |------|-------------|
-| `cartxis_list_pages` | CMS pages (`search`, `status`, pagination) |
-| `cartxis_get_page` | Page by `id` or `url_key` + layout summary / editor URL |
-| `cartxis_create_page` | Create page + empty layout draft |
-| `cartxis_update_page` | Update page metadata / SEO |
-| `cartxis_get_page_layout` | Read `layout_data` for a page or homepage |
-| `cartxis_update_page_layout` | Save layout draft (`layout_data`); optional `publish` |
-| `cartxis_publish_page_layout` | Publish current layout draft |
-| `cartxis_list_editor_blocks` | Block types + defaults for building `layout_data` |
+| `bulbula_list_pages` | CMS pages (`search`, `status`, pagination) |
+| `bulbula_get_page` | Page by `id` or `url_key` + layout summary / editor URL |
+| `bulbula_create_page` | Create page + empty layout draft |
+| `bulbula_update_page` | Update page metadata / SEO |
+| `bulbula_get_page_layout` | Read `layout_data` for a page or homepage |
+| `bulbula_update_page_layout` | Save layout draft (`layout_data`); optional `publish` |
+| `bulbula_publish_page_layout` | Publish current layout draft |
+| `bulbula_list_editor_blocks` | Block types + defaults for building `layout_data` |
 
-**Typical edit flow:** `cartxis_create_page` → `cartxis_list_editor_blocks` → `cartxis_update_page_layout` (with sections/blocks) → `cartxis_publish_page_layout`.
+**Typical edit flow:** `bulbula_create_page` → `bulbula_list_editor_blocks` → `bulbula_update_page_layout` (with sections/blocks) → `bulbula_publish_page_layout`.
 
 Creating a full storefront theme *package* on disk (zip / Template Zone) is not exposed via MCP — use Template Zone in admin for that.
 

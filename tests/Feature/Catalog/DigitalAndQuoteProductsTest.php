@@ -1,8 +1,8 @@
 <?php
 
-use Cartxis\Cart\Support\CartTypeHelper;
-use Cartxis\Product\Models\Product;
-use Cartxis\Product\Models\QuoteRequest;
+use Bulbula\Cart\Support\CartTypeHelper;
+use Bulbula\Product\Models\Product;
+use Bulbula\Product\Models\QuoteRequest;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
 

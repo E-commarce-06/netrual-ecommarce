@@ -3,7 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use Cartxis\CMS\Models\Block;
+use Bulbula\CMS\Models\Block;
 
 class MobileHeroBannersSeeder extends Seeder
 {

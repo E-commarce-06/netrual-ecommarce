@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 use Inertia\Inertia;
 use Inertia\Response;
-use Cartxis\Core\Services\ThemeViewResolver;
+use Bulbula\Core\Services\ThemeViewResolver;
 
 class RegisteredUserController extends Controller
 {

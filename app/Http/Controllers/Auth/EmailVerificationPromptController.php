@@ -7,7 +7,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
-use Cartxis\Core\Services\ThemeViewResolver;
+use Bulbula\Core\Services\ThemeViewResolver;
 
 class EmailVerificationPromptController extends Controller
 {

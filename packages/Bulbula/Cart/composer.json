@@ -1,0 +1,15 @@
+{
+    "name": "bulbula/cart",
+    "description": "Shopping cart functionality for Bulbula E-commerce platform",
+    "type": "library",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Bulbula\\Cart\\": "src/"
+        }
+    },
+    "require": {
+        "php": "^8.3",
+        "illuminate/support": "^12.0"
+    }
+}

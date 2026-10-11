@@ -5,11 +5,11 @@ namespace App\Http\Middleware;
 use Illuminate\Foundation\Inspiring;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
-use Cartxis\Core\Models\Currency;
-use Cartxis\Core\Services\MenuService;
-use Cartxis\Core\Services\SettingService;
-use Cartxis\Admin\Services\AdminNotificationService;
-use Cartxis\Settings\Models\Setting as SystemSetting;
+use Bulbula\Core\Models\Currency;
+use Bulbula\Core\Services\MenuService;
+use Bulbula\Core\Services\SettingService;
+use Bulbula\Admin\Services\AdminNotificationService;
+use Bulbula\Settings\Models\Setting as SystemSetting;
 
 class HandleInertiaRequests extends Middleware
 {

@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Tests\Feature\Admin;
 
-use Cartxis\Admin\Database\Seeders\AdminMenuSeeder;
-use Cartxis\Admin\Services\AdminMenuSyncService;
+use Bulbula\Admin\Database\Seeders\AdminMenuSeeder;
+use Bulbula\Admin\Services\AdminMenuSyncService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\DB;
 

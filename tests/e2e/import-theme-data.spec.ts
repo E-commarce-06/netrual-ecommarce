@@ -2,14 +2,14 @@ import { test, expect } from '@playwright/test'
 
 test('Import Theme Data from Appearance page', async ({ page }) => {
   // Login
-  await page.goto('http://cartxis.test/admin/login')
-  await page.fill('input[name="email"]', 'admin@wontonee.com')
+  await page.goto('http://example.test/admin/login')
+  await page.fill('input[name="email"]', 'admin@example.com')
   await page.fill('input[name="password"]', 'admin123')
   await page.click('button[type="submit"]')
   await page.waitForURL('**/admin/dashboard')
 
   // Navigate to Appearance
-  await page.goto('http://cartxis.test/admin/appearance')
+  await page.goto('http://example.test/admin/appearance')
   await page.waitForSelector('h1:text("Appearance")')
 
   // Verify "Import Demo Data" button is visible

@@ -1,0 +1,10 @@
+{
+    "code": "bulbula-payumoney",
+    "name": "PayUMoney Payment Gateway",
+    "description": "Accept payments in India using PayUMoney. Supports credit/debit cards, net banking, UPI, and wallets.",
+    "version": "1.0.0",
+    "author": "Bulbula Team",
+    "provider": "Bulbula\\PayUMoney\\Providers\\PayUMoneyServiceProvider",
+    "type": "extension",
+    "category": "payment-gateway"
+}

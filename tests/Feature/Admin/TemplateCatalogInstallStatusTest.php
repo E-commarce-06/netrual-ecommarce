@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-use Cartxis\Core\Models\Theme;
-use Cartxis\Core\Services\TemplateCatalogService;
-use Cartxis\Core\Services\ThemeService;
+use Bulbula\Core\Models\Theme;
+use Bulbula\Core\Services\TemplateCatalogService;
+use Bulbula\Core\Services\ThemeService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\File;
 
@@ -22,7 +22,7 @@ test('catalog-only storefront packages are not marked installed until explicitly
         'name' => 'Dmart Electronics',
         'slug' => 'dmart-electronics',
         'version' => '1.0.0',
-        'author' => 'Cartxis',
+        'author' => 'Bulbula',
     ], JSON_PRETTY_PRINT));
 
     File::put($packagePath.'/template.json', json_encode([
@@ -32,7 +32,7 @@ test('catalog-only storefront packages are not marked installed until explicitly
         'name' => 'Dmart Electronics',
         'description' => 'Electronics demo theme',
         'version' => '1.0.0',
-        'author' => 'Cartxis',
+        'author' => 'Bulbula',
     ], JSON_PRETTY_PRINT));
 
     app(ThemeService::class)->discover();
@@ -45,7 +45,7 @@ test('catalog-only storefront packages are not marked installed until explicitly
     expect($entry)->not->toBeNull()
         ->and($entry['installed'])->toBeFalse()
         ->and($catalog->isInstalled('dmart-electronics'))->toBeFalse()
-        ->and($catalog->isInstalled('cartxis-default'))->toBeTrue();
+        ->and($catalog->isInstalled('bulbula-default'))->toBeTrue();
 
     File::deleteDirectory($categoryPath);
 });

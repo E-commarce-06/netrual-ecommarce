@@ -37,7 +37,7 @@ return [
 
         'page_paths' => [
             resource_path('js/pages'),
-            base_path('templates/storefront/general/cartxis-default/resources/views/pages'),
+            base_path('templates/storefront/general/bulbula-default/resources/views/pages'),
         ],
 
         'page_extensions' => [

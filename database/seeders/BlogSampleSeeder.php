@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Database\Seeders;
 
-use Cartxis\Blog\Models\BlogCategory;
-use Cartxis\Blog\Models\BlogPost;
+use Bulbula\Blog\Models\BlogCategory;
+use Bulbula\Blog\Models\BlogPost;
 use Illuminate\Database\Seeder;
 
 class BlogSampleSeeder extends Seeder

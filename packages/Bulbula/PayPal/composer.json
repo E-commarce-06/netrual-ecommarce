@@ -1,0 +1,23 @@
+{
+    "name": "bulbula/paypal",
+    "description": "PayPal Payment Gateway for Bulbula E-Commerce",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Bulbula Team",
+            "email": "support@example.test"
+        }
+    ],
+    "require": {
+        "php": "^8.3",
+        "guzzlehttp/guzzle": "^7.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Bulbula\\PayPal\\": "src/"
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}

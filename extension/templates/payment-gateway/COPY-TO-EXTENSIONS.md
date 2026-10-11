@@ -6,8 +6,8 @@
 3. Update namespaces in PHP files:
    - `Acme\\ExampleGateway\\...` → your vendor/extension namespace
 4. Run:
-   - `php artisan cartxis:extensions:sync`
-   - `php artisan cartxis:extensions:install <your-extension-code>`
-   - `php artisan cartxis:extensions:activate <your-extension-code>`
+   - `php artisan bulbula:extensions:sync`
+   - `php artisan bulbula:extensions:install <your-extension-code>`
+   - `php artisan bulbula:extensions:activate <your-extension-code>`
 
 If your extension needs Composer dependencies, you should package it properly or add an autoloader strategy; filesystem extensions rely on `provider_file` for provider loading.

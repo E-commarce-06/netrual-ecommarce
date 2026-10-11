@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-use Cartxis\Core\Models\Theme;
-use Cartxis\Core\Services\TemplateInstallService;
-use Cartxis\Core\Services\ThemeService;
+use Bulbula\Core\Models\Theme;
+use Bulbula\Core\Services\TemplateInstallService;
+use Bulbula\Core\Services\ThemeService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\File;
 
@@ -86,7 +86,7 @@ function createNestedThemeZipForTest(string $slug, bool $withTemplateJson = fals
         'name' => 'Dmart Electronics',
         'slug' => $slug,
         'version' => '1.0.0',
-        'author' => 'Cartxis',
+        'author' => 'Bulbula',
     ], JSON_PRETTY_PRINT));
     $zip->addFromString("{$slug}/resources/views/pages/Home.vue", '<template><div /></template>');
     $zip->addFromString("{$slug}/resources/views/components/Header.vue", '<template><div /></template>');

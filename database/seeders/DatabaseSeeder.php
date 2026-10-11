@@ -3,7 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use Cartxis\Core\Database\Seeders\DatabaseSeeder as CartxisDatabaseSeeder;
+use Bulbula\Core\Database\Seeders\DatabaseSeeder as BulbulaDatabaseSeeder;
 
 class DatabaseSeeder extends Seeder
 {
@@ -12,8 +12,8 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // Call the main Cartxis Core Seeder which orchestrates all package seeders
-        $this->call(CartxisDatabaseSeeder::class);
+        // Call the main Bulbula Core Seeder which orchestrates all package seeders
+        $this->call(BulbulaDatabaseSeeder::class);
         
         // You can add project-specific seeders here if needed
         // $this->call(TransactionSeeder::class);
