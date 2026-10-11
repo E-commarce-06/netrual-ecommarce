@@ -1,0 +1,78 @@
+name: Build frontend assets
+
+# Builds public/build on GitHub and commits it back to main,
+# so the server only needs `git pull` (no Node.js required on the server).
+
+on:
+  push:
+    branches:
+      - main
+    paths-ignore:
+      - 'public/build/**'
+      - '**.md'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+# Run builds one at a time so two pushes do not race each other.
+concurrency:
+  group: build-assets-main
+  cancel-in-progress: false
+
+jobs:
+  build:
+    # Skip the commit this workflow pushes itself (extra safety against loops).
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.4'
+          tools: composer:v2
+          extensions: mbstring, xml, ctype, json, bcmath, tokenizer, openssl, pdo, pdo_sqlite
+
+      - name: Install PHP dependencies
+        # The Wayfinder Vite plugin runs artisan during the build, so PHP deps are needed.
+        run: composer install --no-interaction --prefer-dist --no-progress
+
+      - name: Prepare environment file
+        run: |
+          cp .env.example .env
+          php artisan key:generate
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+
+      - name: Install Node dependencies
+        run: npm ci
+
+      - name: Build frontend assets
+        run: npm run build
+
+      - name: Assert Vite manifest exists
+        run: test -f public/build/manifest.json
+
+      - name: Commit built assets to main
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -f public/build
+          if git diff --cached --quiet; then
+            echo "No changes in public/build. Nothing to commit."
+            exit 0
+          fi
+          git commit -m "chore: build frontend assets [skip ci]"
+          git pull --rebase origin main
+          git push origin HEAD:main
