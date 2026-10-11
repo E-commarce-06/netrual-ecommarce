@@ -250,6 +250,10 @@ class RemoteThemeDirectoryClient
 
     protected function baseUrl(): string
     {
+        if (! config('brand.features.remote_theme_directory', false)) {
+            return '';
+        }
+
         return ThemeDirectoryUrl::resolve();
     }
 

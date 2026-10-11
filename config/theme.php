@@ -61,7 +61,7 @@ return [
     'directory' => [
         'url' => env('CARTXIS_THEME_DIRECTORY_URL')
             ?: env('CARTXIS_TEMPLATE_CATALOG_URL')
-            ?: 'https://cartxis.com/api',
+            ?: '',
         'api_key' => env('CARTXIS_THEME_API_KEY'),
         'cache_ttl' => (int) env('CARTXIS_THEME_DIRECTORY_CACHE_TTL', 3600),
     ],

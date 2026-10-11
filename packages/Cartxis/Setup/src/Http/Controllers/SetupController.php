@@ -261,15 +261,19 @@ class SetupController extends Controller
             'consent' => 'required|accepted',
         ]);
 
-        try {
-            Http::timeout(5)->post('https://myapps.wontonee.com/api/cartxis/newsletter', [
-                'app_secret' => 'E8BD27515B6F32EA2E260DCF95DA88CF45A630AA81B3085C1A647D8087FFF76D',
-                'email'      => $validated['email'],
-                'name'       => $validated['name'] ?? '',
-            ]);
-        } catch (\Exception $e) {
-            // Silent failure — log warning only, never block the developer
-            Log::warning('Cartxis newsletter subscribe failed', ['error' => $e->getMessage()]);
+        $relayUrl = config('brand.newsletter.url');
+
+        if (filled($relayUrl)) {
+            try {
+                Http::timeout(5)->post($relayUrl, [
+                    'app_secret' => config('brand.newsletter.secret'),
+                    'email'      => $validated['email'],
+                    'name'       => $validated['name'] ?? '',
+                ]);
+            } catch (\Exception $e) {
+                // Silent failure — log warning only, never block the developer
+                Log::warning('Newsletter subscribe relay failed', ['error' => $e->getMessage()]);
+            }
         }
 
         // Always 200 — API failures are invisible to the user

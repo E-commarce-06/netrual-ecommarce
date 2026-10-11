@@ -6,7 +6,7 @@ namespace Cartxis\Core\Support;
 
 class ThemeDirectoryUrl
 {
-    public const DEFAULT = 'https://cartxis.com/api';
+    public const DEFAULT = '';
 
     public static function resolve(?string $configuredUrl = null): string
     {
@@ -14,6 +14,10 @@ class ThemeDirectoryUrl
 
         if ($url === '') {
             $url = self::DEFAULT;
+        }
+
+        if ($url === '' || ! config('brand.features.remote_theme_directory', false)) {
+            return '';
         }
 
         return rtrim(self::normalize($url), '/');
