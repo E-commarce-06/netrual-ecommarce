@@ -184,7 +184,6 @@ test('mcp initialize and tools list succeed with valid token', function () {
 
     $names = collect($tools)->pluck('name')->all();
     expect($names)->toContain('bulbula_store_info')
-        ->and($names)->toContain('bulbula_list_templates')
         ->and($names)->toContain('bulbula_create_page')
         ->and($names)->toContain('bulbula_update_page_layout')
         ->and($names)->toContain('bulbula_list_editor_blocks');
@@ -373,27 +372,3 @@ test('mcp can create page and save ui editor layout', function () {
     expect($layout['layout_data']['sections'] ?? [])->toHaveCount(1);
 });
 
-test('mcp can list templates', function () {
-    enableMcp();
-    $admin = mcpAdmin();
-    $token = mcpToken($admin);
-
-    $response = $this->postJson('/mcp', [
-        'jsonrpc' => '2.0',
-        'id' => 30,
-        'method' => 'tools/call',
-        'params' => [
-            'name' => 'bulbula_list_templates',
-            'arguments' => [],
-        ],
-    ], [
-        'Authorization' => 'Bearer '.$token,
-    ]);
-
-    $response->assertOk()
-        ->assertJsonPath('result.content.0.type', 'text');
-
-    $payload = json_decode($response->json('result.content.0.text'), true);
-    expect($payload)->toHaveKey('data')
-        ->and($payload)->toHaveKey('count');
-});

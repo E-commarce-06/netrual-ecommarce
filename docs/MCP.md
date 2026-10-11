@@ -152,9 +152,6 @@ OAuth is **not** supported in this MVP.
 
 | Tool | Description |
 |------|-------------|
-| `bulbula_list_templates` | Installed themes (`discover`, `active_only`) |
-| `bulbula_get_template` | Theme details + config by `slug` |
-| `bulbula_activate_template` | Activate installed theme by `slug` |
 
 ### Bulbula UI / template editor (pages + layouts)
 

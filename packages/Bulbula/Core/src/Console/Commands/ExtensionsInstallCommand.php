@@ -9,7 +9,7 @@ class ExtensionsInstallCommand extends Command
 {
     protected $signature = 'bulbula:extensions:install {code : Extension code}';
 
-    protected $aliases = ['vortex:extensions:install'];
+    protected $aliases = ['bulbula:extensions:install'];
 
     protected $description = 'Install a discovered filesystem extension (from the /extension directory).';
 

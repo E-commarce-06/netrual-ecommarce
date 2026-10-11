@@ -10,25 +10,13 @@ use Bulbula\Core\Console\Commands\ExtensionsListCommand;
 use Bulbula\Core\Console\Commands\ExtensionsSyncCommand;
 use Bulbula\Core\Console\Commands\ExtensionsUninstallCommand;
 use Bulbula\Core\Console\Commands\InstallCommand;
-use Bulbula\Core\Console\Commands\TemplateDiscoverCommand;
-use Bulbula\Core\Console\Commands\TemplateExportCommand;
-use Bulbula\Core\Console\Commands\TemplateInstallCommand;
-use Bulbula\Core\Console\Commands\ThemeActivateCommand;
-use Bulbula\Core\Console\Commands\ThemeDirectoryRegisterCommand;
 use Bulbula\Core\Console\Commands\ThemeDiscoverCommand;
-use Bulbula\Core\Console\Commands\ThemeImportDataCommand;
-use Bulbula\Core\Console\Commands\ThemeListCommand;
 use Bulbula\Core\Http\Middleware\SetAdminSessionCookie;
 use Bulbula\Core\Services\ExtensionService;
 use Bulbula\Core\Services\HookService;
 use Bulbula\Core\Services\MenuService;
 use Bulbula\Core\Services\PaymentGatewayManager;
-use Bulbula\Core\Services\RemoteThemeDirectoryClient;
 use Bulbula\Core\Services\SettingService;
-use Bulbula\Core\Services\TemplateCatalogService;
-use Bulbula\Core\Services\TemplateInstallService;
-use Bulbula\Core\Services\ThemeAssetBuildService;
-use Bulbula\Core\Services\ThemeLifecycleService;
 use Bulbula\Core\Services\ThemePathResolver;
 use Bulbula\Core\Services\ThemeService;
 use Bulbula\Core\Services\ThemeViewResolver;
@@ -75,36 +63,9 @@ class CoreServiceProvider extends ServiceProvider
             return new ThemeService($app->make(ThemePathResolver::class));
         });
 
-        $this->app->singleton(RemoteThemeDirectoryClient::class, function () {
-            return new RemoteThemeDirectoryClient;
-        });
 
-        $this->app->singleton(TemplateCatalogService::class, function ($app) {
-            return new TemplateCatalogService(
-                $app->make(ThemePathResolver::class),
-                $app->make(RemoteThemeDirectoryClient::class),
-            );
-        });
 
-        $this->app->singleton(ThemeLifecycleService::class, function ($app) {
-            return new ThemeLifecycleService(
-                $app->make('bulbula.theme'),
-                $app->make(ThemeAssetBuildService::class),
-                $app->make(ThemeViewResolver::class),
-            );
-        });
 
-        $this->app->singleton(TemplateInstallService::class, function ($app) {
-            return new TemplateInstallService(
-                $app->make(TemplateCatalogService::class),
-                $app->make('bulbula.theme'),
-                $app->make(LayoutService::class),
-                $app->make(ThemePathResolver::class),
-                $app->make(RemoteThemeDirectoryClient::class),
-                $app->make(ThemeAssetBuildService::class),
-                $app->make(ThemeLifecycleService::class),
-            );
-        });
 
         // Bind ThemeService class to service container
         $this->app->bind(ThemeService::class, function ($app) {
@@ -142,13 +103,6 @@ class CoreServiceProvider extends ServiceProvider
                 ExtensionsActivateCommand::class,
                 ExtensionsDeactivateCommand::class,
                 ThemeDiscoverCommand::class,
-                ThemeListCommand::class,
-                ThemeActivateCommand::class,
-                ThemeImportDataCommand::class,
-                TemplateDiscoverCommand::class,
-                TemplateInstallCommand::class,
-                TemplateExportCommand::class,
-                ThemeDirectoryRegisterCommand::class,
             ]);
         }
     }

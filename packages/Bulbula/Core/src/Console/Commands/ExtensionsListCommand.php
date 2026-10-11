@@ -10,7 +10,7 @@ class ExtensionsListCommand extends Command
 {
     protected $signature = 'bulbula:extensions:list {--installed : Show only installed extensions} {--active : Show only active extensions}';
 
-    protected $aliases = ['vortex:extensions:list'];
+    protected $aliases = ['bulbula:extensions:list'];
 
     protected $description = 'List discovered Bulbula extensions and their install/active status.';
 

@@ -9,7 +9,7 @@ class ExtensionsUninstallCommand extends Command
 {
     protected $signature = 'bulbula:extensions:uninstall {code : Extension code}';
 
-    protected $aliases = ['vortex:extensions:uninstall'];
+    protected $aliases = ['bulbula:extensions:uninstall'];
 
     protected $description = 'Uninstall an extension.';
 

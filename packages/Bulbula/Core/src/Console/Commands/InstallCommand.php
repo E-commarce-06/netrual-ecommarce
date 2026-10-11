@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Bulbula\Core\Console\Commands;
 
 use Bulbula\Admin\Services\AdminMenuSyncService;
-use Bulbula\Core\Services\ThemeDirectoryEnvConfigurator;
 use Bulbula\Core\Support\FrontendAssetManifest;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
@@ -39,7 +38,6 @@ class InstallCommand extends Command
         $this->writeEnvValue('APP_NAME', $appName);
         $this->writeEnvValue('APP_URL', $appUrl);
 
-        $this->registerThemeDirectoryAccess($appName, $appUrl);
 
         $this->newLine();
 
@@ -311,29 +309,6 @@ class InstallCommand extends Command
         $this->newLine();
     }
 
-    private function registerThemeDirectoryAccess(string $appName, string $appUrl): void
-    {
-        $this->line('<fg=yellow>━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</fg=yellow>');
-        $this->line('<fg=yellow>  Theme Directory</fg=yellow>');
-        $this->line('<fg=yellow>━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</fg=yellow>');
-
-        $result = app(ThemeDirectoryEnvConfigurator::class)->ensureConfigured($appName, $appUrl);
-
-        if ($result['status'] === 'already_configured') {
-            $this->line('  <fg=green>✔</fg=green> Theme directory API key already configured');
-        } elseif ($result['status'] === 'registered') {
-            $this->line('  <fg=green>✔</fg=green> Theme directory API key generated and saved to .env');
-        } else {
-            $this->line('  <fg=yellow>!</fg=yellow> '.$result['message']);
-            if (! empty($result['directory_url'])) {
-                $this->line('    URL: <fg=cyan>'.$result['directory_url'].'</fg=cyan>');
-            }
-            if (! empty($result['error'])) {
-                $this->line('    Detail: '.$result['error']);
-            }
-            $this->line('    Run <fg=cyan>php artisan theme:directory:register</fg=cyan> after go-live, or set <fg=cyan>BULBULA_THEME_API_KEY</fg=cyan> manually.');
-        }
-    }
 
     private function ensureEnvFile(): void
     {

@@ -3,10 +3,7 @@
 namespace Bulbula\Core\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use Bulbula\Core\Services\ThemeLifecycleService;
 use Bulbula\Core\Services\ThemeService;
-use Bulbula\Core\Services\ThemeDataImportService;
-use Bulbula\Core\Services\ThemeAssetBuildService;
 use Bulbula\Core\Models\Theme;
 use Bulbula\UIEditor\Services\LayoutService;
 use Bulbula\UIEditor\Models\PageLayout;
@@ -104,35 +101,6 @@ class ThemeController extends Controller
         ]);
     }
 
-    /**
-     * Activate a theme
-     */
-    public function activate(Request $request, string $slug)
-    {
-        try {
-            $theme = Theme::where('slug', $slug)->firstOrFail();
-
-            if (!$theme->exists()) {
-                return back()->with('error', 'Theme files not found. Please reinstall the theme.');
-            }
-
-            $this->themeService->activate($slug);
-
-            $lifecycle = app(ThemeLifecycleService::class)->finalize($slug);
-
-            $message = "Theme '{$theme->name}' activated successfully!";
-
-            if ($lifecycle['assets_rebuilt']) {
-                $message .= ' Storefront assets updated.';
-            } elseif ($lifecycle['cache_cleared']) {
-                $message .= ' Caches cleared — hard-refresh the storefront if styles look stale.';
-            }
-
-            return back()->with('success', $message);
-        } catch (\Exception $e) {
-            return back()->with('error', 'Failed to activate theme: ' . $e->getMessage());
-        }
-    }
 
     /**
      * Redirect to the active theme's settings page.
@@ -179,188 +147,10 @@ class ThemeController extends Controller
         }
     }
 
-    /**
-     * Delete a theme
-     */
-    public function destroy(string $slug)
-    {
-        try {
-            $theme = Theme::where('slug', $slug)->firstOrFail();
 
-            // Prevent deleting active or default theme
-            if ($theme->is_active) {
-                return back()->with('error', 'Cannot delete the active theme. Please activate another theme first.');
-            }
 
-            if ($theme->is_default) {
-                return back()->with('error', 'Cannot delete the default theme.');
-            }
 
-            $this->themeService->delete($slug);
 
-            return back()->with('success', "Theme '{$theme->name}' deleted successfully!");
-        } catch (\Exception $e) {
-            return back()->with('error', 'Failed to delete theme: ' . $e->getMessage());
-        }
-    }
-
-    /**
-     * Upload and install a new theme
-     */
-    public function upload(Request $request)
-    {
-        $validator = Validator::make($request->all(), [
-            'theme' => 'required|file|mimes:zip|max:51200', // 50MB max
-        ]);
-
-        if ($validator->fails()) {
-            return back()->withErrors($validator)->withInput();
-        }
-
-        try {
-            $file = $request->file('theme');
-            $path = $file->storeAs('themes', $file->getClientOriginalName(), 'local');
-            $fullPath = storage_path('app/' . $path);
-
-            $installedSlug = $this->themeService->install($fullPath);
-
-            // Clean up uploaded zip
-            if (file_exists($fullPath)) {
-                unlink($fullPath);
-            }
-
-            if (! $installedSlug) {
-                return back()->with('error', 'Theme upload failed: invalid package structure. Ensure the zip contains a valid theme with theme.json.');
-            }
-
-            Theme::where('slug', $installedSlug)->update([
-                'source' => 'upload',
-            ]);
-
-            $lifecycle = app(ThemeLifecycleService::class)->finalize($installedSlug);
-
-            $message = "Theme installed successfully ({$installedSlug})!";
-
-            if ($lifecycle['assets_rebuilt']) {
-                $message .= ' Storefront assets updated.';
-            } else {
-                $message .= ' Run npm run build on the server, then hard-refresh the storefront.';
-            }
-
-            return back()->with('success', $message);
-        } catch (\Exception $e) {
-            return back()->with('error', 'Failed to install theme: ' . $e->getMessage());
-        }
-    }
-
-    /**
-     * Import theme data (CMS blocks, menus, settings) from the theme's data/theme-data.json file.
-     */
-    public function importData(Request $request, string $slug, ThemeDataImportService $importService)
-    {
-        Theme::where('slug', $slug)->firstOrFail();
-
-        $fresh = $request->boolean('fresh', false);
-
-        try {
-            $results = $importService->import($slug, fresh: $fresh);
-
-            $productResults = [
-                'categories' => 0,
-                'products' => 0,
-                'reviews' => 0,
-                'images' => 0,
-                'attributes' => 0,
-            ];
-
-            if ($request->boolean('include_products', false)) {
-                $productResults = $importService->importProducts($slug, $fresh);
-            }
-
-            cache()->forget('active_theme');
-
-            return back()->with(
-                'success',
-                $importService->buildImportSuccessMessage($results, $productResults)
-            );
-        } catch (\RuntimeException $e) {
-            return back()->with('error', 'Failed to import theme data: ' . $e->getMessage());
-        }
-    }
-
-    /**
-     * Import a pre-built UIEditor homepage layout from the theme's data/theme-data.json.
-     * The JSON must have a "homepage" key containing a valid UIEditor layout object.
-     */
-    public function importLayout(Request $request, string $slug)
-    {
-        $theme = Theme::where('slug', $slug)->firstOrFail();
-
-        $dataPath = $theme->getPath() . '/data/theme-data.json';
-
-        if (!file_exists($dataPath)) {
-            return back()->with('error', 'No demo data file found for this theme.');
-        }
-
-        $themeData = json_decode(file_get_contents($dataPath), true);
-
-        if (empty($themeData['homepage'])) {
-            return back()->with('error', 'No homepage layout found in theme demo data.');
-        }
-
-        $layoutData = $themeData['homepage'];
-
-        // Validate basic structure
-        if (empty($layoutData['version']) || !isset($layoutData['sections'])) {
-            return back()->with('error', 'Invalid layout format in theme demo data.');
-        }
-
-        try {
-            // Homepage layout uses TYPE_HOMEPAGE with null page_id — save and immediately publish
-            $layout = $this->layoutService->saveDraft($layoutData, PageLayout::TYPE_HOMEPAGE, null);
-            $this->layoutService->publish($layout);
-
-            return back()->with('success', 'Homepage demo layout imported and published successfully!');
-        } catch (\Exception $e) {
-            return back()->with('error', 'Failed to import layout: ' . $e->getMessage());
-        }
-    }
-
-    /**
-     * Upload a screenshot/preview image for the theme.
-     */
-    public function uploadScreenshot(Request $request, string $slug)
-    {
-        $theme = Theme::where('slug', $slug)->firstOrFail();
-
-        $validator = Validator::make($request->all(), [
-            'screenshot' => 'required|image|mimes:jpeg,png,jpg,webp|max:5120',
-        ]);
-
-        if ($validator->fails()) {
-            return back()->withErrors($validator)->withInput();
-        }
-
-        try {
-            $file = $request->file('screenshot');
-            $filename = 'screenshot.' . $file->getClientOriginalExtension();
-
-            // Save to the theme's public directory
-            $themePath = public_path("templates/{$slug}");
-            if (!is_dir($themePath)) {
-                mkdir($themePath, 0755, true);
-            }
-
-            $file->move($themePath, $filename);
-
-            // Update the DB record
-            $theme->update(['screenshot' => $filename]);
-
-            return back()->with('success', 'Theme screenshot updated successfully!');
-        } catch (\Exception $e) {
-            return back()->with('error', 'Failed to upload screenshot: ' . $e->getMessage());
-        }
-    }
 
     /**
      * Flatten nested settings into dot-notation keys for the schema-driven form.

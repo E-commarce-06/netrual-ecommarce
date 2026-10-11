@@ -10,7 +10,7 @@ class ExtensionsSyncCommand extends Command
 {
     protected $signature = 'bulbula:extensions:sync {--no-activate-bundled : Do not auto-activate bundled extensions when first syncing}';
 
-    protected $aliases = ['vortex:extensions:sync'];
+    protected $aliases = ['bulbula:extensions:sync'];
 
     protected $description = 'Sync discovered extension manifests into the extensions table.';
 
@@ -31,14 +31,6 @@ class ExtensionsSyncCommand extends Command
             $code = $manifest['code'] ?? null;
             if (!$code) {
                 continue;
-            }
-
-            $legacyCode = str_starts_with($code, 'bulbula-')
-                ? 'vortex-' . substr($code, strlen('bulbula-'))
-                : null;
-
-            if ($legacyCode && !Extension::where('code', $code)->exists()) {
-                Extension::where('code', $legacyCode)->update(['code' => $code]);
             }
 
             $extension = Extension::firstOrNew(['code' => $code]);

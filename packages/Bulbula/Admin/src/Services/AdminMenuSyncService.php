@@ -32,7 +32,6 @@ class AdminMenuSyncService
         }
 
         if ($appearanceId) {
-            $this->syncAppearanceTemplateZone($appearanceId);
         }
 
         if ($settingsId) {
@@ -133,25 +132,6 @@ class AdminMenuSyncService
             ->delete();
     }
 
-    private function syncAppearanceTemplateZone(int $appearanceId): void
-    {
-        DB::table('menu_items')->updateOrInsert(
-            ['key' => 'appearance-template-zone'],
-            [
-                'title' => 'Browse Themes',
-                'icon' => 'layout-template',
-                'route' => 'admin.template-zone.index',
-                'url' => null,
-                'parent_id' => $appearanceId,
-                'order' => 0,
-                'permission' => null,
-                'location' => 'admin',
-                'active' => true,
-                'updated_at' => now(),
-                'created_at' => now(),
-            ]
-        );
-    }
 
     private function syncSettingsMcp(int $settingsId): void
     {

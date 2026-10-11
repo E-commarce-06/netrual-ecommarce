@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Bulbula\Settings\Mcp;
 
 use Bulbula\Settings\Mcp\Contracts\McpToolInterface;
-use Bulbula\Settings\Mcp\Tools\ActivateTemplateTool;
 use Bulbula\Settings\Mcp\Tools\CreatePageTool;
 use Bulbula\Settings\Mcp\Tools\CreateProductTool;
 use Bulbula\Settings\Mcp\Tools\GetOrderTool;
@@ -13,13 +12,11 @@ use Bulbula\Settings\Mcp\Tools\GetPageLayoutTool;
 use Bulbula\Settings\Mcp\Tools\GetPageTool;
 use Bulbula\Settings\Mcp\Tools\GetProductTool;
 use Bulbula\Settings\Mcp\Tools\GetSettingsTool;
-use Bulbula\Settings\Mcp\Tools\GetTemplateTool;
 use Bulbula\Settings\Mcp\Tools\ListCustomersTool;
 use Bulbula\Settings\Mcp\Tools\ListEditorBlocksTool;
 use Bulbula\Settings\Mcp\Tools\ListOrdersTool;
 use Bulbula\Settings\Mcp\Tools\ListPagesTool;
 use Bulbula\Settings\Mcp\Tools\ListProductsTool;
-use Bulbula\Settings\Mcp\Tools\ListTemplatesTool;
 use Bulbula\Settings\Mcp\Tools\PublishPageLayoutTool;
 use Bulbula\Settings\Mcp\Tools\SearchTool;
 use Bulbula\Settings\Mcp\Tools\StoreInfoTool;
@@ -56,9 +53,6 @@ class McpToolRegistry
             SearchTool::class,
 
             // Storefront templates (themes)
-            ListTemplatesTool::class,
-            GetTemplateTool::class,
-            ActivateTemplateTool::class,
 
             // CMS pages + Bulbula UI / template editor
             ListPagesTool::class,

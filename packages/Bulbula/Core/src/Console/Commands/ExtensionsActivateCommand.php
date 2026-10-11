@@ -9,7 +9,7 @@ class ExtensionsActivateCommand extends Command
 {
     protected $signature = 'bulbula:extensions:activate {code : Extension code}';
 
-    protected $aliases = ['vortex:extensions:activate'];
+    protected $aliases = ['bulbula:extensions:activate'];
 
     protected $description = 'Activate an installed extension.';
 

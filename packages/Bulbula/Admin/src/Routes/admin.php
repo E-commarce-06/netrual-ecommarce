@@ -9,7 +9,6 @@ use Bulbula\Admin\Http\Controllers\NotificationController;
 use Bulbula\Admin\Http\Controllers\ActivityLogController;
 use Bulbula\Core\Http\Controllers\Admin\DashboardController;
 use Bulbula\Core\Http\Controllers\Admin\ThemeController;
-use Bulbula\Core\Http\Controllers\Admin\TemplateZoneController;
 
 /*
 |--------------------------------------------------------------------------
@@ -73,24 +72,10 @@ Route::prefix('admin')->name('admin.')->middleware(['web'])->group(function () {
         Route::prefix('appearance/themes')->name('themes.')->group(function () {
             Route::get('/', [ThemeController::class, 'index'])->name('index');
             Route::get('/active-settings', [ThemeController::class, 'activeSettings'])->name('active-settings');
-            Route::post('/{slug}/activate', [ThemeController::class, 'activate'])->name('activate');
             Route::get('/{slug}/settings', [ThemeController::class, 'settings'])->name('settings');
             Route::put('/{slug}/settings', [ThemeController::class, 'updateSettings'])->name('settings.update');
-            Route::delete('/{slug}', [ThemeController::class, 'destroy'])->name('destroy');
-            Route::post('/{slug}/import-data', [ThemeController::class, 'importData'])->name('import-data');
-            Route::post('/{slug}/import-layout', [ThemeController::class, 'importLayout'])->name('import-layout');
-            Route::post('/{slug}/screenshot', [ThemeController::class, 'uploadScreenshot'])->name('screenshot');
-            Route::post('/upload', [ThemeController::class, 'upload'])->name('upload');
-            Route::get('/{slug}/download', [TemplateZoneController::class, 'download'])->name('download');
         });
 
-        Route::prefix('appearance/template-zone')->name('template-zone.')->group(function () {
-            Route::get('/', [TemplateZoneController::class, 'index'])->name('index');
-            Route::post('/sync', [TemplateZoneController::class, 'sync'])->name('sync');
-            Route::get('/{slug}', [TemplateZoneController::class, 'show'])->name('show');
-            Route::post('/{slug}/install', [TemplateZoneController::class, 'install'])->name('install');
-            Route::get('/{slug}/download', [TemplateZoneController::class, 'download'])->name('download');
-        });
     });
 });
 

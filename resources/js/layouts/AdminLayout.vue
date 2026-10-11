@@ -175,14 +175,6 @@ const isActive = (item: any) => {
     // Exact match (most common case)
     if (cleanCurrentPath === cleanMenuPath) return true
 
-    // Template Zone detail pages (/admin/appearance/template-zone/{slug})
-    if (
-      cleanMenuPath === '/admin/appearance/template-zone' &&
-      cleanCurrentPath.startsWith(cleanMenuPath + '/')
-    ) {
-      return true
-    }
-    
     // For resource routes, check if current URL starts with menu URL AND
     // has a valid resource pattern (ID or action like /create, /edit)
     // This prevents /admin/customers from matching /admin/customers/groups

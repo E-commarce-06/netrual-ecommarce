@@ -32,21 +32,6 @@ test('admin menu sync nests newsletters under marketing', function () {
         ->and((int) $newsletter->parent_id)->toBe((int) $marketingId);
 });
 
-test('admin menu sync restores browse themes under appearance', function () {
-    DB::table('menu_items')->where('key', 'appearance-template-zone')->delete();
-
-    app(AdminMenuSyncService::class)->sync();
-
-    $appearanceId = DB::table('menu_items')->where('key', 'appearance')->value('id');
-    $templateZone = DB::table('menu_items')->where('key', 'appearance-template-zone')->first();
-
-    expect($templateZone)->not->toBeNull()
-        ->and($templateZone->title)->toBe('Browse Themes')
-        ->and($templateZone->route)->toBe('admin.template-zone.index')
-        ->and((int) $templateZone->parent_id)->toBe((int) $appearanceId)
-        ->and((bool) $templateZone->active)->toBeTrue();
-});
-
 test('admin menu sync adds MCP under settings', function () {
     DB::table('menu_items')->where('key', 'settings-mcp')->delete();
 

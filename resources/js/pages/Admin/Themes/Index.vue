@@ -3,8 +3,7 @@ import { ref, computed } from 'vue';
 import { Head, router, usePage } from '@inertiajs/vue3';
 import AdminLayout from '@/layouts/AdminLayout.vue';
 import {
-  Trash2, Settings, Power, CheckCircle, Eye,
-  AlertTriangle, Monitor, Plus, Package, LayoutTemplate, Wand2, ChevronRight, Download,
+  Settings, CheckCircle, Eye, AlertTriangle, Monitor, Package, Wand2, ChevronRight,
 } from 'lucide-vue-next';
 
 interface Theme {
@@ -39,96 +38,13 @@ interface Props {
 const props = defineProps<Props>();
 const page = usePage();
 const flash = computed(() => (page.props as any).flash || {});
-const processing = ref<Record<string, boolean>>({});
-const uploadingTheme = ref(false);
-const themeFileInput = ref<HTMLInputElement | null>(null);
 
 const activeTheme = computed(() => props.themes.find(t => t.is_active));
-const otherThemes = computed(() => props.themes.filter(t => !t.is_active));
-
-const importingLayout = ref<Record<string, boolean>>({});
-
-const importDemoLayout = (slug: string) => {
-  if (importingLayout.value[slug]) return;
-  if (!confirm('This will import the demo homepage layout and replace any existing draft. Continue?')) return;
-  importingLayout.value[slug] = true;
-  router.post(
-    `/admin/appearance/themes/${slug}/import-layout`,
-    {},
-    {
-      preserveScroll: true,
-      onFinish: () => { importingLayout.value[slug] = false; },
-    }
-  );
-};
-
-const activateTheme = (slug: string) => {
-  if (processing.value[slug]) return;
-  
-  processing.value[slug] = true;
-  
-  router.post(
-    `/admin/appearance/themes/${slug}/activate`,
-    {},
-    {
-      preserveScroll: true,
-      onFinish: () => {
-        processing.value[slug] = false;
-      },
-    }
-  );
-};
-
-const deleteTheme = (slug: string, name: string) => {
-  if (processing.value[slug]) return;
-  
-  if (!confirm(`Are you sure you want to delete the theme "${name}"?`)) {
-    return;
-  }
-  
-  processing.value[slug] = true;
-  
-  router.delete(`/admin/appearance/themes/${slug}`, {
-    preserveScroll: true,
-    onFinish: () => {
-      processing.value[slug] = false;
-    },
-  });
-};
 
 const goToSettings = (slug: string) => {
   router.get('/admin/appearance');
 };
 
-const downloadTheme = (slug: string) => {
-  window.location.href = `/admin/appearance/themes/${encodeURIComponent(slug)}/download?source=installed`;
-};
-
-const triggerThemeUpload = () => {
-  if (uploadingTheme.value) return;
-  themeFileInput.value?.click();
-};
-
-const uploadTheme = (event: Event) => {
-  const input = event.target as HTMLInputElement;
-  const file = input.files?.[0];
-
-  if (!file) return;
-
-  uploadingTheme.value = true;
-
-  const formData = new FormData();
-  formData.append('theme', file);
-
-  router.post('/admin/appearance/themes/upload', formData, {
-    preserveScroll: true,
-    forceFormData: true,
-    onFinish: () => {
-      uploadingTheme.value = false;
-      input.value = '';
-    },
-  });
-};
 </script>
 
 <template>
@@ -142,32 +58,9 @@ const uploadTheme = (event: Event) => {
           <div>
             <h1 class="text-2xl font-bold text-gray-900 tracking-tight">Themes</h1>
             <p class="mt-1 text-sm text-gray-500">
-              Manage installed themes — browse the catalog to add new storefront templates
+              Settings for the storefront theme in use.
             </p>
           </div>
-          <div class="flex flex-wrap gap-2">
-            <a
-              href="/admin/appearance/template-zone"
-              class="inline-flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium text-white bg-blue-600 hover:bg-blue-700"
-            >
-              <LayoutTemplate class="w-4 h-4" />
-              Browse Template Zone
-            </a>
-            <button
-              @click="triggerThemeUpload"
-              class="inline-flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium border border-gray-300 text-gray-700 bg-white hover:bg-gray-50"
-            >
-              <Plus class="w-4 h-4" />
-              Upload Zip
-            </button>
-          </div>
-          <input
-            ref="themeFileInput"
-            type="file"
-            accept=".zip,application/zip"
-            class="hidden"
-            @change="uploadTheme"
-          />
         </div>
 
         <!-- Alerts -->
@@ -261,119 +154,8 @@ const uploadTheme = (event: Event) => {
                   {{ activeTheme.homepageEditor.editorLabel }}
                   <ChevronRight class="w-3.5 h-3.5 opacity-60" />
                 </a>
-                <!-- No layout yet → import button -->
-                <button
-                  v-else-if="activeTheme.homepageEditor?.showImportLayout"
-                  @click="importDemoLayout(activeTheme.slug)"
-                  :disabled="importingLayout[activeTheme.slug]"
-                  class="inline-flex items-center gap-2 px-5 py-2.5 border border-gray-300 text-sm font-medium rounded-lg text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-                  title="Import pre-built homepage layout"
-                >
-                  <svg v-if="importingLayout[activeTheme.slug]" class="animate-spin w-4 h-4" fill="none" viewBox="0 0 24 24">
-                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/>
-                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"/>
-                  </svg>
-                  <LayoutTemplate v-else class="w-4 h-4" />
-                  {{ importingLayout[activeTheme.slug] ? 'Importing…' : 'Import Demo Layout' }}
-                </button>
               </div>
             </div>
-          </div>
-        </div>
-
-        <!-- Installed Themes -->
-        <div v-if="otherThemes.length > 0">
-          <h2 class="text-sm font-medium text-gray-500 uppercase tracking-wider mb-4">Installed Themes</h2>
-          <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            <div
-              v-for="theme in otherThemes"
-              :key="theme.id"
-              class="group relative bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden hover:shadow-md transition-shadow duration-300 flex flex-col h-full"
-            >
-              <!-- Screenshot -->
-              <div class="aspect-video bg-gray-100 relative overflow-hidden">
-                <img
-                  v-if="theme.screenshot"
-                  :src="theme.screenshot"
-                  :alt="theme.name"
-                  class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                />
-                <div v-else class="w-full h-full flex items-center justify-center bg-gray-50">
-                  <Monitor class="w-12 h-12 text-gray-300" />
-                </div>
-                
-                <!-- Overlay Actions -->
-                <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex items-center justify-center gap-3">
-                    <button
-                      v-if="theme.exists"
-                      @click="activateTheme(theme.slug)"
-                      :disabled="processing[theme.slug]"
-                      class="inline-flex items-center px-4 py-2 bg-white rounded-lg text-sm font-semibold text-gray-900 shadow-lg hover:bg-gray-50 focus:outline-none transform translate-y-2 group-hover:translate-y-0 transition-all duration-300"
-                    >
-                        <svg v-if="processing[theme.slug]" class="animate-spin -ml-1 mr-2 h-4 w-4 text-gray-900" fill="none" viewBox="0 0 24 24">
-                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                        </svg>
-                        <Power v-else class="w-4 h-4 mr-2" />
-                        Activate
-                    </button>
-                </div>
-              </div>
-
-              <!-- Content -->
-              <div class="p-5 flex-1 flex flex-col">
-                <div class="flex items-start justify-between mb-2">
-                  <div>
-                    <h3 class="text-lg font-bold text-gray-900 leading-tight">{{ theme.name }}</h3>
-                    <div class="text-xs text-gray-500 mt-1">v{{ theme.version }} by {{ theme.author }}</div>
-                  </div>
-                  <span v-if="theme.is_default" class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-blue-50 text-blue-700 ring-1 ring-inset ring-blue-700/10">Default</span>
-                </div>
-                
-                <p class="text-sm text-gray-500 mb-4 line-clamp-2">{{ theme.description }}</p>
-
-                <div class="mt-auto border-t border-gray-100 pt-4 flex items-center justify-between">
-                   <div v-if="!theme.exists" class="flex items-center text-xs text-amber-600 font-medium">
-                       <AlertTriangle class="w-3.5 h-3.5 mr-1" />
-                       Files missing
-                   </div>
-                   <div v-else class="text-xs text-gray-400 font-medium">
-                        {{ theme.exists ? 'Ready to use' : 'Not installed' }}
-                   </div>
-
-                   <div class="flex items-center gap-1">
-                     <button
-                       v-if="theme.exists"
-                       @click="downloadTheme(theme.slug)"
-                       class="text-gray-400 hover:text-blue-600 transition-colors p-1"
-                       title="Download Theme"
-                     >
-                       <Download class="w-4 h-4" />
-                     </button>
-                     <button
-                      v-if="!theme.is_active && !theme.is_default"
-                      @click="deleteTheme(theme.slug, theme.name)"
-                      class="text-gray-400 hover:text-red-600 transition-colors p-1"
-                      title="Delete Theme"
-                     >
-                       <Trash2 class="w-4 h-4" />
-                     </button>
-                   </div>
-                </div>
-              </div>
-            </div>
-            
-            <!-- Upload Placeholder Card -->
-             <div 
-                @click="triggerThemeUpload"
-                class="group relative rounded-xl border-2 border-dashed border-gray-300 hover:border-gray-400 bg-gray-50 hover:bg-gray-100 transition-all cursor-pointer min-h-[300px] flex flex-col items-center justify-center text-center p-6"
-              >
-                 <div class="w-16 h-16 rounded-full bg-white shadow-sm flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-                     <Plus class="w-8 h-8 text-gray-400 group-hover:text-gray-600" />
-                 </div>
-                 <h3 class="text-base font-semibold text-gray-900">Add New Theme</h3>
-                 <p class="text-sm text-gray-500 mt-1 max-w-[200px]">Upload a .zip file containing your theme files</p>
-             </div>
           </div>
         </div>
 
@@ -381,11 +163,10 @@ const uploadTheme = (event: Event) => {
         <div
           v-if="props.themes.length === 0"
           class="text-center py-20 bg-white rounded-xl border border-dashed border-gray-300 cursor-pointer hover:bg-gray-50 transition-colors"
-          @click="triggerThemeUpload"
         >
           <Package class="mx-auto h-12 w-12 text-gray-400" />
           <h3 class="mt-4 text-lg font-medium text-gray-900">No themes installed</h3>
-          <p class="mt-2 text-sm text-gray-500">Click here to upload your first theme.</p>
+          <p class="mt-2 text-sm text-gray-500">No theme is set up yet.</p>
         </div>
       </div>
     </div>

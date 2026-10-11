@@ -18,7 +18,7 @@ class ExtensionMakeCommand extends Command
         {--interactive : Ask for missing values interactively}
         {--force : Overwrite target folder if it already exists}';
 
-    protected $aliases = ['vortex:extension:make'];
+    protected $aliases = ['bulbula:extension:make'];
 
     protected $description = 'Scaffold a new filesystem extension in the /extension directory.';
 

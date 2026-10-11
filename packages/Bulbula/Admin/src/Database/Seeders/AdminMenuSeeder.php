@@ -414,16 +414,6 @@ class AdminMenuSeeder extends Seeder
 
             // Appearance Children
             [
-                'key' => 'appearance-template-zone',
-                'title' => 'Browse Themes',
-                'icon' => 'layout-template',
-                'route' => 'admin.template-zone.index',
-                'parent_id' => $appearanceId,
-                'order' => 0,
-                'location' => 'admin',
-                'active' => true,
-            ],
-            [
                 'key' => 'appearance-theme',
                 'title' => 'Theme',
                 'icon' => 'palette',

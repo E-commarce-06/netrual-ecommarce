@@ -9,7 +9,7 @@ class ExtensionsDeactivateCommand extends Command
 {
     protected $signature = 'bulbula:extensions:deactivate {code : Extension code}';
 
-    protected $aliases = ['vortex:extensions:deactivate'];
+    protected $aliases = ['bulbula:extensions:deactivate'];
 
     protected $description = 'Deactivate an active extension.';
 
