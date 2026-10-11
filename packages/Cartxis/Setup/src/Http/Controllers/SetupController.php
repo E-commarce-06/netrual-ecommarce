@@ -1,0 +1,307 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Cartxis\Setup\Http\Controllers;
+
+use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
+use Inertia\Inertia;
+use Inertia\Response;
+use Cartxis\Setup\Services\DemoDataService;
+use Cartxis\Core\Models\Country;
+use Cartxis\Core\Services\SettingService;
+use Cartxis\Core\Models\Currency;
+use Cartxis\UIEditor\Models\PageLayout;
+use Cartxis\UIEditor\Services\LayoutService;
+
+class SetupController extends Controller
+{
+    public function __construct(
+        private DemoDataService $demoDataService,
+        private SettingService $settingService
+    ) {}
+
+    /**
+     * Show welcome screen
+     */
+    public function welcome(): Response
+    {
+        return Inertia::render('Setup/Welcome', [
+            'appName' => config('app.name', 'Cartxis'),
+            'appVersion' => config('app.version', '1.0.15'),
+        ]);
+    }
+
+    /**
+     * Show business type selection
+     */
+    public function businessType(): Response
+    {
+        return Inertia::render('Setup/BusinessType', [
+            'businessTypes' => $this->demoDataService->getBusinessTypes(),
+        ]);
+    }
+
+    /**
+     * Show business settings screen
+     */
+    public function businessSettings(Request $request): Response
+    {
+        $allowed = $this->demoDataService->allowedTypeIds();
+        $businessType = (string) $request->query('type', 'blank');
+        if (! in_array($businessType, $allowed, true)) {
+            $businessType = 'blank';
+        }
+
+        $countries = Country::active()->ordered()->get(['name', 'code'])->toArray();
+
+        // Prefer the currencies table (proper names + metadata).
+        // Fall back to countries-derived data on a true first-run before seeding.
+        $currenciesFromTable = Currency::where('is_active', true)
+            ->orderBy('code')
+            ->get(['code', 'name', 'symbol'])
+            ->toArray();
+
+        if (!empty($currenciesFromTable)) {
+            $currencies = $currenciesFromTable;
+        } else {
+            // First-run fallback: derive from countries reference data
+            $currencies = Country::active()
+                ->whereNotNull('currency_code')
+                ->selectRaw('currency_code as code, MIN(currency_symbol) as symbol')
+                ->groupBy('currency_code')
+                ->orderBy('currency_code')
+                ->get()
+                ->map(fn ($r) => ['code' => $r->code, 'name' => $r->code, 'symbol' => $r->symbol])
+                ->toArray();
+        }
+
+        return Inertia::render('Setup/BusinessSettings', [
+            'businessType' => $businessType,
+            'countries'    => $countries,
+            'currencies'   => $currencies,
+        ]);
+    }
+
+    /**
+     * Save business settings
+     */
+    public function saveBusinessSettings(Request $request)
+    {
+        $validated = $request->validate([
+            'business_type' => 'required|string|in:'.implode(',', $this->demoDataService->allowedTypeIds()),
+            'store_name' => 'required|string|max:255',
+            'contact_phone' => 'nullable|string|max:50',
+            'store_address' => 'nullable|string',
+            'store_country' => 'required|string|max:100',
+            'currency' => 'required|string|max:10',
+            'timezone' => 'required|string|max:100',
+        ]);
+
+        try {
+            // Save settings for setup wizard (raw in settings table)
+            foreach ($validated as $key => $value) {
+                DB::table('settings')->updateOrInsert(
+                    ['key' => $key],
+                    [
+                        'key' => $key,
+                        'value' => $value,
+                        'created_at' => now(),
+                        'updated_at' => now(),
+                    ]
+                );
+            }
+
+            // Save to general settings using SettingService (for admin panel)
+            $this->settingService->set('site_name', $validated['store_name'], 'string', 'general');
+            $this->settingService->set('contact_phone', $validated['contact_phone'] ?? '', 'string', 'general');
+            $this->settingService->set('contact_address', $validated['store_address'] ?? '', 'string', 'general');
+            $this->settingService->set('store_country', $validated['store_country'], 'string', 'general');
+
+            $currencyCode = strtoupper($validated['currency']);
+            $currencyMeta = $this->getCurrencyMetadata($currencyCode);
+
+            Currency::updateOrCreate(
+                ['code' => $currencyCode],
+                [
+                    'name' => $currencyMeta['name'],
+                    'symbol' => $currencyMeta['symbol'],
+                    'symbol_position' => $currencyMeta['symbol_position'],
+                    'decimal_places' => $currencyMeta['decimal_places'],
+                    'exchange_rate' => $currencyMeta['exchange_rate'],
+                    'is_default' => true,
+                    'is_active' => true,
+                    'sort_order' => 0,
+                ]
+            );
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Business settings saved successfully',
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to save settings: ' . $e->getMessage(),
+            ], 500);
+        }
+    }
+
+    /**
+     * Show demo data import screen
+     */
+    public function demoData(Request $request): Response
+    {
+        $allowed = $this->demoDataService->allowedTypeIds();
+        $businessType = (string) $request->query('type', 'blank');
+        if (! in_array($businessType, $allowed, true)) {
+            $businessType = 'blank';
+        }
+
+        return Inertia::render('Setup/DemoData', [
+            'businessType' => $businessType,
+            'businessTypes' => $this->demoDataService->getBusinessTypes(),
+            'hasDemo' => $this->demoDataService->hasDemo($businessType),
+        ]);
+    }
+
+    /**
+     * Import demo data
+     */
+    public function importDemoData(Request $request)
+    {
+        $validated = $request->validate([
+            'business_type' => 'required|string|in:'.implode(',', $this->demoDataService->allowedTypeIds()),
+            'import_products' => 'boolean',
+        ]);
+
+        try {
+            $result = $this->demoDataService->importDemoData(
+                $validated['business_type'],
+                $validated['import_products'] ?? true
+            );
+
+            if ($result['success']) {
+                // Also seed the homepage layout from the default theme if not already published
+                $themeDataPath = base_path('templates/storefront/general/cartxis-default/data/theme-data.json');
+                if (file_exists($themeDataPath)) {
+                    $themeData = json_decode(file_get_contents($themeDataPath), true);
+                    if (!empty($themeData['homepage']) && !PageLayout::homepage()->published()->exists()) {
+                        $layoutService = app(LayoutService::class);
+                        $layout = $layoutService->saveDraft($themeData['homepage'], PageLayout::TYPE_HOMEPAGE, null);
+                        $layoutService->publish($layout);
+                    }
+                }
+
+                return response()->json([
+                    'success' => true,
+                    'message' => $result['message'],
+                    'stats' => $result['stats'],
+                ]);
+            }
+
+            return response()->json([
+                'success' => false,
+                'message' => $result['message'],
+            ], 500);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to import demo data: ' . $e->getMessage(),
+            ], 500);
+        }
+    }
+
+    /**
+     * Complete setup
+     */
+    public function complete(Request $request)
+    {
+        try {
+            $this->demoDataService->markSetupComplete();
+
+            // Clear all caches after setup completion
+            Artisan::call('optimize:clear');
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Setup completed successfully',
+                'redirect' => '/admin/login',
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to complete setup: ' . $e->getMessage(),
+            ], 500);
+        }
+    }
+
+    /**
+     * Show completion screen
+     */
+    public function finish(): Response
+    {
+        return Inertia::render('Setup/Finish');
+    }
+
+    /**
+     * Proxy developer newsletter opt-in to Cartxis HQ.
+     * Email is never stored locally — forwarded directly and forgotten.
+     */
+    public function newsletterSubscribe(Request $request): \Illuminate\Http\JsonResponse
+    {
+        $validated = $request->validate([
+            'email'   => 'required|email|max:254',
+            'name'    => 'nullable|string|max:255',
+            'consent' => 'required|accepted',
+        ]);
+
+        try {
+            Http::timeout(5)->post('https://myapps.wontonee.com/api/cartxis/newsletter', [
+                'app_secret' => 'E8BD27515B6F32EA2E260DCF95DA88CF45A630AA81B3085C1A647D8087FFF76D',
+                'email'      => $validated['email'],
+                'name'       => $validated['name'] ?? '',
+            ]);
+        } catch (\Exception $e) {
+            // Silent failure — log warning only, never block the developer
+            Log::warning('Cartxis newsletter subscribe failed', ['error' => $e->getMessage()]);
+        }
+
+        // Always 200 — API failures are invisible to the user
+        return response()->json(['success' => true]);
+    }
+
+    private function getCurrencyMetadata(string $code): array
+    {
+        // Prefer the currencies table — it has full metadata set by the seeder/admin.
+        $currency = Currency::where('code', $code)->first();
+
+        if ($currency) {
+            return [
+                'name'            => $currency->name,
+                'symbol'          => $currency->symbol,
+                'symbol_position' => $currency->symbol_position,
+                'decimal_places'  => $currency->decimal_places,
+                'exchange_rate'   => (float) $currency->exchange_rate,
+            ];
+        }
+
+        // Fallback: derive from countries reference data (first-run before seeding)
+        $country = Country::whereNotNull('currency_code')
+            ->where('currency_code', $code)
+            ->first(['currency_symbol']);
+
+        return [
+            'name'            => $code,
+            'symbol'          => $country?->currency_symbol ?? $code,
+            'symbol_position' => 'before',
+            'decimal_places'  => 2,
+            'exchange_rate'   => 1.0,
+        ];
+    }
+}

@@ -1,0 +1,160 @@
+{
+    "$schema": "https://getcomposer.org/schema.json",
+    "name": "cartxis/cartxis",
+    "version": "1.0.15",
+    "type": "project",
+    "description": "Open source eCommerce for Laravel, Inertia.js and Vue 3.",
+    "keywords": [
+        "laravel",
+        "ecommerce",
+        "inertia",
+        "vue",
+        "cartxis"
+    ],
+    "homepage": "https://github.com/E-commarce-06/netrual-ecommarce",
+    "license": "MIT",
+    "repositories": [
+        {
+            "type": "path",
+            "url": "packages/Cartxis/PhonePe/sdk"
+        }
+    ],
+    "require": {
+        "php": "^8.3",
+        "aws/aws-sdk-php": "^3.357",
+        "inertiajs/inertia-laravel": "^2.0",
+        "intervention/image": "^3.0",
+        "laravel/fortify": "^1.30",
+        "laravel/framework": "^13.0",
+        "laravel/sanctum": "^4.0",
+        "laravel/tinker": "^3.0",
+        "laravel/wayfinder": "^0.1.9",
+        "mews/purifier": "^3.4.4",
+        "mpdf/mpdf": "^8.2",
+        "netresearch/jsonmapper": "^4.4",
+        "phonepe/pg-php-sdk-v2": "^2.0",
+        "razorpay/razorpay": "^2.9",
+        "spatie/laravel-backup": "^10.0",
+        "stripe/stripe-php": "^18.0"
+    },
+    "require-dev": {
+        "fakerphp/faker": "^1.23",
+        "laravel/pail": "^1.2.2",
+        "laravel/pint": "^1.18",
+        "laravel/sail": "^1.41",
+        "mockery/mockery": "^1.6",
+        "nunomaduro/collision": "^8.6",
+        "pestphp/pest": "^4.1",
+        "pestphp/pest-plugin-laravel": "^4.0"
+    },
+    "autoload": {
+        "files": [
+            "packages/Cartxis/Core/src/Helpers/hooks.php"
+        ],
+        "psr-4": {
+            "App\\": "app/",
+            "Database\\Factories\\": "database/factories/",
+            "Database\\Seeders\\": "database/seeders/",
+            "Cartxis\\Core\\": "packages/Cartxis/Core/src/",
+            "Cartxis\\Core\\Database\\Seeders\\": "packages/Cartxis/Core/src/Database/Seeders/",
+            "Cartxis\\Admin\\": "packages/Cartxis/Admin/src/",
+            "Cartxis\\Admin\\Database\\Seeders\\": "packages/Cartxis/Admin/src/Database/Seeders/",
+            "Cartxis\\Product\\": "packages/Cartxis/Product/src/",
+            "Cartxis\\Product\\Database\\Seeders\\": "packages/Cartxis/Product/src/Database/Seeders/",
+            "Cartxis\\Cart\\": "packages/Cartxis/Cart/src/",
+            "Cartxis\\Shop\\": "packages/Cartxis/Shop/src/",
+            "Cartxis\\Shop\\Database\\Seeders\\": "packages/Cartxis/Shop/src/Database/Seeders/",
+            "Cartxis\\Settings\\": "packages/Cartxis/Settings/src/",
+            "Cartxis\\Settings\\Database\\Seeders\\": "packages/Cartxis/Settings/src/Database/Seeders/",
+            "Cartxis\\Stripe\\": "packages/Cartxis/Stripe/src/",
+            "Cartxis\\Razorpay\\": "packages/Cartxis/Razorpay/src/",
+            "Cartxis\\PayPal\\": "packages/Cartxis/PayPal/src/",
+            "Cartxis\\PayUMoney\\": "packages/Cartxis/PayUMoney/src/",
+            "Cartxis\\PhonePe\\": "packages/Cartxis/PhonePe/src/",
+            "Cartxis\\Sales\\": "packages/Cartxis/Sales/src/",
+            "Cartxis\\Customer\\": "packages/Cartxis/Customer/src/",
+            "Cartxis\\CMS\\": "packages/Cartxis/CMS/src/",
+            "Cartxis\\UIEditor\\": "packages/Cartxis/UIEditor/src/",
+            "Cartxis\\System\\": "packages/Cartxis/System/src/",
+            "Cartxis\\Reports\\": "packages/Cartxis/Reports/src/",
+            "Cartxis\\Marketing\\": "packages/Cartxis/Marketing/src/",
+            "Cartxis\\API\\": "packages/Cartxis/API/",
+            "Cartxis\\Setup\\": "packages/Cartxis/Setup/src/",
+            "Cartxis\\Setup\\Database\\Seeders\\": "packages/Cartxis/Setup/src/Database/Seeders/",
+            "Cartxis\\Blog\\": "packages/Cartxis/Blog/src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests/"
+        }
+    },
+    "scripts": {
+        "setup": [
+            "composer install",
+            "@php -r \"file_exists('.env') || copy('.env.example', '.env');\"",
+            "@php artisan key:generate",
+            "@php artisan migrate --force",
+            "npm install",
+            "npm run build"
+        ],
+        "dev": [
+            "Composer\\Config::disableProcessTimeout",
+            "npx concurrently -c \"#93c5fd,#c4b5fd,#fdba74\" \"php artisan serve\" \"php artisan queue:listen --tries=1\" \"npm run dev\" --names='server,queue,vite'"
+        ],
+        "dev:ssr": [
+            "npm run build:ssr",
+            "Composer\\Config::disableProcessTimeout",
+            "npx concurrently -c \"#93c5fd,#c4b5fd,#fb7185,#fdba74\" \"php artisan serve\" \"php artisan queue:listen --tries=1\" \"php artisan pail --timeout=0\" \"php artisan inertia:start-ssr\" --names=server,queue,logs,ssr --kill-others"
+        ],
+        "test": [
+            "@php artisan config:clear --ansi",
+            "@php artisan test"
+        ],
+        "post-autoload-dump": [
+            "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
+            "@php artisan package:discover --ansi"
+        ],
+        "post-update-cmd": [
+            "@php artisan vendor:publish --tag=laravel-assets --ansi --force"
+        ],
+        "post-root-package-install": [
+            "@php -r \"file_exists('.env') || copy('.env.example', '.env');\""
+        ],
+        "post-create-project-cmd": [
+            "@php artisan key:generate --ansi",
+            "@php -r \"echo PHP_EOL . '════════════════════════════════════════════════════' . PHP_EOL . '  Cartxis installed! Run: php artisan cartxis:install' . PHP_EOL . '════════════════════════════════════════════════════' . PHP_EOL;\""
+        ],
+        "pre-package-uninstall": [
+            "Illuminate\\Foundation\\ComposerScripts::prePackageUninstall"
+        ]
+    },
+    "extra": {
+        "laravel": {
+            "dont-discover": []
+        }
+    },
+    "config": {
+        "optimize-autoloader": true,
+        "preferred-install": "dist",
+        "sort-packages": true,
+        "allow-plugins": {
+            "pestphp/pest-plugin": true,
+            "php-http/discovery": true
+        }
+    },
+    "archive": {
+        "exclude": [
+            "/public/build",
+            "/public/hot",
+            "/node_modules",
+            "/.git",
+            "/storage/logs/*.log",
+            "/storage/framework/cache",
+            "/storage/framework/sessions",
+            "/storage/framework/views"
+        ]
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true
+}

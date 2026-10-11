@@ -1,0 +1,57 @@
+<?php
+
+declare(strict_types=1);
+
+use Illuminate\Support\Facades\Route;
+use Cartxis\CMS\Http\Controllers\Admin\PagesController;
+use Cartxis\CMS\Http\Controllers\Admin\MediaController;
+use Cartxis\CMS\Http\Controllers\Admin\FolderController;
+use Cartxis\CMS\Http\Controllers\Admin\StorefrontMenuController;
+
+// CMS Admin Routes
+Route::middleware(['web', 'auth:admin'])->prefix('admin')->name('admin.')->group(function () {
+    Route::prefix('content')->name('content.')->group(function () {
+        // Pages Management
+        Route::prefix('pages')->name('pages.')->group(function () {
+            Route::get('/', [PagesController::class, 'index'])->name('index');
+            Route::get('/create', [PagesController::class, 'create'])->name('create');
+            Route::post('/', [PagesController::class, 'store'])->name('store');
+            Route::get('/{page}/edit', [PagesController::class, 'edit'])->name('edit');
+            Route::put('/{page}', [PagesController::class, 'update'])->name('update');
+            Route::delete('/{page}', [PagesController::class, 'destroy'])->name('destroy');
+            Route::post('/bulk-action', [PagesController::class, 'bulkAction'])->name('bulk-action');
+            Route::get('/{page}/preview', [PagesController::class, 'preview'])->name('preview');
+            Route::post('/check-slug', [PagesController::class, 'checkSlug'])->name('check-slug');
+            Route::post('/{page}/duplicate', [PagesController::class, 'duplicate'])->name('duplicate');
+        });
+
+        // Media Library
+        Route::prefix('media')->name('media.')->group(function () {
+            Route::get('/', [MediaController::class, 'index'])->name('index');
+            Route::post('/upload', [MediaController::class, 'upload'])->name('upload');
+            Route::post('/upload-json', [MediaController::class, 'uploadJson'])->name('upload-json');
+            Route::post('/bulk-action', [MediaController::class, 'bulkAction'])->name('bulk-action');
+            Route::get('/picker', [MediaController::class, 'picker'])->name('picker');
+            Route::get('/{media}', [MediaController::class, 'show'])->name('show');
+            Route::put('/{media}', [MediaController::class, 'update'])->name('update');
+            Route::delete('/{media}', [MediaController::class, 'destroy'])->name('destroy');
+        });
+
+        // Media Folders
+        Route::prefix('folders')->name('folders.')->group(function () {
+            Route::post('/', [FolderController::class, 'store'])->name('store');
+            Route::put('/{folder}', [FolderController::class, 'update'])->name('update');
+            Route::delete('/{folder}', [FolderController::class, 'destroy'])->name('destroy');
+        });
+
+        // Storefront Menus
+        Route::prefix('storefront-menus')->name('storefront-menus.')->group(function () {
+            Route::get('/', [StorefrontMenuController::class, 'index'])->name('index');
+            Route::post('/', [StorefrontMenuController::class, 'store'])->name('store');
+            Route::put('/{menuItem}', [StorefrontMenuController::class, 'update'])->name('update');
+            Route::delete('/{menuItem}', [StorefrontMenuController::class, 'destroy'])->name('destroy');
+            Route::post('/reorder', [StorefrontMenuController::class, 'reorder'])->name('reorder');
+            Route::post('/{menuItem}/toggle', [StorefrontMenuController::class, 'toggle'])->name('toggle');
+        });
+    });
+});
