@@ -1,0 +1,75 @@
+name: storefront e2e
+
+# Manual only (workflow_dispatch). It is not required for merges to main yet.
+# Enable it on pull requests once it has passed a few runs.
+on:
+  workflow_dispatch:
+
+jobs:
+  e2e:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.4'
+          extensions: sqlite3, pdo_sqlite, mbstring, intl, gd, zip
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+
+      - name: Install PHP dependencies
+        run: composer install --no-interaction --prefer-dist --no-progress
+
+      - name: Install Node dependencies
+        run: npm ci
+
+      - name: Prepare environment
+        run: |
+          cp .env.example .env
+          php artisan key:generate
+          touch database/e2e.sqlite
+          sed -i 's#^DB_CONNECTION=.*#DB_CONNECTION=sqlite#' .env
+          sed -i 's#^DB_DATABASE=.*#DB_DATABASE=/home/runner/work/netrual-ecommarce/netrual-ecommarce/database/e2e.sqlite#' .env
+
+      - name: Build frontend assets
+        run: npm run build
+
+      - name: Migrate and seed storefront fixtures
+        run: |
+          php artisan migrate --force
+          php artisan db:seed --class="Bulbula\Product\Database\Seeders\CategorySeeder" --force
+          php artisan db:seed --class="Bulbula\Product\Database\Seeders\BrandSeeder" --force
+          php artisan db:seed --class="Bulbula\Product\Database\Seeders\ProductSeeder" --force
+          php artisan db:seed --class="Bulbula\Shop\Database\Seeders\ThemeSeeder" --force
+          php artisan storage:link
+
+      - name: Start app
+        run: |
+          nohup php artisan serve --host=127.0.0.1 --port=8000 > serve.log 2>&1 &
+          sleep 5
+          curl -sf http://127.0.0.1:8000/ > /dev/null
+
+      - name: Install browsers
+        run: npx playwright install --with-deps chromium
+
+      - name: Run storefront tests
+        env:
+          E2E_BASE_URL: http://127.0.0.1:8000
+          CI: 'true'
+        run: npx playwright test
+
+      - name: Upload report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report
+          path: playwright-report/
+          retention-days: 7
