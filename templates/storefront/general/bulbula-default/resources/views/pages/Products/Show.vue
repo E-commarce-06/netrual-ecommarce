@@ -135,6 +135,18 @@ function toParagraphs(raw: string | null | undefined): string[] {
 const shortDescriptionParagraphs = computed(() => toParagraphs(props.product.short_description));
 const descriptionParagraphs = computed(() => toParagraphs(props.product.description));
 
+// Only fields the page already receives. Weight/dimensions are not provided
+// by the controller, so they are not shown.
+const detailRows = computed(() => [
+    { label: 'SKU', value: props.product.sku },
+    { label: 'Brand', value: props.product.brand?.name ?? '' },
+    { label: 'Category', value: (props.product.categories ?? []).map(c => c.name).join(', ') },
+    {
+        label: 'Availability',
+        value: props.product.in_stock ? `In stock (${props.product.quantity} available)` : 'Out of stock',
+    },
+].filter(row => row.value));
+
 // Add to cart state
 const quantity = ref(1);
 const isAddingToCart = ref(false);
@@ -598,6 +610,21 @@ const handleMouseMove = (e: MouseEvent) => {
                 <div class="max-w-none text-gray-600 leading-relaxed space-y-4">
                     <p v-for="(paragraph, index) in descriptionParagraphs" :key="index">{{ paragraph }}</p>
                 </div>
+            </div>
+
+            <!-- Product Details -->
+            <div v-if="detailRows.length" class="mt-12 border-t pt-8">
+                <h2 class="text-2xl font-bold text-gray-900 mb-4">Product Details</h2>
+                <dl class="grid grid-cols-1 sm:grid-cols-2 gap-x-8">
+                    <div
+                        v-for="row in detailRows"
+                        :key="row.label"
+                        class="flex justify-between gap-4 border-b border-gray-100 py-3 text-sm"
+                    >
+                        <dt class="text-gray-500">{{ row.label }}</dt>
+                        <dd class="text-gray-900 font-medium text-right">{{ row.value }}</dd>
+                    </div>
+                </dl>
             </div>
 
             <!-- Related Products -->
