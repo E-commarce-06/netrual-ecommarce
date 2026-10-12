@@ -356,7 +356,7 @@ const activeFilterBadges = computed(() => {
                         id="product-filters"
                         aria-label="Filters"
                         :class="mobileFiltersOpen
-                            ? 'fixed inset-x-0 bottom-0 z-50 max-h-[85vh] overflow-y-auto rounded-t-2xl bg-white lg:static lg:max-h-none lg:w-64 lg:flex-shrink-0 lg:overflow-visible lg:rounded-none'
+                            ? 'fixed inset-x-0 bottom-0 z-50 w-screen max-w-full box-border max-h-[85vh] overflow-y-auto rounded-t-2xl bg-white lg:static lg:w-64 lg:max-h-none lg:flex-shrink-0 lg:overflow-visible lg:rounded-none'
                             : 'hidden lg:block lg:w-64 lg:flex-shrink-0'"
                     >
                         <div class="bg-white rounded-2xl shadow-md p-6 lg:sticky lg:top-24">
