@@ -458,7 +458,7 @@ const activeFilterBadges = computed(() => {
                                         class="flex items-center text-sm text-gray-600 hover:text-indigo-600 transition-colors cursor-pointer"
                                         :class="{ 'text-indigo-600 font-semibold': activeFilters.rating === rating }"
                                     >
-                                        <span class="text-yellow-400 mr-2">{{ '★'.repeat(rating) }}{{ '☆'.repeat(5 - rating) }}</span>
+                                        <span class="text-amber-600 mr-2">{{ '★'.repeat(rating) }}{{ '☆'.repeat(5 - rating) }}</span>
                                         <span>& Up</span>
                                     </a>
                                 </div>

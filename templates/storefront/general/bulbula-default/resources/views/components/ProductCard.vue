@@ -209,7 +209,7 @@ const handleWishlistToggle = async () => {
             </Link>
 
             <div v-if="showRatings" class="flex items-center gap-2 mb-3">
-                <div class="flex text-yellow-400 text-sm">
+                <div class="flex text-amber-600 text-sm">
                     {{ renderStars(product.rating) }}
                 </div>
                 <span class="text-xs text-gray-500">({{ product.reviews_count }})</span>

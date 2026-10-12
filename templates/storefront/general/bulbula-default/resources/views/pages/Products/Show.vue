@@ -349,7 +349,7 @@ const handleMouseMove = (e: MouseEvent) => {
                                     v-for="i in 5"
                                     :key="i"
                                     class="w-5 h-5"
-                                    :class="i <= Math.round(product.rating) ? 'text-yellow-400' : 'text-gray-300'"
+                                    :class="i <= Math.round(product.rating) ? 'text-amber-600' : 'text-gray-400'"
                                     fill="currentColor"
                                     viewBox="0 0 20 20"
                                 >

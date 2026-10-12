@@ -97,7 +97,7 @@
                                     <!-- Rating & Reviews -->
                                     <div class="flex items-center gap-3">
                                         <div class="flex items-center">
-                                            <span class="text-yellow-400 text-lg">
+                                            <span class="text-amber-600 text-lg">
                                                 {{ '★'.repeat(Math.floor(product.rating)) }}{{ '☆'.repeat(5 - Math.floor(product.rating)) }}
                                             </span>
                                         </div>

@@ -125,7 +125,7 @@ const totalResults = computed(() => {
                             <!-- Rating -->
                             <div v-if="product.rating" class="flex items-center mt-2">
                                 <div class="flex items-center">
-                                    <span class="text-yellow-400">★</span>
+                                    <span class="text-amber-600">★</span>
                                     <span class="ml-1 text-sm text-gray-600">{{ product.rating }}</span>
                                 </div>
                                 <span v-if="product.reviews_count" class="ml-2 text-xs text-gray-500">

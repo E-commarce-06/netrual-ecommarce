@@ -101,7 +101,7 @@ function submit() {
                 type="email"
                 placeholder="your@email.com"
                 autocomplete="email"
-                class="w-full px-4 py-3 rounded-xl text-sm outline-none bg-white text-gray-900 placeholder-gray-400 focus:ring-2 focus:ring-blue-400 border-0"
+                class="w-full px-4 py-3 rounded-xl text-sm outline-none bg-white text-gray-900 placeholder-gray-500 focus:ring-2 focus:ring-blue-400 border-0"
               />
               <p v-if="error" class="mt-1.5 text-xs text-red-400">{{ error }}</p>
             </div>
