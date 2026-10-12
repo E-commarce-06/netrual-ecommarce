@@ -225,6 +225,7 @@ class SetupController extends Controller
     {
         try {
             $this->ensureInstallerDataSeeded();
+            $this->ensureStorefrontReady();
 
             $this->demoDataService->markSetupComplete();
 
@@ -241,6 +242,25 @@ class SetupController extends Controller
                 'success' => false,
                 'message' => 'Failed to complete setup: ' . $e->getMessage(),
             ], 500);
+        }
+    }
+
+    /**
+     * Make the storefront show product images and its theme blocks (product
+     * links). Creates public/storage when missing, and seeds/activates the
+     * bundled default theme only when no theme is active.
+     */
+    private function ensureStorefrontReady(): void
+    {
+        if (! is_link(public_path('storage')) && ! file_exists(public_path('storage'))) {
+            Artisan::call('storage:link');
+        }
+
+        if (Schema::hasTable('themes') && ! DB::table('themes')->where('is_active', true)->exists()) {
+            Artisan::call('db:seed', [
+                '--class' => \Bulbula\Shop\Database\Seeders\ThemeSeeder::class,
+                '--force' => true,
+            ]);
         }
     }
 
