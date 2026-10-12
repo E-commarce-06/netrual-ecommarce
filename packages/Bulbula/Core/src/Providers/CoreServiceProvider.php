@@ -10,7 +10,10 @@ use Bulbula\Core\Console\Commands\ExtensionsListCommand;
 use Bulbula\Core\Console\Commands\ExtensionsSyncCommand;
 use Bulbula\Core\Console\Commands\ExtensionsUninstallCommand;
 use Bulbula\Core\Console\Commands\InstallCommand;
+use Bulbula\Core\Console\Commands\ThemeActivateCommand;
 use Bulbula\Core\Console\Commands\ThemeDiscoverCommand;
+use Bulbula\Core\Console\Commands\ThemeImportDataCommand;
+use Bulbula\Core\Console\Commands\ThemeListCommand;
 use Bulbula\Core\Http\Middleware\SetAdminSessionCookie;
 use Bulbula\Core\Services\ExtensionService;
 use Bulbula\Core\Services\HookService;
@@ -103,6 +106,9 @@ class CoreServiceProvider extends ServiceProvider
                 ExtensionsActivateCommand::class,
                 ExtensionsDeactivateCommand::class,
                 ThemeDiscoverCommand::class,
+                ThemeListCommand::class,
+                ThemeActivateCommand::class,
+                ThemeImportDataCommand::class,
             ]);
         }
     }

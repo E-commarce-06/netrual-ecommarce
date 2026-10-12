@@ -48,15 +48,15 @@ const goToSettings = (slug: string) => {
 </script>
 
 <template>
-  <AdminLayout title="Themes">
-    <Head title="Themes" />
+  <AdminLayout title="Design Templates">
+    <Head title="Design Templates" />
 
     <div class="py-8">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <!-- Header -->
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
           <div>
-            <h1 class="text-2xl font-bold text-gray-900 tracking-tight">Themes</h1>
+            <h1 class="text-2xl font-bold text-gray-900 tracking-tight">Design Templates</h1>
             <p class="mt-1 text-sm text-gray-500">
               Settings for the storefront theme in use.
             </p>
