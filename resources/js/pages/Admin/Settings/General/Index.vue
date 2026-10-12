@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { Head, useForm, router } from '@inertiajs/vue3'
+import { Head, useForm, router, usePage } from '@inertiajs/vue3'
+const brand = (usePage().props.brand ?? {}) as Record<string, string>
 import AdminLayout from '@/layouts/AdminLayout.vue'
 import ImageUploader from '@/components/Admin/ImageUploader.vue'
 import { 
@@ -46,7 +47,7 @@ const removeMobileAuthLogo = ref(false)
 
 const form = useForm({
   // Site Information
-  site_name: props.settings['site_name'] || 'Bulbula Shop',
+  site_name: props.settings['site_name'] || `${brand.name} Shop`,
   site_tagline: props.settings['site_tagline'] || '',
   admin_email: props.settings['admin_email'] || '',
   contact_phone: props.settings['contact_phone'] || '',

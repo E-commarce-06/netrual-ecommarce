@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Frontend assets missing — Bulbula</title>
+    <title>Frontend assets missing — {{ config('brand.name') }}</title>
     <style>
         :root {
             --bg: #0f1419;
@@ -99,7 +99,7 @@
         <div class="badge">Setup required</div>
         <h1>Frontend assets are missing</h1>
         <p>
-            Bulbula could not find <code>public/build/manifest.json</code>.
+            {{ config('brand.name') }} could not find <code>public/build/manifest.json</code>.
             The admin panel and setup wizard need pre-built Vite assets.
             Shared hosts typically do not include Node.js, so cloning the git repo alone is not enough.
         </p>

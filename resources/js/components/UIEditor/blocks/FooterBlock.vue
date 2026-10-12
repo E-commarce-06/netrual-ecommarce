@@ -10,7 +10,9 @@ interface MenuItem {
   children: MenuItem[]
 }
 
+import { usePage } from '@inertiajs/vue3'
 const props = defineProps<{ settings: Record<string, unknown>; editorMode?: boolean }>()
+const brand = (usePage().props.brand ?? {}) as Record<string, string>
 
 const menuItems = ref<MenuItem[]>([])
 const loading   = ref(false)
@@ -225,7 +227,7 @@ const activeSocials = computed(() =>
         </div>
 
         <p v-else-if="editorMode" style="font-size:12px;color:#4b5563;font-style:italic;margin:0;">
-          Powered by Bulbula
+          Powered by {{ brand.powered_by }}
         </p>
       </div>
     </div>

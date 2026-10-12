@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { Head, router } from '@inertiajs/vue3';
+import { Head, router, usePage } from '@inertiajs/vue3';
+const brand = (usePage().props.brand ?? {}) as Record<string, string>;
 
 interface Props {
     appName: string;
@@ -23,7 +24,7 @@ const startSetup = () => {
                     <div class="w-20 h-20 bg-white rounded-full flex items-center justify-center">
                         <img
                             src="/logos/logo_icon.png"
-                            alt="Bulbula logo"
+                            :alt="`${brand.name} logo`"
                             class="w-12 h-12 object-contain"
                         />
                     </div>
@@ -38,7 +39,7 @@ const startSetup = () => {
                         Set up your store
                     </h2>
                     <p class="text-lg text-gray-600">
-                        Bulbula works for retail, digital downloads, and quote/RFQ catalogs — not only physical shops.
+                        {{ brand.name }} works for retail, digital downloads, and quote/RFQ catalogs — not only physical shops.
                     </p>
                 </div>
 

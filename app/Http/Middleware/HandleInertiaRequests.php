@@ -47,6 +47,27 @@ class HandleInertiaRequests extends Middleware
     }
 
     /**
+     * Brand values for the frontend. Single source: config/brand.php.
+     *
+     * @return array<string, mixed>
+     */
+    protected function brandProps(): array
+    {
+        return [
+            'name' => config('brand.name'),
+            'slug' => config('brand.slug'),
+            'company' => config('brand.company'),
+            'tagline' => config('brand.tagline'),
+            'powered_by' => config('brand.powered_by'),
+            'copyright_holder' => config('brand.copyright_holder'),
+            'logo' => config('brand.logo'),
+            'logo_icon' => config('brand.logo_icon'),
+            'favicon' => config('brand.favicon'),
+            'support_email' => config('brand.support_email'),
+        ];
+    }
+
+    /**
      * Define the props that are shared by default.
      *
      * @see https://inertiajs.com/shared-data
@@ -61,6 +82,7 @@ class HandleInertiaRequests extends Middleware
         if (app()->runningInConsole()) {
             return array_merge(parent::share($request), [
                 'name' => config('app.name'),
+                'brand' => $this->brandProps(),
                 'appVersion' => config('app.version'),
                 'quote' => ['message' => trim($message), 'author' => trim($author)],
                 'auth' => [
@@ -108,6 +130,7 @@ class HandleInertiaRequests extends Middleware
 
         return array_merge(parent::share($request), [
             'name' => config('app.name'),
+            'brand' => $this->brandProps(),
             'appVersion' => config('app.version'),
             'csrf_token' => csrf_token(),
             'quote' => ['message' => trim($message), 'author' => trim($author)],

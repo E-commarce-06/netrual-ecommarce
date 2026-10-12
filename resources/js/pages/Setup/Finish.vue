@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { Head } from '@inertiajs/vue3';
+import { Head, usePage } from '@inertiajs/vue3';
+const brand = (usePage().props.brand ?? {}) as Record<string, string>;
 import { ref } from 'vue';
 import axios from 'axios';
 
@@ -215,7 +216,7 @@ const subscribeNewsletter = async () => {
                                         class="mt-0.5 h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
                                     />
                                     <span class="text-xs text-gray-600 leading-snug">
-                                        I agree to receive developer updates from the Bulbula Commerce team.
+                                        I agree to receive developer updates from the {{ brand.company }} team.
                                         You can unsubscribe at any time.
                                         <a href="https://example.com/privacy" target="_blank" rel="noopener noreferrer" class="text-blue-600 underline">Privacy Policy</a>
                                     </span>
@@ -249,7 +250,7 @@ const subscribeNewsletter = async () => {
 
             <!-- Footer -->
             <div class="bg-gray-50 px-8 py-4 text-center text-sm text-gray-600">
-                <p>Thank you for choosing Bulbula eCommerce Platform! 🚀</p>
+                <p>Thank you for choosing {{ brand.name }} eCommerce Platform! 🚀</p>
             </div>
         </div>
     </div>

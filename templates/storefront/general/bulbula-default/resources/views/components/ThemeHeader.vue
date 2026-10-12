@@ -32,15 +32,17 @@ interface Props {
 const props = withDefaults(defineProps<Props>(), {
     theme: null,
     siteConfig: () => ({
-        name: 'Bulbula',
+        name: '',
         url: '/',
-        description: 'E-commerce Platform'
+        description: ''
     }),
     categories: () => [],
     containerStyle: () => ({}),
 });
 
 const page = usePage();
+// Store name: siteConfig from the server, else the brand name from config/brand.php.
+const siteName = computed(() => props.siteConfig?.name || (page.props.brand as any)?.name || '');
 const auth = computed(() => page.props.auth as any);
 const user = computed(() => auth.value?.user);
 
@@ -277,7 +279,7 @@ onUnmounted(() => {
                         <img
                             v-if="siteConfig.logo"
                             :src="`/storage/${siteConfig.logo}`"
-                            :alt="siteConfig.name"
+                            :alt="siteName"
                             class="h-10 object-contain"
                             :style="{ maxWidth: '200px' }"
                         />
@@ -286,7 +288,7 @@ onUnmounted(() => {
                             class="text-xl md:text-2xl font-bold"
                             :style="{ color: primary }"
                         >
-                            {{ siteConfig.name }}
+                            {{ siteName }}
                         </h1>
                     </Link>
                 </div>
@@ -693,7 +695,7 @@ onUnmounted(() => {
                     <div class="absolute inset-0 bg-black/40" @click="closeMobileMenu" />
                     <aside class="absolute left-0 top-0 h-full w-[min(320px,88vw)] bg-white shadow-xl flex flex-col">
                         <div class="flex items-center justify-between px-4 h-16 border-b border-slate-200">
-                            <span class="font-bold text-slate-900">{{ siteConfig.name }}</span>
+                            <span class="font-bold text-slate-900">{{ siteName }}</span>
                             <button type="button" class="p-2 rounded-lg hover:bg-slate-100" aria-label="Close menu" @click="closeMobileMenu">
                                 <X class="w-5 h-5" />
                             </button>

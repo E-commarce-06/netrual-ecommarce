@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Link } from '@inertiajs/vue3';
+import { Link, usePage } from '@inertiajs/vue3';
 import { useStorefrontMenu } from '@/composables/useStorefrontMenu';
 import { useThemeSettings } from '@/composables/useThemeSettings';
 import { computed } from 'vue';
@@ -18,14 +18,19 @@ interface Props {
 const props = withDefaults(defineProps<Props>(), {
     theme: null,
     siteConfig: () => ({
-        name: 'Bulbula',
+        name: '',
         url: '/',
-        description: 'E-commerce Platform',
+        description: '',
     }),
     containerStyle: () => ({}),
 });
 
 const currentYear = new Date().getFullYear();
+const page = usePage();
+const brand = computed(() => (page.props.brand ?? {}) as Record<string, string>);
+// Name and description: from siteConfig, else the brand values in config/brand.php.
+const siteName = computed(() => props.siteConfig?.name || brand.value.name || '');
+const siteDescription = computed(() => props.siteConfig?.description || brand.value.tagline || '');
 const { menus, loading, getMenuUrl } = useStorefrontMenu();
 const { showPlatformBranding, accent } = useThemeSettings();
 
@@ -43,8 +48,8 @@ const footerSections = computed(() => {
         <div class="mx-auto px-4 sm:px-6 lg:px-8" :style="containerStyle">
             <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
                 <div>
-                    <h3 class="text-xl font-bold text-white mb-4">{{ siteConfig.name }}</h3>
-                    <p class="text-sm leading-relaxed mb-4">{{ siteConfig.description }}</p>
+                    <h3 class="text-xl font-bold text-white mb-4">{{ siteName }}</h3>
+                    <p class="text-sm leading-relaxed mb-4">{{ siteDescription }}</p>
                     <div class="flex items-center gap-3">
                         <a href="#" class="p-2 rounded-full bg-slate-800 hover:bg-blue-600 transition-colors" aria-label="Facebook">
                             <Facebook class="w-4 h-4" />
@@ -104,9 +109,9 @@ const footerSections = computed(() => {
                     <span class="text-xs">Visa · Mastercard · PayPal · Stripe</span>
                 </div>
                 <div class="text-center text-sm">
-                    <p>&copy; {{ currentYear }} {{ siteConfig.name }}. All rights reserved.</p>
+                    <p>&copy; {{ currentYear }} {{ siteName }}. All rights reserved.</p>
                     <p v-if="showPlatformBranding" class="mt-1 text-slate-500">
-                        Powered by <span class="text-slate-400 font-medium">Bulbula</span>
+                        Powered by <span class="text-slate-400 font-medium">{{ brand.powered_by }}</span>
                     </p>
                 </div>
             </div>

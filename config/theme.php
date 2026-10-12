@@ -22,7 +22,7 @@ return [
     | have a required view, the resolver will fall back to this theme.
     |
     */
-    'default' => 'bulbula-default',
+    'default' => (require __DIR__.'/brand.php')['default_theme'],
 
     /*
     |--------------------------------------------------------------------------

@@ -1,9 +1,9 @@
 {
-    "name": "Bulbula Default",
+    "name": "Default Theme",
     "slug": "bulbula-default",
     "description": "A vibrant, mobile-first storefront theme with UI Editor homepage layouts, quick view, and modern blue retail polish.",
     "version": "2.0.0",
-    "author": "Bulbula Team",
+    "author": "",
     "author_url": "https://example.com",
     "screenshot": "screenshots/theme-preview.svg",
     "is_default": true,

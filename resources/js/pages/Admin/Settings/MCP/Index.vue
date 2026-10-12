@@ -49,6 +49,8 @@ const props = withDefaults(defineProps<Props>(), {
 })
 
 const page = usePage()
+// Key for the MCP server entry. Comes from config/brand.php (BRAND_SLUG).
+const mcpKey = ((page.props.brand as any)?.slug as string) || 'mcp'
 const flash = computed(() => (page.props.flash as Record<string, string | null>) || {})
 
 const settingsForm = useForm({
@@ -166,7 +168,7 @@ const buildRemoteSnippet = (url: string) => {
   if (remoteEnv.value) {
     server.env = remoteEnv.value
   }
-  return JSON.stringify({ mcpServers: { bulbula: server } }, null, 2)
+  return JSON.stringify({ mcpServers: { [mcpKey]: server } }, null, 2)
 }
 
 const platforms = computed(() => [
@@ -179,7 +181,7 @@ const platforms = computed(() => [
     fileHint: '.cursor/mcp.json',
     snippet: JSON.stringify({
       mcpServers: {
-        bulbula: {
+        [mcpKey]: {
           url: props.endpointUrl,
           headers: {
             Authorization: 'Bearer YOUR_MCP_TOKEN',
@@ -211,7 +213,7 @@ const platforms = computed(() => [
     fileHint: '.vscode/mcp.json',
     snippet: JSON.stringify({
       servers: {
-        bulbula: {
+        [mcpKey]: {
           type: 'http',
           url: props.endpointUrl,
           headers: {
@@ -241,7 +243,7 @@ const platforms = computed(() => [
     fileHint: 'mcp.json',
     snippet: JSON.stringify({
       mcpServers: {
-        bulbula: {
+        [mcpKey]: {
           url: props.endpointUrl,
           headers: {
             Authorization: 'Bearer YOUR_MCP_TOKEN',
