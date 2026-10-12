@@ -1,1 +1,0 @@
-import{d as t,b as o,k as n,K as s}from"./app-DgyYWtR_.js";const l=t({__name:"SpacerBlock",props:{settings:{},editorMode:{type:Boolean}},setup(a){return(e,r)=>(o(),n("div",{style:s({height:`${e.settings.height??40}px`})},null,4))}});export{l as default};
