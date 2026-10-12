@@ -7,7 +7,6 @@ use Illuminate\Support\Facades\Facade;
 /**
  * @method static array discover()
  * @method static \Bulbula\Core\Models\Theme|null active()
- * @method static bool activate(string $slug)
  * @method static bool install(string $zipPath)
  * @method static bool delete(string $slug)
  * @method static array getSettingsSchema(\Bulbula\Core\Models\Theme $theme)

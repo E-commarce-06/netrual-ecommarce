@@ -51,7 +51,7 @@ class ListTemplatesTool implements McpToolInterface
         $themes = $this->themeService->all();
 
         if (! empty($arguments['active_only'])) {
-            $themes = $themes->where('is_active', true)->values();
+            $themes = $themes->where('slug', config('theme.default'))->values();
         }
 
         return McpResponse::text([
@@ -62,7 +62,7 @@ class ListTemplatesTool implements McpToolInterface
                 'category' => $theme->category,
                 'version' => $theme->version,
                 'author' => $theme->author,
-                'is_active' => (bool) $theme->is_active,
+                'is_active' => $theme->slug === config('theme.default'),
                 'is_default' => (bool) $theme->is_default,
                 'source' => $theme->source,
                 'exists_on_disk' => $theme->exists(),

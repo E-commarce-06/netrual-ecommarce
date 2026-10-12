@@ -22,16 +22,12 @@ class AdminMenuSyncService
         }
 
         $marketingId = $this->parentId('marketing');
-        $appearanceId = $this->parentId('appearance');
         $settingsId = $this->parentId('settings');
         $catalogId = $this->parentId('catalog');
 
         if ($marketingId) {
             $this->syncMarketingChildren($marketingId);
             $this->reparentOrphanedNewsletterItems($marketingId);
-        }
-
-        if ($appearanceId) {
         }
 
         if ($settingsId) {

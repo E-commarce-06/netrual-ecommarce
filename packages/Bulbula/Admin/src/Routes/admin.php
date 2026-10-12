@@ -8,7 +8,6 @@ use Bulbula\Admin\Http\Controllers\PasswordController;
 use Bulbula\Admin\Http\Controllers\NotificationController;
 use Bulbula\Admin\Http\Controllers\ActivityLogController;
 use Bulbula\Core\Http\Controllers\Admin\DashboardController;
-use Bulbula\Core\Http\Controllers\Admin\ThemeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -65,15 +64,6 @@ Route::prefix('admin')->name('admin.')->middleware(['web'])->group(function () {
         Route::prefix('password')->name('password.')->group(function () {
             Route::get('/', [PasswordController::class, 'edit'])->name('edit');
             Route::post('/', [PasswordController::class, 'update'])->name('update');
-        });
-        
-        // Appearance -> Themes
-        Route::get('appearance', [ThemeController::class, 'appearance'])->name('appearance.index');
-        Route::prefix('appearance/themes')->name('themes.')->group(function () {
-            Route::get('/', [ThemeController::class, 'index'])->name('index');
-            Route::get('/active-settings', [ThemeController::class, 'activeSettings'])->name('active-settings');
-            Route::get('/{slug}/settings', [ThemeController::class, 'settings'])->name('settings');
-            Route::put('/{slug}/settings', [ThemeController::class, 'updateSettings'])->name('settings.update');
         });
 
     });

@@ -16,13 +16,15 @@ class ThemeSeeder extends Seeder
      */
     public function run(): void
     {
-        $themePath = base_path('templates/storefront/general/bulbula-default');
+        // The single storefront theme, chosen by config (BRAND_DEFAULT_THEME).
+        $slug = (string) config('theme.default');
+        $themePath = base_path('templates/storefront/general/'.$slug);
 
         // ── 1. Theme record ────────────────────────────────────────────────
         $themeConfig = json_decode(file_get_contents($themePath . '/theme.json'), true);
 
         Theme::updateOrCreate(
-            ['slug' => 'bulbula-default'],
+            ['slug' => $slug],
             [
                 'name'        => $themeConfig['name'],
                 'description' => $themeConfig['description'],
@@ -31,7 +33,7 @@ class ThemeSeeder extends Seeder
                 'screenshot'  => $themeConfig['screenshot'] ?? null,
                 'is_active'   => true,
                 'is_default'  => true,
-                'catalog_slug' => 'bulbula-default',
+                'catalog_slug' => $slug,
                 'source'      => 'bundled',
                 'category'    => 'general',
                 'settings'    => $themeConfig['settings'] ?? [],
@@ -42,7 +44,7 @@ class ThemeSeeder extends Seeder
 
         // Publish theme public assets (hero images, etc.)
         Artisan::call('theme:discover');
-        $this->command->info('  ↳ Theme assets published to public/templates/bulbula-default/.');
+        $this->command->info('  ↳ Theme assets published to public/templates/'.$slug.'/.');
 
         // ── 2. Homepage UIEditor layout ────────────────────────────────────
         // Only seed if NO published homepage layout exists yet.

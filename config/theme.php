@@ -6,8 +6,8 @@ return [
     | Active Theme
     |--------------------------------------------------------------------------
     |
-    | The slug of the currently active theme. This is set dynamically by
-    | ThemeServiceProvider during boot based on the database record.
+    | The slug of the currently active theme. CoreServiceProvider sets this at
+    | boot from the 'default' theme below. It is not chosen in the admin.
     | Null means the default theme will be used.
     |
     */

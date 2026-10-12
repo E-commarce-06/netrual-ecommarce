@@ -10,7 +10,6 @@ use Bulbula\Core\Console\Commands\ExtensionsListCommand;
 use Bulbula\Core\Console\Commands\ExtensionsSyncCommand;
 use Bulbula\Core\Console\Commands\ExtensionsUninstallCommand;
 use Bulbula\Core\Console\Commands\InstallCommand;
-use Bulbula\Core\Console\Commands\ThemeActivateCommand;
 use Bulbula\Core\Console\Commands\ThemeDiscoverCommand;
 use Bulbula\Core\Console\Commands\ThemeImportDataCommand;
 use Bulbula\Core\Console\Commands\ThemeListCommand;
@@ -107,7 +106,6 @@ class CoreServiceProvider extends ServiceProvider
                 ExtensionsDeactivateCommand::class,
                 ThemeDiscoverCommand::class,
                 ThemeListCommand::class,
-                ThemeActivateCommand::class,
                 ThemeImportDataCommand::class,
             ]);
         }
@@ -164,7 +162,7 @@ class CoreServiceProvider extends ServiceProvider
             $themeService->discover();
 
             // Load asset paths and hooks for the currently active theme
-            $activeTheme = $themeService->reconcileActiveTheme() ?? $themeService->active();
+            $activeTheme = $themeService->active();
 
             if ($activeTheme) {
                 config(['theme.active' => $activeTheme->slug]);

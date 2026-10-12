@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Bulbula\Settings\Mcp;
 
 use Bulbula\Settings\Mcp\Contracts\McpToolInterface;
-use Bulbula\Settings\Mcp\Tools\ActivateTemplateTool;
 use Bulbula\Settings\Mcp\Tools\CreatePageTool;
 use Bulbula\Settings\Mcp\Tools\CreateProductTool;
 use Bulbula\Settings\Mcp\Tools\GetOrderTool;
@@ -58,7 +57,6 @@ class McpToolRegistry
             // Storefront templates (themes)
             ListTemplatesTool::class,
             GetTemplateTool::class,
-            ActivateTemplateTool::class,
 
             // CMS pages + Bulbula UI / template editor
             ListPagesTool::class,

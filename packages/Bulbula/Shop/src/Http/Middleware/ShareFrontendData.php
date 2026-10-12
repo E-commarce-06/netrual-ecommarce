@@ -83,7 +83,7 @@ class ShareFrontendData
             // Theme basics (name, slug, settings) — needed by all themes
             'theme' => function () {
                 try {
-                    $theme = Theme::where('is_active', true)->first();
+                    $theme = Theme::active();
                     if ($theme) {
                         $configSettings = $theme->getConfig()['settings'] ?? [];
                         $defaultSettings = is_array($configSettings)

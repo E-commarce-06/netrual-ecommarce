@@ -189,7 +189,7 @@ class SetupController extends Controller
 
             if ($result['success']) {
                 // Also seed the homepage layout from the default theme if not already published
-                $themeDataPath = base_path('templates/storefront/general/bulbula-default/data/theme-data.json');
+                $themeDataPath = base_path('templates/storefront/general/'.config('theme.default').'/data/theme-data.json');
                 if (file_exists($themeDataPath)) {
                     $themeData = json_decode(file_get_contents($themeDataPath), true);
                     if (!empty($themeData['homepage']) && !PageLayout::homepage()->published()->exists()) {
@@ -256,7 +256,8 @@ class SetupController extends Controller
             Artisan::call('storage:link');
         }
 
-        if (Schema::hasTable('themes') && ! DB::table('themes')->where('is_active', true)->exists()) {
+        // The storefront theme is the one named in config (theme.default); seed it if its row is missing.
+        if (Schema::hasTable('themes') && ! DB::table('themes')->where('slug', config('theme.default'))->exists()) {
             Artisan::call('db:seed', [
                 '--class' => \Bulbula\Shop\Database\Seeders\ThemeSeeder::class,
                 '--force' => true,

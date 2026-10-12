@@ -3,10 +3,7 @@
 namespace Bulbula\Core\Services;
 
 use Bulbula\Core\Models\Theme;
-use Bulbula\Shop\Services\HomeService;
-use Bulbula\UIEditor\Models\PageLayout;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 
@@ -155,112 +152,6 @@ class ThemeService
     public function active(): ?Theme
     {
         return Theme::active();
-    }
-
-    /**
-     * If the active theme has no files on disk, fall back to the default bundled theme.
-     */
-    public function reconcileActiveTheme(): ?Theme
-    {
-        $active = Theme::active();
-
-        if ($active === null) {
-            return null;
-        }
-
-        if ($active->exists()) {
-            return $active;
-        }
-
-        $defaultSlug = (string) config('theme.default', 'bulbula-default');
-
-        logger()->warning('Active theme files missing on disk; falling back to default theme.', [
-            'missing_slug' => $active->slug,
-            'missing_category' => $active->category,
-            'fallback' => $defaultSlug,
-        ]);
-
-        Theme::query()->update(['is_active' => false]);
-
-        $default = Theme::where('slug', $defaultSlug)->first();
-
-        if ($default !== null && $default->exists()) {
-            $default->activate();
-
-            return $default->fresh();
-        }
-
-        return null;
-    }
-
-    public function activate(string $slug): bool
-    {
-        $theme = Theme::where('slug', $slug)->first();
-
-        if (! $theme || ! $theme->exists()) {
-            return false;
-        }
-
-        $result = $theme->activate();
-
-        if ($result) {
-            Cache::forget('active_theme');
-            $this->restoreBundledTheme($theme->fresh());
-
-            if (function_exists('do_action')) {
-                do_action('theme.activated', $theme);
-            }
-        }
-
-        return $result;
-    }
-
-    public function restoreBundledTheme(?Theme $theme = null): void
-    {
-        $theme = $theme ?? Theme::where('slug', config('theme.default', 'bulbula-default'))->first();
-
-        if (! $theme || ! $theme->exists()) {
-            return;
-        }
-
-        $config = $theme->getConfig();
-        $dataPath = $theme->getPath().'/data/theme-data.json';
-        $themeData = file_exists($dataPath)
-            ? json_decode((string) file_get_contents($dataPath), true)
-            : [];
-
-        if (! empty($config['settings'])) {
-            $theme->update(['settings' => $config['settings']]);
-        }
-
-        if (! empty($config['native_homepage'])) {
-            PageLayout::homepage()->delete();
-        } elseif (! empty($themeData['homepage']['sections'])) {
-            PageLayout::homepage()->delete();
-
-            PageLayout::create([
-                'page_type' => PageLayout::TYPE_HOMEPAGE,
-                'page_id' => null,
-                'layout_data' => $themeData['homepage'],
-                'status' => PageLayout::STATUS_PUBLISHED,
-                'published_at' => now(),
-            ]);
-        }
-
-        if (file_exists($dataPath)) {
-            app(ThemeDataImportService::class)->import(
-                $theme->slug,
-                blocks: true,
-                menus: true,
-                settings: true,
-            );
-        }
-
-        Cache::forget('active_theme');
-
-        if (class_exists(HomeService::class)) {
-            app(HomeService::class)->clearCache();
-        }
     }
 
     public function all(): Collection

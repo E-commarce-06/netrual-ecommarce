@@ -1,8 +1,12 @@
 <script setup lang="ts">
 import { onMounted } from 'vue'
-import { Head, Link } from '@inertiajs/vue3'
+import { Head, Link, usePage } from '@inertiajs/vue3'
 import { useWishlist } from '@/composables/useWishlist'
-import ThemeLayout from '../../../templates/storefront/general/bulbula-default/resources/views/layouts/ThemeLayout.vue'
+// Storefront layout of the active theme (theme folder is chosen by config, not hardcoded here).
+const themeLayouts = import.meta.glob('../../../templates/storefront/*/*/resources/views/layouts/ThemeLayout.vue', { eager: true, import: 'default' }) as Record<string, any>
+const activeThemeSlug = (usePage().props.theme as { slug?: string } | null)?.slug
+const themeLayoutKey = Object.keys(themeLayouts).find((k) => activeThemeSlug && k.includes(`/${activeThemeSlug}/`)) ?? Object.keys(themeLayouts)[0]
+const ThemeLayout = themeLayouts[themeLayoutKey]
 import { Heart, ShoppingCart, Trash2, Loader2 } from 'lucide-vue-next'
 
 const { wishlistItems, wishlistCount, loading, removeFromWishlist, moveToCart, fetchWishlist } = useWishlist()

@@ -29,7 +29,7 @@ class ThemeListCommand extends Command
             $t->name,
             $t->version,
             $t->author ?: '—',
-            $t->is_active ? '<fg=green>● active</>' : '<fg=gray>inactive</>',
+            $t->slug === config('theme.default') ? '<fg=green>● active</>' : '<fg=gray>inactive</>',
             $t->is_default ? 'yes' : '',
             $t->exists() ? '<fg=green>yes</>' : '<fg=red>MISSING</>',
         ]);

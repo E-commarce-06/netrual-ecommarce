@@ -5,7 +5,6 @@ namespace Bulbula\Core\Models;
 use Bulbula\Core\Services\ThemePathResolver;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Support\Facades\Cache;
 
 class Theme extends Model
 {
@@ -42,32 +41,12 @@ class Theme extends Model
     }
 
     /**
-     * Get the active theme
+     * The active theme is chosen by config (theme.default, from BRAND_DEFAULT_THEME),
+     * not by a runtime flag. There is one storefront theme; no admin UI changes it.
      */
     public static function active(): ?self
     {
-        return static::where('is_active', true)->first();
-    }
-
-    /**
-     * Activate this theme
-     */
-    public function activate(): bool
-    {
-        // Deactivate all themes first
-        static::query()->update(['is_active' => false]);
-
-        // Mass update bypasses model state — sync so re-activating this theme still persists.
-        $this->is_active = false;
-
-        // Activate this theme
-        $activated = $this->update(['is_active' => true]);
-
-        if ($activated) {
-            Cache::forget('active_theme');
-        }
-
-        return $activated;
+        return static::where('slug', (string) config('theme.default'))->first();
     }
 
     /**

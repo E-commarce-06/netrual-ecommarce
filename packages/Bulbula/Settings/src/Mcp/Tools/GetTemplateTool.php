@@ -75,7 +75,7 @@ class GetTemplateTool implements McpToolInterface
             'version' => $theme->version,
             'author' => $theme->author,
             'author_url' => $theme->author_url,
-            'is_active' => (bool) $theme->is_active,
+            'is_active' => $theme->slug === config('theme.default'),
             'is_default' => (bool) $theme->is_default,
             'source' => $theme->source,
             'exists_on_disk' => $theme->exists(),

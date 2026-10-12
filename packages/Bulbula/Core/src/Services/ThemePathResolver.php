@@ -68,10 +68,8 @@ class ThemePathResolver
 
         if ($path === null) {
             throw new \RuntimeException(
-                "Storefront template '{$slug}' was not found under templates/storefront/. "
-                .'Install it from Admin → Appearance → Browse Themes, run '
-                ."`php artisan template:install {$slug}`, or activate another theme with "
-                .'`php artisan theme:activate bulbula-default`.'
+                "Storefront theme '{$slug}' was not found under templates/storefront/. "
+                .'Restore its folder, or set BRAND_DEFAULT_THEME to an installed theme slug.'
             );
         }
 

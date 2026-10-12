@@ -43,9 +43,7 @@ class HomeService extends ShopService
     {
         try {
             $featuredCount = config('shop.homepage.featured_products_count', 12);
-            $activeThemeSlug = Theme::query()
-                ->where('is_active', true)
-                ->value('slug') ?? (string) config('theme.default', 'bulbula-default');
+            $activeThemeSlug = Theme::active()?->slug ?? (string) config('theme.default');
 
             $identifierCandidates = function (string $identifier) use ($activeThemeSlug): array {
                 $slug = trim((string) $activeThemeSlug);
