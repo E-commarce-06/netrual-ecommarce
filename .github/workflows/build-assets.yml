@@ -74,5 +74,8 @@ jobs:
             exit 0
           fi
           git commit -m "chore: build frontend assets [skip ci]"
+          # npm ci can rewrite tracked files such as yarn.lock; discard those side effects
+          # (the built files are already committed) so the rebase can run.
+          git reset --hard HEAD
           git pull --rebase origin main
           git push origin HEAD:main
