@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Schema;
 use Inertia\Inertia;
 use Inertia\Response;
 use Bulbula\Setup\Services\DemoDataService;
@@ -223,6 +224,8 @@ class SetupController extends Controller
     public function complete(Request $request)
     {
         try {
+            $this->ensureInstallerDataSeeded();
+
             $this->demoDataService->markSetupComplete();
 
             // Clear all caches after setup completion
@@ -238,6 +241,52 @@ class SetupController extends Controller
                 'success' => false,
                 'message' => 'Failed to complete setup: ' . $e->getMessage(),
             ], 500);
+        }
+    }
+
+    /**
+     * Seed the menus and core store data that the CLI installer (bulbula:install)
+     * provides. A group is seeded only when its table is empty, so running setup
+     * again never duplicates rows. Demo and theme seeders are not part of this.
+     */
+    private function ensureInstallerDataSeeded(): void
+    {
+        $groups = [
+            'menu_items' => [
+                \Bulbula\Admin\Database\Seeders\AdminMenuSeeder::class,
+                \Bulbula\CMS\Database\Seeders\StorefrontMenuSeeder::class,
+                \Bulbula\Customer\Database\Seeders\CustomerMenuSeeder::class,
+                \Bulbula\Marketing\Database\Seeders\MarketingMenuSeeder::class,
+                \Bulbula\Product\Database\Seeders\BrandMenuSeeder::class,
+                \Bulbula\Reports\Database\Seeders\ReportsMenuSeeder::class,
+            ],
+            'countries' => [
+                \Bulbula\Core\Database\Seeders\CountrySeeder::class,
+            ],
+            'tax_rates' => [
+                \Bulbula\Core\Database\Seeders\TaxSeeder::class,
+            ],
+            'shipping_methods' => [
+                \Bulbula\Core\Database\Seeders\ShippingMethodSeeder::class,
+            ],
+            'email_templates' => [
+                \Bulbula\Core\Database\Seeders\EmailSeeder::class,
+                \Bulbula\Sales\Database\Seeders\CreditMemoEmailTemplatesSeeder::class,
+                \Bulbula\Sales\Database\Seeders\ShipmentEmailTemplatesSeeder::class,
+            ],
+            'customer_groups' => [
+                \Bulbula\Customer\Database\Seeders\CustomerGroupSeeder::class,
+            ],
+        ];
+
+        foreach ($groups as $table => $seeders) {
+            if (! Schema::hasTable($table) || DB::table($table)->exists()) {
+                continue;
+            }
+
+            foreach ($seeders as $seeder) {
+                Artisan::call('db:seed', ['--class' => $seeder, '--force' => true]);
+            }
         }
     }
 
