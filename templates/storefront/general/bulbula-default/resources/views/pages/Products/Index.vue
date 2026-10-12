@@ -77,6 +77,8 @@ interface Props {
 const props = defineProps<Props>();
 
 const viewMode = ref<'grid' | 'list'>('grid');
+// Phones: filters open as a bottom sheet instead of stacking above the products.
+const mobileFiltersOpen = ref(false);
 const isLoading = ref(false);
 const showQuickView = ref(false);
 const selectedProductSlug = ref<string | null>(null);
@@ -344,9 +346,30 @@ const activeFilterBadges = computed(() => {
 
                 <div class="flex flex-col lg:flex-row gap-8">
                     <!-- Filters Sidebar -->
-                    <aside class="lg:w-64 flex-shrink-0">
-                        <div class="bg-white rounded-2xl shadow-md p-6 sticky top-24">
-                            <h2 class="text-xl font-bold text-gray-900 mb-6">Filters</h2>
+                    <div
+                        v-if="mobileFiltersOpen"
+                        class="fixed inset-0 z-40 bg-black/40 lg:hidden"
+                        aria-hidden="true"
+                        @click="mobileFiltersOpen = false"
+                    ></div>
+                    <aside
+                        id="product-filters"
+                        aria-label="Filters"
+                        :class="mobileFiltersOpen
+                            ? 'fixed inset-x-0 bottom-0 z-50 max-h-[85vh] overflow-y-auto rounded-t-2xl bg-white lg:static lg:max-h-none lg:w-64 lg:flex-shrink-0 lg:overflow-visible lg:rounded-none'
+                            : 'hidden lg:block lg:w-64 lg:flex-shrink-0'"
+                    >
+                        <div class="bg-white rounded-2xl shadow-md p-6 lg:sticky lg:top-24">
+                            <div class="flex items-center justify-between mb-6">
+                                <h2 class="text-xl font-bold text-gray-900">Filters</h2>
+                                <button
+                                    type="button"
+                                    class="lg:hidden px-4 py-2 rounded-lg bg-indigo-600 text-white text-sm font-semibold"
+                                    @click="mobileFiltersOpen = false"
+                                >
+                                    Show results
+                                </button>
+                            </div>
 
                             <!-- Categories -->
                             <div class="mb-6">
@@ -460,6 +483,17 @@ const activeFilterBadges = computed(() => {
                     <main class="flex-1">
                         <!-- Toolbar -->
                         <div class="bg-white rounded-2xl shadow-md p-4 mb-6 flex items-center justify-between">
+                            <!-- Mobile filter trigger -->
+                            <button
+                                type="button"
+                                class="lg:hidden inline-flex items-center gap-2 px-3 py-2 rounded-lg border border-gray-300 text-sm font-medium text-gray-900 bg-white"
+                                aria-controls="product-filters"
+                                :aria-expanded="mobileFiltersOpen ? 'true' : 'false'"
+                                @click="mobileFiltersOpen = true"
+                            >
+                                Filters
+                            </button>
+
                             <!-- View Toggle -->
                             <div class="flex gap-2">
                                 <button
@@ -503,10 +537,9 @@ const activeFilterBadges = computed(() => {
 
                         <!-- Product Grid -->
                         <div
-                            class="grid gap-6"
                             :class="{
-                                'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3': viewMode === 'grid',
-                                'grid-cols-1': viewMode === 'list'
+                                'grid grid-cols-2 gap-3 sm:gap-6 lg:grid-cols-3': viewMode === 'grid',
+                                'grid grid-cols-1 gap-3 sm:gap-6': viewMode === 'list'
                             }"
                         >
                             <!-- Show skeletons when loading -->
