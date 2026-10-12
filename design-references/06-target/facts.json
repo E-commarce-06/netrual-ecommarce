@@ -1,0 +1,420 @@
+{
+ "site": "Target",
+ "folder": "06-target",
+ "captured": [
+  {
+   "title": "Target : Expect More. Pay Less.",
+   "h1": [
+    "Homepage"
+   ],
+   "buttons": [
+    "Ship to 97058",
+    "Fairview",
+    "search by voice",
+    "search",
+    "Sign in or create account",
+    "close"
+   ],
+   "inputs": [
+    {
+     "placeholder": "What can we help you find?",
+     "aria": "What can we help you find? suggestions appear below"
+    }
+   ],
+   "headerSticky": false,
+   "bottomFixedBar": false,
+   "visibleImages": 15,
+   "viewport": [
+    1440,
+    900
+   ],
+   "body": "skip to main content\nskip to footer\nShip to 97058\nFairview\nTarget Circle™\nTarget Circle™ Card\nTarget Circle 360™\nRegistry & Wish List\nWeekly Ad\nFind Stores\nCategories\nDeals\nPickup & delivery\nsearch\nAccount\nSign in for the best experience\nSee past orders and manage returns\nCheck out faster\nSign in or create account\nHomepage\nFeatured categories\n\nTop categories shop all\n\nWomen's\nMen's\nKids'\nBaby\nShoe",
+   "blocked": false,
+   "file": "screens/01-home-desktop-16x10-1440.png",
+   "url": "https://www.target.com/",
+   "kind": "home",
+   "width": 1440,
+   "height": 900,
+   "mobile": false
+  },
+  {
+   "title": "Target : Expect More. Pay Less.",
+   "h1": [
+    "Homepage"
+   ],
+   "buttons": [
+    "Ship to 97058",
+    "Fairview",
+    "search by voice",
+    "search",
+    "Sign in or create account",
+    "close"
+   ],
+   "inputs": [
+    {
+     "placeholder": "What can we help you find?",
+     "aria": "What can we help you find? suggestions appear below"
+    }
+   ],
+   "headerSticky": false,
+   "bottomFixedBar": false,
+   "visibleImages": 15,
+   "viewport": [
+    1920,
+    1080
+   ],
+   "body": "skip to main content\nskip to footer\nShip to 97058\nFairview\nTarget Circle™\nTarget Circle™ Card\nTarget Circle 360™\nRegistry & Wish List\nWeekly Ad\nFind Stores\nCategories\nDeals\nPickup & delivery\nsearch\nAccount\nSign in for the best experience\nSee past orders and manage returns\nCheck out faster\nSign in or create account\nHomepage\nFeatured categories\n\nTop categories shop all\n\nWomen's\nMen's\nKids'\nBaby\nShoe",
+   "blocked": false,
+   "file": "screens/02-home-desktop-16x9-1920.png",
+   "url": "https://www.target.com/",
+   "kind": "home",
+   "width": 1920,
+   "height": 1080,
+   "mobile": false
+  },
+  {
+   "title": "Target : Expect More. Pay Less.",
+   "h1": [
+    "Homepage"
+   ],
+   "buttons": [
+    "Ship to 97058",
+    "Fairview",
+    "search by voice",
+    "search",
+    "Sign in or create account",
+    "close"
+   ],
+   "inputs": [
+    {
+     "placeholder": "What can we help you find?",
+     "aria": "What can we help you find? suggestions appear below"
+    }
+   ],
+   "headerSticky": false,
+   "bottomFixedBar": false,
+   "visibleImages": 15,
+   "viewport": [
+    2560,
+    1080
+   ],
+   "body": "skip to main content\nskip to footer\nShip to 97058\nFairview\nTarget Circle™\nTarget Circle™ Card\nTarget Circle 360™\nRegistry & Wish List\nWeekly Ad\nFind Stores\nCategories\nDeals\nPickup & delivery\nsearch\nAccount\nSign in for the best experience\nSee past orders and manage returns\nCheck out faster\nSign in or create account\nHomepage\nFeatured categories\n\nTop categories shop all\n\nWomen's\nMen's\nKids'\nBaby\nShoe",
+   "blocked": false,
+   "file": "screens/03-home-ultrawide-21x9-2560.png",
+   "url": "https://www.target.com/",
+   "kind": "home",
+   "width": 2560,
+   "height": 1080,
+   "mobile": false
+  },
+  {
+   "title": "Target : Expect More. Pay Less.",
+   "h1": [
+    "Homepage"
+   ],
+   "buttons": [
+    "Ship to 97058",
+    "Fairview",
+    "search by voice",
+    "search",
+    "Sign in or create account",
+    "close"
+   ],
+   "inputs": [
+    {
+     "placeholder": "What can we help you find?",
+     "aria": "What can we help you find? suggestions appear below"
+    }
+   ],
+   "headerSticky": false,
+   "bottomFixedBar": false,
+   "visibleImages": 15,
+   "viewport": [
+    1366,
+    768
+   ],
+   "body": "skip to main content\nskip to footer\nShip to 97058\nFairview\nTarget Circle™\nTarget Circle™ Card\nTarget Circle 360™\nRegistry & Wish List\nWeekly Ad\nFind Stores\nCategories\nDeals\nPickup & delivery\nsearch\nAccount\nSign in for the best experience\nSee past orders and manage returns\nCheck out faster\nSign in or create account\nHomepage\nFeatured categories\n\nTop categories shop all\n\nWomen's\nMen's\nKids'\nBaby\nShoe",
+   "blocked": false,
+   "file": "screens/04-home-laptop-16x9-1366.png",
+   "url": "https://www.target.com/",
+   "kind": "home",
+   "width": 1366,
+   "height": 768,
+   "mobile": false
+  },
+  {
+   "title": "Target : Expect More. Pay Less.",
+   "h1": [
+    "Homepage"
+   ],
+   "buttons": [
+    "Ship to 97058",
+    "Fairview",
+    "search by voice",
+    "search",
+    "Sign in or create account",
+    "close"
+   ],
+   "inputs": [
+    {
+     "placeholder": "What can we help you find?",
+     "aria": "What can we help you find? suggestions appear below"
+    }
+   ],
+   "headerSticky": false,
+   "bottomFixedBar": false,
+   "visibleImages": 15,
+   "viewport": [
+    768,
+    1024
+   ],
+   "body": "skip to main content\nskip to footer\nShip to 97058\nFairview\nsearch\nAccount\nSign in for the best experience\nSee past orders and manage returns\nCheck out faster\nSign in or create account\nHomepage\nFeatured categories\n\nTop categories shop all\n\nWomen's\nMen's\nKids'\nBaby\nShoes\nHome\nFurniture\nKitchen\nToys\nElectronics\nBeauty\nGrocery\nHousehold Essentials\nTop Deals\nClearance\nGet top deals, latest trends, and ",
+   "blocked": false,
+   "file": "screens/05-home-tablet-portrait-3x4-768.png",
+   "url": "https://www.target.com/",
+   "kind": "home",
+   "width": 768,
+   "height": 1024,
+   "mobile": true
+  },
+  {
+   "title": "Target : Expect More. Pay Less.",
+   "h1": [
+    "Homepage"
+   ],
+   "buttons": [
+    "Ship to 97058",
+    "Fairview",
+    "search by voice",
+    "search",
+    "Sign in or create account",
+    "close"
+   ],
+   "inputs": [
+    {
+     "placeholder": "What can we help you find?",
+     "aria": "What can we help you find? suggestions appear below"
+    }
+   ],
+   "headerSticky": false,
+   "bottomFixedBar": false,
+   "visibleImages": 15,
+   "viewport": [
+    1024,
+    768
+   ],
+   "body": "skip to main content\nskip to footer\nShip to 97058\nFairview\nsearch\nAccount\nSign in for the best experience\nSee past orders and manage returns\nCheck out faster\nSign in or create account\nHomepage\nFeatured categories\n\nTop categories shop all\n\nWomen's\nMen's\nKids'\nBaby\nShoes\nHome\nFurniture\nKitchen\nToys\nElectronics\nBeauty\nGrocery\nHousehold Essentials\nTop Deals\nClearance\nGet top deals, latest trends, and ",
+   "blocked": false,
+   "file": "screens/06-home-tablet-landscape-4x3-1024.png",
+   "url": "https://www.target.com/",
+   "kind": "home",
+   "width": 1024,
+   "height": 768,
+   "mobile": true
+  },
+  {
+   "title": "Target : Expect More. Pay Less.",
+   "h1": [
+    "Homepage"
+   ],
+   "buttons": [
+    "Ship to 97058",
+    "Fairview",
+    "Sign in or create account",
+    "close",
+    "What can we help you find?"
+   ],
+   "inputs": [
+    {
+     "placeholder": "What can we help you find?",
+     "aria": ""
+    }
+   ],
+   "headerSticky": false,
+   "bottomFixedBar": false,
+   "visibleImages": 12,
+   "viewport": [
+    360,
+    740
+   ],
+   "body": "skip to main content\nskip to footer\nShip to 97058\nFairview\nStore Mode\nSign in for the best experience\nSee past orders and manage returns\nCheck out faster\nSign in or create account\nAsk Target\nHomepage\nFeatured categories\n\nTop categories shop all\n\nWomen's\nMen's\nKids'\nBaby\nShoes\nHome\nFurniture\nKitchen\nToys\nElectronics\nBeauty\nGrocery\nHousehold Essentials\nTop Deals\nClearance\nGet top deals, latest trend",
+   "blocked": false,
+   "file": "screens/07-home-phone-small-360.png",
+   "url": "https://www.target.com/",
+   "kind": "home",
+   "width": 360,
+   "height": 740,
+   "mobile": true
+  },
+  {
+   "title": "Target : Expect More. Pay Less.",
+   "h1": [
+    "Homepage"
+   ],
+   "buttons": [
+    "Ship to 97058",
+    "Fairview",
+    "Sign in or create account",
+    "close",
+    "What can we help you find?"
+   ],
+   "inputs": [
+    {
+     "placeholder": "What can we help you find?",
+     "aria": ""
+    }
+   ],
+   "headerSticky": false,
+   "bottomFixedBar": false,
+   "visibleImages": 12,
+   "viewport": [
+    390,
+    844
+   ],
+   "body": "skip to main content\nskip to footer\nShip to 97058\nFairview\nStore Mode\nSign in for the best experience\nSee past orders and manage returns\nCheck out faster\nSign in or create account\nHomepage\nFeatured categories\n\nTop categories shop all\n\nWomen's\nMen's\nKids'\nBaby\nShoes\nHome\nFurniture\nKitchen\nToys\nElectronics\nBeauty\nGrocery\nHousehold Essentials\nTop Deals\nClearance\nGet top deals, latest trends, and more",
+   "blocked": false,
+   "file": "screens/08-home-phone-iphone-390.png",
+   "url": "https://www.target.com/",
+   "kind": "home",
+   "width": 390,
+   "height": 844,
+   "mobile": true
+  },
+  {
+   "title": "Target : Expect More. Pay Less.",
+   "h1": [
+    "Homepage"
+   ],
+   "buttons": [
+    "Ship to 97058",
+    "Fairview",
+    "Sign in or create account",
+    "close",
+    "What can we help you find?"
+   ],
+   "inputs": [
+    {
+     "placeholder": "What can we help you find?",
+     "aria": ""
+    }
+   ],
+   "headerSticky": false,
+   "bottomFixedBar": false,
+   "visibleImages": 15,
+   "viewport": [
+    430,
+    932
+   ],
+   "body": "skip to main content\nskip to footer\nShip to 97058\nFairview\nStore Mode\nSign in for the best experience\nSee past orders and manage returns\nCheck out faster\nSign in or create account\nAsk Target\nHomepage\nFeatured categories\n\nTop categories shop all\n\nWomen's\nMen's\nKids'\nBaby\nShoes\nHome\nFurniture\nKitchen\nToys\nElectronics\nBeauty\nGrocery\nHousehold Essentials\nTop Deals\nClearance\nGet top deals, latest trend",
+   "blocked": false,
+   "file": "screens/09-home-phone-large-430.png",
+   "url": "https://www.target.com/",
+   "kind": "home",
+   "width": 430,
+   "height": 932,
+   "mobile": true
+  },
+  {
+   "title": "\"headphones\" : Target",
+   "h1": [],
+   "buttons": [
+    "Ship to 97058",
+    "Fairview",
+    "search by voice",
+    "reset",
+    "search"
+   ],
+   "inputs": [
+    {
+     "placeholder": "What can we help you find?",
+     "aria": "What can we help you find? suggestions appear below"
+    }
+   ],
+   "headerSticky": false,
+   "bottomFixedBar": true,
+   "visibleImages": 13,
+   "viewport": [
+    1440,
+    900
+   ],
+   "body": "skip to main content\nskip to footer\nShip to 97058\nFairview\nTarget Circle™\nTarget Circle™ Card\nTarget Circle 360™\nRegistry & Wish List\nWeekly Ad\nFind Stores\nCategories\nDeals\nPickup & delivery\nsearch\nAccount\n“”\nWe couldn’t find a match for your search.\nFeatured categories\n\nShop all\n\nWomen’s\nMen’s\nKids’\nBaby\nPets\nToys\nElectronics\nVideo Games\nApple\nSports & Outdoors\nLuggage\nGrocery\nBeauty\nHealth\nHouse",
+   "blocked": false,
+   "file": "screens/10-listing-desktop-16x10-1440.png",
+   "url": "https://www.target.com/s?searchTerm=headphones",
+   "kind": "listing",
+   "width": 1440,
+   "height": 900,
+   "mobile": false
+  },
+  {
+   "title": "\"headphones\" : Target",
+   "h1": [],
+   "buttons": [
+    "Ship to 97058",
+    "Fairview",
+    "What can we help you find?"
+   ],
+   "inputs": [
+    {
+     "placeholder": "What can we help you find?",
+     "aria": ""
+    }
+   ],
+   "headerSticky": false,
+   "bottomFixedBar": true,
+   "visibleImages": 10,
+   "viewport": [
+    390,
+    844
+   ],
+   "body": "skip to main content\nskip to footer\nShip to 97058\nFairview\nStore Mode\nAsk Target\n“”\nWe couldn’t find a match for your search.\nFeatured categories\n\nShop all\n\nWomen’s\nMen’s\nKids’\nBaby\nPets\nToys\nElectronics\nVideo Games\nApple\nSports & Outdoors\nLuggage\nGrocery\nBeauty\nHealth\nHousehold Essentials\nPersonal Care\nSchool & Office\nHome\nKitchen & Dining\nDeals\nClearance\n\nSponsored\n\nSponsored\n\nGet top deals, lat",
+   "blocked": false,
+   "file": "screens/11-listing-phone-390.png",
+   "url": "https://www.target.com/s?searchTerm=headphones",
+   "kind": "listing",
+   "width": 390,
+   "height": 844,
+   "mobile": true
+  },
+  {
+   "title": "\"headphones\" : Target",
+   "h1": [],
+   "buttons": [
+    "Ship to 97058",
+    "Fairview",
+    "search by voice",
+    "reset",
+    "search"
+   ],
+   "inputs": [
+    {
+     "placeholder": "What can we help you find?",
+     "aria": "What can we help you find? suggestions appear below"
+    }
+   ],
+   "headerSticky": false,
+   "bottomFixedBar": true,
+   "visibleImages": 21,
+   "viewport": [
+    768,
+    1024
+   ],
+   "body": "skip to main content\nskip to footer\nShip to 97058\nFairview\nsearch\nAsk Target\nAccount\n“”\nWe couldn’t find a match for your search.\nFeatured categories\n\nShop all\n\nWomen’s\nMen’s\nKids’\nBaby\nPets\nToys\nElectronics\nVideo Games\nApple\nSports & Outdoors\nLuggage\nGrocery\nBeauty\nHealth\nHousehold Essentials\nPersonal Care\nSchool & Office\nHome\nKitchen & Dining\nDeals\nClearance\n\nSponsored\n\nSponsored\n\nGet top deals,",
+   "blocked": false,
+   "file": "screens/12-listing-tablet-portrait-768.png",
+   "url": "https://www.target.com/s?searchTerm=headphones",
+   "kind": "listing",
+   "width": 768,
+   "height": 1024,
+   "mobile": true
+  }
+ ],
+ "errors": [
+  "product-desktop-16x10-1440: no url for product",
+  "product-phone-390: no url for product",
+  "product-phone-small-360: no url for product"
+ ],
+ "product_url": null,
+ "listing_url": "https://www.target.com/s?searchTerm=headphones",
+ "excluded_screens": []
+}

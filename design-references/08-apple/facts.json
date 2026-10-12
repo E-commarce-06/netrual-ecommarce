@@ -1,0 +1,509 @@
+{
+ "site": "Apple Store",
+ "folder": "10-apple",
+ "captured": [
+  {
+   "title": "Apple",
+   "h1": [
+    "Apple"
+   ],
+   "buttons": [
+    "Store menu",
+    "Mac menu",
+    "iPad menu",
+    "iPhone menu",
+    "Watch menu",
+    "Vision menu",
+    "AirPods menu",
+    "TV and Home menu",
+    "Entertainment menu",
+    "Accessories menu",
+    "Support menu",
+    "Search apple.com",
+    "0 +",
+    "Learn more",
+    "Buy"
+   ],
+   "inputs": [],
+   "headerSticky": false,
+   "bottomFixedBar": false,
+   "visibleImages": 2,
+   "viewport": [
+    1440,
+    900
+   ],
+   "file": "screens/01-home-desktop-16x10-1440.png",
+   "url": "https://www.apple.com/",
+   "kind": "home",
+   "width": 1440,
+   "height": 900,
+   "mobile": false
+  },
+  {
+   "title": "Apple",
+   "h1": [
+    "Apple"
+   ],
+   "buttons": [
+    "Store menu",
+    "Mac menu",
+    "iPad menu",
+    "iPhone menu",
+    "Watch menu",
+    "Vision menu",
+    "AirPods menu",
+    "TV and Home menu",
+    "Entertainment menu",
+    "Accessories menu",
+    "Support menu",
+    "Search apple.com",
+    "0 +",
+    "Learn more",
+    "Buy",
+    "View pricing"
+   ],
+   "inputs": [],
+   "headerSticky": false,
+   "bottomFixedBar": false,
+   "visibleImages": 2,
+   "viewport": [
+    1920,
+    1080
+   ],
+   "file": "screens/02-home-desktop-16x9-1920.png",
+   "url": "https://www.apple.com/",
+   "kind": "home",
+   "width": 1920,
+   "height": 1080,
+   "mobile": false
+  },
+  {
+   "title": "Apple",
+   "h1": [
+    "Apple"
+   ],
+   "buttons": [
+    "Store menu",
+    "Mac menu",
+    "iPad menu",
+    "iPhone menu",
+    "Watch menu",
+    "Vision menu",
+    "AirPods menu",
+    "TV and Home menu",
+    "Entertainment menu",
+    "Accessories menu",
+    "Support menu",
+    "Search apple.com",
+    "0 +",
+    "Learn more",
+    "Buy",
+    "View pricing"
+   ],
+   "inputs": [],
+   "headerSticky": false,
+   "bottomFixedBar": false,
+   "visibleImages": 2,
+   "viewport": [
+    2560,
+    1080
+   ],
+   "file": "screens/03-home-ultrawide-21x9-2560.png",
+   "url": "https://www.apple.com/",
+   "kind": "home",
+   "width": 2560,
+   "height": 1080,
+   "mobile": false
+  },
+  {
+   "title": "Apple",
+   "h1": [
+    "Apple"
+   ],
+   "buttons": [
+    "Store menu",
+    "Mac menu",
+    "iPad menu",
+    "iPhone menu",
+    "Watch menu",
+    "Vision menu",
+    "AirPods menu",
+    "TV and Home menu",
+    "Entertainment menu",
+    "Accessories menu",
+    "Support menu",
+    "Search apple.com",
+    "0 +",
+    "Learn more",
+    "Buy"
+   ],
+   "inputs": [],
+   "headerSticky": false,
+   "bottomFixedBar": false,
+   "visibleImages": 2,
+   "viewport": [
+    1366,
+    768
+   ],
+   "file": "screens/04-home-laptop-16x9-1366.png",
+   "url": "https://www.apple.com/",
+   "kind": "home",
+   "width": 1366,
+   "height": 768,
+   "mobile": false
+  },
+  {
+   "title": "Apple",
+   "h1": [
+    "Apple"
+   ],
+   "buttons": [
+    "Search apple.com",
+    "0 +",
+    "Menu",
+    "Learn more",
+    "Buy",
+    "View pricing"
+   ],
+   "inputs": [],
+   "headerSticky": false,
+   "bottomFixedBar": false,
+   "visibleImages": 2,
+   "viewport": [
+    768,
+    1024
+   ],
+   "file": "screens/05-home-tablet-portrait-3x4-768.png",
+   "url": "https://www.apple.com/",
+   "kind": "home",
+   "width": 768,
+   "height": 1024,
+   "mobile": true
+  },
+  {
+   "title": "Apple",
+   "h1": [
+    "Apple"
+   ],
+   "buttons": [
+    "Store menu",
+    "Mac menu",
+    "iPad menu",
+    "iPhone menu",
+    "Watch menu",
+    "Vision menu",
+    "AirPods menu",
+    "TV and Home menu",
+    "Entertainment menu",
+    "Accessories menu",
+    "Support menu",
+    "Search apple.com",
+    "0 +",
+    "Learn more",
+    "Buy"
+   ],
+   "inputs": [],
+   "headerSticky": false,
+   "bottomFixedBar": false,
+   "visibleImages": 2,
+   "viewport": [
+    1024,
+    768
+   ],
+   "file": "screens/06-home-tablet-landscape-4x3-1024.png",
+   "url": "https://www.apple.com/",
+   "kind": "home",
+   "width": 1024,
+   "height": 768,
+   "mobile": true
+  },
+  {
+   "title": "Apple",
+   "h1": [
+    "Apple"
+   ],
+   "buttons": [
+    "Search apple.com",
+    "0 +",
+    "Menu",
+    "Learn more",
+    "Buy",
+    "View pricing"
+   ],
+   "inputs": [],
+   "headerSticky": false,
+   "bottomFixedBar": false,
+   "visibleImages": 2,
+   "viewport": [
+    360,
+    740
+   ],
+   "file": "screens/07-home-phone-small-360.png",
+   "url": "https://www.apple.com/",
+   "kind": "home",
+   "width": 360,
+   "height": 740,
+   "mobile": true
+  },
+  {
+   "title": "Apple",
+   "h1": [
+    "Apple"
+   ],
+   "buttons": [
+    "Search apple.com",
+    "0 +",
+    "Menu",
+    "Learn more",
+    "Buy",
+    "View pricing"
+   ],
+   "inputs": [],
+   "headerSticky": false,
+   "bottomFixedBar": false,
+   "visibleImages": 2,
+   "viewport": [
+    390,
+    844
+   ],
+   "file": "screens/08-home-phone-iphone-390.png",
+   "url": "https://www.apple.com/",
+   "kind": "home",
+   "width": 390,
+   "height": 844,
+   "mobile": true
+  },
+  {
+   "title": "Apple",
+   "h1": [
+    "Apple"
+   ],
+   "buttons": [
+    "Search apple.com",
+    "0 +",
+    "Menu",
+    "Learn more",
+    "Buy",
+    "View pricing"
+   ],
+   "inputs": [],
+   "headerSticky": false,
+   "bottomFixedBar": false,
+   "visibleImages": 2,
+   "viewport": [
+    430,
+    932
+   ],
+   "file": "screens/09-home-phone-large-430.png",
+   "url": "https://www.apple.com/",
+   "kind": "home",
+   "width": 430,
+   "height": 932,
+   "mobile": true
+  },
+  {
+   "title": "Buy iPhone - Apple",
+   "h1": [
+    "Shop iPhone"
+   ],
+   "buttons": [
+    "Store menu",
+    "Mac menu",
+    "iPad menu",
+    "iPhone menu",
+    "Watch menu",
+    "Vision menu",
+    "AirPods menu",
+    "TV and Home menu",
+    "Entertainment menu",
+    "Accessories menu",
+    "Support menu",
+    "Search apple.com",
+    "0 +",
+    "Learn more (Opens in a new window)",
+    "Previous",
+    "Next",
+    "Connect with a Specialist (Opens in a new window)",
+    "Next - All models."
+   ],
+   "inputs": [],
+   "headerSticky": false,
+   "bottomFixedBar": false,
+   "visibleImages": 7,
+   "viewport": [
+    1440,
+    900
+   ],
+   "file": "screens/10-listing-desktop-16x10-1440.png",
+   "url": "https://www.apple.com/shop/buy-iphone",
+   "kind": "listing",
+   "width": 1440,
+   "height": 900,
+   "mobile": false
+  },
+  {
+   "title": "Buy iPhone - Apple",
+   "h1": [
+    "Shop iPhone"
+   ],
+   "buttons": [
+    "Search apple.com",
+    "0 +",
+    "Menu",
+    "Learn more (Opens in a new window)",
+    "Previous",
+    "Next",
+    "Connect with a Specialist (Opens in a new window)"
+   ],
+   "inputs": [],
+   "headerSticky": false,
+   "bottomFixedBar": false,
+   "visibleImages": 25,
+   "viewport": [
+    390,
+    844
+   ],
+   "file": "screens/11-listing-phone-390.png",
+   "url": "https://www.apple.com/shop/buy-iphone",
+   "kind": "listing",
+   "width": 390,
+   "height": 844,
+   "mobile": true
+  },
+  {
+   "title": "Buy iPhone - Apple",
+   "h1": [
+    "Shop iPhone"
+   ],
+   "buttons": [
+    "Search apple.com",
+    "0 +",
+    "Menu",
+    "Learn more (Opens in a new window)",
+    "Previous",
+    "Next",
+    "Connect with a Specialist (Opens in a new window)",
+    "Get ready - iPhone Duo",
+    "Buy - iPhone 18 Pro & iPhone 18 Pro Max",
+    "Buy - iPhone Air",
+    "Buy - iPhone 17",
+    "Buy - iPhone 17e",
+    "Buy - iPhone 16"
+   ],
+   "inputs": [],
+   "headerSticky": false,
+   "bottomFixedBar": false,
+   "visibleImages": 30,
+   "viewport": [
+    768,
+    1024
+   ],
+   "file": "screens/12-listing-tablet-portrait-768.png",
+   "url": "https://www.apple.com/shop/buy-iphone",
+   "kind": "listing",
+   "width": 768,
+   "height": 1024,
+   "mobile": true
+  },
+  {
+   "title": "Carrier Deals - Apple",
+   "h1": [
+    "Carrier deals at Apple. That has a nice ring to it."
+   ],
+   "buttons": [
+    "Store menu",
+    "Mac menu",
+    "iPad menu",
+    "iPhone menu",
+    "Watch menu",
+    "Vision menu",
+    "AirPods menu",
+    "TV and Home menu",
+    "Entertainment menu",
+    "Accessories menu",
+    "Support menu",
+    "Search apple.com",
+    "0 +",
+    "See how it works Carrier deals video",
+    "All deals",
+    "AT&T",
+    "T-Mobile",
+    "Verizon"
+   ],
+   "inputs": [],
+   "headerSticky": false,
+   "bottomFixedBar": false,
+   "visibleImages": 3,
+   "viewport": [
+    1440,
+    900
+   ],
+   "file": "screens/13-product-desktop-16x10-1440.png",
+   "url": "https://www.apple.com/shop/buy-iphone/carrier-offers",
+   "kind": "product",
+   "width": 1440,
+   "height": 900,
+   "mobile": false
+  },
+  {
+   "title": "Carrier Deals - Apple",
+   "h1": [
+    "Carrier deals at Apple. That has a nice ring to it."
+   ],
+   "buttons": [
+    "Search apple.com",
+    "0 +",
+    "Menu",
+    "See how it works Carrier deals video",
+    "All deals",
+    "AT&T",
+    "T-Mobile",
+    "Verizon"
+   ],
+   "inputs": [],
+   "headerSticky": false,
+   "bottomFixedBar": false,
+   "visibleImages": 2,
+   "viewport": [
+    390,
+    844
+   ],
+   "file": "screens/14-product-phone-390.png",
+   "url": "https://www.apple.com/shop/buy-iphone/carrier-offers",
+   "kind": "product",
+   "width": 390,
+   "height": 844,
+   "mobile": true
+  },
+  {
+   "title": "Carrier Deals - Apple",
+   "h1": [
+    "Carrier deals at Apple. That has a nice ring to it."
+   ],
+   "buttons": [
+    "Search apple.com",
+    "0 +",
+    "Menu",
+    "See how it works Carrier deals video"
+   ],
+   "inputs": [],
+   "headerSticky": false,
+   "bottomFixedBar": false,
+   "visibleImages": 2,
+   "viewport": [
+    360,
+    740
+   ],
+   "file": "screens/15-product-phone-small-360.png",
+   "url": "https://www.apple.com/shop/buy-iphone/carrier-offers",
+   "kind": "product",
+   "width": 360,
+   "height": 740,
+   "mobile": true
+  }
+ ],
+ "errors": [],
+ "product_url": "https://www.apple.com/shop/buy-iphone/carrier-offers",
+ "listing_url": "https://www.apple.com/shop/buy-iphone",
+ "excluded_screens": []
+}

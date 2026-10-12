@@ -1,0 +1,505 @@
+{
+ "site": "Home Depot",
+ "folder": "07-home-depot",
+ "captured": [
+  {
+   "title": "The Home Depot",
+   "h1": [],
+   "buttons": [
+    "Ask Magic Apron",
+    "Home Depot Credit Cards",
+    "The Dalles 9PM",
+    "97058",
+    "Search Field Icon",
+    "Shop All",
+    "Services",
+    "DIY",
+    "Log In",
+    "close",
+    "Sign In",
+    "Open drawer for Details",
+    "Ask a question or get help"
+   ],
+   "inputs": [
+    {
+     "placeholder": "What can we help you find today?",
+     "aria": ""
+    }
+   ],
+   "headerSticky": false,
+   "bottomFixedBar": false,
+   "visibleImages": 6,
+   "viewport": [
+    1440,
+    900
+   ],
+   "body": "UP TO $500 OFF Select Appliances - Shop Now\nAsk Magic Apron\n\nHome Depot Credit Cards\n\nThe Dalles\n\n9PM\n\n97058\n\nShop All\n\nServices\n\nDIY\n\nLog In\n\nSign in for the best experience\n\nSign In\n\nDon't have an account?\n\nCreate an Account\n\nCart\n\nTop Categories\nSkip Listing\nToday's Big Savings All in One Place\n\nToday Only! Fast Free Delivery\n\nShop All Savings\nAppliance Savings\nShop All Savings\n$3099\n$1799\n\nLG ",
+   "blocked": false,
+   "file": "screens/01-home-desktop-16x10-1440.png",
+   "url": "https://www.homedepot.com/",
+   "kind": "home",
+   "width": 1440,
+   "height": 900,
+   "mobile": false
+  },
+  {
+   "title": "The Home Depot",
+   "h1": [],
+   "buttons": [
+    "Ask Magic Apron",
+    "Home Depot Credit Cards",
+    "The Dalles 9PM",
+    "97058",
+    "Search Field Icon",
+    "Shop All",
+    "Services",
+    "DIY",
+    "Log In",
+    "close",
+    "Sign In",
+    "Open drawer for Details",
+    "Ask a question or get help"
+   ],
+   "inputs": [
+    {
+     "placeholder": "What can we help you find today?",
+     "aria": ""
+    }
+   ],
+   "headerSticky": false,
+   "bottomFixedBar": false,
+   "visibleImages": 7,
+   "viewport": [
+    1920,
+    1080
+   ],
+   "body": "UP TO $500 OFF Select Appliances - Shop Now\nAsk Magic Apron\n\nHome Depot Credit Cards\n\nThe Dalles\n\n9PM\n\n97058\n\nShop All\n\nServices\n\nDIY\n\nLog In\n\nSign in for the best experience\n\nSign In\n\nDon't have an account?\n\nCreate an Account\n\nCart\n\nTop Categories\nSkip Listing\nToday's Big Savings All in One Place\n\nToday Only! Fast Free Delivery\n\nShop All Savings\nAppliance Savings\nShop All Savings\n$3099\n$1799\n\nLG ",
+   "blocked": false,
+   "file": "screens/02-home-desktop-16x9-1920.png",
+   "url": "https://www.homedepot.com/",
+   "kind": "home",
+   "width": 1920,
+   "height": 1080,
+   "mobile": false
+  },
+  {
+   "title": "The Home Depot",
+   "h1": [],
+   "buttons": [
+    "Ask Magic Apron",
+    "Home Depot Credit Cards",
+    "The Dalles 9PM",
+    "97058",
+    "Search Field Icon",
+    "Shop All",
+    "Services",
+    "DIY",
+    "Log In",
+    "close",
+    "Sign In",
+    "Departments",
+    "Deals",
+    "Open drawer for Details",
+    "Ask a question or get help"
+   ],
+   "inputs": [
+    {
+     "placeholder": "What can we help you find today?",
+     "aria": ""
+    }
+   ],
+   "headerSticky": false,
+   "bottomFixedBar": false,
+   "visibleImages": 7,
+   "viewport": [
+    2560,
+    1080
+   ],
+   "body": "UP TO $500 OFF Select Appliances - Shop Now\nAsk Magic Apron\n\nHome Depot Credit Cards\n\nThe Dalles\n\n9PM\n\n97058\n\nShop All\n\nServices\n\nDIY\n\nLog In\n\nSign in for the best experience\n\nSign In\n\nDon't have an account?\n\nCreate an Account\n\nCart\n\nDepartments\nDeals\nHalloween\nOutdoors\nAppliances\nTools\nPlumbing\nFlooring\nPaint\nHardware\nBuilding Materials\nLumber & Composites\nTop Categories\nSkip Listing\nToday's Big ",
+   "blocked": false,
+   "file": "screens/03-home-ultrawide-21x9-2560.png",
+   "url": "https://www.homedepot.com/",
+   "kind": "home",
+   "width": 2560,
+   "height": 1080,
+   "mobile": false
+  },
+  {
+   "title": "The Home Depot",
+   "h1": [],
+   "buttons": [
+    "Ask Magic Apron",
+    "Home Depot Credit Cards",
+    "The Dalles 9PM",
+    "97058",
+    "Search Field Icon",
+    "Shop All",
+    "Services",
+    "DIY",
+    "Log In",
+    "close",
+    "Sign In",
+    "Open drawer for Details",
+    "Ask a question or get help"
+   ],
+   "inputs": [
+    {
+     "placeholder": "What can we help you find today?",
+     "aria": ""
+    }
+   ],
+   "headerSticky": false,
+   "bottomFixedBar": false,
+   "visibleImages": 6,
+   "viewport": [
+    1366,
+    768
+   ],
+   "body": "UP TO $500 OFF Select Appliances - Shop Now\nAsk Magic Apron\n\nHome Depot Credit Cards\n\nThe Dalles\n\n9PM\n\n97058\n\nShop All\n\nServices\n\nDIY\n\nLog In\n\nSign in for the best experience\n\nSign In\n\nDon't have an account?\n\nCreate an Account\n\nCart\n\nTop Categories\nSkip Listing\nToday's Big Savings All in One Place\n\nToday Only! Fast Free Delivery\n\nShop All Savings\nAppliance Savings\nShop All Savings\n$3099\n$1799\n\nLG ",
+   "blocked": false,
+   "file": "screens/04-home-laptop-16x9-1366.png",
+   "url": "https://www.homedepot.com/",
+   "kind": "home",
+   "width": 1366,
+   "height": 768,
+   "mobile": false
+  },
+  {
+   "title": "The Home Depot",
+   "h1": [],
+   "buttons": [
+    "Search Field Icon",
+    "The Dalles 9PM",
+    "97058",
+    "Shop All",
+    "Services",
+    "DIY",
+    "Log In",
+    "close",
+    "Sign In",
+    "Open drawer for Details",
+    "Ask a question or get help"
+   ],
+   "inputs": [
+    {
+     "placeholder": "Search",
+     "aria": ""
+    }
+   ],
+   "headerSticky": false,
+   "bottomFixedBar": true,
+   "visibleImages": 3,
+   "viewport": [
+    768,
+    1024
+   ],
+   "body": "UP TO $500 OFF Select Appliances - Shop Now\n\nThe Dalles\n\n9PM\n\n97058\n\nShop All\n\nServices\n\nDIY\n\nLog In\n\nSign in for the best experience\n\nSign In\n\nDon't have an account?\n\nCreate an Account\nTop Categories\nSkip Listing\nToday's Big Savings All in One Place\n\nToday Only! Fast Free Delivery\n\nShop All Savings\nAppliance Savings\nShop All Savings\n$3099\n$1799\n\nLG 36\" Stainless Steel Refrigerator\n\n$2598\n$\n1798\n\n",
+   "blocked": false,
+   "file": "screens/05-home-tablet-portrait-3x4-768.png",
+   "url": "https://www.homedepot.com/",
+   "kind": "home",
+   "width": 768,
+   "height": 1024,
+   "mobile": true
+  },
+  {
+   "title": "The Home Depot",
+   "h1": [],
+   "buttons": [
+    "Ask Magic Apron",
+    "Home Depot Credit Cards",
+    "The Dalles 9PM",
+    "97058",
+    "Search Field Icon",
+    "Shop All",
+    "Services",
+    "DIY",
+    "Log In",
+    "close",
+    "Sign In",
+    "Open drawer for Details",
+    "Ask a question or get help"
+   ],
+   "inputs": [
+    {
+     "placeholder": "What can we help you find today?",
+     "aria": ""
+    }
+   ],
+   "headerSticky": false,
+   "bottomFixedBar": false,
+   "visibleImages": 3,
+   "viewport": [
+    1024,
+    768
+   ],
+   "body": "UP TO $500 OFF Select Appliances - Shop Now\nAsk Magic Apron\n\nHome Depot Credit Cards\n\nThe Dalles\n\n9PM\n\n97058\n\nShop All\n\nServices\n\nDIY\n\nLog In\n\nSign in for the best experience\n\nSign In\n\nDon't have an account?\n\nCreate an Account\n\nCart\n\nTop Categories\nSkip Listing\nToday's Big Savings All in One Place\n\nToday Only! Fast Free Delivery\n\nShop All Savings\nAppliance Savings\nShop All Savings\n$3099\n$1799\n\nLG ",
+   "blocked": false,
+   "file": "screens/06-home-tablet-landscape-4x3-1024.png",
+   "url": "https://www.homedepot.com/",
+   "kind": "home",
+   "width": 1024,
+   "height": 768,
+   "mobile": true
+  },
+  {
+   "title": "The Home Depot",
+   "h1": [],
+   "buttons": [
+    "Search Field Icon",
+    "The Dalles 9PM",
+    "97058",
+    "Shop All",
+    "Services",
+    "DIY",
+    "Log In",
+    "close",
+    "Sign In",
+    "Open drawer for Details",
+    "Ask a question or get help"
+   ],
+   "inputs": [
+    {
+     "placeholder": "Search",
+     "aria": ""
+    }
+   ],
+   "headerSticky": false,
+   "bottomFixedBar": true,
+   "visibleImages": 4,
+   "viewport": [
+    360,
+    740
+   ],
+   "body": "UP TO $500 OFF Select Appliances - Shop Now\n\nThe Dalles\n\n9PM\n\n97058\n\nShop All\n\nServices\n\nDIY\n\nLog In\n\nSign in for the best experience\n\nSign In\n\nDon't have an account?\n\nCreate an Account\nTop Categories\nSkip Listing\nToday's Big Savings All in One Place\n\nToday Only! Fast Free Delivery\n\nShop All Savings\nAppliance Savings\nShop All Savings\n$3099\n$1799\n\nLG 36\" Stainless Steel Refrigerator\n\n$2598\n$\n1798\n\n",
+   "blocked": false,
+   "file": "screens/07-home-phone-small-360.png",
+   "url": "https://www.homedepot.com/",
+   "kind": "home",
+   "width": 360,
+   "height": 740,
+   "mobile": true
+  },
+  {
+   "title": "The Home Depot",
+   "h1": [],
+   "buttons": [
+    "Search Field Icon",
+    "The Dalles 9PM",
+    "97058",
+    "Shop All",
+    "Services",
+    "DIY",
+    "Log In",
+    "close",
+    "Sign In",
+    "Open drawer for Details",
+    "Ask a question or get help"
+   ],
+   "inputs": [
+    {
+     "placeholder": "Search",
+     "aria": ""
+    }
+   ],
+   "headerSticky": false,
+   "bottomFixedBar": true,
+   "visibleImages": 5,
+   "viewport": [
+    390,
+    844
+   ],
+   "body": "UP TO $500 OFF Select Appliances - Shop Now\n\nThe Dalles\n\n9PM\n\n97058\n\nShop All\n\nServices\n\nDIY\n\nLog In\n\nSign in for the best experience\n\nSign In\n\nDon't have an account?\n\nCreate an Account\nTop Categories\nSkip Listing\nToday's Big Savings All in One Place\n\nToday Only! Fast Free Delivery\n\nShop All Savings\nAppliance Savings\nShop All Savings\n$3099\n$1799\n\nLG 36\" Stainless Steel Refrigerator\n\n$2598\n$\n1798\n\n",
+   "blocked": false,
+   "file": "screens/08-home-phone-iphone-390.png",
+   "url": "https://www.homedepot.com/",
+   "kind": "home",
+   "width": 390,
+   "height": 844,
+   "mobile": true
+  },
+  {
+   "title": "The Home Depot",
+   "h1": [],
+   "buttons": [
+    "Search Field Icon",
+    "The Dalles 9PM",
+    "97058",
+    "Shop All",
+    "Services",
+    "DIY",
+    "Log In",
+    "close",
+    "Sign In",
+    "Open drawer for Details",
+    "Ask a question or get help"
+   ],
+   "inputs": [
+    {
+     "placeholder": "Search",
+     "aria": ""
+    }
+   ],
+   "headerSticky": false,
+   "bottomFixedBar": true,
+   "visibleImages": 5,
+   "viewport": [
+    430,
+    932
+   ],
+   "body": "UP TO $500 OFF Select Appliances - Shop Now\n\nThe Dalles\n\n9PM\n\n97058\n\nShop All\n\nServices\n\nDIY\n\nLog In\n\nSign in for the best experience\n\nSign In\n\nDon't have an account?\n\nCreate an Account\nTop Categories\nSkip Listing\nToday's Big Savings All in One Place\n\nToday Only! Fast Free Delivery\n\nShop All Savings\nAppliance Savings\nShop All Savings\n$3099\n$1799\n\nLG 36\" Stainless Steel Refrigerator\n\n$2598\n$\n1798\n\n",
+   "blocked": false,
+   "file": "screens/09-home-phone-large-430.png",
+   "url": "https://www.homedepot.com/",
+   "kind": "home",
+   "width": 430,
+   "height": 932,
+   "mobile": true
+  },
+  {
+   "title": "The Home Depot",
+   "h1": [],
+   "buttons": [
+    "Search Field Icon",
+    "The Dalles 9PM",
+    "97058",
+    "Shop All",
+    "Services",
+    "DIY",
+    "Log In",
+    "close",
+    "Sign In",
+    "Open drawer for Details",
+    "Ask a question or get help"
+   ],
+   "inputs": [
+    {
+     "placeholder": "Search",
+     "aria": ""
+    }
+   ],
+   "headerSticky": false,
+   "bottomFixedBar": true,
+   "visibleImages": 5,
+   "viewport": [
+    412,
+    915
+   ],
+   "body": "UP TO $500 OFF Select Appliances - Shop Now\n\nThe Dalles\n\n9PM\n\n97058\n\nShop All\n\nServices\n\nDIY\n\nLog In\n\nSign in for the best experience\n\nSign In\n\nDon't have an account?\n\nCreate an Account\nTop Categories\nSkip Listing\nToday's Big Savings All in One Place\n\nToday Only! Fast Free Delivery\n\nShop All Savings\nAppliance Savings\nShop All Savings\n$3099\n$1799\n\nLG 36\" Stainless Steel Refrigerator\n\n$2598\n$\n1798\n\n",
+   "blocked": false,
+   "file": "screens/extra-home-phone-android-412.png",
+   "url": "https://www.homedepot.com/",
+   "kind": "home",
+   "width": 412,
+   "height": 915,
+   "mobile": true
+  },
+  {
+   "title": "The Home Depot",
+   "h1": [],
+   "buttons": [
+    "Search Field Icon",
+    "The Dalles 9PM",
+    "97058",
+    "Shop All",
+    "Services",
+    "DIY",
+    "Log In",
+    "close",
+    "Sign In",
+    "Open drawer for Details",
+    "Ask a question or get help"
+   ],
+   "inputs": [
+    {
+     "placeholder": "Search",
+     "aria": ""
+    }
+   ],
+   "headerSticky": false,
+   "bottomFixedBar": true,
+   "visibleImages": 3,
+   "viewport": [
+    834,
+    1194
+   ],
+   "body": "UP TO $500 OFF Select Appliances - Shop Now\n\nThe Dalles\n\n9PM\n\n97058\n\nShop All\n\nServices\n\nDIY\n\nLog In\n\nSign in for the best experience\n\nSign In\n\nDon't have an account?\n\nCreate an Account\nTop Categories\nSkip Listing\nToday's Big Savings All in One Place\n\nToday Only! Fast Free Delivery\n\nShop All Savings\nAppliance Savings\nShop All Savings\n$3099\n$1799\n\nLG 36\" Stainless Steel Refrigerator\n\n$2598\n$\n1798\n\n",
+   "blocked": false,
+   "file": "screens/extra-home-ipad-pro-834.png",
+   "url": "https://www.homedepot.com/",
+   "kind": "home",
+   "width": 834,
+   "height": 1194,
+   "mobile": true
+  },
+  {
+   "title": "The Home Depot",
+   "h1": [],
+   "buttons": [
+    "Ask Magic Apron",
+    "Home Depot Credit Cards",
+    "The Dalles 9PM",
+    "97058",
+    "Search Field Icon",
+    "Shop All",
+    "Services",
+    "DIY",
+    "Log In",
+    "close",
+    "Sign In",
+    "Open drawer for Details",
+    "Ask a question or get help"
+   ],
+   "inputs": [
+    {
+     "placeholder": "What can we help you find today?",
+     "aria": ""
+    }
+   ],
+   "headerSticky": false,
+   "bottomFixedBar": false,
+   "visibleImages": 6,
+   "viewport": [
+    1280,
+    800
+   ],
+   "body": "UP TO $500 OFF Select Appliances - Shop Now\nAsk Magic Apron\n\nHome Depot Credit Cards\n\nThe Dalles\n\n9PM\n\n97058\n\nShop All\n\nServices\n\nDIY\n\nLog In\n\nSign in for the best experience\n\nSign In\n\nDon't have an account?\n\nCreate an Account\n\nCart\n\nTop Categories\nSkip Listing\nToday's Big Savings All in One Place\n\nToday Only! Fast Free Delivery\n\nShop All Savings\nAppliance Savings\nShop All Savings\n$3099\n$1799\n\nLG ",
+   "blocked": false,
+   "file": "screens/extra-home-desktop-16x10-1280.png",
+   "url": "https://www.homedepot.com/",
+   "kind": "home",
+   "width": 1280,
+   "height": 800,
+   "mobile": false
+  }
+ ],
+ "errors": [],
+ "product_url": "https://www.homedepot.com/p/LG-36-in-28-cu-ft-3-Door-French-Door-Refrigerator-w-Ice-and-Water-Dispenser-and-Craft-Ice-in-PrintProof-Stainless-Steel-LHFS28XBS/325158253",
+ "listing_url": "https://www.homedepot.com/s/drill",
+ "excluded_screens": [
+  {
+   "file": "screens/10-listing-desktop-16x10-1440.png",
+   "reason": "block or error page detected: Error Page"
+  },
+  {
+   "file": "screens/11-listing-phone-390.png",
+   "reason": "block or error page detected: Error Page"
+  },
+  {
+   "file": "screens/12-listing-tablet-portrait-768.png",
+   "reason": "block or error page detected: Error Page"
+  },
+  {
+   "file": "screens/13-product-desktop-16x10-1440.png",
+   "reason": "block or error page detected: Error Page"
+  },
+  {
+   "file": "screens/14-product-phone-390.png",
+   "reason": "block or error page detected: Error Page"
+  },
+  {
+   "file": "screens/15-product-phone-small-360.png",
+   "reason": "block or error page detected: Error Page"
+  }
+ ]
+}

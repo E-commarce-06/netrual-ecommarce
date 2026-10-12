@@ -1,0 +1,532 @@
+{
+ "site": "Amazon",
+ "folder": "01-amazon",
+ "captured": [
+  {
+   "title": "Amazon.com. Spend less. Smile more.",
+   "h1": [],
+   "buttons": [
+    "Show/Hide shortcuts shift + alt + Z",
+    "Delivering to The Dalles 97058 Update location",
+    "Expand to Change Language or Country",
+    "Expand Account and Lists",
+    "All",
+    "Prime Details",
+    "Amazon Home Details",
+    "Toys & Games Details",
+    "Custom Products Details",
+    "Gift Cards Details",
+    "Pause",
+    "Play",
+    "Carousel next slide"
+   ],
+   "inputs": [
+    {
+     "placeholder": "Search Amazon",
+     "aria": "Search Amazon"
+    }
+   ],
+   "headerSticky": false,
+   "bottomFixedBar": false,
+   "visibleImages": 25,
+   "viewport": [
+    1440,
+    900
+   ],
+   "file": "screens/01-home-desktop-16x10-1440.png",
+   "url": "https://www.amazon.com/",
+   "kind": "home",
+   "width": 1440,
+   "height": 900,
+   "mobile": false
+  },
+  {
+   "title": "Amazon.com. Spend less. Smile more.",
+   "h1": [],
+   "buttons": [
+    "Show/Hide shortcuts shift + alt + Z",
+    "Delivering to The Dalles 97058 Update location",
+    "Expand to Change Language or Country",
+    "Expand Account and Lists",
+    "All",
+    "Prime Details",
+    "Amazon Home Details",
+    "Toys & Games Details",
+    "Custom Products Details",
+    "Gift Cards Details",
+    "Pause",
+    "Play",
+    "Carousel next slide"
+   ],
+   "inputs": [
+    {
+     "placeholder": "Search Amazon",
+     "aria": "Search Amazon"
+    }
+   ],
+   "headerSticky": false,
+   "bottomFixedBar": false,
+   "visibleImages": 25,
+   "viewport": [
+    1920,
+    1080
+   ],
+   "file": "screens/02-home-desktop-16x9-1920.png",
+   "url": "https://www.amazon.com/",
+   "kind": "home",
+   "width": 1920,
+   "height": 1080,
+   "mobile": false
+  },
+  {
+   "title": "Amazon.com. Spend less. Smile more.",
+   "h1": [],
+   "buttons": [
+    "Show/Hide shortcuts shift + alt + Z",
+    "Delivering to The Dalles 97058 Update location",
+    "Expand to Change Language or Country",
+    "Expand Account and Lists",
+    "All",
+    "Prime Details",
+    "Amazon Home Details",
+    "Toys & Games Details",
+    "Custom Products Details",
+    "Gift Cards Details",
+    "Pause",
+    "Play",
+    "Carousel next slide"
+   ],
+   "inputs": [
+    {
+     "placeholder": "Search Amazon",
+     "aria": "Search Amazon"
+    }
+   ],
+   "headerSticky": false,
+   "bottomFixedBar": false,
+   "visibleImages": 25,
+   "viewport": [
+    2560,
+    1080
+   ],
+   "file": "screens/03-home-ultrawide-21x9-2560.png",
+   "url": "https://www.amazon.com/",
+   "kind": "home",
+   "width": 2560,
+   "height": 1080,
+   "mobile": false
+  },
+  {
+   "title": "Amazon.com. Spend less. Smile more.",
+   "h1": [],
+   "buttons": [
+    "Show/Hide shortcuts shift + alt + Z",
+    "Delivering to The Dalles 97058 Update location",
+    "Expand to Change Language or Country",
+    "Expand Account and Lists",
+    "All",
+    "Prime Details",
+    "Amazon Home Details",
+    "Toys & Games Details",
+    "Custom Products Details",
+    "Gift Cards Details",
+    "Pause",
+    "Play",
+    "Carousel next slide"
+   ],
+   "inputs": [
+    {
+     "placeholder": "Search Amazon",
+     "aria": "Search Amazon"
+    }
+   ],
+   "headerSticky": false,
+   "bottomFixedBar": false,
+   "visibleImages": 17,
+   "viewport": [
+    1366,
+    768
+   ],
+   "file": "screens/04-home-laptop-16x9-1366.png",
+   "url": "https://www.amazon.com/",
+   "kind": "home",
+   "width": 1366,
+   "height": 768,
+   "mobile": false
+  },
+  {
+   "title": "Amazon.com. Spend less. Smile more.",
+   "h1": [],
+   "buttons": [
+    "Open All Categories Menu",
+    "Join Prime Join Prime",
+    "Join Prime",
+    "Pause",
+    "Play",
+    "Sign in securely"
+   ],
+   "inputs": [
+    {
+     "placeholder": "Search Amazon",
+     "aria": "Search Amazon"
+    }
+   ],
+   "headerSticky": false,
+   "bottomFixedBar": false,
+   "visibleImages": 6,
+   "viewport": [
+    768,
+    1024
+   ],
+   "file": "screens/05-home-tablet-portrait-3x4-768.png",
+   "url": "https://www.amazon.com/",
+   "kind": "home",
+   "width": 768,
+   "height": 1024,
+   "mobile": true
+  },
+  {
+   "title": "Amazon.com. Spend less. Smile more.",
+   "h1": [],
+   "buttons": [
+    "Open All Categories Menu",
+    "Join Prime Join Prime",
+    "Join Prime",
+    "Pause",
+    "Play",
+    "Sign in securely"
+   ],
+   "inputs": [
+    {
+     "placeholder": "Search Amazon",
+     "aria": "Search Amazon"
+    }
+   ],
+   "headerSticky": false,
+   "bottomFixedBar": false,
+   "visibleImages": 5,
+   "viewport": [
+    1024,
+    768
+   ],
+   "file": "screens/06-home-tablet-landscape-4x3-1024.png",
+   "url": "https://www.amazon.com/",
+   "kind": "home",
+   "width": 1024,
+   "height": 768,
+   "mobile": true
+  },
+  {
+   "title": "Amazon.com. Spend less. Smile more.",
+   "h1": [],
+   "buttons": [
+    "Open All Categories Menu",
+    "Join Prime Join Prime",
+    "Join Prime",
+    "Pause",
+    "Play",
+    "Sign in securely"
+   ],
+   "inputs": [
+    {
+     "placeholder": "Search Amazon",
+     "aria": "Search Amazon"
+    }
+   ],
+   "headerSticky": false,
+   "bottomFixedBar": false,
+   "visibleImages": 5,
+   "viewport": [
+    360,
+    740
+   ],
+   "file": "screens/07-home-phone-small-360.png",
+   "url": "https://www.amazon.com/",
+   "kind": "home",
+   "width": 360,
+   "height": 740,
+   "mobile": true
+  },
+  {
+   "title": "Amazon.com. Spend less. Smile more.",
+   "h1": [],
+   "buttons": [
+    "Open All Categories Menu",
+    "Join Prime Join Prime",
+    "Join Prime",
+    "Pause",
+    "Play",
+    "Sign in securely"
+   ],
+   "inputs": [
+    {
+     "placeholder": "Search Amazon",
+     "aria": "Search Amazon"
+    }
+   ],
+   "headerSticky": false,
+   "bottomFixedBar": false,
+   "visibleImages": 4,
+   "viewport": [
+    390,
+    844
+   ],
+   "file": "screens/08-home-phone-iphone-390.png",
+   "url": "https://www.amazon.com/",
+   "kind": "home",
+   "width": 390,
+   "height": 844,
+   "mobile": true
+  },
+  {
+   "title": "Amazon.com. Spend less. Smile more.",
+   "h1": [],
+   "buttons": [
+    "Open All Categories Menu",
+    "Join Prime Join Prime",
+    "Join Prime",
+    "Pause",
+    "Play",
+    "Sign in securely"
+   ],
+   "inputs": [
+    {
+     "placeholder": "Search Amazon",
+     "aria": "Search Amazon"
+    }
+   ],
+   "headerSticky": false,
+   "bottomFixedBar": false,
+   "visibleImages": 5,
+   "viewport": [
+    430,
+    932
+   ],
+   "file": "screens/09-home-phone-large-430.png",
+   "url": "https://www.amazon.com/",
+   "kind": "home",
+   "width": 430,
+   "height": 932,
+   "mobile": true
+  },
+  {
+   "title": "Amazon.com : wireless headphones",
+   "h1": [
+    "1-16 of over 50,000 results for \"wireless headphones\" Sort b"
+   ],
+   "buttons": [
+    "Show/Hide shortcuts shift + alt + Z",
+    "Delivering to The Dalles 97058 Update location",
+    "Expand to Change Language or Country",
+    "Expand Account and Lists",
+    "Sign in",
+    "All",
+    "Prime Details",
+    "Amazon Home Details",
+    "Toys & Games Details",
+    "Custom Products Details",
+    "Gift Cards Details",
+    "Pause Sponsored Video",
+    "Mute Sponsored Video",
+    "4.5 out of 5 stars",
+    "Energy efficiency +3 more",
+    "Add to cart",
+    "See more"
+   ],
+   "inputs": [
+    {
+     "placeholder": "Search Amazon",
+     "aria": "Search Amazon"
+    }
+   ],
+   "headerSticky": false,
+   "bottomFixedBar": false,
+   "visibleImages": 6,
+   "viewport": [
+    1440,
+    900
+   ],
+   "file": "screens/10-listing-desktop-16x10-1440.png",
+   "url": "https://www.amazon.com/s?k=wireless+headphones",
+   "kind": "listing",
+   "width": 1440,
+   "height": 900,
+   "mobile": false
+  },
+  {
+   "title": "Amazon.com : wireless headphones",
+   "h1": [],
+   "buttons": [
+    "Open All Categories Menu",
+    "Join Prime Join Prime",
+    "Join Prime",
+    "All Filters Icon",
+    "Pause Sponsored Video",
+    "Mute Sponsored Video"
+   ],
+   "inputs": [
+    {
+     "placeholder": "Search Amazon",
+     "aria": "Search Amazon"
+    }
+   ],
+   "headerSticky": false,
+   "bottomFixedBar": false,
+   "visibleImages": 6,
+   "viewport": [
+    390,
+    844
+   ],
+   "file": "screens/11-listing-phone-390.png",
+   "url": "https://www.amazon.com/s?k=wireless+headphones",
+   "kind": "listing",
+   "width": 390,
+   "height": 844,
+   "mobile": true
+  },
+  {
+   "title": "Amazon.com : wireless headphones",
+   "h1": [],
+   "buttons": [
+    "Open All Categories Menu",
+    "Join Prime Join Prime",
+    "Join Prime",
+    "All Filters Icon",
+    "Pause Sponsored Video",
+    "Mute Sponsored Video"
+   ],
+   "inputs": [
+    {
+     "placeholder": "Search Amazon",
+     "aria": "Search Amazon"
+    }
+   ],
+   "headerSticky": false,
+   "bottomFixedBar": false,
+   "visibleImages": 5,
+   "viewport": [
+    768,
+    1024
+   ],
+   "file": "screens/12-listing-tablet-portrait-768.png",
+   "url": "https://www.amazon.com/s?k=wireless+headphones",
+   "kind": "listing",
+   "width": 768,
+   "height": 1024,
+   "mobile": true
+  },
+  {
+   "title": "Amazon.com: Bose QuietComfort Ultra Bluetooth Headphones (2nd Gen), Wireless Headphones with Spatial Audio, Over Ear Noise Cancelling with Mic, Up to 30 Hours of Play time, Black : Electronics",
+   "h1": [
+    "Product summary presents key product information Keyboard sh",
+    "Bose QuietComfort Ultra Bluetooth Headphones (2nd Gen), Wire",
+    "About this item"
+   ],
+   "buttons": [
+    "Add to cart shift + alt + K",
+    "Product summary shift + alt + D",
+    "Show/Hide shortcuts shift + alt + Z",
+    "Delivering to The Dalles 97058 Update location",
+    "Expand to Change Language or Country",
+    "Expand Account and Lists",
+    "All",
+    "Prime Details",
+    "Amazon Home Details",
+    "Toys & Games Details",
+    "Custom Products Details",
+    "Gift Cards Details",
+    "Sign in",
+    "Product summary presents key product information",
+    "Delivering to The Dalles 97058 - Update location",
+    "FREE 30-day refund/replacement",
+    "Secure transaction",
+    "Share",
+    "4.3 4.3 out of 5 stars",
+    "FREE Returns"
+   ],
+   "inputs": [
+    {
+     "placeholder": "Search Amazon",
+     "aria": "Search Amazon"
+    }
+   ],
+   "headerSticky": false,
+   "bottomFixedBar": false,
+   "visibleImages": 18,
+   "viewport": [
+    1440,
+    900
+   ],
+   "file": "screens/13-product-desktop-16x10-1440.png",
+   "url": "https://www.amazon.com/dp/B0FDKR293G/?_encoding=UTF8&pd_rd_i=B0FDKR293G&ref_=sbx_be_s_sparkle_ssd_img&qid=1791821978&pd_rd_w=oBwxy&content-id=amzn1.sym.8de9b3d5-f5c5-40e9-9b39-d65f08d6ea68%3Aamzn1.sym.8de9b3d5-f5c5-40e9-9b39-d65f08d6ea68&pf_rd_p=8de9b3d5-f5c5-40e9-9b39-d65f08d6ea68&pf_rd_r=BMB6MTNA1TTE0W18WNRG&pd_rd_wg=cnLY6&pd_rd_r=05e5dd50-c6e8-45c7-b998-2f2ab725bc9d&pd_rd_plhdr=t&th=1",
+   "kind": "product",
+   "width": 1440,
+   "height": 900,
+   "mobile": false
+  },
+  {
+   "title": "Amazon.com: Bose QuietComfort Ultra Bluetooth Headphones (2nd Gen), Wireless Headphones with Spatial Audio, Over Ear Noise Cancelling with Mic, Up to 30 Hours of Play time, Black : Electronics",
+   "h1": [
+    "Product summary presents key product information",
+    "Bose QuietComfort Ultra Bluetooth Headphones (2nd Gen), Wire"
+   ],
+   "buttons": [
+    "Open All Categories Menu",
+    "Product summary presents key product information"
+   ],
+   "inputs": [
+    {
+     "placeholder": "Search Amazon",
+     "aria": "Search Amazon"
+    }
+   ],
+   "headerSticky": false,
+   "bottomFixedBar": false,
+   "visibleImages": 16,
+   "viewport": [
+    390,
+    844
+   ],
+   "file": "screens/14-product-phone-390.png",
+   "url": "https://www.amazon.com/dp/B0FDKR293G/?_encoding=UTF8&pd_rd_i=B0FDKR293G&ref_=sbx_be_s_sparkle_ssd_img&qid=1791821978&pd_rd_w=oBwxy&content-id=amzn1.sym.8de9b3d5-f5c5-40e9-9b39-d65f08d6ea68%3Aamzn1.sym.8de9b3d5-f5c5-40e9-9b39-d65f08d6ea68&pf_rd_p=8de9b3d5-f5c5-40e9-9b39-d65f08d6ea68&pf_rd_r=BMB6MTNA1TTE0W18WNRG&pd_rd_wg=cnLY6&pd_rd_r=05e5dd50-c6e8-45c7-b998-2f2ab725bc9d&pd_rd_plhdr=t",
+   "kind": "product",
+   "width": 390,
+   "height": 844,
+   "mobile": true
+  },
+  {
+   "title": "Amazon.com: Bose QuietComfort Ultra Bluetooth Headphones (2nd Gen), Wireless Headphones with Spatial Audio, Over Ear Noise Cancelling with Mic, Up to 30 Hours of Play time, Black : Electronics",
+   "h1": [
+    "Product summary presents key product information",
+    "Bose QuietComfort Ultra Bluetooth Headphones (2nd Gen), Wire"
+   ],
+   "buttons": [
+    "Open All Categories Menu",
+    "Product summary presents key product information"
+   ],
+   "inputs": [
+    {
+     "placeholder": "Search Amazon",
+     "aria": "Search Amazon"
+    }
+   ],
+   "headerSticky": false,
+   "bottomFixedBar": false,
+   "visibleImages": 9,
+   "viewport": [
+    360,
+    740
+   ],
+   "file": "screens/15-product-phone-small-360.png",
+   "url": "https://www.amazon.com/dp/B0FDKR293G/?_encoding=UTF8&pd_rd_i=B0FDKR293G&ref_=sbx_be_s_sparkle_ssd_img&qid=1791821978&pd_rd_w=oBwxy&content-id=amzn1.sym.8de9b3d5-f5c5-40e9-9b39-d65f08d6ea68%3Aamzn1.sym.8de9b3d5-f5c5-40e9-9b39-d65f08d6ea68&pf_rd_p=8de9b3d5-f5c5-40e9-9b39-d65f08d6ea68&pf_rd_r=BMB6MTNA1TTE0W18WNRG&pd_rd_wg=cnLY6&pd_rd_r=05e5dd50-c6e8-45c7-b998-2f2ab725bc9d&pd_rd_plhdr=t",
+   "kind": "product",
+   "width": 360,
+   "height": 740,
+   "mobile": true
+  }
+ ],
+ "errors": [],
+ "product_url": "https://aax-us-east-retail-direct.amazon.com/x/c/JNNktygiJmelVSxzMZRd5VgAAAGhMOmcCAEAAAH2AQBvbm9fdHhuX2JpZDEgICBvbm9fdHhuX2ltcDIgICDlY36a/clv1c_ek-wBfHXEsTW3uLbEz1lydv97BoWi5MvUxJx0oaql_6q_YLwn3XBPgSzvq0Gj7ubehtJDydDABbc3zQJiyiAQ_j5dqjSpoO6ADMMmuyMD9gdyQmKpv0gTfP7tbY8lnI3zAJvhYqINBfeOwFXbF814ltiQ8WIFlXpkKxQnxYpS4M7Y0st30Bzmusr_kKokfEDXEDP_tR6EQrOrbwt15tg8GBIiXt6Ak-72c9mcHXGYjIGCdlStjc51bamGHkGosI3iE2I1s2488IPKoGPe_pQNMrLgU_BTEzry-9qkwo72VDPUJZDMdQ-UKTIBzj94EGSezS9nqERy9KSx5QIH_wnLR7iygrzoaKHfQ1SHqFovSkMLD4hHkjafbAOuCT6TvQXbXk9JZB6NHy3ozEpb8YtXkMyePGrBxO-N15HVsc_HSqFzS9Wohvskx2BqqmE2Ao8WHk1K9R6C3dvtO6DCmlPfxZf7zYqL4C7li3ROyUd_D-9DK6BQcqZskQkjd3YEgnVrFsx3dXnBGKSzCix1W-sarOZDMd2XoFSUvSIVuI3FIvPNaE9TqhlsmeMbCbraXOT4cPaz7AdVzhpvPNGm5yVJxTSeuUYO4Q_eRY07SnACF7fOXHSfs__5u4I6oPqDU3BHF0R41b2p7rQsqlBQewzCMctrv9YFRIcrlVORAR-CfipmK8kEvhMSJX1EZMlrUi5IJeAry6Rf4paEbhC9zrsqqvca5x74Qkw3dWXPHIhuF8bztI9CB8tuP05a6nGMoQ0WUVIgXFmnWGWNFeNMd-RVVPeKcVhWEOD21Budthao5BgOFg5gee3ARfQH9qnlYFdr8i9LQMa7weXnXFg36B-oIV6x36Z5-6nUpqYxEC2naYFosipBU_bCh9bQz9Mgr-Ki6FFUvXKhtbIDgyKbxWUV5AGpMH6GUWyPWiONLLnuFsx_Tlv0qNVwye7Em9tn1pbnI_uvwiFG3VpN4mGjufd72ymPQgE2m3ulRRg36Kz-Y1F9jwp2995Y-g5l79YP9ZIvzV7Mj_UZP7xlntnPgcFPusK8iUFnuFfgimAnpLEsOgO2ibTpQ_GrYkZNOOBowwIILXkyimFnVQ3odXrIrU1tq_-3WwkvSerXd3huAb1uc4HWJrFfAWIxkVJRJvMV4eTXyBqNd-8kr9ExIlvsnz0ZKrBPQd_YyoE6z6kV8dSV8OseeWKAOziXZvjBKA65WCzcLX8xuRuVcZbknUub_585O6VS3qiMKYGGpCUj451uB1UqzboSvWfROKz25x2HCeW2KwnkaMMCAxizr67hPekIhyXPfA74LP7_iQn8NNpskyRKmdxM89AWNBBZuBx4oHHkRledaBZwSDFwrNW12l33y0HXo5FcZwwNTU9-rKUazvTMbgFkUFDxd16KlfNnZvG-NrtGhvUe00ZhgANhJbM_iIVJuXDf_XZ2_ESJshtxGihX6hLRkGChA7Z-aC_8E-ND5K9h_v5nwBarJV4Jx4tzUqxbs8B782FAgOHWOe10H_BZ6Vs2Bx3u-C3JQPfmp4PM6FTS6lsu-C4mifR_K8lvgA0kr5JuIcC_CqFqju5r_A47IootV0f9bcqfCdV9qN6al5j7D17q0GEZ8aJGzBSPawajjHrBcUIU13d/https://www.amazon.com/dp/B0FDKR293G/?_encoding=UTF8&pd_rd_i=B0FDKR293G&ref_=sbx_be_s_sparkle_ssd_img&qid=1791821978&pd_rd_w=oBwxy&content-id=amzn1.sym.8de9b3d5-f5c5-40e9-9b39-d65f08d6ea68%3Aamzn1.sym.8de9b3d5-f5c5-40e9-9b39-d65f08d6ea68&pf_rd_p=8de9b3d5-f5c5-40e9-9b39-d65f08d6ea68&pf_rd_r=BMB6MTNA1TTE0W18WNRG&pd_rd_wg=cnLY6&pd_rd_r=05e5dd50-c6e8-45c7-b998-2f2ab725bc9d&pd_rd_plhdr=t",
+ "listing_url": "https://www.amazon.com/s?k=wireless+headphones",
+ "excluded_screens": []
+}

@@ -1,0 +1,592 @@
+{
+ "site": "Walgreens",
+ "folder": "10-walgreens",
+ "captured": [
+  {
+   "title": "Walgreens: Pharmacy, Health & Wellness, Photo & More for You",
+   "h1": [
+    "Walgreens: Pharmacy, Health & Wellness, Photo & More for You"
+   ],
+   "buttons": [
+    "Search",
+    "Nearest store 515 Mount Hood St, The Dalle...",
+    "Account Menu",
+    "Pharmacy",
+    "Health Services",
+    "Shop",
+    "Savings",
+    "Photo",
+    "Financial Services",
+    "Español",
+    "Schedule now",
+    "Apply codes",
+    "Feedback"
+   ],
+   "inputs": [
+    {
+     "placeholder": "Search",
+     "aria": "Search by keyword or item number"
+    }
+   ],
+   "headerSticky": false,
+   "bottomFixedBar": false,
+   "visibleImages": 9,
+   "viewport": [
+    1440,
+    900
+   ],
+   "body": "Skip to main content\n20% OFF $50+ eligible items sitewide* with code OCT20\nTreat of the Week: BOGO $1 select snack size candy bags\nSchedule vaccinations\nNearest store\n515 Mount Hood St, The Dalle...\nAccount\nMenu\nPharmacy\nHealth Services\nShop\nSavings\nPhoto\nFinancial Services\nWeekly Ad\nHalloween\nVaccinations\nEspañol\n2026-2027 COVID-19 vaccines are now recommended for all adults ages 18+. Children un",
+   "blocked": false,
+   "file": "screens/01-home-desktop-16x10-1440.png",
+   "url": "https://www.walgreens.com/",
+   "kind": "home",
+   "width": 1440,
+   "height": 900,
+   "mobile": false
+  },
+  {
+   "title": "Walgreens: Pharmacy, Health & Wellness, Photo & More for You",
+   "h1": [
+    "Walgreens: Pharmacy, Health & Wellness, Photo & More for You"
+   ],
+   "buttons": [
+    "Search",
+    "Nearest store 515 Mount Hood St, The Dalle...",
+    "Account Menu",
+    "Pharmacy",
+    "Health Services",
+    "Shop",
+    "Savings",
+    "Photo",
+    "Financial Services",
+    "Español",
+    "Schedule now",
+    "Apply codes",
+    "Feedback"
+   ],
+   "inputs": [
+    {
+     "placeholder": "Search",
+     "aria": "Search by keyword or item number"
+    }
+   ],
+   "headerSticky": false,
+   "bottomFixedBar": false,
+   "visibleImages": 9,
+   "viewport": [
+    1920,
+    1080
+   ],
+   "body": "Skip to main content\n20% OFF $50+ eligible items sitewide* with code OCT20\nTreat of the Week: BOGO $1 select snack size candy bags\nSchedule vaccinations\nNearest store\n515 Mount Hood St, The Dalle...\nAccount\nMenu\nPharmacy\nHealth Services\nShop\nSavings\nPhoto\nFinancial Services\nWeekly Ad\nHalloween\nVaccinations\nEspañol\n2026-2027 COVID-19 vaccines are now recommended for all adults ages 18+. Children un",
+   "blocked": false,
+   "file": "screens/02-home-desktop-16x9-1920.png",
+   "url": "https://www.walgreens.com/",
+   "kind": "home",
+   "width": 1920,
+   "height": 1080,
+   "mobile": false
+  },
+  {
+   "title": "Walgreens: Pharmacy, Health & Wellness, Photo & More for You",
+   "h1": [
+    "Walgreens: Pharmacy, Health & Wellness, Photo & More for You"
+   ],
+   "buttons": [
+    "Search",
+    "Nearest store 515 Mount Hood St, The Dalle...",
+    "Account Menu",
+    "Pharmacy",
+    "Health Services",
+    "Shop",
+    "Savings",
+    "Photo",
+    "Financial Services",
+    "Español",
+    "Schedule now",
+    "Apply codes",
+    "Feedback"
+   ],
+   "inputs": [
+    {
+     "placeholder": "Search",
+     "aria": "Search by keyword or item number"
+    }
+   ],
+   "headerSticky": false,
+   "bottomFixedBar": false,
+   "visibleImages": 9,
+   "viewport": [
+    2560,
+    1080
+   ],
+   "body": "Skip to main content\n20% OFF $50+ eligible items sitewide* with code OCT20\nTreat of the Week: BOGO $1 select snack size candy bags\nSchedule vaccinations\nNearest store\n515 Mount Hood St, The Dalle...\nAccount\nMenu\nPharmacy\nHealth Services\nShop\nSavings\nPhoto\nFinancial Services\nWeekly Ad\nHalloween\nVaccinations\nEspañol\n2026-2027 COVID-19 vaccines are now recommended for all adults ages 18+. Children un",
+   "blocked": false,
+   "file": "screens/03-home-ultrawide-21x9-2560.png",
+   "url": "https://www.walgreens.com/",
+   "kind": "home",
+   "width": 2560,
+   "height": 1080,
+   "mobile": false
+  },
+  {
+   "title": "Walgreens: Pharmacy, Health & Wellness, Photo & More for You",
+   "h1": [
+    "Walgreens: Pharmacy, Health & Wellness, Photo & More for You"
+   ],
+   "buttons": [
+    "Search",
+    "Nearest store 515 Mount Hood St, The Dalle...",
+    "Account Menu",
+    "Pharmacy",
+    "Health Services",
+    "Shop",
+    "Savings",
+    "Photo",
+    "Financial Services",
+    "Español",
+    "Schedule now",
+    "Apply codes",
+    "Feedback"
+   ],
+   "inputs": [
+    {
+     "placeholder": "Search",
+     "aria": "Search by keyword or item number"
+    }
+   ],
+   "headerSticky": false,
+   "bottomFixedBar": false,
+   "visibleImages": 6,
+   "viewport": [
+    1366,
+    768
+   ],
+   "body": "Skip to main content\n20% OFF $50+ eligible items sitewide* with code OCT20\nTreat of the Week: BOGO $1 select snack size candy bags\nSchedule vaccinations\nNearest store\n515 Mount Hood St, The Dalle...\nAccount\nMenu\nPharmacy\nHealth Services\nShop\nSavings\nPhoto\nFinancial Services\nWeekly Ad\nHalloween\nVaccinations\nEspañol\n2026-2027 COVID-19 vaccines are now recommended for all adults ages 18+. Children un",
+   "blocked": false,
+   "file": "screens/04-home-laptop-16x9-1366.png",
+   "url": "https://www.walgreens.com/",
+   "kind": "home",
+   "width": 1366,
+   "height": 768,
+   "mobile": false
+  },
+  {
+   "title": "Walgreens: Pharmacy, Health & Wellness, Photo & More for You",
+   "h1": [
+    "Walgreens: Pharmacy, Health & Wellness, Photo & More for You"
+   ],
+   "buttons": [
+    "Search",
+    "Nearest store 515 Mount Hood St, The Dalle...",
+    "Account Menu",
+    "Pharmacy",
+    "Health Services",
+    "Shop",
+    "Savings",
+    "Photo",
+    "Financial Services",
+    "Close main menu",
+    "Schedule now",
+    "Feedback"
+   ],
+   "inputs": [
+    {
+     "placeholder": "Search",
+     "aria": "Search by keyword or item number"
+    }
+   ],
+   "headerSticky": false,
+   "bottomFixedBar": false,
+   "visibleImages": 6,
+   "viewport": [
+    768,
+    1024
+   ],
+   "body": "Skip to main content\n20% OFF $50+ eligible items sitewide* with code OCT20\nTreat of the Week: BOGO $1 select snack size candy bags\nSchedule vaccinations\nNearest store\n515 Mount Hood St, The Dalle...\nAccount\nMenu\nPharmacy\nHealth Services\nShop\nSavings\nPhoto\nFinancial Services\nWeekly Ad\nHalloween\nVaccinations\nClose main menu\n2026-2027 COVID-19 vaccines are now recommended for all adults ages 18+. Chi",
+   "blocked": false,
+   "file": "screens/05-home-tablet-portrait-3x4-768.png",
+   "url": "https://www.walgreens.com/",
+   "kind": "home",
+   "width": 768,
+   "height": 1024,
+   "mobile": true
+  },
+  {
+   "title": "Walgreens: Pharmacy, Health & Wellness, Photo & More for You",
+   "h1": [
+    "Walgreens: Pharmacy, Health & Wellness, Photo & More for You"
+   ],
+   "buttons": [
+    "Search",
+    "Nearest store 515 Mount Hood St, The Dalle...",
+    "Account Menu",
+    "Pharmacy",
+    "Health Services",
+    "Shop",
+    "Savings",
+    "Photo",
+    "Financial Services",
+    "Español",
+    "Schedule now",
+    "Feedback"
+   ],
+   "inputs": [
+    {
+     "placeholder": "Search",
+     "aria": "Search by keyword or item number"
+    }
+   ],
+   "headerSticky": false,
+   "bottomFixedBar": false,
+   "visibleImages": 6,
+   "viewport": [
+    1024,
+    768
+   ],
+   "body": "Skip to main content\n20% OFF $50+ eligible items sitewide* with code OCT20\nTreat of the Week: BOGO $1 select snack size candy bags\nSchedule vaccinations\nNearest store\n515 Mount Hood St, The Dalle...\nAccount\nMenu\nPharmacy\nHealth Services\nShop\nSavings\nPhoto\nFinancial Services\nWeekly Ad\nHalloween\nVaccinations\nEspañol\n2026-2027 COVID-19 vaccines are now recommended for all adults ages 18+. Children un",
+   "blocked": false,
+   "file": "screens/06-home-tablet-landscape-4x3-1024.png",
+   "url": "https://www.walgreens.com/",
+   "kind": "home",
+   "width": 1024,
+   "height": 768,
+   "mobile": true
+  },
+  {
+   "title": "Walgreens: Pharmacy, Health & Wellness, Photo & More for You",
+   "h1": [
+    "Walgreens: Pharmacy, Health & Wellness, Photo & More for You"
+   ],
+   "buttons": [
+    "main menu",
+    "Search",
+    "Nearest store 515 Mount Hood St, The Dalle...",
+    "Account Menu",
+    "Feedback"
+   ],
+   "inputs": [
+    {
+     "placeholder": "Search",
+     "aria": "Search by keyword or item number"
+    }
+   ],
+   "headerSticky": true,
+   "bottomFixedBar": false,
+   "visibleImages": 5,
+   "viewport": [
+    360,
+    740
+   ],
+   "body": "20% OFF $50+ eligible items sitewide* with code OCT20\nNearest store\n515 Mount Hood St, The Dalle...\nAccount\nMenu\n2026-2027 COVID-19 vaccines are now recommended for all adults ages 18+. Children under 18 may be eligible: speak to a pharmacist to learn more. Walk in or schedule online ›\nyour vaccine\nWalgreens: Pharmacy, Health & Wellness, Photo & More for You\nSchedule vaccinations\nGLP-1s for weight",
+   "blocked": false,
+   "file": "screens/07-home-phone-small-360.png",
+   "url": "https://www.walgreens.com/",
+   "kind": "home",
+   "width": 360,
+   "height": 740,
+   "mobile": true
+  },
+  {
+   "title": "Walgreens: Pharmacy, Health & Wellness, Photo & More for You",
+   "h1": [
+    "Walgreens: Pharmacy, Health & Wellness, Photo & More for You"
+   ],
+   "buttons": [
+    "main menu",
+    "Search",
+    "Nearest store 515 Mount Hood St, The Dalle...",
+    "Account Menu",
+    "Schedule now",
+    "Feedback"
+   ],
+   "inputs": [
+    {
+     "placeholder": "Search",
+     "aria": "Search by keyword or item number"
+    }
+   ],
+   "headerSticky": true,
+   "bottomFixedBar": false,
+   "visibleImages": 6,
+   "viewport": [
+    390,
+    844
+   ],
+   "body": "20% OFF $50+ eligible items sitewide* with code OCT20\nNearest store\n515 Mount Hood St, The Dalle...\nAccount\nMenu\n2026-2027 COVID-19 vaccines are now recommended for all adults ages 18+. Children under 18 may be eligible: speak to a pharmacist to learn more. Walk in or schedule online ›\nyour vaccine\nWalgreens: Pharmacy, Health & Wellness, Photo & More for You\nSchedule vaccinations\nGLP-1s for weight",
+   "blocked": false,
+   "file": "screens/08-home-phone-iphone-390.png",
+   "url": "https://www.walgreens.com/",
+   "kind": "home",
+   "width": 390,
+   "height": 844,
+   "mobile": true
+  },
+  {
+   "title": "Walgreens: Pharmacy, Health & Wellness, Photo & More for You",
+   "h1": [
+    "Walgreens: Pharmacy, Health & Wellness, Photo & More for You"
+   ],
+   "buttons": [
+    "main menu",
+    "Search",
+    "Nearest store 515 Mount Hood St, The Dalle...",
+    "Account Menu",
+    "Schedule now",
+    "Feedback"
+   ],
+   "inputs": [
+    {
+     "placeholder": "Search",
+     "aria": "Search by keyword or item number"
+    }
+   ],
+   "headerSticky": true,
+   "bottomFixedBar": false,
+   "visibleImages": 6,
+   "viewport": [
+    430,
+    932
+   ],
+   "body": "20% OFF $50+ eligible items sitewide* with code OCT20\nNearest store\n515 Mount Hood St, The Dalle...\nAccount\nMenu\n2026-2027 COVID-19 vaccines are now recommended for all adults ages 18+. Children under 18 may be eligible: speak to a pharmacist to learn more. Walk in or schedule online ›\nyour vaccine\nWalgreens: Pharmacy, Health & Wellness, Photo & More for You\nSchedule vaccinations\nGLP-1s for weight",
+   "blocked": false,
+   "file": "screens/09-home-phone-large-430.png",
+   "url": "https://www.walgreens.com/",
+   "kind": "home",
+   "width": 430,
+   "height": 932,
+   "mobile": true
+  },
+  {
+   "title": "headphones | Walgreens",
+   "h1": [],
+   "buttons": [
+    "Clear Search input",
+    "Search",
+    "Nearest store 515 Mount Hood St, The Dalles, OR",
+    "Account Menu",
+    "Pharmacy",
+    "Health Services",
+    "Shop",
+    "Savings",
+    "Photo",
+    "Financial Services",
+    "Español",
+    "Sign up for deals and offers!",
+    "Feedback"
+   ],
+   "inputs": [
+    {
+     "placeholder": "Search",
+     "aria": "Search by keyword or item number"
+    }
+   ],
+   "headerSticky": false,
+   "bottomFixedBar": false,
+   "visibleImages": 2,
+   "viewport": [
+    1440,
+    900
+   ],
+   "body": "20% OFF $50+ eligible items sitewide* with code OCT20\nTreat of the Week: BOGO $1 select snack size candy bags\nSchedule vaccinations\nNearest store\n515 Mount Hood St, The Dalles, OR\nAccount\nMenu\nPharmacy\nHealth Services\nShop\nSavings\nPhoto\nFinancial Services\nWeekly Ad\nHalloween\nVaccinations\nEspañol\nSign up for deals and offers!\nCustomer Service\nShipping\nReturns\nHelp/FAQs\nContact Us\nmyWalgreens®\nProgr",
+   "blocked": false,
+   "file": "screens/10-listing-desktop-16x10-1440.png",
+   "url": "https://www.walgreens.com/search/results.jsp?Ntt=headphones",
+   "kind": "listing",
+   "width": 1440,
+   "height": 900,
+   "mobile": false
+  },
+  {
+   "title": "headphones | Walgreens",
+   "h1": [],
+   "buttons": [
+    "main menu",
+    "Clear Search input",
+    "Search",
+    "Nearest store 515 Mount Hood St, The Dalle...",
+    "Account Menu",
+    "Sort & Filter",
+    "Sales & Offers",
+    "Walgreens",
+    "Category",
+    "Product Type",
+    "Brand",
+    "Price",
+    "Benefit Program",
+    "Form",
+    "Size",
+    "Days Supply",
+    "Special Feature",
+    "Deals & Promotions",
+    "More Options",
+    "Pickup",
+    "Same Day Delivery",
+    "Shipping",
+    "Add to cart",
+    "Feedback"
+   ],
+   "inputs": [
+    {
+     "placeholder": "Search",
+     "aria": "Search by keyword or item number"
+    }
+   ],
+   "headerSticky": true,
+   "bottomFixedBar": false,
+   "visibleImages": 8,
+   "viewport": [
+    390,
+    844
+   ],
+   "body": "20% OFF $50+ eligible items sitewide* with code OCT20\nNearest store\n515 Mount Hood St, The Dalle...\nAccount\nMenu\nShop all Halloween. FREE 30-Minute Pickup on $10+ or FREE 1-Hour Delivery on $35+. Shop now ›\nSort & Filter\nSales & Offers\nWalgreens\nCategory\nProduct Type\nBrand\nPrice\nBenefit Program\nForm\nSize\nDays Supply\nSpecial Feature\nDeals & Promotions\nMore Options\nPickup\nSame Day Delivery\nShipping\n",
+   "blocked": false,
+   "file": "screens/11-listing-phone-390.png",
+   "url": "https://www.walgreens.com/search/results.jsp?Ntt=headphones",
+   "kind": "listing",
+   "width": 390,
+   "height": 844,
+   "mobile": true
+  },
+  {
+   "title": "headphones | Walgreens",
+   "h1": [],
+   "buttons": [
+    "Clear Search input",
+    "Search",
+    "Nearest store 515 Mount Hood St, The Dalle...",
+    "Account Menu",
+    "Pharmacy",
+    "Health Services",
+    "Shop",
+    "Savings",
+    "Photo",
+    "Financial Services",
+    "Close main menu",
+    "Sort & Filter",
+    "Sales & Offers",
+    "Walgreens",
+    "Category",
+    "Product Type",
+    "Brand",
+    "Price",
+    "Benefit Program",
+    "Form",
+    "Size",
+    "Days Supply",
+    "Special Feature",
+    "Deals & Promotions",
+    "More Options"
+   ],
+   "inputs": [
+    {
+     "placeholder": "Search",
+     "aria": "Search by keyword or item number"
+    }
+   ],
+   "headerSticky": false,
+   "bottomFixedBar": false,
+   "visibleImages": 9,
+   "viewport": [
+    768,
+    1024
+   ],
+   "body": "20% OFF $50+ eligible items sitewide* with code OCT20\nTreat of the Week: BOGO $1 select snack size candy bags\nSchedule vaccinations\nNearest store\n515 Mount Hood St, The Dalle...\nAccount\nMenu\nPharmacy\nHealth Services\nShop\nSavings\nPhoto\nFinancial Services\nWeekly Ad\nHalloween\nVaccinations\nClose main menu\nShop all Halloween. FREE 30-Minute Pickup on $10+ or FREE 1-Hour Delivery on $35+. Shop now ›\nSki",
+   "blocked": false,
+   "file": "screens/12-listing-tablet-portrait-768.png",
+   "url": "https://www.walgreens.com/search/results.jsp?Ntt=headphones",
+   "kind": "listing",
+   "width": 768,
+   "height": 1024,
+   "mobile": true
+  },
+  {
+   "title": "Lenses - Contact Lenses | Walgreens",
+   "h1": [
+    "Contact Lenses"
+   ],
+   "buttons": [
+    "main menu",
+    "Search",
+    "Nearest store 515 Mount Hood St, The Dalle...",
+    "Account Menu",
+    "All All is selected",
+    "Pickup",
+    "Same Day Delivery",
+    "Shipping",
+    "Arrow key right to view next slides",
+    "Refine",
+    "Feedback"
+   ],
+   "inputs": [
+    {
+     "placeholder": "Search",
+     "aria": "Search by keyword or item number"
+    }
+   ],
+   "headerSticky": true,
+   "bottomFixedBar": false,
+   "visibleImages": 9,
+   "viewport": [
+    390,
+    844
+   ],
+   "body": "20% OFF $50+ eligible items sitewide* with code OCT20\nNearest store\n515 Mount Hood St, The Dalle...\nAccount\nMenu\nContact Lenses\nAll\nAll is selected\nPickup\nSame Day Delivery\nShipping\nAcuvue\nDailies\nBiofinity\nBiotrue\nLenses for Astigmatism\nDaily Disposable Lenses\nMonthly Lenses\nRefine\nIn-stock items only\n108 items*\n1-Day Acuvue MOIST 90Pk  - 90.0 ea\n(2387)\n$117.99\n20% off Contact Lenses wi...\n Not s",
+   "blocked": false,
+   "file": "screens/14-product-phone-390.png",
+   "url": "https://www.walgreens.com/store/c/contact-lenses/ID=350006-tier3contactlens",
+   "kind": "product",
+   "width": 390,
+   "height": 844,
+   "mobile": true
+  },
+  {
+   "title": "Lenses - Contact Lenses | Walgreens",
+   "h1": [
+    "Contact Lenses"
+   ],
+   "buttons": [
+    "main menu",
+    "Search",
+    "Nearest store 515 Mount Hood St, The Dalle...",
+    "Account Menu",
+    "All All is selected",
+    "Pickup",
+    "Same Day Delivery",
+    "Shipping",
+    "Arrow key right to view next slides",
+    "Refine",
+    "Feedback"
+   ],
+   "inputs": [
+    {
+     "placeholder": "Search",
+     "aria": "Search by keyword or item number"
+    }
+   ],
+   "headerSticky": true,
+   "bottomFixedBar": false,
+   "visibleImages": 9,
+   "viewport": [
+    360,
+    740
+   ],
+   "body": "20% OFF $50+ eligible items sitewide* with code OCT20\nNearest store\n515 Mount Hood St, The Dalle...\nAccount\nMenu\nContact Lenses\nAll\nAll is selected\nPickup\nSame Day Delivery\nShipping\nAcuvue\nDailies\nBiofinity\nBiotrue\nLenses for Astigmatism\nDaily Disposable Lenses\nMonthly Lenses\nRefine\nIn-stock items only\n108 items*\n1-Day Acuvue MOIST 90Pk  - 90.0 ea\n(2387)\n$117.99\n20% off Contact Lenses wi...\n Not s",
+   "blocked": false,
+   "file": "screens/15-product-phone-small-360.png",
+   "url": "https://www.walgreens.com/store/c/contact-lenses/ID=350006-tier3contactlens",
+   "kind": "product",
+   "width": 360,
+   "height": 740,
+   "mobile": true
+  }
+ ],
+ "errors": [],
+ "product_url": "https://www.walgreens.com/store/c/contact-lenses/ID=350006-tier3contactlens",
+ "listing_url": "https://www.walgreens.com/search/results.jsp?Ntt=headphones",
+ "excluded_screens": [
+  {
+   "file": "screens/13-product-desktop-16x10-1440.png",
+   "reason": "block or error page detected: Access Denied"
+  }
+ ]
+}

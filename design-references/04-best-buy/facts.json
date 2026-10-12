@@ -1,0 +1,428 @@
+{
+ "site": "Best Buy",
+ "folder": "04-best-buy",
+ "captured": [
+  {
+   "title": "Best Buy | Official Online Store | Shop Now & Save",
+   "h1": [],
+   "buttons": [
+    "Assistive Survey",
+    "Submit search",
+    "Your store Find a store",
+    "Account Sign in",
+    "Shop",
+    "Deals",
+    "Support & Services",
+    "Discover",
+    "More",
+    "Learn more.",
+    "Sign in",
+    "Create an account"
+   ],
+   "inputs": [],
+   "headerSticky": false,
+   "bottomFixedBar": false,
+   "visibleImages": 2,
+   "viewport": [
+    1440,
+    900
+   ],
+   "body": "Skip to content\nGo to Product Search\nGo to Footer\nAssistive Survey\nYour store\nFind a store\nAccount\nSign in\nShop\nDeals\nSupport & Services\nDiscover\nTop Deals\nDeal of the Day\nTrade-In\nGift Ideas\nFall Football\nMy Best Buy Memberships\nCredit Cards\nGift Cards\nBest Buy Business\nMore\nMain Content\n.\nSign in for free shipping*, recommendations, easy order tracking and more.\n*Exclusions apply. \nLearn more.\nS",
+   "blocked": false,
+   "file": "screens/01-home-desktop-16x10-1440.png",
+   "url": "https://www.bestbuy.com/",
+   "kind": "home",
+   "width": 1440,
+   "height": 900,
+   "mobile": false
+  },
+  {
+   "title": "Best Buy | Official Online Store | Shop Now & Save",
+   "h1": [],
+   "buttons": [
+    "Assistive Survey",
+    "Submit search",
+    "Your store Find a store",
+    "Account Sign in",
+    "Shop",
+    "Deals",
+    "Support & Services",
+    "Discover",
+    "More",
+    "Learn more.",
+    "Sign in",
+    "Create an account"
+   ],
+   "inputs": [],
+   "headerSticky": false,
+   "bottomFixedBar": false,
+   "visibleImages": 6,
+   "viewport": [
+    1920,
+    1080
+   ],
+   "body": "Skip to content\nGo to Product Search\nGo to Footer\nAssistive Survey\nYour store\nFind a store\nAccount\nSign in\nShop\nDeals\nSupport & Services\nDiscover\nTop Deals\nDeal of the Day\nTrade-In\nGift Ideas\nFall Football\nMy Best Buy Memberships\nCredit Cards\nGift Cards\nBest Buy Business\nMore\nMain Content\n.\nSign in for free shipping*, recommendations, easy order tracking and more.\n*Exclusions apply. \nLearn more.\nS",
+   "blocked": false,
+   "file": "screens/02-home-desktop-16x9-1920.png",
+   "url": "https://www.bestbuy.com/",
+   "kind": "home",
+   "width": 1920,
+   "height": 1080,
+   "mobile": false
+  },
+  {
+   "title": "Best Buy | Official Online Store | Shop Now & Save",
+   "h1": [],
+   "buttons": [
+    "Assistive Survey",
+    "Submit search",
+    "Your store Find a store",
+    "Account Sign in",
+    "Ask Blue",
+    "Shop",
+    "Deals",
+    "Support & Services",
+    "Discover",
+    "More",
+    "Learn more.",
+    "Sign in",
+    "Create an account"
+   ],
+   "inputs": [],
+   "headerSticky": false,
+   "bottomFixedBar": false,
+   "visibleImages": 7,
+   "viewport": [
+    2560,
+    1080
+   ],
+   "body": "Skip to content\nGo to Product Search\nGo to Footer\nAssistive Survey\nYour store\nFind a store\nAccount\nSign in\nAsk Blue\nShop\nDeals\nSupport & Services\nDiscover\nTop Deals\nDeal of the Day\nTrade-In\nGift Ideas\nFall Football\nMy Best Buy Memberships\nCredit Cards\nGift Cards\nBest Buy Business\nMore\nMain Content\n.\nSign in for free shipping*, recommendations, easy order tracking and more.\n*Exclusions apply. \nLear",
+   "blocked": false,
+   "file": "screens/03-home-ultrawide-21x9-2560.png",
+   "url": "https://www.bestbuy.com/",
+   "kind": "home",
+   "width": 2560,
+   "height": 1080,
+   "mobile": false
+  },
+  {
+   "title": "Best Buy | Official Online Store | Shop Now & Save",
+   "h1": [],
+   "buttons": [
+    "Assistive Survey",
+    "Submit search",
+    "Your store Find a store",
+    "Account Sign in",
+    "Ask Blue",
+    "Shop",
+    "Deals",
+    "Support & Services",
+    "Discover",
+    "More",
+    "Learn more.",
+    "Sign in",
+    "Create an account"
+   ],
+   "inputs": [],
+   "headerSticky": false,
+   "bottomFixedBar": false,
+   "visibleImages": 3,
+   "viewport": [
+    1366,
+    768
+   ],
+   "body": "Skip to content\nGo to Product Search\nGo to Footer\nAssistive Survey\nYour store\nFind a store\nAccount\nSign in\nAsk Blue\nShop\nDeals\nSupport & Services\nDiscover\nTop Deals\nDeal of the Day\nTrade-In\nGift Ideas\nFall Football\nMy Best Buy Memberships\nCredit Cards\nGift Cards\nBest Buy Business\nMore\nMain Content\n.\nSign in for free shipping*, recommendations, easy order tracking and more.\n*Exclusions apply. \nLear",
+   "blocked": false,
+   "file": "screens/04-home-laptop-16x9-1366.png",
+   "url": "https://www.bestbuy.com/",
+   "kind": "home",
+   "width": 1366,
+   "height": 768,
+   "mobile": false
+  },
+  {
+   "title": "Best Buy | Official Online Store | Shop Now & Save",
+   "h1": [],
+   "buttons": [
+    "Menu",
+    "Sign in",
+    "Submit search",
+    "Ask Blue",
+    "Create an account",
+    "Learn more."
+   ],
+   "inputs": [],
+   "headerSticky": false,
+   "bottomFixedBar": false,
+   "visibleImages": 3,
+   "viewport": [
+    768,
+    1024
+   ],
+   "body": "Skip to content\nGo to Product Search\nGo to Footer\nAssistive Survey\nSign in\nAsk Blue\nMain Content\n.\nSign in for more benefits\nFree shipping*\nDeals picked for you\nEasy order tracking\nFaster checkout\nSign in\nCreate an account\n*Exclusions apply. \nLearn more.\n.\n.\n.\n.\n.\n.\nBring Halloween thrills to life\nConjure up haunted house vibes\nMust-haves for your pumpkin party\nCandy duty essentials\nScares, laughs",
+   "blocked": false,
+   "file": "screens/05-home-tablet-portrait-3x4-768.png",
+   "url": "https://www.bestbuy.com/",
+   "kind": "home",
+   "width": 768,
+   "height": 1024,
+   "mobile": true
+  },
+  {
+   "title": "Best Buy | Official Online Store | Shop Now & Save",
+   "h1": [],
+   "buttons": [
+    "Menu",
+    "Sign in",
+    "Submit search",
+    "Ask Blue",
+    "Create an account",
+    "Learn more."
+   ],
+   "inputs": [],
+   "headerSticky": false,
+   "bottomFixedBar": false,
+   "visibleImages": 2,
+   "viewport": [
+    1024,
+    768
+   ],
+   "body": "Skip to content\nGo to Product Search\nGo to Footer\nAssistive Survey\nSign in\nAsk Blue\nMain Content\n.\nSign in for more benefits\nFree shipping*\nDeals picked for you\nEasy order tracking\nFaster checkout\nSign in\nCreate an account\n*Exclusions apply. \nLearn more.\n.\n.\n.\n.\n.\n.\nBring Halloween thrills to life\nConjure up haunted house vibes\nMust-haves for your pumpkin party\nCandy duty essentials\nScares, laughs",
+   "blocked": false,
+   "file": "screens/06-home-tablet-landscape-4x3-1024.png",
+   "url": "https://www.bestbuy.com/",
+   "kind": "home",
+   "width": 1024,
+   "height": 768,
+   "mobile": true
+  },
+  {
+   "title": "Best Buy | Official Online Store | Shop Now & Save",
+   "h1": [],
+   "buttons": [
+    "Menu",
+    "Sign in",
+    "Submit search",
+    "Create an account",
+    "Learn more."
+   ],
+   "inputs": [],
+   "headerSticky": false,
+   "bottomFixedBar": false,
+   "visibleImages": 1,
+   "viewport": [
+    360,
+    740
+   ],
+   "body": "Skip to content\nGo to Product Search\nGo to Footer\nAssistive Survey\nSign in\nMain Content\n.\nSign in for more benefits\nFree shipping*\nDeals picked for you\nEasy order tracking\nFaster checkout\nSign in\nCreate an account\n*Exclusions apply. \nLearn more.\n.\n.\n.\n.\n.\n.\nBring Halloween thrills to life\nConjure up haunted house vibes\nMust-haves for your pumpkin party\nCandy duty essentials\nScares, laughs and Hall",
+   "blocked": false,
+   "file": "screens/07-home-phone-small-360.png",
+   "url": "https://www.bestbuy.com/",
+   "kind": "home",
+   "width": 360,
+   "height": 740,
+   "mobile": true
+  },
+  {
+   "title": "Best Buy | Official Online Store | Shop Now & Save",
+   "h1": [],
+   "buttons": [
+    "Menu",
+    "Sign in",
+    "Submit search",
+    "Create an account",
+    "Learn more."
+   ],
+   "inputs": [],
+   "headerSticky": false,
+   "bottomFixedBar": false,
+   "visibleImages": 1,
+   "viewport": [
+    390,
+    844
+   ],
+   "body": "Skip to content\nGo to Product Search\nGo to Footer\nAssistive Survey\nSign in\nMain Content\n.\nSign in for more benefits\nFree shipping*\nDeals picked for you\nEasy order tracking\nFaster checkout\nSign in\nCreate an account\n*Exclusions apply. \nLearn more.\n.\n.\n.\n.\n.\n.\nBring Halloween thrills to life\nConjure up haunted house vibes\nMust-haves for your pumpkin party\nCandy duty essentials\nScares, laughs and Hall",
+   "blocked": false,
+   "file": "screens/08-home-phone-iphone-390.png",
+   "url": "https://www.bestbuy.com/",
+   "kind": "home",
+   "width": 390,
+   "height": 844,
+   "mobile": true
+  },
+  {
+   "title": "Best Buy | Official Online Store | Shop Now & Save",
+   "h1": [],
+   "buttons": [
+    "Menu",
+    "Sign in",
+    "Submit search",
+    "Create an account",
+    "Learn more."
+   ],
+   "inputs": [],
+   "headerSticky": false,
+   "bottomFixedBar": false,
+   "visibleImages": 2,
+   "viewport": [
+    430,
+    932
+   ],
+   "body": "Skip to content\nGo to Product Search\nGo to Footer\nAssistive Survey\nSign in\nMain Content\n.\nSign in for more benefits\nFree shipping*\nDeals picked for you\nEasy order tracking\nFaster checkout\nSign in\nCreate an account\n*Exclusions apply. \nLearn more.\n.\n.\n.\n.\n.\n.\nBring Halloween thrills to life\nConjure up haunted house vibes\nMust-haves for your pumpkin party\nCandy duty essentials\nScares, laughs and Hall",
+   "blocked": false,
+   "file": "screens/09-home-phone-large-430.png",
+   "url": "https://www.bestbuy.com/",
+   "kind": "home",
+   "width": 430,
+   "height": 932,
+   "mobile": true
+  },
+  {
+   "title": "headphones - Best Buy",
+   "h1": [
+    "headphones search results"
+   ],
+   "buttons": [
+    "Clear",
+    "Submit search",
+    "Your store Find a store",
+    "Account Sign in",
+    "Shop",
+    "Deals",
+    "Support & Services",
+    "Discover",
+    "More",
+    "Set",
+    "On Sale",
+    "Clearance",
+    "Over-the-Ear",
+    "In-Ear",
+    "On-Ear",
+    "Wireless",
+    "Wired",
+    "Open-Box",
+    "Sony",
+    "Bose",
+    "Best Match",
+    "Save",
+    "Top Rated"
+   ],
+   "inputs": [],
+   "headerSticky": false,
+   "bottomFixedBar": false,
+   "visibleImages": 11,
+   "viewport": [
+    1440,
+    900
+   ],
+   "body": "Skip to content\nGo to Product Search\nAssistive Survey\nYour store\nFind a store\nAccount\nSign in\nShop\nDeals\nSupport & Services\nDiscover\nTop Deals\nDeal of the Day\nTrade-In\nGift Ideas\nFall Football\nMy Best Buy Memberships\nCredit Cards\nGift Cards\nBest Buy Business\nMore\nMain Content\nheadphones search results\nFilters\nSkip To Results\nGet it fast\nPickup · Ready today\nSelect Store\nShipping · Get it today\n554",
+   "blocked": false,
+   "file": "screens/10-listing-desktop-16x10-1440.png",
+   "url": "https://www.bestbuy.com/site/searchpage.jsp?st=headphones",
+   "kind": "listing",
+   "width": 1440,
+   "height": 900,
+   "mobile": false
+  },
+  {
+   "title": "headphones - Best Buy",
+   "h1": [
+    "headphones search results"
+   ],
+   "buttons": [
+    "Menu",
+    "Sign in",
+    "Clear",
+    "Submit search",
+    "55423",
+    "Filter & Sort",
+    "Get it fast",
+    "Headphone Fit",
+    "Price",
+    "Brand",
+    "Connection Type",
+    "Current Deals",
+    "On Sale",
+    "Clearance",
+    "Over-the-Ear",
+    "In-Ear",
+    "Wireless",
+    "Wired",
+    "Open-Box",
+    "Sony",
+    "Bose",
+    "Bluetooth"
+   ],
+   "inputs": [],
+   "headerSticky": false,
+   "bottomFixedBar": false,
+   "visibleImages": 7,
+   "viewport": [
+    390,
+    844
+   ],
+   "body": "Skip to content\nGo to Product Search\nAssistive Survey\nSign in\nMain Content\nheadphones search results\nSkip To Results\nSelect Store\nShip to\n55423\nCarousel with 7 items\nAirPods\nBeats\nBose\nSony\nJBL\nSamsung\nGoogle\nFilter & Sort\nGet it fast\nHeadphone Fit\nPrice\nBrand\nConnection Type\nCurrent Deals\nOn Sale\nClearance\nOver-the-Ear\nIn-Ear\nWireless\nWired\nOpen-Box\nSony\nBose\nBluetooth\nheadphones (3334)\nBose - Qu",
+   "blocked": false,
+   "file": "screens/11-listing-phone-390.png",
+   "url": "https://www.bestbuy.com/site/searchpage.jsp?st=headphones",
+   "kind": "listing",
+   "width": 390,
+   "height": 844,
+   "mobile": true
+  },
+  {
+   "title": "headphones - Best Buy",
+   "h1": [
+    "headphones search results"
+   ],
+   "buttons": [
+    "Menu",
+    "Sign in",
+    "Clear",
+    "Submit search",
+    "55423",
+    "Filter & Sort",
+    "Get it fast",
+    "Headphone Fit",
+    "Price",
+    "Brand",
+    "Connection Type",
+    "Current Deals",
+    "On Sale",
+    "Clearance",
+    "Over-the-Ear",
+    "In-Ear",
+    "Wireless",
+    "Wired",
+    "Open-Box",
+    "Sony",
+    "Bose",
+    "Bluetooth"
+   ],
+   "inputs": [],
+   "headerSticky": false,
+   "bottomFixedBar": false,
+   "visibleImages": 7,
+   "viewport": [
+    768,
+    1024
+   ],
+   "body": "Skip to content\nGo to Product Search\nAssistive Survey\nSign in\nMain Content\nheadphones search results\nSkip To Results\nSelect Store\nShip to\n55423\nCarousel with 7 items\nAirPods\nBeats\nBose\nSony\nJBL\nSamsung\nGoogle\nFilter & Sort\nGet it fast\nHeadphone Fit\nPrice\nBrand\nConnection Type\nCurrent Deals\nOn Sale\nClearance\nOver-the-Ear\nIn-Ear\nWireless\nWired\nOpen-Box\nSony\nBose\nBluetooth\nheadphones (3315)\nBose - Qu",
+   "blocked": false,
+   "file": "screens/12-listing-tablet-portrait-768.png",
+   "url": "https://www.bestbuy.com/site/searchpage.jsp?st=headphones",
+   "kind": "listing",
+   "width": 768,
+   "height": 1024,
+   "mobile": true
+  }
+ ],
+ "errors": [
+  "product-desktop-16x10-1440: Page.goto: net::ERR_HTTP2_PROTOCOL_ERROR at https://www.bestbuy.com/product/sony-wh-1000xm5-wireless-noise-cancelling-over-the-ear-headphone",
+  "product-phone-390: Page.goto: net::ERR_HTTP2_PROTOCOL_ERROR at https://www.bestbuy.com/product/sony-wh-1000xm5-wireless-noise-cancelling-over-the-ear-headphone",
+  "product-phone-small-360: Page.goto: net::ERR_HTTP2_PROTOCOL_ERROR at https://www.bestbuy.com/product/sony-wh-1000xm5-wireless-noise-cancelling-over-the-ear-headphone"
+ ],
+ "product_url": "https://www.bestbuy.com/product/sony-wh-1000xm5-wireless-noise-cancelling-over-the-ear-headphones-black/J7XSRH5CXG/sku/6505727",
+ "listing_url": "https://www.bestbuy.com/site/searchpage.jsp?st=headphones",
+ "excluded_screens": []
+}

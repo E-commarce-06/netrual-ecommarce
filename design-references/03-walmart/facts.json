@@ -1,0 +1,484 @@
+{
+ "site": "Walmart",
+ "folder": "03-walmart",
+ "captured": [
+  {
+   "title": "Walmart | Save Money. Live better.",
+   "h1": [
+    "Walmart | Save Money. Live better."
+   ],
+   "buttons": [
+    "Search",
+    "Reorder My Items",
+    "Sign In Account",
+    "$0.00",
+    "Departments",
+    "Services",
+    "Previous slide for heroCarousel list",
+    "Pause carousel",
+    "Next slide for heroCarousel list",
+    "Add",
+    "Next slide for Flash Deals list"
+   ],
+   "inputs": [
+    {
+     "placeholder": "Search everything at Walmart online and in store",
+     "aria": "Search"
+    }
+   ],
+   "headerSticky": false,
+   "bottomFixedBar": false,
+   "visibleImages": 14,
+   "viewport": [
+    1440,
+    900
+   ],
+   "body": "Skip to Main Content\nPickup or delivery?\nReorder\nMy Items\nSign In\nAccount\n$0.00\nDepartments\nServices\nWalmart | Save Money. Live better.\n\nSave more. A lot more.\n\nAnnual members can save $380 per year!\n\nTry Walmart+ for $1\nTry Walmart+ for $1\n\nFashion, home & more\n\n1,000s of savings, all yours\n\nShop now\nShop now\n\nDecor, serveware & more\n\nThe season’s must-haves, all here\n\nShop now\nShop now\nFlash Dea",
+   "blocked": false,
+   "file": "screens/01-home-desktop-16x10-1440.png",
+   "url": "https://www.walmart.com/",
+   "kind": "home",
+   "width": 1440,
+   "height": 900,
+   "mobile": false
+  },
+  {
+   "title": "Walmart | Save Money. Live better.",
+   "h1": [
+    "Walmart | Save Money. Live better."
+   ],
+   "buttons": [
+    "Search",
+    "Reorder My Items",
+    "Sign In Account",
+    "$0.00",
+    "Departments",
+    "Services",
+    "Previous slide for heroCarousel list",
+    "Pause carousel",
+    "Next slide for heroCarousel list",
+    "Add",
+    "Next slide for Flash Deals list"
+   ],
+   "inputs": [
+    {
+     "placeholder": "Search everything at Walmart online and in store",
+     "aria": "Search"
+    }
+   ],
+   "headerSticky": false,
+   "bottomFixedBar": false,
+   "visibleImages": 17,
+   "viewport": [
+    1920,
+    1080
+   ],
+   "body": "Skip to Main Content\nPickup or delivery?\nReorder\nMy Items\nSign In\nAccount\n$0.00\nDepartments\nServices\nWalmart | Save Money. Live better.\n\nSave more. A lot more.\n\nAnnual members can save $380 per year!\n\nTry Walmart+ for $1\nTry Walmart+ for $1\n\nFashion, home & more\n\n1,000s of savings, all yours\n\nShop now\nShop now\n\nDecor, serveware & more\n\nThe season’s must-haves, all here\n\nShop now\nShop now\nFlash Dea",
+   "blocked": false,
+   "file": "screens/02-home-desktop-16x9-1920.png",
+   "url": "https://www.walmart.com/",
+   "kind": "home",
+   "width": 1920,
+   "height": 1080,
+   "mobile": false
+  },
+  {
+   "title": "Walmart | Save Money. Live better.",
+   "h1": [
+    "Walmart | Save Money. Live better."
+   ],
+   "buttons": [
+    "Search",
+    "Reorder My Items",
+    "Sign In Account",
+    "$0.00",
+    "Departments",
+    "Services",
+    "Previous slide for heroCarousel list",
+    "Pause carousel",
+    "Next slide for heroCarousel list",
+    "Add",
+    "Next slide for Flash Deals list"
+   ],
+   "inputs": [
+    {
+     "placeholder": "Search everything at Walmart online and in store",
+     "aria": "Search"
+    }
+   ],
+   "headerSticky": false,
+   "bottomFixedBar": false,
+   "visibleImages": 17,
+   "viewport": [
+    2560,
+    1080
+   ],
+   "body": "Skip to Main Content\nPickup or delivery?\nReorder\nMy Items\nSign In\nAccount\n$0.00\nDepartments\nServices\nWalmart | Save Money. Live better.\n\nSave more. A lot more.\n\nAnnual members can save $380 per year!\n\nTry Walmart+ for $1\nTry Walmart+ for $1\n\nFashion, home & more\n\n1,000s of savings, all yours\n\nShop now\nShop now\n\nDecor, serveware & more\n\nThe season’s must-haves, all here\n\nShop now\nShop now\nFlash Dea",
+   "blocked": false,
+   "file": "screens/03-home-ultrawide-21x9-2560.png",
+   "url": "https://www.walmart.com/",
+   "kind": "home",
+   "width": 2560,
+   "height": 1080,
+   "mobile": false
+  },
+  {
+   "title": "Walmart | Save Money. Live better.",
+   "h1": [
+    "Walmart | Save Money. Live better."
+   ],
+   "buttons": [
+    "Search",
+    "Reorder My Items",
+    "Sign In Account",
+    "$0.00",
+    "Departments",
+    "Services",
+    "Previous slide for heroCarousel list",
+    "Pause carousel",
+    "Next slide for heroCarousel list",
+    "Next slide for Flash Deals list"
+   ],
+   "inputs": [
+    {
+     "placeholder": "Search everything at Walmart online and in store",
+     "aria": "Search"
+    }
+   ],
+   "headerSticky": false,
+   "bottomFixedBar": false,
+   "visibleImages": 13,
+   "viewport": [
+    1366,
+    768
+   ],
+   "body": "Skip to Main Content\nPickup or delivery?\nReorder\nMy Items\nSign In\nAccount\n$0.00\nDepartments\nServices\nWalmart | Save Money. Live better.\n\nWalmart+ members get more!\n\nWant Free Delivery, Gas Savings & more ways to save?\n\nTry Walmart+ for $1\nTry Walmart+ for $1\n\nDecor, serveware & more\n\nThe season’s must-haves, all here\n\nShop now\nShop now\n\nFashion, home & more\n\n1,000s of savings, all yours\n\nShop now\n",
+   "blocked": false,
+   "file": "screens/04-home-laptop-16x9-1366.png",
+   "url": "https://www.walmart.com/",
+   "kind": "home",
+   "width": 1366,
+   "height": 768,
+   "mobile": false
+  },
+  {
+   "title": "Walmart | Save Money. Live better.",
+   "h1": [
+    "Walmart | Save Money. Live better."
+   ],
+   "buttons": [
+    "Menu",
+    "Search",
+    "$0.00",
+    "Pause carousel",
+    "Close banner",
+    "Get the app"
+   ],
+   "inputs": [
+    {
+     "placeholder": "Search Walmart",
+     "aria": "Search"
+    }
+   ],
+   "headerSticky": false,
+   "bottomFixedBar": false,
+   "visibleImages": 7,
+   "viewport": [
+    768,
+    1024
+   ],
+   "body": "Skip to Main Content\nCancel\n$0.00\nPickup or delivery?\nWalmart | Save Money. Live better.\n\nStart 30 days of Walmart+ for only $1\n\nClaim your trial now\nClaim your trial now\n\nDecor, serveware & more\n\nThe season’s must-haves\n\nShop now\nShop now\n\nNow trending\n\nThe Fall It List\n\nShop now\nShop now\n\nEek-worthy graphics\n\nShop now\nShop now\n\nUp to 35% off\n\nShop now\nShop now\n\nSave on Halloween variety bags\n\nSh",
+   "blocked": false,
+   "file": "screens/05-home-tablet-portrait-3x4-768.png",
+   "url": "https://www.walmart.com/",
+   "kind": "home",
+   "width": 768,
+   "height": 1024,
+   "mobile": true
+  },
+  {
+   "title": "Walmart | Save Money. Live better.",
+   "h1": [
+    "Walmart | Save Money. Live better."
+   ],
+   "buttons": [
+    "Search",
+    "Reorder My Items",
+    "Sign In Account",
+    "$0.00",
+    "Departments",
+    "Services",
+    "Pause carousel",
+    "Close banner",
+    "Get the app"
+   ],
+   "inputs": [
+    {
+     "placeholder": "Search Walmart",
+     "aria": "Search"
+    }
+   ],
+   "headerSticky": false,
+   "bottomFixedBar": false,
+   "visibleImages": 7,
+   "viewport": [
+    1024,
+    768
+   ],
+   "body": "Skip to Main Content\nPickup or delivery?\nReorder\nMy Items\nSign In\nAccount\n$0.00\nDepartments\nServices\nWalmart | Save Money. Live better.\n\nStart 30 days of Walmart+ for only $1\n\nClaim your trial now\nClaim your trial now\n\nDecor, serveware & more\n\nThe season’s must-haves\n\nShop now\nShop now\n\nNow trending\n\nThe Fall It List\n\nShop now\nShop now\n\nEek-worthy graphics\n\nShop now\nShop now\n\nUp to 35% off\n\nShop n",
+   "blocked": false,
+   "file": "screens/06-home-tablet-landscape-4x3-1024.png",
+   "url": "https://www.walmart.com/",
+   "kind": "home",
+   "width": 1024,
+   "height": 768,
+   "mobile": true
+  },
+  {
+   "title": "Walmart | Save Money. Live better.",
+   "h1": [
+    "Walmart | Save Money. Live better."
+   ],
+   "buttons": [
+    "Menu",
+    "Search",
+    "$0.00",
+    "Pause carousel",
+    "Close banner",
+    "Get the app"
+   ],
+   "inputs": [
+    {
+     "placeholder": "Search Walmart",
+     "aria": "Search"
+    }
+   ],
+   "headerSticky": false,
+   "bottomFixedBar": false,
+   "visibleImages": 10,
+   "viewport": [
+    360,
+    740
+   ],
+   "body": "Skip to Main Content\nCancel\n$0.00\nPickup or delivery?\nWalmart | Save Money. Live better.\n\nStart 30 days of Walmart+ for only $1\n\nClaim your trial now\nClaim your trial now\n\nDecor, serveware & more\n\nThe season’s must-haves\n\nShop now\nShop now\n\nNow trending\n\nThe Fall It List\n\nShop now\nShop now\n\nEek-worthy graphics\n\nShop now\nShop now\n\nUp to 35% off\n\nShop now\nShop now\n\nSave on Halloween variety bags\n\nSh",
+   "blocked": false,
+   "file": "screens/07-home-phone-small-360.png",
+   "url": "https://www.walmart.com/",
+   "kind": "home",
+   "width": 360,
+   "height": 740,
+   "mobile": true
+  },
+  {
+   "title": "Walmart | Save Money. Live better.",
+   "h1": [
+    "Walmart | Save Money. Live better."
+   ],
+   "buttons": [
+    "Menu",
+    "Search",
+    "$0.00",
+    "Pause carousel",
+    "Close banner",
+    "Get the app"
+   ],
+   "inputs": [
+    {
+     "placeholder": "Search Walmart",
+     "aria": "Search"
+    }
+   ],
+   "headerSticky": false,
+   "bottomFixedBar": false,
+   "visibleImages": 10,
+   "viewport": [
+    390,
+    844
+   ],
+   "body": "Skip to Main Content\nCancel\n$0.00\nPickup or delivery?\nWalmart | Save Money. Live better.\n\nStart 30 days of Walmart+ for only $1\n\nClaim your trial now\nClaim your trial now\n\nDecor, serveware & more\n\nThe season’s must-haves\n\nShop now\nShop now\n\nNow trending\n\nThe Fall It List\n\nShop now\nShop now\n\nEek-worthy graphics\n\nShop now\nShop now\n\nUp to 35% off\n\nShop now\nShop now\n\nSave on Halloween variety bags\n\nSh",
+   "blocked": false,
+   "file": "screens/08-home-phone-iphone-390.png",
+   "url": "https://www.walmart.com/",
+   "kind": "home",
+   "width": 390,
+   "height": 844,
+   "mobile": true
+  },
+  {
+   "title": "Walmart | Save Money. Live better.",
+   "h1": [
+    "Walmart | Save Money. Live better."
+   ],
+   "buttons": [
+    "Menu",
+    "Search",
+    "$0.00",
+    "Pause carousel",
+    "Try Walmart+ for $1",
+    "Close banner",
+    "Get the app"
+   ],
+   "inputs": [
+    {
+     "placeholder": "Search Walmart",
+     "aria": "Search"
+    }
+   ],
+   "headerSticky": false,
+   "bottomFixedBar": false,
+   "visibleImages": 10,
+   "viewport": [
+    430,
+    932
+   ],
+   "body": "Skip to Main Content\nCancel\n$0.00\nPickup or delivery?\nWalmart | Save Money. Live better.\n\nStart 30 days of Walmart+ for only $1\n\nClaim your trial now\nClaim your trial now\n\nDecor, serveware & more\n\nThe season’s must-haves\n\nShop now\nShop now\n\nNow trending\n\nThe Fall It List\n\nShop now\nShop now\n\nEek-worthy graphics\n\nShop now\nShop now\n\nUp to 35% off\n\nShop now\nShop now\n\nSave on Halloween variety bags\n\nSh",
+   "blocked": false,
+   "file": "screens/09-home-phone-large-430.png",
+   "url": "https://www.walmart.com/",
+   "kind": "home",
+   "width": 430,
+   "height": 932,
+   "mobile": true
+  },
+  {
+   "title": "Walmart | Save Money. Live better.",
+   "h1": [
+    "Walmart | Save Money. Live better."
+   ],
+   "buttons": [
+    "Menu",
+    "Search",
+    "$0.00",
+    "Pause carousel",
+    "Try Walmart+ for $1",
+    "Close banner",
+    "Get the app"
+   ],
+   "inputs": [
+    {
+     "placeholder": "Search Walmart",
+     "aria": "Search"
+    }
+   ],
+   "headerSticky": false,
+   "bottomFixedBar": false,
+   "visibleImages": 10,
+   "viewport": [
+    412,
+    915
+   ],
+   "body": "Skip to Main Content\nCancel\n$0.00\nPickup or delivery?\nWalmart | Save Money. Live better.\n\nSave more with Walmart+\n\nMembers get Free Delivery\n\nTry Walmart+ now\nTry Walmart+ now\n\nDress to impress\n\nTop 100+ Halloween costumes\n\nShop now\nShop now\n\nDecor, serveware & more\n\nThe season’s must-haves\n\nShop now\nShop now\n\nEek-worthy graphics\n\nShop now\nShop now\n\nUp to 35% off\n\nShop now\nShop now\n\nSave on Hallow",
+   "blocked": false,
+   "file": "screens/extra-home-phone-android-412.png",
+   "url": "https://www.walmart.com/",
+   "kind": "home",
+   "width": 412,
+   "height": 915,
+   "mobile": true
+  },
+  {
+   "title": "Walmart | Save Money. Live better.",
+   "h1": [
+    "Walmart | Save Money. Live better."
+   ],
+   "buttons": [
+    "Menu",
+    "Search",
+    "$0.00",
+    "Pause carousel",
+    "Close banner",
+    "Get the app"
+   ],
+   "inputs": [
+    {
+     "placeholder": "Search Walmart",
+     "aria": "Search"
+    }
+   ],
+   "headerSticky": false,
+   "bottomFixedBar": false,
+   "visibleImages": 7,
+   "viewport": [
+    834,
+    1194
+   ],
+   "body": "Skip to Main Content\nCancel\n$0.00\nPickup or delivery?\nWalmart | Save Money. Live better.\n\nSave more with Walmart+\n\nMembers get Free Delivery\n\nTry Walmart+ now\nTry Walmart+ now\n\nDress to impress\n\nTop 100+ Halloween costumes\n\nShop now\nShop now\n\nDecor, serveware & more\n\nThe season’s must-haves\n\nShop now\nShop now\n\nEek-worthy graphics\n\nShop now\nShop now\n\nUp to 35% off\n\nShop now\nShop now\n\nSave on Hallow",
+   "blocked": false,
+   "file": "screens/extra-home-ipad-pro-834.png",
+   "url": "https://www.walmart.com/",
+   "kind": "home",
+   "width": 834,
+   "height": 1194,
+   "mobile": true
+  },
+  {
+   "title": "Walmart | Save Money. Live better.",
+   "h1": [
+    "Walmart | Save Money. Live better."
+   ],
+   "buttons": [
+    "Search",
+    "Reorder My Items",
+    "Sign In Account",
+    "$0.00",
+    "Departments",
+    "Services",
+    "Previous slide for heroCarousel list",
+    "Pause carousel",
+    "Next slide for heroCarousel list",
+    "Add",
+    "Next slide for Flash Deals list"
+   ],
+   "inputs": [
+    {
+     "placeholder": "Search everything at Walmart online and in store",
+     "aria": "Search"
+    }
+   ],
+   "headerSticky": false,
+   "bottomFixedBar": false,
+   "visibleImages": 14,
+   "viewport": [
+    1280,
+    800
+   ],
+   "body": "Skip to Main Content\nPickup or delivery?\nReorder\nMy Items\nSign In\nAccount\n$0.00\nDepartments\nServices\nWalmart | Save Money. Live better.\n\nSave more. A lot more.\n\nAnnual members can save $380 per year!\n\nTry Walmart+ for $1\nTry Walmart+ for $1\n\nTrick, treat & dress to impress\n\nTop 100+ Halloween costumes\n\nShop now\nShop now\n\nFashion, home & more\n\n1,000s of savings, all yours\n\nShop now\nShop now\nFlash D",
+   "blocked": false,
+   "file": "screens/extra-home-desktop-16x10-1280.png",
+   "url": "https://www.walmart.com/",
+   "kind": "home",
+   "width": 1280,
+   "height": 800,
+   "mobile": false
+  }
+ ],
+ "errors": [],
+ "product_url": "https://www.walmart.com/ip/UPGO-Leg-Stretch-Machine-for-Flexibility-Training-Perfect-for-Full-Splits-Yoga-Dance-and-Stretching-Workouts/13809624291?athAsset=eyJhdGhjcGlkIjoiMTM4MDk2MjQyOTEiLCJhdGhzdGlkIjoiQ1MwMjAiLCJhdGhhbmNpZCI6Ikl0ZW1DYXJvdXNlbCIsImF0aHJrIjowLjB9&athena=true",
+ "listing_url": "https://www.walmart.com/search?q=headphones",
+ "excluded_screens": [
+  {
+   "file": "screens/10-listing-desktop-16x10-1440.png",
+   "reason": "block or error page detected: Robot or human?"
+  },
+  {
+   "file": "screens/11-listing-phone-390.png",
+   "reason": "block or error page detected: Robot or human?"
+  },
+  {
+   "file": "screens/12-listing-tablet-portrait-768.png",
+   "reason": "block or error page detected: Robot or human?"
+  },
+  {
+   "file": "screens/13-product-desktop-16x10-1440.png",
+   "reason": "block or error page detected: Robot or human?"
+  },
+  {
+   "file": "screens/14-product-phone-390.png",
+   "reason": "block or error page detected: Robot or human?"
+  },
+  {
+   "file": "screens/15-product-phone-small-360.png",
+   "reason": "block or error page detected: Robot or human?"
+  }
+ ]
+}
