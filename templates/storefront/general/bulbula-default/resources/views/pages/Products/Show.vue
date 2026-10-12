@@ -113,6 +113,28 @@ const isZoomed = ref(false);
 const zoomPosition = ref({ x: 50, y: 50 });
 const mainImageRef = ref<HTMLElement | null>(null);
 
+// Stored descriptions can contain HTML (e.g. <p>). Convert them to plain
+// paragraphs so tags are never shown as text. Output is rendered with {{ }},
+// so it is escaped by Vue and no v-html is needed.
+function toParagraphs(raw: string | null | undefined): string[] {
+    if (!raw) return [];
+    const decode = (s: string) => s
+        .replace(/&nbsp;/gi, ' ')
+        .replace(/&lt;/gi, '<')
+        .replace(/&gt;/gi, '>')
+        .replace(/&quot;/gi, '"')
+        .replace(/&#39;/gi, "'")
+        .replace(/&amp;/gi, '&');
+    return raw
+        .replace(/<br\s*\/?>/gi, '\n')
+        .split(/<\/p>|\n{2,}/i)
+        .map(part => decode(part.replace(/<[^>]*>/g, '')).replace(/\s+/g, ' ').trim())
+        .filter(Boolean);
+}
+
+const shortDescriptionParagraphs = computed(() => toParagraphs(props.product.short_description));
+const descriptionParagraphs = computed(() => toParagraphs(props.product.description));
+
 // Add to cart state
 const quantity = ref(1);
 const isAddingToCart = ref(false);
@@ -402,8 +424,8 @@ const handleMouseMove = (e: MouseEvent) => {
                     </div>
 
                     <!-- Short Description -->
-                    <div v-if="product.short_description" class="text-gray-600 leading-relaxed">
-                        {{ product.short_description }}
+                    <div v-if="shortDescriptionParagraphs.length" class="text-gray-600 leading-relaxed space-y-2">
+                        <p v-for="(paragraph, index) in shortDescriptionParagraphs" :key="index">{{ paragraph }}</p>
                     </div>
 
                     <!-- Product Attributes (Color, Size, etc.) -->
@@ -511,8 +533,10 @@ const handleMouseMove = (e: MouseEvent) => {
                             <span class="text-sm font-medium text-gray-700">Quantity:</span>
                             <div class="flex items-center border rounded-lg">
                                 <button
+                                    type="button"
                                     @click="decrementQuantity"
                                     :disabled="quantity <= 1"
+                                    aria-label="Decrease quantity"
                                     class="px-4 py-2 text-gray-600 hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
                                 >
                                     -
@@ -522,11 +546,14 @@ const handleMouseMove = (e: MouseEvent) => {
                                     type="number"
                                     min="1"
                                     :max="product.quantity"
-                                    class="w-16 text-center border-x py-2 focus:outline-none"
+                                    aria-label="Quantity"
+                                    class="w-16 text-center text-gray-900 bg-white border-x py-2 focus:outline-none"
                                 />
                                 <button
+                                    type="button"
                                     @click="incrementQuantity"
                                     :disabled="quantity >= product.quantity"
+                                    aria-label="Increase quantity"
                                     class="px-4 py-2 text-gray-600 hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
                                 >
                                     +
@@ -566,10 +593,10 @@ const handleMouseMove = (e: MouseEvent) => {
             </div>
 
             <!-- Full Description -->
-            <div v-if="product.description" class="mt-12 border-t pt-8">
+            <div v-if="descriptionParagraphs.length" class="mt-12 border-t pt-8">
                 <h2 class="text-2xl font-bold text-gray-900 mb-4">Product Description</h2>
-                <div class="prose max-w-none text-gray-600 leading-relaxed">
-                    {{ product.description }}
+                <div class="max-w-none text-gray-600 leading-relaxed space-y-4">
+                    <p v-for="(paragraph, index) in descriptionParagraphs" :key="index">{{ paragraph }}</p>
                 </div>
             </div>
 

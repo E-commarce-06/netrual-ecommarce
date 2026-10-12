@@ -125,7 +125,7 @@ const discountPercentage = (product: Product) => {
                     <label class="text-sm text-gray-700">
                         Sort by:
                         <select 
-                            class="ml-2 border border-gray-300 rounded-md px-3 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                            class="ml-2 border border-gray-300 rounded-md bg-white text-gray-900 px-3 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
                             @change="(e) => $inertia.get(`/category/${category.slug}`, { sort: (e.target as HTMLSelectElement).value })"
                         >
                             <option value="position">Featured</option>
