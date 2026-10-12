@@ -23,19 +23,12 @@ class HandleAppearance
         $appearance = $request->cookie('appearance') ?? 'system';
         $forceLightStorefront = false;
 
+        // The storefront theme ships light-only CSS (no dark: variants). When the
+        // OS is in dark mode, the dark class and native form controls made text
+        // and backgrounds the same colour. Storefront pages are always light.
         if (! $request->is('admin') && ! $request->is('admin/*')) {
-            try {
-                $theme = \Bulbula\Core\Models\Theme::active();
-                $config = $theme?->getConfig() ?? [];
-
-                // Native-homepage themes ship light-only CSS; system/admin dark mode breaks them.
-                if (! empty($config['native_homepage'])) {
-                    $appearance = 'light';
-                    $forceLightStorefront = true;
-                }
-            } catch (\Throwable $e) {
-                // ignore during install/migrations
-            }
+            $appearance = 'light';
+            $forceLightStorefront = true;
         }
 
         View::share('appearance', $appearance);
