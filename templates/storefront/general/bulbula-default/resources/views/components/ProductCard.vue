@@ -178,11 +178,11 @@ const handleWishlistToggle = async () => {
 
                 <div
                     v-if="quickViewEnabled"
-                    class="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center"
+                    class="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center pointer-events-none"
                 >
                     <button
                         @click.prevent="emit('quickView', product.slug)"
-                        class="px-6 py-3 bg-white text-gray-900 rounded-lg font-semibold hover:bg-gray-100 transition-all transform hover:scale-105 cursor-pointer"
+                        class="pointer-events-auto px-6 py-3 bg-white text-gray-900 rounded-lg font-semibold hover:bg-gray-100 transition-all transform hover:scale-105 cursor-pointer"
                     >
                         Quick View
                     </button>
