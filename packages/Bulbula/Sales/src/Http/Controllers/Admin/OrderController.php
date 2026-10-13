@@ -9,6 +9,8 @@ use Illuminate\Http\RedirectResponse;
 use Inertia\Inertia;
 use Inertia\Response as InertiaResponse;
 use Bulbula\Shop\Models\Order;
+use Bulbula\Sales\Models\ManualPaymentReasonTemplate;
+use Bulbula\Sales\Models\ManualPaymentSubmission;
 use Bulbula\Sales\Services\OrderService;
 use Bulbula\Sales\Repositories\OrderRepository;
 
@@ -124,8 +126,36 @@ class OrderController extends Controller
             return redirect()->route('admin.sales.orders.index')->with('error', 'Order not found');
         }
 
+        $manualPaymentSubmissions = $order->manualPaymentSubmissions
+            ->sortByDesc('id')
+            ->values()
+            ->map(fn (ManualPaymentSubmission $submission): array => [
+                'id' => $submission->id,
+                'status' => $submission->status,
+                'amount' => (float) $submission->amount,
+                'currency' => $submission->currency,
+                'transfer_reference' => $submission->transfer_reference,
+                'destination_snapshot' => $submission->destination_snapshot,
+                'proof_url' => route('admin.sales.manual-payments.proof', $submission),
+                'proof_mime_type' => $submission->proof_mime_type,
+                'proof_size' => $submission->proof_size,
+                'submitted_at' => $submission->created_at?->format('Y-m-d H:i:s'),
+                'review_note' => $submission->review_note,
+                'reviewed_at' => $submission->reviewed_at?->format('Y-m-d H:i:s'),
+                'reviewer_name' => $submission->reviewer?->name,
+            ]);
+
+        // Do not serialize private storage paths or disk names to the browser.
+        $order->unsetRelation('manualPaymentSubmissions');
+
         return Inertia::render('Admin/Sales/Orders/Show', [
             'order' => $order,
+            'manualPaymentSubmissions' => $manualPaymentSubmissions,
+            'reasonTemplates' => ManualPaymentReasonTemplate::query()
+                ->where('is_active', true)
+                ->orderBy('sort_order')
+                ->orderBy('label')
+                ->get(['id', 'label', 'reason']),
             'statuses' => $this->getOrderStatuses(),
             'paymentStatuses' => $this->getPaymentStatuses(),
         ]);
@@ -169,6 +199,13 @@ class OrderController extends Controller
         ]);
 
         $order = Order::findOrFail($id);
+
+        if ($order->payment_method === 'bank_transfer') {
+            return back()->with(
+                'error',
+                'Bank and wallet transfer payments must be changed through manual proof review. Approve only after staff verify settled funds.'
+            );
+        }
 
         $success = $this->orderService->updatePaymentStatus(
             $order,

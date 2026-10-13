@@ -1,9 +1,18 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue'
+import { computed, reactive, ref } from 'vue'
 import { Head, Link, router, usePage } from '@inertiajs/vue3'
 import AdminLayout from '@/layouts/AdminLayout.vue'
 import Pagination from '@/components/Admin/Pagination.vue'
-import { Check, ExternalLink, Search, X, CircleAlert } from 'lucide-vue-next'
+import ManualPaymentReviewActions from '@/components/Admin/ManualPaymentReviewActions.vue'
+import { CircleAlert, ExternalLink, Pencil, Plus, Search, Trash2, X } from 'lucide-vue-next'
+
+interface ReasonTemplate {
+  id: number
+  label: string
+  reason: string
+  is_active?: boolean
+  sort_order?: number
+}
 
 interface Submission {
   id: number
@@ -43,15 +52,23 @@ const props = defineProps<{
   submissions: PaginationData
   filters: { status: string; search: string }
   pendingCount: number
+  reasonTemplates: ReasonTemplate[]
+  managedReasonTemplates: ReasonTemplate[]
 }>()
 
 const page = usePage()
 const search = ref(props.filters.search || '')
 const status = ref(props.filters.status || 'pending_review')
-const rejectingSubmission = ref<Submission | null>(null)
-const rejectionReason = ref('')
-const submittingRejection = ref(false)
+const showReasonManager = ref(false)
+const editingReason = ref<ReasonTemplate | null>(null)
+const savingReason = ref(false)
 const serverErrors = computed(() => page.props.errors as Record<string, string>)
+const reasonForm = reactive({
+  label: '',
+  reason: '',
+  is_active: true,
+  sort_order: 0,
+})
 
 const applyFilters = () => {
   router.get('/admin/sales/manual-payments', {
@@ -70,39 +87,50 @@ const clearFilters = () => {
   applyFilters()
 }
 
-const approve = (submission: Submission) => {
-  const orderLabel = submission.order?.order_number || `submission ${submission.id}`
-  if (!window.confirm(`Approve the verified transfer for ${orderLabel}? This will mark the order as paid and advance its normal order/inventory workflow.`)) return
+const resetReasonForm = () => {
+  editingReason.value = null
+  reasonForm.label = ''
+  reasonForm.reason = ''
+  reasonForm.is_active = true
+  reasonForm.sort_order = Math.max(0, ...props.managedReasonTemplates.map((item) => item.sort_order || 0)) + 10
+}
 
-  router.post(`/admin/sales/manual-payments/${submission.id}/approve`, {}, {
+const editReason = (template: ReasonTemplate) => {
+  editingReason.value = template
+  reasonForm.label = template.label
+  reasonForm.reason = template.reason
+  reasonForm.is_active = template.is_active !== false
+  reasonForm.sort_order = template.sort_order || 0
+}
+
+const saveReasonTemplate = () => {
+  savingReason.value = true
+  const payload = {
+    label: reasonForm.label.trim(),
+    reason: reasonForm.reason.trim(),
+    is_active: reasonForm.is_active,
+    sort_order: reasonForm.sort_order,
+  }
+  const options = {
     preserveScroll: true,
-  })
+    onSuccess: () => resetReasonForm(),
+    onFinish: () => { savingReason.value = false },
+  }
+
+  if (editingReason.value) {
+    router.put(`/admin/sales/manual-payments/reason-templates/${editingReason.value.id}`, payload, options)
+  } else {
+    router.post('/admin/sales/manual-payments/reason-templates', payload, options)
+  }
 }
 
-const openReject = (submission: Submission) => {
-  rejectingSubmission.value = submission
-  rejectionReason.value = ''
-}
+const deleteReasonTemplate = (template: ReasonTemplate) => {
+  if (!window.confirm(`Delete the saved reason “${template.label}”? It will no longer be available for future reviews.`)) return
 
-const closeReject = () => {
-  if (submittingRejection.value) return
-  rejectingSubmission.value = null
-  rejectionReason.value = ''
-}
-
-const submitReject = () => {
-  if (!rejectingSubmission.value || !rejectionReason.value.trim()) return
-  submittingRejection.value = true
-  router.post(`/admin/sales/manual-payments/${rejectingSubmission.value.id}/reject`, {
-    reason: rejectionReason.value.trim(),
-  }, {
+  router.delete(`/admin/sales/manual-payments/reason-templates/${template.id}`, {
     preserveScroll: true,
     onSuccess: () => {
-      rejectingSubmission.value = null
-      rejectionReason.value = ''
-    },
-    onFinish: () => {
-      submittingRejection.value = false
+      if (editingReason.value?.id === template.id) resetReasonForm()
     },
   })
 }
@@ -142,9 +170,14 @@ const formatDate = (value?: string | null) => value
           </div>
           <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">Compare each receipt with the actual incoming bank or wallet transaction before approving.</p>
         </div>
-        <Link href="/admin/sales/orders" class="inline-flex items-center px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 text-sm font-medium text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700">
-          Back to orders
-        </Link>
+        <div class="flex flex-wrap gap-2">
+          <button type="button" @click="showReasonManager = true; resetReasonForm()" class="inline-flex items-center gap-2 rounded-lg border border-gray-300 px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 dark:border-gray-600 dark:text-gray-200 dark:hover:bg-gray-700">
+            <Pencil class="h-4 w-4" /> Manage rejection reasons
+          </button>
+          <Link href="/admin/sales/orders" class="inline-flex items-center px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 text-sm font-medium text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700">
+            Back to orders
+          </Link>
+        </div>
       </div>
 
       <div class="rounded-xl border border-blue-200 bg-blue-50 p-4 text-sm text-blue-900 dark:border-blue-900/50 dark:bg-blue-900/20 dark:text-blue-200">
@@ -214,15 +247,13 @@ const formatDate = (value?: string | null) => value
                   <p v-if="submission.reviewer_name" class="mt-1 text-xs text-gray-500 dark:text-gray-400">By {{ submission.reviewer_name }} · {{ formatDate(submission.reviewed_at) }}</p>
                 </td>
                 <td class="px-5 py-4 text-right min-w-[190px]">
-                  <div v-if="submission.status === 'pending_review'" class="flex justify-end gap-2">
-                    <button @click="approve(submission)" class="inline-flex items-center gap-1.5 rounded-lg bg-green-600 px-3 py-2 text-xs font-semibold text-white hover:bg-green-700">
-                      <Check class="w-4 h-4" /> Approve
-                    </button>
-                    <button @click="openReject(submission)" class="rounded-lg border border-red-300 px-3 py-2 text-xs font-semibold text-red-700 hover:bg-red-50 dark:border-red-800 dark:text-red-300 dark:hover:bg-red-900/20">
-                      Reject
-                    </button>
-                  </div>
-                  <span v-else class="text-xs text-gray-500 dark:text-gray-400">Reviewed</span>
+                  <ManualPaymentReviewActions
+                    :submission-id="submission.id"
+                    :status="submission.status"
+                    :order-label="submission.order?.order_number || `submission ${submission.id}`"
+                    :reason-templates="reasonTemplates"
+                  />
+                  <span v-if="submission.status !== 'pending_review'" class="text-xs text-gray-500 dark:text-gray-400">Reviewed</span>
                 </td>
               </tr>
               <tr v-if="submissions.data.length === 0">
@@ -239,23 +270,70 @@ const formatDate = (value?: string | null) => value
       </section>
     </div>
 
-    <div v-if="rejectingSubmission" class="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4" @click.self="closeReject">
-      <section role="dialog" aria-modal="true" aria-labelledby="reject-payment-title" class="w-full max-w-lg rounded-xl bg-white p-6 shadow-xl dark:bg-gray-800">
+    <div v-if="showReasonManager" class="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4" @click.self="showReasonManager = false">
+      <section role="dialog" aria-modal="true" aria-labelledby="reason-manager-title" class="max-h-[92vh] w-full max-w-5xl overflow-y-auto rounded-xl bg-white p-6 shadow-xl dark:bg-gray-800">
         <div class="flex items-start justify-between gap-4">
           <div>
-            <h2 id="reject-payment-title" class="text-lg font-semibold text-gray-900 dark:text-white">Reject transfer proof</h2>
-            <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">Give the customer a clear reason so they can correct the issue and submit replacement proof.</p>
+            <h2 id="reason-manager-title" class="text-xl font-semibold text-gray-900 dark:text-white">Manage rejection reasons</h2>
+            <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">Saved reasons help staff give clear, consistent feedback. You can edit, deactivate, or delete them at any time.</p>
           </div>
-          <button type="button" @click="closeReject" aria-label="Close" class="rounded-md p-1 text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-700"><X class="w-5 h-5" /></button>
+          <button type="button" @click="showReasonManager = false" aria-label="Close" class="rounded-md p-1 text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-700"><X class="h-5 w-5" /></button>
         </div>
-        <p v-if="serverErrors.reason" class="mt-4 rounded-lg bg-red-50 p-3 text-sm text-red-700 dark:bg-red-900/20 dark:text-red-300">{{ serverErrors.reason }}</p>
-        <label class="mt-5 block text-sm font-medium text-gray-700 dark:text-gray-300">Rejection reason *</label>
-        <textarea v-model="rejectionReason" rows="4" maxlength="1000" required placeholder="For example: the amount does not match, the receipt is unreadable, or the transfer is not visible in the receiving account." class="mt-2 w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 dark:border-gray-600 dark:bg-gray-700 dark:text-white" />
-        <div class="mt-5 flex justify-end gap-3">
-          <button type="button" @click="closeReject" class="rounded-lg border border-gray-300 px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 dark:border-gray-600 dark:text-gray-200 dark:hover:bg-gray-700">Cancel</button>
-          <button type="button" @click="submitReject" :disabled="submittingRejection || !rejectionReason.trim()" class="rounded-lg bg-red-600 px-4 py-2 text-sm font-semibold text-white hover:bg-red-700 disabled:cursor-not-allowed disabled:opacity-50">
-            {{ submittingRejection ? 'Saving…' : 'Reject submission' }}
-          </button>
+
+        <div class="mt-6 grid gap-6 lg:grid-cols-2">
+          <section>
+            <div class="mb-3 flex items-center justify-between gap-3">
+              <h3 class="font-semibold text-gray-900 dark:text-white">Saved reasons ({{ managedReasonTemplates.length }})</h3>
+              <button type="button" @click="resetReasonForm" class="inline-flex items-center gap-1.5 rounded-lg border border-blue-300 px-3 py-2 text-sm font-medium text-blue-700 hover:bg-blue-50 dark:border-blue-800 dark:text-blue-300 dark:hover:bg-blue-900/20">
+                <Plus class="h-4 w-4" /> New reason
+              </button>
+            </div>
+            <div class="max-h-[55vh] space-y-2 overflow-y-auto pr-1">
+              <article v-for="template in managedReasonTemplates" :key="template.id" class="rounded-lg border border-gray-200 p-3 dark:border-gray-700">
+                <div class="flex items-start justify-between gap-3">
+                  <div class="min-w-0">
+                    <div class="flex flex-wrap items-center gap-2">
+                      <h4 class="font-medium text-gray-900 dark:text-white">{{ template.label }}</h4>
+                      <span :class="template.is_active ? 'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-300' : 'bg-gray-100 text-gray-600 dark:bg-gray-700 dark:text-gray-300'" class="rounded-full px-2 py-0.5 text-xs font-medium">{{ template.is_active ? 'Active' : 'Inactive' }}</span>
+                    </div>
+                    <p class="mt-1 whitespace-pre-line text-sm text-gray-600 dark:text-gray-400">{{ template.reason }}</p>
+                  </div>
+                  <div class="flex shrink-0 gap-1">
+                    <button type="button" @click="editReason(template)" :aria-label="`Edit ${template.label}`" class="rounded-md p-2 text-gray-600 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-700"><Pencil class="h-4 w-4" /></button>
+                    <button type="button" @click="deleteReasonTemplate(template)" :aria-label="`Delete ${template.label}`" class="rounded-md p-2 text-red-600 hover:bg-red-50 dark:text-red-300 dark:hover:bg-red-900/20"><Trash2 class="h-4 w-4" /></button>
+                  </div>
+                </div>
+              </article>
+              <div v-if="managedReasonTemplates.length === 0" class="rounded-lg border border-dashed border-gray-300 p-6 text-center text-sm text-gray-500 dark:border-gray-600 dark:text-gray-400">
+                No saved reasons yet. Add one here or save a custom reason when rejecting a submission.
+              </div>
+            </div>
+          </section>
+
+          <form @submit.prevent="saveReasonTemplate" class="rounded-xl border border-gray-200 p-4 dark:border-gray-700">
+            <h3 class="font-semibold text-gray-900 dark:text-white">{{ editingReason ? 'Edit rejection reason' : 'Add a rejection reason' }}</h3>
+            <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">Customers will see this wording when staff select the reason for a rejection.</p>
+            <p v-if="serverErrors.label" class="mt-3 rounded-lg bg-red-50 p-3 text-sm text-red-700 dark:bg-red-900/20 dark:text-red-300">{{ serverErrors.label }}</p>
+            <p v-if="serverErrors.reason" class="mt-3 rounded-lg bg-red-50 p-3 text-sm text-red-700 dark:bg-red-900/20 dark:text-red-300">{{ serverErrors.reason }}</p>
+            <label class="mt-4 block text-sm font-medium text-gray-700 dark:text-gray-300">Template name *</label>
+            <input v-model="reasonForm.label" required minlength="2" maxlength="120" type="text" class="mt-2 w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 dark:border-gray-600 dark:bg-gray-700 dark:text-white" />
+            <label class="mt-4 block text-sm font-medium text-gray-700 dark:text-gray-300">Customer-facing reason *</label>
+            <textarea v-model="reasonForm.reason" required minlength="3" maxlength="1000" rows="5" class="mt-2 w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 dark:border-gray-600 dark:bg-gray-700 dark:text-white" />
+            <label v-if="editingReason" class="mt-4 flex items-center gap-2 text-sm text-gray-700 dark:text-gray-300">
+              <input v-model="reasonForm.is_active" type="checkbox" class="rounded border-gray-300 text-blue-600" />
+              Active — available in review forms
+            </label>
+            <div v-if="editingReason" class="mt-4">
+              <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Display order</label>
+              <input v-model.number="reasonForm.sort_order" type="number" min="0" class="mt-2 w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 dark:border-gray-600 dark:bg-gray-700 dark:text-white" />
+            </div>
+            <div class="mt-5 flex justify-end gap-2">
+              <button v-if="editingReason" type="button" @click="resetReasonForm" class="rounded-lg border border-gray-300 px-4 py-2 text-sm font-medium text-gray-700 dark:border-gray-600 dark:text-gray-200">Cancel edit</button>
+              <button type="submit" :disabled="savingReason || !reasonForm.label.trim() || reasonForm.reason.trim().length < 3" class="rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-50">
+                {{ savingReason ? 'Saving…' : editingReason ? 'Save changes' : 'Add reason' }}
+              </button>
+            </div>
+          </form>
         </div>
       </section>
     </div>

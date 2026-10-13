@@ -26,6 +26,9 @@ Route::middleware(['web', 'auth:admin'])->prefix('admin/sales')->name('admin.sal
         Route::get('/{submission}/proof', [ManualPaymentReviewController::class, 'proof'])->name('proof');
         Route::post('/{submission}/approve', [ManualPaymentReviewController::class, 'approve'])->name('approve');
         Route::post('/{submission}/reject', [ManualPaymentReviewController::class, 'reject'])->name('reject');
+        Route::post('/reason-templates', [ManualPaymentReviewController::class, 'storeReasonTemplate'])->name('reason-templates.store');
+        Route::put('/reason-templates/{template}', [ManualPaymentReviewController::class, 'updateReasonTemplate'])->name('reason-templates.update');
+        Route::delete('/reason-templates/{template}', [ManualPaymentReviewController::class, 'deleteReasonTemplate'])->name('reason-templates.delete');
     });
 
     // Orders

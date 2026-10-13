@@ -219,7 +219,7 @@ class OrderService
             }
 
             if ($paymentStatusChanged) {
-                $this->sendPaymentStatusEmail($lockedOrder, $oldPaymentStatus, $newPaymentStatus);
+                $this->sendPaymentStatusEmail($lockedOrder, $oldPaymentStatus, $newPaymentStatus, $comment);
                 $this->dispatchOrderEvent(
                     action: 'order.payment.updated',
                     title: "Order #{$lockedOrder->order_number} payment updated",
@@ -469,70 +469,72 @@ class OrderService
 
     /**
      * Send payment status change email notification.
-     *
-     * @param Order $order
-     * @param string $oldPaymentStatus
-     * @param string $newPaymentStatus
-     * @return void
      */
     protected function sendPaymentStatusEmail(
         Order $order,
         string $oldPaymentStatus,
-        string $newPaymentStatus
+        string $newPaymentStatus,
+        ?string $comment = null
     ): void {
         try {
-            // Determine which template to use based on new payment status
-            $templateCode = null;
-            switch ($newPaymentStatus) {
-                case 'paid':
-                    $templateCode = 'payment_received';
-                    break;
-                case 'failed':
-                    $templateCode = 'payment_failed';
-                    break;
-            }
+            $isManualTransfer = $order->payment_method === 'bank_transfer';
+            $templateCode = match ($newPaymentStatus) {
+                'paid' => $isManualTransfer ? 'manual_transfer_approved' : 'payment_received',
+                'failed' => $isManualTransfer ? 'manual_transfer_rejected' : 'payment_failed',
+                default => null,
+            };
 
-            // If no specific template for this status, skip email
-            if (!$templateCode) {
+            if (! $templateCode || empty($order->customer_email)) {
                 return;
             }
 
-            // Skip if order has no customer email
-            if (empty($order->customer_email)) {
-                return;
-            }
-
-            // Skip if email settings are not configured in Settings -> Email
+            // Skip if email settings are not configured in Settings -> Email.
             $emailConfig = EmailConfiguration::where('is_active', true)->first();
-            if (!$emailConfig || empty($emailConfig->mail_from_address)) {
+            if (! $emailConfig || empty($emailConfig->mail_from_address)) {
                 return;
             }
 
             $template = EmailTemplate::findByCode($templateCode);
-            
-            if (!$template || !$template->is_active) {
+
+            // Preserve the existing generic notification if a merchant has
+            // disabled or removed one of the manual-transfer templates.
+            if (! $template && $isManualTransfer) {
+                $fallbackCode = $newPaymentStatus === 'paid' ? 'payment_received' : 'payment_failed';
+                $template = EmailTemplate::findByCode($fallbackCode);
+            }
+
+            if (! $template || ! $template->is_active) {
                 return;
             }
 
-            // Prepare template data
             $data = [
                 'order_number' => $order->order_number,
                 'customer_name' => $order->user->name ?? 'Customer',
                 'customer_email' => $order->customer_email,
-                'payment_amount' => '₹' . number_format($order->total, 2),
+                'payment_amount' => $isManualTransfer
+                    ? $this->formatCurrency((float) $order->total)
+                    : '₹' . number_format($order->total, 2),
                 'payment_date' => now()->format('F d, Y'),
                 'transaction_id' => $order->payment_transaction_id ?? 'N/A',
                 'store_name' => config('app.name', config('brand.name')),
                 'store_url' => config('app.url'),
             ];
 
-            // Use the template's send method
-            $template->send($order->customer_email, $data);
+            if ($isManualTransfer && $newPaymentStatus === 'failed') {
+                $reason = trim((string) $comment);
+                $reasonPrefix = 'Manual transfer rejected:';
+                if (str_starts_with($reason, $reasonPrefix)) {
+                    $reason = trim(substr($reason, strlen($reasonPrefix)));
+                }
+                $data['payment_reason'] = $reason;
+                $data['payment_reason_html'] = nl2br(e($reason));
+            }
 
+            $template->send($order->customer_email, $data);
         } catch (\Exception $e) {
             Log::error('Failed to send payment status email', [
                 'order_id' => $order->id,
-                'error' => $e->getMessage()
+                'error' => $e->getMessage(),
             ]);
         }
     }

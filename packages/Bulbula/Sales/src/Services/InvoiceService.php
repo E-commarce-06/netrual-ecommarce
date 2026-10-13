@@ -115,6 +115,12 @@ class InvoiceService
                 throw new Exception('Cannot mark cancelled invoice as paid');
             }
 
+            $order = $invoice->order;
+            if ($order?->payment_method === 'bank_transfer'
+                && $order->payment_status !== Order::PAYMENT_PAID) {
+                throw new Exception('Manual transfer invoices can be marked paid only after staff approve verified transfer proof.');
+            }
+
             $updated = $invoice->markAsPaid();
 
             if (!app(OrderService::class)->updatePaymentStatus(

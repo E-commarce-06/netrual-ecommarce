@@ -768,7 +768,7 @@ class CheckoutController extends Controller
         $trackPage   = Page::where('url_key', 'track-order')->where('status', 'published')->first();
         $layoutData  = $trackPage ? $this->layoutService->getPublishedForPage($trackPage)?->layout_data : null;
 
-        $order = Order::with(['items', 'shippingAddress'])
+        $order = Order::with(['items', 'shippingAddress', 'latestManualPaymentSubmission'])
             ->where('order_number', $orderNumber)
             ->whereNull('user_id')
             ->first();
@@ -794,6 +794,14 @@ class CheckoutController extends Controller
                 'order_number' => $order->order_number,
                 'status' => $order->status,
                 'payment_status' => $order->payment_status,
+                'manual_payment_review' => $order->payment_method === 'bank_transfer' && $order->latestManualPaymentSubmission ? [
+                    'status' => $order->latestManualPaymentSubmission->status,
+                    'reason' => $order->latestManualPaymentSubmission->status === ManualPaymentSubmission::STATUS_REJECTED
+                        ? $order->latestManualPaymentSubmission->review_note
+                        : null,
+                    'submitted_at' => $order->latestManualPaymentSubmission->created_at?->format('F j, Y g:i A'),
+                    'reviewed_at' => $order->latestManualPaymentSubmission->reviewed_at?->format('F j, Y g:i A'),
+                ] : null,
                 'total' => round((float) $order->total, 2),
                 'created_at' => $order->created_at->format('F j, Y g:i A'),
                 'items_count' => $order->items->sum('quantity'),

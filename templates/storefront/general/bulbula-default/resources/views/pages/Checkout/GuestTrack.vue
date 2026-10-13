@@ -10,6 +10,12 @@ interface TrackedOrder {
   order_number: string
   status: string
   payment_status: string
+  manual_payment_review?: {
+    status: 'pending_review' | 'approved' | 'rejected'
+    reason?: string | null
+    submitted_at?: string | null
+    reviewed_at?: string | null
+  } | null
   total: number
   created_at: string
   items_count: number
@@ -71,6 +77,25 @@ const submit = () => {
           <div class="flex justify-between"><span class="text-gray-600">Items</span><span>{{ trackedOrder.items_count }}</span></div>
           <div class="flex justify-between"><span class="text-gray-600">Total</span><span class="font-semibold">{{ formatPrice(trackedOrder.total) }}</span></div>
         </div>
+        <section v-if="trackedOrder.manual_payment_review" :class="[
+          'mt-5 rounded-lg border p-4',
+          trackedOrder.manual_payment_review.status === 'approved' ? 'border-green-200 bg-green-50' :
+          trackedOrder.manual_payment_review.status === 'rejected' ? 'border-red-200 bg-red-50' :
+          'border-amber-200 bg-amber-50'
+        ]">
+          <h3 class="font-semibold" :class="trackedOrder.manual_payment_review.status === 'approved' ? 'text-green-900' : trackedOrder.manual_payment_review.status === 'rejected' ? 'text-red-900' : 'text-amber-900'">
+            {{ trackedOrder.manual_payment_review.status === 'pending_review' ? 'Transfer proof pending staff review' : trackedOrder.manual_payment_review.status === 'approved' ? 'Transfer approved' : 'Transfer proof rejected' }}
+          </h3>
+          <p v-if="trackedOrder.manual_payment_review.status === 'pending_review'" class="mt-1 text-sm text-amber-800">Your order remains unpaid until staff verify that the funds have settled in the receiving account.</p>
+          <p v-else-if="trackedOrder.manual_payment_review.status === 'approved'" class="mt-1 text-sm text-green-800">Staff verified the transfer and confirmed your payment.</p>
+          <p v-else class="mt-1 text-sm text-red-800">The submitted proof was not approved. Review the reason below and contact the store if you need help.</p>
+          <div v-if="trackedOrder.manual_payment_review.status === 'rejected' && trackedOrder.manual_payment_review.reason" class="mt-3 rounded bg-white/80 p-3 text-sm text-red-900">
+            <strong>Staff reason:</strong>
+            <p class="mt-1 whitespace-pre-line">{{ trackedOrder.manual_payment_review.reason }}</p>
+          </div>
+          <p v-if="trackedOrder.manual_payment_review.submitted_at" class="mt-2 text-xs text-gray-600">Proof submitted {{ trackedOrder.manual_payment_review.submitted_at }}</p>
+          <p v-if="trackedOrder.manual_payment_review.reviewed_at" class="mt-1 text-xs text-gray-600">Reviewed {{ trackedOrder.manual_payment_review.reviewed_at }}</p>
+        </section>
       </div>
     </div>
   </ThemeLayout>

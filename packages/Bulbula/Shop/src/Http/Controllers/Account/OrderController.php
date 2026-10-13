@@ -51,8 +51,16 @@ class OrderController extends Controller
                 $query->where('customer_id', auth()->id())
                     ->orWhere('customer_email', auth()->user()->email);
             })
-            ->with(['items.product.mainImage', 'items.product.images', 'shippingAddress', 'billingAddress'])
+            ->with([
+                'items.product.mainImage',
+                'items.product.images',
+                'shippingAddress',
+                'billingAddress',
+                'latestManualPaymentSubmission',
+            ])
             ->firstOrFail();
+
+        $manualPaymentSubmission = $order->latestManualPaymentSubmission;
 
         return $this->themeResolver->inertia('Account/Orders/Show', [
             'order' => [
@@ -61,6 +69,15 @@ class OrderController extends Controller
                 'status' => $order->status,
                 'payment_method' => $order->payment_method,
                 'payment_status' => $order->payment_status,
+                'manual_payment_review' => $order->payment_method === 'bank_transfer' && $manualPaymentSubmission ? [
+                    'status' => $manualPaymentSubmission->status,
+                    'reason' => $manualPaymentSubmission->status === 'rejected'
+                        ? $manualPaymentSubmission->review_note
+                        : null,
+                    'submitted_at' => $manualPaymentSubmission->created_at?->format('M d, Y H:i'),
+                    'reviewed_at' => $manualPaymentSubmission->reviewed_at?->format('M d, Y H:i'),
+                    'can_resubmit' => (int) $order->user_id === (int) auth()->id(),
+                ] : null,
                 'customer_name' => $order->customer_name,
                 'customer_email' => $order->customer_email,
                 'customer_phone' => $order->customer_phone,

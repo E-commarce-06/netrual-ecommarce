@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import { Head, router } from '@inertiajs/vue3';
 import AdminLayout from '@/layouts/AdminLayout.vue';
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
 import { useCurrency } from '@/composables/useCurrency';
+import ManualPaymentReviewActions from '@/components/Admin/ManualPaymentReviewActions.vue';
 
 interface Order {
   id: number;
@@ -82,8 +83,32 @@ interface Order {
   }>;
 }
 
+interface ManualPaymentSubmission {
+  id: number;
+  status: 'pending_review' | 'approved' | 'rejected';
+  amount: number;
+  currency: string;
+  transfer_reference?: string | null;
+  destination_snapshot: Record<string, string> | null;
+  proof_url: string;
+  proof_mime_type: string;
+  proof_size: number;
+  submitted_at: string | null;
+  review_note?: string | null;
+  reviewed_at?: string | null;
+  reviewer_name?: string | null;
+}
+
+interface ReasonTemplate {
+  id: number;
+  label: string;
+  reason: string;
+}
+
 interface Props {
   order: Order;
+  manualPaymentSubmissions: ManualPaymentSubmission[];
+  reasonTemplates: ReasonTemplate[];
   statuses: Array<{ value: string; label: string }>;
   paymentStatuses: Array<{ value: string; label: string }>;
 }
@@ -105,6 +130,13 @@ const paymentMethodLabel = (code: string) =>
   paymentMethodLabels[code] ?? code;
 
 const activeTab = ref('overview');
+const tabs = computed(() => {
+  const standardTabs = ['overview', 'items', 'addresses', 'shipments', 'history'];
+  if (props.order.payment_method === 'bank_transfer' || props.manualPaymentSubmissions.length > 0) {
+    standardTabs.splice(1, 0, 'payment');
+  }
+  return standardTabs;
+});
 const showStatusModal = ref(false);
 const showPaymentModal = ref(false);
 const showCancelModal = ref(false);
@@ -185,7 +217,9 @@ function getStatusBadge(status: string): string {
   return badges[status] || badges.pending;
 }
 
-function formatDate(date: string): string {
+function formatDate(date?: string | null): string {
+  if (!date) return '—';
+
   return new Date(date).toLocaleString('en-US', {
     year: 'numeric',
     month: 'short',
@@ -242,6 +276,7 @@ const billingAddress = props.order.addresses.find(a => a.type === 'billing');
             Update Status
           </button>
           <button
+            v-if="order.payment_method !== 'bank_transfer'"
             @click="showPaymentModal = true"
             class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50"
           >
@@ -286,7 +321,7 @@ const billingAddress = props.order.addresses.find(a => a.type === 'billing');
         <div class="border-b border-gray-200">
           <nav class="-mb-px flex space-x-8 px-6">
             <button
-              v-for="tab in ['overview', 'items', 'addresses', 'shipments', 'history']"
+              v-for="tab in tabs"
               :key="tab"
               @click="activeTab = tab"
               :class="[
@@ -296,7 +331,7 @@ const billingAddress = props.order.addresses.find(a => a.type === 'billing');
                   : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
               ]"
             >
-              {{ tab.charAt(0).toUpperCase() + tab.slice(1) }}
+              {{ tab === 'payment' ? 'Payment evidence' : tab.charAt(0).toUpperCase() + tab.slice(1) }}
             </button>
           </nav>
         </div>
@@ -337,6 +372,79 @@ const billingAddress = props.order.addresses.find(a => a.type === 'billing');
               <div class="text-sm font-medium text-gray-500">Notes</div>
               <div class="mt-1 text-sm text-gray-900 bg-gray-50 p-3 rounded">{{ order.notes }}</div>
             </div>
+          </div>
+
+          <!-- Manual transfer proof and staff review -->
+          <div v-if="activeTab === 'payment'" class="space-y-5">
+            <div class="rounded-lg border border-blue-200 bg-blue-50 p-4 text-sm text-blue-900">
+              A receipt is evidence only. Verify the settled funds in the receiving bank or wallet account before approving; approval records this order as paid.
+            </div>
+
+            <div v-if="manualPaymentSubmissions.length === 0" class="rounded-xl border border-dashed border-gray-300 p-10 text-center text-sm text-gray-500">
+              No transfer proof has been submitted for this order yet.
+            </div>
+
+            <article v-for="submission in manualPaymentSubmissions" :key="submission.id" class="overflow-hidden rounded-xl border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-800">
+              <header class="flex flex-wrap items-start justify-between gap-4 border-b border-gray-200 p-4 dark:border-gray-700">
+                <div>
+                  <h3 class="font-semibold text-gray-900 dark:text-white">Transfer submission #{{ submission.id }}</h3>
+                  <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">Submitted {{ formatDate(submission.submitted_at) }}</p>
+                </div>
+                <span :class="[
+                  'inline-flex rounded-full px-3 py-1 text-xs font-semibold',
+                  submission.status === 'approved' ? 'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-300' :
+                  submission.status === 'rejected' ? 'bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-300' :
+                  'bg-amber-100 text-amber-800 dark:bg-amber-900/30 dark:text-amber-300'
+                ]">
+                  {{ submission.status === 'pending_review' ? 'Pending review' : submission.status === 'approved' ? 'Approved' : 'Rejected' }}
+                </span>
+              </header>
+
+              <div class="grid gap-5 p-4 lg:grid-cols-[minmax(0,1fr)_300px]">
+                <div>
+                  <a :href="submission.proof_url" target="_blank" rel="noopener noreferrer" class="block overflow-hidden rounded-lg border border-gray-200 bg-gray-50 dark:border-gray-700 dark:bg-gray-900">
+                    <img :src="submission.proof_url" alt="Customer-submitted transfer proof" class="mx-auto max-h-[540px] w-full object-contain" />
+                  </a>
+                  <a :href="submission.proof_url" target="_blank" rel="noopener noreferrer" class="mt-2 inline-flex text-sm font-medium text-blue-600 hover:underline dark:text-blue-400">Open full-size proof</a>
+                </div>
+
+                <div class="space-y-4">
+                  <div class="rounded-lg bg-gray-50 p-4 dark:bg-gray-900/50">
+                    <h4 class="text-sm font-semibold text-gray-900 dark:text-white">Transfer details</h4>
+                    <dl class="mt-3 space-y-3 text-sm">
+                      <div>
+                        <dt class="text-gray-500 dark:text-gray-400">Submitted amount</dt>
+                        <dd class="font-semibold text-gray-900 dark:text-white">{{ submission.currency }} {{ Number(submission.amount).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }) }}</dd>
+                      </div>
+                      <div>
+                        <dt class="text-gray-500 dark:text-gray-400">Transfer reference</dt>
+                        <dd class="break-all font-mono text-gray-900 dark:text-white">{{ submission.transfer_reference || 'Not provided' }}</dd>
+                      </div>
+                      <div>
+                        <dt class="text-gray-500 dark:text-gray-400">Destination selected</dt>
+                        <dd class="text-gray-900 dark:text-white">{{ submission.destination_snapshot?.label || submission.destination_snapshot?.provider || 'Transfer account' }}</dd>
+                        <dd v-if="submission.destination_snapshot?.account_name" class="text-xs text-gray-600 dark:text-gray-300">{{ submission.destination_snapshot.account_name }}</dd>
+                        <dd v-if="submission.destination_snapshot?.account_number" class="font-mono text-xs text-gray-600 dark:text-gray-300">{{ submission.destination_snapshot.account_number }}</dd>
+                      </div>
+                    </dl>
+                  </div>
+
+                  <div v-if="submission.review_note" class="rounded-lg border border-gray-200 p-4 dark:border-gray-700">
+                    <h4 class="text-sm font-semibold text-gray-900 dark:text-white">Staff review note</h4>
+                    <p class="mt-2 whitespace-pre-line text-sm text-gray-700 dark:text-gray-300">{{ submission.review_note }}</p>
+                    <p v-if="submission.reviewer_name" class="mt-2 text-xs text-gray-500 dark:text-gray-400">{{ submission.reviewer_name }} · {{ formatDate(submission.reviewed_at) }}</p>
+                  </div>
+                  <p v-else-if="submission.status !== 'pending_review' && submission.reviewer_name" class="text-xs text-gray-500 dark:text-gray-400">Reviewed by {{ submission.reviewer_name }} · {{ formatDate(submission.reviewed_at) }}</p>
+
+                  <ManualPaymentReviewActions
+                    :submission-id="submission.id"
+                    :status="submission.status"
+                    :order-label="`order ${order.order_number}`"
+                    :reason-templates="reasonTemplates"
+                  />
+                </div>
+              </div>
+            </article>
           </div>
 
           <!-- Items Tab -->
@@ -603,7 +711,8 @@ const billingAddress = props.order.addresses.find(a => a.type === 'billing');
                 <svg class="h-5 w-5 text-blue-400 mr-2" fill="currentColor" viewBox="0 0 20 20">
                   <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"/>
                 </svg>
-                <p class="text-sm text-blue-700">Updating payment status will be recorded in order history.</p>
+                <p v-if="order.payment_method === 'bank_transfer'" class="text-sm text-blue-700">For manual transfers, use the Payment evidence review after confirming settled funds. This form cannot mark the order paid.</p>
+                <p v-else class="text-sm text-blue-700">Updating payment status will be recorded in order history.</p>
               </div>
             </div>
           </div>

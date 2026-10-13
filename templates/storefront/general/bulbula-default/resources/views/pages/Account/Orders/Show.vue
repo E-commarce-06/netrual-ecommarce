@@ -30,6 +30,13 @@ interface Order {
   status: string;
   payment_method: string;
   payment_status: string;
+  manual_payment_review?: {
+    status: 'pending_review' | 'approved' | 'rejected';
+    reason?: string | null;
+    submitted_at?: string | null;
+    reviewed_at?: string | null;
+    can_resubmit: boolean;
+  } | null;
   customer_name: string;
   customer_email: string;
   customer_phone?: string;
@@ -116,6 +123,52 @@ const formatAddress = (address?: Address) => {
             </span>
           </div>
         </div>
+
+        <section v-if="order.manual_payment_review" :class="[
+          'mb-6 rounded-lg border p-5',
+          order.manual_payment_review.status === 'approved' ? 'border-green-200 bg-green-50' :
+          order.manual_payment_review.status === 'rejected' ? 'border-red-200 bg-red-50' :
+          'border-amber-200 bg-amber-50'
+        ]">
+          <div class="flex flex-wrap items-start justify-between gap-3">
+            <div>
+              <h2 :class="[
+                'text-lg font-semibold',
+                order.manual_payment_review.status === 'approved' ? 'text-green-900' :
+                order.manual_payment_review.status === 'rejected' ? 'text-red-900' :
+                'text-amber-900'
+              ]">
+                {{ order.manual_payment_review.status === 'approved' ? 'Manual payment approved' : order.manual_payment_review.status === 'rejected' ? 'Transfer proof rejected' : 'Manual payment pending review' }}
+              </h2>
+              <p v-if="order.manual_payment_review.status === 'pending_review'" class="mt-1 text-sm text-amber-800">We received your transfer proof. Your order remains unpaid until staff verify that the funds have settled in the receiving account.</p>
+              <p v-else-if="order.manual_payment_review.status === 'approved'" class="mt-1 text-sm text-green-800">Staff verified the transfer and confirmed your payment.</p>
+              <p v-else class="mt-1 text-sm text-red-800">The submitted proof was not approved. Review the reason below; you can submit replacement proof if the order is still awaiting payment.</p>
+            </div>
+            <span :class="[
+              'rounded-full px-3 py-1 text-xs font-semibold',
+              order.manual_payment_review.status === 'approved' ? 'bg-green-100 text-green-800' :
+              order.manual_payment_review.status === 'rejected' ? 'bg-red-100 text-red-800' :
+              'bg-amber-100 text-amber-800'
+            ]">
+              {{ order.manual_payment_review.status === 'pending_review' ? 'Pending' : order.manual_payment_review.status === 'approved' ? 'Approved' : 'Rejected' }}
+            </span>
+          </div>
+          <div v-if="order.manual_payment_review.status === 'rejected' && order.manual_payment_review.reason" class="mt-4 rounded-lg border border-red-200 bg-white/80 p-4 text-sm text-red-900">
+            <strong>Staff rejection reason:</strong>
+            <p class="mt-1 whitespace-pre-line">{{ order.manual_payment_review.reason }}</p>
+          </div>
+          <div class="mt-3 flex flex-wrap items-center justify-between gap-3 text-xs text-gray-600">
+            <span v-if="order.manual_payment_review.submitted_at">Proof submitted {{ order.manual_payment_review.submitted_at }}</span>
+            <span v-if="order.manual_payment_review.reviewed_at">Reviewed {{ order.manual_payment_review.reviewed_at }}</span>
+          </div>
+          <Link
+            v-if="order.manual_payment_review.status === 'rejected' && order.manual_payment_review.can_resubmit && order.status === 'pending' && order.payment_status === 'failed'"
+            :href="`/checkout/success/${order.id}`"
+            class="mt-4 inline-flex rounded-lg bg-red-700 px-4 py-2 text-sm font-semibold text-white hover:bg-red-800"
+          >
+            Review and submit replacement proof
+          </Link>
+        </section>
 
         <!-- Order Timeline (Visual Status) -->
         <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6 mb-6">

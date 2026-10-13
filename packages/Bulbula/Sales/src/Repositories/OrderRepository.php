@@ -259,7 +259,8 @@ class OrderRepository
             'items.product',
             'addresses',
             'histories.adminUser',
-            'shipments.shipmentItems.orderItem.product'
+            'shipments.shipmentItems.orderItem.product',
+            'manualPaymentSubmissions.reviewer'
         ])->find($orderId);
     }
 }

@@ -3,6 +3,7 @@
 namespace Bulbula\Sales\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use Bulbula\Sales\Models\ManualPaymentReasonTemplate;
 use Bulbula\Sales\Models\ManualPaymentSubmission;
 use Bulbula\Sales\Services\ManualPaymentService;
 use Illuminate\Http\RedirectResponse;
@@ -10,6 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 use Inertia\Inertia;
 use Inertia\Response as InertiaResponse;
 use Throwable;
@@ -87,6 +89,15 @@ class ManualPaymentReviewController extends Controller
                 'status',
                 ManualPaymentSubmission::STATUS_PENDING_REVIEW
             )->count(),
+            'reasonTemplates' => ManualPaymentReasonTemplate::query()
+                ->where('is_active', true)
+                ->orderBy('sort_order')
+                ->orderBy('label')
+                ->get(['id', 'label', 'reason']),
+            'managedReasonTemplates' => ManualPaymentReasonTemplate::query()
+                ->orderBy('sort_order')
+                ->orderBy('label')
+                ->get(['id', 'label', 'reason', 'is_active', 'sort_order']),
         ]);
     }
 
@@ -117,6 +128,7 @@ class ManualPaymentReviewController extends Controller
     public function approve(Request $request, ManualPaymentSubmission $submission): RedirectResponse
     {
         $validated = $request->validate([
+            'verified_settled' => ['required', 'accepted'],
             'note' => ['nullable', 'string', 'max:1000'],
         ]);
 
@@ -143,17 +155,24 @@ class ManualPaymentReviewController extends Controller
     {
         $validated = $request->validate([
             'reason' => ['required', 'string', 'min:3', 'max:1000'],
+            'save_as_template' => ['nullable', 'boolean'],
+            'template_label' => ['nullable', 'string', 'min:2', 'max:120'],
         ]);
+
+        $reason = trim($validated['reason']);
+        $saveAsTemplate = $request->boolean('save_as_template');
+        $templateLabel = trim((string) ($validated['template_label'] ?? ''));
+        if ($saveAsTemplate && $templateLabel === '') {
+            $templateLabel = Str::limit($reason, 120, '');
+        }
 
         try {
             $adminId = Auth::guard('admin')->id() ?? Auth::id();
             $this->manualPaymentService->reject(
                 $submission,
-                trim($validated['reason']),
+                $reason,
                 $adminId ? (int) $adminId : null,
             );
-
-            return back()->with('success', 'Manual transfer rejected. The reason is saved for the customer.');
         } catch (Throwable $exception) {
             Log::warning('Manual payment rejection failed', [
                 'submission_id' => $submission->id,
@@ -162,5 +181,109 @@ class ManualPaymentReviewController extends Controller
 
             return back()->with('error', $exception->getMessage());
         }
+
+        if ($saveAsTemplate) {
+            try {
+                $this->saveReasonTemplate($templateLabel, $reason);
+            } catch (Throwable $exception) {
+                Log::warning('Manual payment reason template could not be saved after rejection', [
+                    'submission_id' => $submission->id,
+                    'error' => $exception->getMessage(),
+                ]);
+
+                return back()->with(
+                    'success',
+                    'Manual transfer rejection was recorded, but the reusable reason could not be saved. You can add it from Manage rejection reasons.'
+                );
+            }
+        }
+
+        $message = $saveAsTemplate
+            ? 'Manual transfer rejected and the reason saved for future use.'
+            : 'Manual transfer rejected. The reason is saved for the customer.';
+
+        return back()->with('success', $message);
+    }
+
+    public function storeReasonTemplate(Request $request): RedirectResponse
+    {
+        $validated = $request->validate([
+            'label' => ['required', 'string', 'min:2', 'max:120'],
+            'reason' => ['required', 'string', 'min:3', 'max:1000'],
+        ]);
+
+        try {
+            $this->saveReasonTemplate(trim($validated['label']), trim($validated['reason']));
+
+            return back()->with('success', 'Rejection reason saved.');
+        } catch (Throwable $exception) {
+            Log::warning('Manual payment reason template creation failed', [
+                'error' => $exception->getMessage(),
+            ]);
+
+            return back()->with('error', 'Could not save that rejection reason.');
+        }
+    }
+
+    public function updateReasonTemplate(Request $request, ManualPaymentReasonTemplate $template): RedirectResponse
+    {
+        $validated = $request->validate([
+            'label' => ['required', 'string', 'min:2', 'max:120'],
+            'reason' => ['required', 'string', 'min:3', 'max:1000'],
+            'is_active' => ['required', 'boolean'],
+            'sort_order' => ['nullable', 'integer', 'min:0', 'max:100000'],
+        ]);
+
+        $template->update([
+            'label' => trim($validated['label']),
+            'reason' => trim($validated['reason']),
+            'is_active' => $validated['is_active'],
+            'sort_order' => $validated['sort_order'] ?? $template->sort_order,
+        ]);
+
+        return back()->with('success', 'Rejection reason updated.');
+    }
+
+    public function deleteReasonTemplate(ManualPaymentReasonTemplate $template): RedirectResponse
+    {
+        $template->delete();
+
+        return back()->with('success', 'Rejection reason deleted.');
+    }
+
+    private function saveReasonTemplate(string $label, string $reason): ManualPaymentReasonTemplate
+    {
+        $existing = ManualPaymentReasonTemplate::query()
+            ->where('reason', $reason)
+            ->first();
+
+        if ($existing) {
+            if (! $existing->is_active) {
+                $existing->update(['is_active' => true]);
+            }
+
+            return $existing;
+        }
+
+        $baseCode = Str::slug($label);
+        if ($baseCode === '') {
+            $baseCode = 'manual-payment-reason';
+        }
+        $baseCode = substr($baseCode, 0, 48);
+        $code = $baseCode;
+        $suffix = 2;
+
+        while (ManualPaymentReasonTemplate::query()->where('code', $code)->exists()) {
+            $ending = '-' . $suffix++;
+            $code = substr($baseCode, 0, 64 - strlen($ending)) . $ending;
+        }
+
+        return ManualPaymentReasonTemplate::create([
+            'code' => $code,
+            'label' => $label,
+            'reason' => $reason,
+            'is_active' => true,
+            'sort_order' => (int) (ManualPaymentReasonTemplate::max('sort_order') ?? 0) + 10,
+        ]);
     }
 }
