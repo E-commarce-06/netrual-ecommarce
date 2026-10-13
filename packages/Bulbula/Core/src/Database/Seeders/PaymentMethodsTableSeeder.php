@@ -33,27 +33,22 @@ class PaymentMethodsTableSeeder extends Seeder
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
-            // Bank Transfer
+            // Manual transfer is available in settings, but stays inactive
+            // until an administrator adds at least one receiving account.
             [
                 'code' => 'bank_transfer',
-                'name' => 'Bank Transfer',
-                'description' => 'Transfer payment directly to our bank account',
+                'name' => 'Manual Bank / Wallet Transfer',
+                'description' => 'Pay by bank transfer or mobile wallet. Staff verify the transfer before confirming payment.',
                 'type' => 'bank_transfer',
-                'is_active' => true,
+                'is_active' => false,
                 'is_default' => false,
                 'sort_order' => 2,
-                'instructions' => 'Please transfer the order amount to our bank account and use the reference format provided during checkout.',
+                'instructions' => 'Transfer the exact order total to an active receiving account and upload your receipt for staff verification.',
                 'configuration' => json_encode([
-                    'account_name' => (config('brand.name') . ' Shop Inc.'),
-                    'bank_name' => '',
-                    'account_number' => '',
-                    'swift_code' => '',
-                    'iban' => '',
-                    'ifsc_code' => '',
-                    'branch_address' => '',
-                    'reference_format' => 'ORDER-{order_id}',
+                    'account_destinations' => [],
+                    'min_order_amount' => 0,
+                    'max_order_amount' => null,
                     'verification_days' => 3,
-                    'auto_confirm' => false,
                     'allowed_countries' => ['*'],
                 ]),
                 'created_at' => now(),
@@ -92,6 +87,13 @@ class PaymentMethodsTableSeeder extends Seeder
         ];
 
         foreach ($paymentMethods as $method) {
+            if ($method['code'] === 'bank_transfer') {
+                // This method has administrator-managed account details and
+                // instructions. Only create its defaults when it is missing.
+                DB::table('payment_methods')->insertOrIgnore($method);
+                continue;
+            }
+
             DB::table('payment_methods')->updateOrInsert(
                 ['code' => $method['code']],
                 $method
