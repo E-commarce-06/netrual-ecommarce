@@ -10,6 +10,7 @@ use Bulbula\Core\Models\PaymentMethod;
 use Bulbula\Core\Services\PaymentGatewayManager;
 use Bulbula\Sales\Services\InvoiceService;
 use Bulbula\Sales\Services\TransactionService;
+use Bulbula\Sales\Services\OrderService;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
 
@@ -63,11 +64,20 @@ class PhonePeController extends Controller
                 ->with('error', 'Payment verification failed. Please contact support if you were charged.');
         }
 
-        // Update order payment status
-        $order->update([
-            'payment_status' => Order::PAYMENT_PAID,
-            'status' => Order::STATUS_PROCESSING,
-        ]);
+        $wasAlreadyPaid = $order->payment_status === Order::PAYMENT_PAID;
+        if (!app(OrderService::class)->updatePaymentStatus(
+            $order,
+            Order::PAYMENT_PAID,
+            'Payment completed via PhonePe callback'
+        )) {
+            return redirect()->route('cart.index')
+                ->with('error', 'Payment was verified, but the order could not be updated. Please contact support.');
+        }
+
+        if ($order->payment_status !== Order::PAYMENT_PAID) {
+            return redirect()->route('cart.index')
+                ->with('error', 'This order is not in a payable state. Please contact support.');
+        }
 
         $paymentData = json_decode($order->payment_data, true) ?? [];
         $invoice = $this->invoiceService->createFromOrderIfMissing($order);
@@ -86,11 +96,15 @@ class PhonePeController extends Controller
             'order_id' => $order->id,
         ]);
 
-        // Send order confirmation email
-        $this->sendOrderConfirmationEmail($order);
+        // Send order confirmation email only on the first paid transition.
+        if (!$wasAlreadyPaid) {
+            $this->sendOrderConfirmationEmail($order);
+        }
 
         // Keep last order marker for guest success page authorization
         Session::put('checkout.last_order_id', $order->id);
+        Session::forget('cart');
+        Session::forget('cart_coupon');
 
         // Redirect to order success page
         return redirect()->route('shop.checkout.success', ['order' => $order->id])
@@ -109,10 +123,14 @@ class PhonePeController extends Controller
             'order_id' => $order->id,
         ]);
 
-        // Update order status to payment failed
-        $order->update([
-            'payment_status' => Order::PAYMENT_FAILED,
-        ]);
+        if (!app(OrderService::class)->updatePaymentStatus(
+            $order,
+            Order::PAYMENT_FAILED,
+            'Payment cancelled via PhonePe callback'
+        )) {
+            return redirect()->route('cart.index')
+                ->with('error', 'Payment cancellation could not be recorded. Please contact support.');
+        }
 
         // Redirect back to cart with error
         return redirect()->route('cart.index')
@@ -185,8 +203,11 @@ class PhonePeController extends Controller
                 'response' => json_encode($callbackResponse),
             ]);
 
-            // Process the callback based on event type
-            $this->processCallback($callbackResponse);
+            // Process the callback based on event type; ask PhonePe to retry if
+            // the verified event could not be committed locally.
+            if (!$this->processCallback($callbackResponse)) {
+                return response()->json(['error' => 'Order transition failed'], 500);
+            }
 
             // Return 200 OK to acknowledge receipt
             return response()->json(['status' => 'received'], 200);
@@ -211,7 +232,7 @@ class PhonePeController extends Controller
     /**
      * Process callback response and update order status.
      */
-    protected function processCallback($callbackResponse): void
+    protected function processCallback($callbackResponse): bool
     {
         try {
             // Extract order details from callback
@@ -222,7 +243,7 @@ class PhonePeController extends Controller
 
             if (!$merchantOrderId) {
                 Log::warning('PhonePeController: No merchant order ID in callback');
-                return;
+                return true;
             }
 
             // Find order by order_number
@@ -232,7 +253,7 @@ class PhonePeController extends Controller
                 Log::warning('PhonePeController: Order not found', [
                     'merchant_order_id' => $merchantOrderId,
                 ]);
-                return;
+                return true;
             }
 
             Log::info('PhonePeController: Processing callback for order', [
@@ -243,51 +264,76 @@ class PhonePeController extends Controller
 
             // Update order based on payment state
             if ($state === 'COMPLETED') {
-                if ($order->payment_status !== Order::PAYMENT_PAID) {
-                    $order->update([
-                        'payment_status' => Order::PAYMENT_PAID,
-                        'status' => Order::STATUS_PROCESSING,
-                    ]);
-
-                    // Update payment data with transaction ID
-                    $paymentData = json_decode($order->payment_data, true) ?? [];
-                    $paymentData['transaction_id'] = $transactionId;
-                    $paymentData['callback_state'] = $state;
-                    $order->update(['payment_data' => json_encode($paymentData)]);
-
-                    $invoice = $this->invoiceService->createFromOrderIfMissing($order);
-                    $this->transactionService->createPaymentIfMissing($order, [
-                        'payment_method' => 'phonepe',
-                        'gateway' => 'phonepe',
-                        'gateway_transaction_id' => $transactionId ?? $merchantOrderId,
-                        'amount' => $order->total,
-                        'status' => 'completed',
-                        'notes' => 'Payment completed via PhonePe webhook',
-                        'response_data' => $paymentData,
-                        'invoice_id' => $invoice?->id,
-                    ]);
-
-                    // Send order confirmation email
-                    $this->sendOrderConfirmationEmail($order);
-
-                    Log::info('PhonePeController: Order marked as paid via webhook', [
+                if ($order->payment_status === Order::PAYMENT_REFUNDED) {
+                    Log::warning('PhonePeController: Ignoring completed callback for refunded order', [
                         'order_id' => $order->id,
                     ]);
+                    return true;
                 }
-            } elseif ($state === 'FAILED') {
-                $order->update([
-                    'payment_status' => Order::PAYMENT_FAILED,
+
+                $wasAlreadyPaid = $order->payment_status === Order::PAYMENT_PAID;
+                if (!$wasAlreadyPaid && !app(OrderService::class)->updatePaymentStatus(
+                    $order,
+                    Order::PAYMENT_PAID,
+                    'Payment completed via PhonePe webhook'
+                )) {
+                    throw new \RuntimeException('PhonePe webhook order transition failed.');
+                }
+
+                // A concurrent refund may have won the order lock after the lookup.
+                if ($order->payment_status !== Order::PAYMENT_PAID) {
+                    Log::warning('PhonePeController: Completed callback was not applied to order', [
+                        'order_id' => $order->id,
+                        'payment_status' => $order->payment_status,
+                    ]);
+                    return true;
+                }
+
+                // Keep ancillary records recoverable when a verified webhook is retried.
+                $paymentData = json_decode($order->payment_data, true) ?? [];
+                $paymentData['transaction_id'] = $transactionId;
+                $paymentData['callback_state'] = $state;
+                $order->update(['payment_data' => json_encode($paymentData)]);
+
+                $invoice = $this->invoiceService->createFromOrderIfMissing($order);
+                $this->transactionService->createPaymentIfMissing($order, [
+                    'payment_method' => 'phonepe',
+                    'gateway' => 'phonepe',
+                    'gateway_transaction_id' => $transactionId ?? $merchantOrderId,
+                    'amount' => $order->total,
+                    'status' => 'completed',
+                    'notes' => 'Payment completed via PhonePe webhook',
+                    'response_data' => $paymentData,
+                    'invoice_id' => $invoice?->id,
                 ]);
+
+                if (!$wasAlreadyPaid) {
+                    $this->sendOrderConfirmationEmail($order);
+                }
+
+                Log::info('PhonePeController: Order marked as paid via webhook', [
+                    'order_id' => $order->id,
+                ]);
+            } elseif ($state === 'FAILED') {
+                if (!app(OrderService::class)->updatePaymentStatus(
+                    $order,
+                    Order::PAYMENT_FAILED,
+                    'Payment failed via PhonePe webhook'
+                )) {
+                    throw new \RuntimeException('PhonePe webhook payment-failure transition failed.');
+                }
 
                 Log::info('PhonePeController: Order marked as payment failed via webhook', [
                     'order_id' => $order->id,
                 ]);
             }
 
+            return true;
         } catch (\Throwable $e) {
             Log::error('PhonePeController: Error processing callback', [
                 'error' => $e->getMessage(),
             ]);
+            return false;
         }
     }
 

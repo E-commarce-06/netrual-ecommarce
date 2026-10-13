@@ -242,12 +242,28 @@ class Coupon extends Model
     }
 
     /**
-     * Get usage count for specific customer.
+     * Get usage count for a customer and/or authenticated user.
      */
-    public function getCustomerUsageCount(int $customerId): int
+    public function getCustomerUsageCount(?int $customerId, ?int $userId = null): int
     {
+        if (!$customerId && !$userId) {
+            return 0;
+        }
+
         return $this->usages()
-            ->where('customer_id', $customerId)
+            ->where(function (Builder $query) use ($customerId, $userId) {
+                if ($customerId) {
+                    $query->where('customer_id', $customerId);
+                }
+
+                if ($userId) {
+                    if ($customerId) {
+                        $query->orWhere('user_id', $userId);
+                    } else {
+                        $query->where('user_id', $userId);
+                    }
+                }
+            })
             ->count();
     }
 

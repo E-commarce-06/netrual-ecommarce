@@ -205,14 +205,16 @@ class CartController extends Controller
 
         $subtotal = collect($items)->sum(fn($i) => $i['price'] * $i['quantity']);
         $cartItemsCollection = collect($items)->map(fn($i) => (object) $i);
-        $customerId = Auth::id();
+        $userId = Auth::id();
+        $customerId = Auth::user()?->customer?->id;
 
         $couponService = app(CouponService::class);
         $result = $couponService->validate(
             Str::upper(trim($request->coupon_code)),
             $customerId,
             $subtotal,
-            $cartItemsCollection
+            $cartItemsCollection,
+            $userId
         );
 
         if (!$result['valid']) {
@@ -222,7 +224,9 @@ class CartController extends Controller
         $applied = $couponService->apply($result['coupon'], $subtotal, $cartItemsCollection);
 
         $coupon = [
+            'coupon_id'       => $applied['coupon_id'],
             'code'            => $applied['coupon_code'],
+            'type'            => $applied['discount_type'],
             'discount_amount' => $applied['discount_amount'],
             'message'         => $applied['message'],
         ];
@@ -296,15 +300,18 @@ class CartController extends Controller
             $couponService = app(CouponService::class);
             $result = $couponService->validate(
                 $coupon['code'],
-                Auth::id(),
+                Auth::user()?->customer?->id,
                 $subtotal,
-                $cartItemsCollection
+                $cartItemsCollection,
+                Auth::id()
             );
 
             if ($result['valid']) {
                 $applied = $couponService->apply($result['coupon'], $subtotal, $cartItemsCollection);
                 $this->saveCartCoupon([
+                    'coupon_id'       => $applied['coupon_id'],
                     'code'            => $applied['coupon_code'],
+                    'type'            => $applied['discount_type'],
                     'discount_amount' => $applied['discount_amount'],
                     'message'         => $applied['message'],
                 ]);

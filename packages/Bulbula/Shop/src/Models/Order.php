@@ -5,6 +5,7 @@ namespace Bulbula\Shop\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -51,6 +52,8 @@ class Order extends Model
         'ip_address',
         'user_agent',
         'source_channel',
+        'stock_deducted_at',
+        'stock_restored_at',
     ];
 
     /**
@@ -67,6 +70,8 @@ class Order extends Model
         'created_at' => 'datetime',
         'updated_at' => 'datetime',
         'deleted_at' => 'datetime',
+        'stock_deducted_at' => 'datetime',
+        'stock_restored_at' => 'datetime',
     ];
 
     /**
@@ -195,6 +200,17 @@ class Order extends Model
     public function invoices(): HasMany
     {
         return $this->hasMany(\Bulbula\Sales\Models\Invoice::class);
+    }
+
+    /** Manual bank/wallet transfer proof attempts for this order. */
+    public function manualPaymentSubmissions(): HasMany
+    {
+        return $this->hasMany(\Bulbula\Sales\Models\ManualPaymentSubmission::class);
+    }
+
+    public function latestManualPaymentSubmission(): HasOne
+    {
+        return $this->hasOne(\Bulbula\Sales\Models\ManualPaymentSubmission::class)->latestOfMany();
     }
 
     /**

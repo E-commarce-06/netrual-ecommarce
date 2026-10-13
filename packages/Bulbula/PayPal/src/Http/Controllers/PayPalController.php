@@ -8,6 +8,7 @@ use Bulbula\Core\Services\PaymentGatewayManager;
 use Bulbula\Shop\Models\Order;
 use Bulbula\Sales\Services\InvoiceService;
 use Bulbula\Sales\Services\TransactionService;
+use Bulbula\Sales\Services\OrderService;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
@@ -55,6 +56,14 @@ class PayPalController extends Controller
             if ($result['success']) {
                 // Create transaction
                 DB::transaction(function () use ($order, $result) {
+                    if (!app(OrderService::class)->updatePaymentStatus(
+                        $order,
+                        Order::PAYMENT_PAID,
+                        'Payment completed via PayPal callback'
+                    ) || $order->payment_status !== Order::PAYMENT_PAID) {
+                        throw new \RuntimeException('PayPal payment was verified, but the order transition failed.');
+                    }
+
                     $invoice = $this->invoiceService->createFromOrderIfMissing($order);
 
                     $this->transactionService->createPaymentIfMissing($order, [
@@ -68,10 +77,7 @@ class PayPalController extends Controller
                         'invoice_id' => $invoice?->id,
                     ]);
 
-                    // Update order status
                     $order->update([
-                        'status' => 'processing',
-                        'payment_status' => 'paid',
                         'payment_gateway_data' => array_merge(
                             $order->payment_gateway_data ?? [],
                             $result['response_data'] ?? []
@@ -82,6 +88,7 @@ class PayPalController extends Controller
 
                 Session::put('checkout.last_order_id', $order->id);
                 Session::forget('cart');
+                Session::forget('cart_coupon');
 
                 return redirect()->route('shop.checkout.success', ['order' => $order->id])
                     ->with('success', 'Payment completed successfully!');

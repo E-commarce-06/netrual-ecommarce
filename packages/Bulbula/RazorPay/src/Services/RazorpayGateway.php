@@ -5,6 +5,7 @@ namespace Bulbula\Razorpay\Services;
 use Bulbula\Core\Contracts\PaymentGatewayInterface;
 use Bulbula\Core\Models\PaymentMethod;
 use Bulbula\Shop\Models\Order;
+use Bulbula\Sales\Services\OrderService;
 use Razorpay\Api\Api;
 use Razorpay\Api\Errors\SignatureVerificationError;
 use Illuminate\Support\Facades\Log;
@@ -315,10 +316,13 @@ class RazorpayGateway implements PaymentGatewayInterface
             return;
         }
 
-        $order->update([
-            'payment_status' => Order::PAYMENT_PAID,
-            'status' => Order::STATUS_PROCESSING,
-        ]);
+        if (!app(OrderService::class)->updatePaymentStatus(
+            $order,
+            Order::PAYMENT_PAID,
+            'Payment captured via Razorpay webhook'
+        )) {
+            throw new \RuntimeException('Razorpay captured-payment transition failed.');
+        }
 
         Log::info('RazorpayGateway: Payment captured, order updated', [
             'order_id' => $orderId,
@@ -344,9 +348,13 @@ class RazorpayGateway implements PaymentGatewayInterface
             return;
         }
 
-        $order->update([
-            'payment_status' => Order::PAYMENT_FAILED,
-        ]);
+        if (!app(OrderService::class)->updatePaymentStatus(
+            $order,
+            Order::PAYMENT_FAILED,
+            'Payment failed via Razorpay webhook'
+        )) {
+            throw new \RuntimeException('Razorpay failed-payment transition failed.');
+        }
 
         Log::info('RazorpayGateway: Payment failed, order updated', [
             'order_id' => $orderId,

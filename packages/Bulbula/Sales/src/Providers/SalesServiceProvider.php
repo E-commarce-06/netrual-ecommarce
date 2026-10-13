@@ -17,6 +17,7 @@ class SalesServiceProvider extends ServiceProvider
         $this->app->singleton(\Bulbula\Sales\Services\OrderService::class);
         $this->app->singleton(\Bulbula\Sales\Services\InvoiceService::class);
         $this->app->singleton(\Bulbula\Sales\Services\TransactionService::class);
+        $this->app->singleton(\Bulbula\Sales\Services\ManualPaymentService::class);
     }
 
     public function boot(): void

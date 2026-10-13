@@ -21,6 +21,7 @@ class TransactionService
     {
         $transactionData = [
             'order_id' => $order->id,
+            'invoice_id' => $data['invoice_id'] ?? null,
             'transaction_number' => Transaction::generateTransactionNumber(),
             'type' => 'payment',
             'payment_method' => $data['payment_method'],

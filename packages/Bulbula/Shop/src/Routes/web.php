@@ -107,6 +107,9 @@ Route::group([
         Route::post('/', [Bulbula\Shop\Http\Controllers\Checkout\CheckoutController::class, 'store'])->middleware('throttle:10,1')->name('store');
         Route::post('/shipping', [Bulbula\Shop\Http\Controllers\Checkout\CheckoutController::class, 'updateShipping'])->middleware('throttle:20,1')->name('shipping.update');
         Route::get('/success/{order}', [Bulbula\Shop\Http\Controllers\Checkout\CheckoutController::class, 'success'])->name('success');
+        Route::post('/success/{order}/manual-payment', [Bulbula\Shop\Http\Controllers\Checkout\CheckoutController::class, 'resubmitManualPayment'])
+            ->middleware('throttle:5,1')
+            ->name('manual-payment.resubmit');
         Route::get('/track-order', [Bulbula\Shop\Http\Controllers\Checkout\CheckoutController::class, 'guestTrack'])->name('track');
         Route::post('/track-order', [Bulbula\Shop\Http\Controllers\Checkout\CheckoutController::class, 'guestTrackLookup'])->name('track.lookup');
     });

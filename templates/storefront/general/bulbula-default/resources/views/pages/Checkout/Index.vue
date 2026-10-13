@@ -58,8 +58,18 @@ interface Address {
   is_default?: boolean;
 }
 
+interface ManualAccount {
+  id: string;
+  label: string;
+  provider: string;
+  type: 'bank' | 'wallet';
+  account_name: string;
+  account_number: string;
+  instructions?: string;
+}
+
 interface PaymentMethod {
-  id: number;
+  id: string;
   code: string;
   name: string;
   description: string;
@@ -67,6 +77,7 @@ interface PaymentMethod {
   is_default: boolean;
   fee: number;
   is_available: boolean;
+  manual_accounts?: ManualAccount[];
 }
 
 interface CheckoutConfig {
@@ -99,6 +110,10 @@ const selectedAddressId = ref<number | null>(props.userAddresses.find(a => a.is_
 const useNewAddress = ref(!selectedAddressId.value);
 const selectedShippingId = ref(props.cartSummary.shipping.selected?.id || null);
 const selectedPaymentMethod = ref(props.paymentMethods.find(m => m.is_default)?.code || props.paymentMethods[0]?.code || 'cod');
+const manualPaymentAccounts = computed(() => props.paymentMethods.find(method => method.code === 'bank_transfer')?.manual_accounts || []);
+const selectedManualAccountId = ref(manualPaymentAccounts.value[0]?.id || '');
+const manualPaymentReference = ref('');
+const manualPaymentProof = ref<File | null>(null);
 const billingSameAsShipping = ref(true);
 const termsAccepted = ref(false);
 const newsletterSignup = ref(false);
@@ -115,6 +130,17 @@ const guestPhone = ref('');
 const orderNotes = ref('');
 const accountPassword = ref('');
 const accountPasswordConfirm = ref('');
+
+const selectManualPaymentProof = (event: Event) => {
+  const input = event.target as HTMLInputElement;
+  manualPaymentProof.value = input.files?.[0] || null;
+};
+
+watch(manualPaymentAccounts, (accounts) => {
+  if (!accounts.some(account => account.id === selectedManualAccountId.value)) {
+    selectedManualAccountId.value = accounts[0]?.id || '';
+  }
+});
 
 const shippingAddress = ref<Address>({
   first_name: '',
@@ -368,6 +394,22 @@ const submitOrder = () => {
     }
   }
 
+  if (selectedPaymentMethod.value === 'bank_transfer') {
+    if (!selectedManualAccountId.value) {
+      fieldErrors.value.manual_payment_account_id = 'Choose the bank or wallet account you paid';
+    }
+    if (!manualPaymentProof.value) {
+      fieldErrors.value.payment_proof = 'Upload a screenshot of the transfer receipt';
+    } else {
+      const allowedTypes = ['image/jpeg', 'image/png', 'image/webp'];
+      if (!allowedTypes.includes(manualPaymentProof.value.type)) {
+        fieldErrors.value.payment_proof = 'Choose a JPEG, PNG, or WebP image';
+      } else if (manualPaymentProof.value.size > 5 * 1024 * 1024) {
+        fieldErrors.value.payment_proof = 'The screenshot must be 5 MB or smaller';
+      }
+    }
+  }
+
   // Validate terms acceptance
   if (!termsAccepted.value && props.checkoutConfig.require_terms_acceptance) {
     fieldErrors.value.terms = 'You must accept the terms and conditions';
@@ -401,6 +443,12 @@ const submitOrder = () => {
     newsletter_signup: newsletterSignup.value,
     order_notes: orderNotes.value,
   };
+
+  if (selectedPaymentMethod.value === 'bank_transfer') {
+    formData.manual_payment_account_id = selectedManualAccountId.value;
+    formData.manual_payment_reference = manualPaymentReference.value || null;
+    formData.payment_proof = manualPaymentProof.value;
+  }
 
   if (requiresShipping.value) {
     formData.shipping_method_id = selectedShippingId.value;
@@ -443,6 +491,7 @@ const submitOrder = () => {
   router.post('/checkout', formData, {
     preserveState: true,
     preserveScroll: true,
+    forceFormData: selectedPaymentMethod.value === 'bank_transfer',
     onSuccess: () => {
       // Use nextTick to ensure page props are updated
       nextTick(() => {
@@ -477,11 +526,11 @@ const submitOrder = () => {
       });
     },
     onError: (errors) => {
+      fieldErrors.value = { ...errors } as Record<string, string>;
       processing.value = false;
     },
     onFinish: () => {
-      // processing.value will be false if there were errors
-      // For successful redirects/integrations, page will navigate away or modal opens
+      processing.value = false;
     },
   });
 };
@@ -879,6 +928,50 @@ const submitOrder = () => {
                   Default
                 </div>
               </label>
+            </div>
+
+            <div v-if="selectedPaymentMethod === 'bank_transfer'" class="mt-5 rounded-xl border border-amber-200 bg-amber-50 p-5 dark:border-amber-800 dark:bg-amber-900/20">
+              <h3 class="font-semibold text-gray-900 dark:text-white">Pay to a bank or wallet account</h3>
+              <p class="mt-1 text-sm text-gray-700 dark:text-gray-300">
+                Transfer exactly <strong>{{ formatPrice(cartSummary.total) }}</strong> to one of the active accounts below, then upload the receipt screenshot. Payment stays pending until staff verify the transfer against the receiving account.
+              </p>
+
+              <div class="mt-4 space-y-3">
+                <label
+                  v-for="account in manualPaymentAccounts"
+                  :key="account.id"
+                  class="flex cursor-pointer gap-3 rounded-lg border bg-white p-4 dark:bg-gray-800"
+                  :class="selectedManualAccountId === account.id ? 'border-blue-500 ring-1 ring-blue-500' : 'border-gray-200 dark:border-gray-700'"
+                >
+                  <input v-model="selectedManualAccountId" type="radio" :value="account.id" class="mt-1" />
+                  <div class="min-w-0 flex-1">
+                    <div class="flex flex-wrap items-center justify-between gap-2">
+                      <span class="font-semibold text-gray-900 dark:text-white">{{ account.label }}</span>
+                      <span class="text-xs uppercase tracking-wide text-gray-500 dark:text-gray-400">{{ account.type === 'wallet' ? 'Mobile wallet' : 'Bank account' }}</span>
+                    </div>
+                    <p class="mt-1 text-sm text-gray-700 dark:text-gray-300">{{ account.provider }}</p>
+                    <p class="mt-2 text-sm text-gray-600 dark:text-gray-400">Account holder: <strong class="text-gray-900 dark:text-white">{{ account.account_name }}</strong></p>
+                    <p class="font-mono text-base font-semibold text-gray-900 dark:text-white">{{ account.account_number }}</p>
+                    <p v-if="account.instructions" class="mt-1 text-sm text-gray-600 dark:text-gray-400">{{ account.instructions }}</p>
+                  </div>
+                </label>
+              </div>
+              <p v-if="fieldErrors.manual_payment_account_id" class="mt-2 text-sm text-red-600">{{ fieldErrors.manual_payment_account_id }}</p>
+
+              <div class="mt-4 grid grid-cols-1 gap-4">
+                <div>
+                  <label class="mb-1 block text-sm font-medium text-gray-800 dark:text-gray-200">Transfer reference (if shown by your bank or wallet)</label>
+                  <input v-model="manualPaymentReference" type="text" maxlength="150" autocomplete="off" placeholder="Transaction or receipt number" class="w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 dark:border-gray-600 dark:bg-gray-800 dark:text-white" />
+                  <p v-if="fieldErrors.manual_payment_reference" class="mt-1 text-sm text-red-600">{{ fieldErrors.manual_payment_reference }}</p>
+                </div>
+                <div>
+                  <label class="mb-1 block text-sm font-medium text-gray-800 dark:text-gray-200">Transfer receipt screenshot <span class="text-red-600">*</span></label>
+                  <input type="file" accept="image/jpeg,image/png,image/webp" @change="selectManualPaymentProof" class="block w-full text-sm text-gray-700 file:mr-4 file:rounded-md file:border-0 file:bg-blue-50 file:px-4 file:py-2 file:font-medium file:text-blue-700 hover:file:bg-blue-100 dark:text-gray-300" />
+                  <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">JPEG, PNG, or WebP; maximum 5 MB. Do not upload passwords, PINs, or one-time codes.</p>
+                  <p v-if="manualPaymentProof" class="mt-1 text-sm text-gray-700 dark:text-gray-300">Selected: {{ manualPaymentProof.name }}</p>
+                  <p v-if="fieldErrors.payment_proof" class="mt-1 text-sm text-red-600">{{ fieldErrors.payment_proof }}</p>
+                </div>
+              </div>
             </div>
           </div>
 

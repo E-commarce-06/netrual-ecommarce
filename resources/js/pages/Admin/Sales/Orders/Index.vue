@@ -209,6 +209,13 @@ function formatDate(date: string): string {
           <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">Manage customer orders and shipments</p>
         </div>
         <div class="flex gap-2">
+          <Link
+            href="/admin/sales/manual-payments"
+            class="flex items-center gap-2 px-4 py-2 text-sm font-medium text-amber-900 dark:text-amber-200 bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-lg hover:bg-amber-100 dark:hover:bg-amber-900/40 transition-colors"
+          >
+            <CreditCard class="w-4 h-4" />
+            Payment review
+          </Link>
           <button
             @click="exportOrders"
             class="flex items-center gap-2 px-4 py-2 text-sm font-medium text-gray-700 dark:text-gray-200 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"

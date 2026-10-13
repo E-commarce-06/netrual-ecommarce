@@ -36,21 +36,37 @@ class OrderService
         ?string $comment = null,
         bool $notifyCustomer = false
     ): bool {
-        $oldStatus = $order->status;
-        
-        if ($oldStatus === $newStatus) {
-            return true; // No change needed
+        if (!array_key_exists($newStatus, Order::getStatuses())) {
+            Log::warning('Rejected unknown order status', [
+                'order_id' => $order->id,
+                'status' => $newStatus,
+            ]);
+            return false;
         }
 
         try {
             DB::beginTransaction();
 
-            // Update order status
-            $order->status = $newStatus;
-            $order->save();
+            $lockedOrder = Order::query()
+                ->whereKey($order->getKey())
+                ->lockForUpdate()
+                ->first();
 
-            // Create history entry
-            $this->createHistoryEntry($order, [
+            if (!$lockedOrder) {
+                throw new \RuntimeException('Order not found.');
+            }
+
+            $oldStatus = $lockedOrder->status;
+            if ($oldStatus === $newStatus) {
+                DB::commit();
+                $order->refresh();
+                return true;
+            }
+
+            $lockedOrder->status = $newStatus;
+            $lockedOrder->save();
+
+            $this->createHistoryEntry($lockedOrder, [
                 'status_from' => $oldStatus,
                 'status_to' => $newStatus,
                 'comment' => $comment,
@@ -58,17 +74,14 @@ class OrderService
                 'visible_to_customer' => true,
             ]);
 
-            // Send email notification for status changes
-            $this->sendStatusChangeEmail($order, $oldStatus, $newStatus);
-
-            // Auto-actions based on status
-            $this->handleStatusChangeActions($order, $newStatus);
+            $this->handleStatusChangeActions($lockedOrder, $oldStatus, $newStatus);
+            $this->sendStatusChangeEmail($lockedOrder, $oldStatus, $newStatus);
 
             $this->dispatchOrderEvent(
                 action: 'order.status.updated',
-                title: "Order #{$order->order_number} status updated",
+                title: "Order #{$lockedOrder->order_number} status updated",
                 message: "Status changed from {$oldStatus} to {$newStatus}.",
-                order: $order,
+                order: $lockedOrder,
                 severity: $newStatus === Order::STATUS_CANCELLED ? 'warning' : 'info',
                 context: [
                     'old_status' => $oldStatus,
@@ -79,13 +92,13 @@ class OrderService
             );
 
             DB::commit();
+            $order->refresh();
             return true;
-
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
             DB::rollBack();
             Log::error('Failed to update order status', [
                 'order_id' => $order->id,
-                'error' => $e->getMessage()
+                'error' => $e->getMessage(),
             ]);
             return false;
         }
@@ -103,58 +116,132 @@ class OrderService
         string $newPaymentStatus,
         ?string $comment = null
     ): bool {
-        $oldPaymentStatus = $order->payment_status;
-        
-        if ($oldPaymentStatus === $newPaymentStatus) {
-            return true;
+        if (!array_key_exists($newPaymentStatus, Order::getPaymentStatuses())) {
+            Log::warning('Rejected unknown order payment status', [
+                'order_id' => $order->id,
+                'payment_status' => $newPaymentStatus,
+            ]);
+            return false;
         }
 
         try {
             DB::beginTransaction();
 
-            // Update payment status
-            $order->payment_status = $newPaymentStatus;
-            $order->save();
+            $lockedOrder = Order::query()
+                ->whereKey($order->getKey())
+                ->lockForUpdate()
+                ->first();
 
-            // Create history entry
-            $this->createHistoryEntry($order, [
-                'payment_status_from' => $oldPaymentStatus,
-                'payment_status_to' => $newPaymentStatus,
-                'comment' => $comment,
-                'customer_notified' => false,
-                'visible_to_customer' => true,
-            ]);
-
-            // Auto-update order status if paid
-            if ($newPaymentStatus === Order::PAYMENT_PAID && $order->status === Order::STATUS_PENDING) {
-                $order->status = Order::STATUS_PROCESSING;
-                $order->save();
+            if (!$lockedOrder) {
+                throw new \RuntimeException('Order not found.');
             }
 
-            // Send payment status email
-            $this->sendPaymentStatusEmail($order, $oldPaymentStatus, $newPaymentStatus);
+            $oldPaymentStatus = $lockedOrder->payment_status;
+            $oldOrderStatus = $lockedOrder->status;
 
-            $this->dispatchOrderEvent(
-                action: 'order.payment.updated',
-                title: "Order #{$order->order_number} payment updated",
-                message: "Payment status changed from {$oldPaymentStatus} to {$newPaymentStatus}.",
-                order: $order,
-                severity: $newPaymentStatus === Order::PAYMENT_FAILED ? 'warning' : 'info',
-                context: [
-                    'old_payment_status' => $oldPaymentStatus,
-                    'new_payment_status' => $newPaymentStatus,
+            // Late failure/pending callbacks must not undo an accepted payment.
+            if ($oldPaymentStatus === Order::PAYMENT_PAID
+                && in_array($newPaymentStatus, [Order::PAYMENT_PENDING, Order::PAYMENT_FAILED], true)) {
+                DB::commit();
+                $order->refresh();
+                return true;
+            }
+
+            // A refund is terminal; stale payment callbacks cannot reopen it.
+            if ($oldPaymentStatus === Order::PAYMENT_REFUNDED
+                && $newPaymentStatus !== Order::PAYMENT_REFUNDED) {
+                DB::commit();
+                $order->refresh();
+                return true;
+            }
+
+            $paymentStatusChanged = $oldPaymentStatus !== $newPaymentStatus;
+            $newOrderStatus = $oldOrderStatus;
+
+            if ($paymentStatusChanged && $newPaymentStatus === Order::PAYMENT_PAID
+                && $oldOrderStatus === Order::STATUS_PENDING) {
+                $newOrderStatus = Order::STATUS_PROCESSING;
+            } elseif ($newPaymentStatus === Order::PAYMENT_REFUNDED
+                && $oldOrderStatus !== Order::STATUS_REFUNDED) {
+                $newOrderStatus = Order::STATUS_REFUNDED;
+            }
+
+            $orderStatusChanged = $oldOrderStatus !== $newOrderStatus;
+
+            if (!$paymentStatusChanged && !$orderStatusChanged) {
+                DB::commit();
+                $order->refresh();
+                return true;
+            }
+
+            if ($paymentStatusChanged) {
+                $lockedOrder->payment_status = $newPaymentStatus;
+            }
+            if ($orderStatusChanged) {
+                $lockedOrder->status = $newOrderStatus;
+            }
+            $lockedOrder->save();
+
+            if ($paymentStatusChanged) {
+                $this->createHistoryEntry($lockedOrder, [
+                    'payment_status_from' => $oldPaymentStatus,
+                    'payment_status_to' => $newPaymentStatus,
                     'comment' => $comment,
-                ]
-            );
+                    'customer_notified' => false,
+                    'visible_to_customer' => true,
+                ]);
+            }
+
+            if ($orderStatusChanged) {
+                $this->createHistoryEntry($lockedOrder, [
+                    'status_from' => $oldOrderStatus,
+                    'status_to' => $newOrderStatus,
+                    'comment' => $comment,
+                    'customer_notified' => false,
+                    'visible_to_customer' => true,
+                ]);
+
+                $this->handleStatusChangeActions($lockedOrder, $oldOrderStatus, $newOrderStatus);
+                $this->sendStatusChangeEmail($lockedOrder, $oldOrderStatus, $newOrderStatus);
+                $this->dispatchOrderEvent(
+                    action: 'order.status.updated',
+                    title: "Order #{$lockedOrder->order_number} status updated",
+                    message: "Status changed from {$oldOrderStatus} to {$newOrderStatus}.",
+                    order: $lockedOrder,
+                    severity: $newOrderStatus === Order::STATUS_CANCELLED ? 'warning' : 'info',
+                    context: [
+                        'old_status' => $oldOrderStatus,
+                        'new_status' => $newOrderStatus,
+                        'comment' => $comment,
+                        'source' => 'payment_status_transition',
+                    ]
+                );
+            }
+
+            if ($paymentStatusChanged) {
+                $this->sendPaymentStatusEmail($lockedOrder, $oldPaymentStatus, $newPaymentStatus);
+                $this->dispatchOrderEvent(
+                    action: 'order.payment.updated',
+                    title: "Order #{$lockedOrder->order_number} payment updated",
+                    message: "Payment status changed from {$oldPaymentStatus} to {$newPaymentStatus}.",
+                    order: $lockedOrder,
+                    severity: $newPaymentStatus === Order::PAYMENT_FAILED ? 'warning' : 'info',
+                    context: [
+                        'old_payment_status' => $oldPaymentStatus,
+                        'new_payment_status' => $newPaymentStatus,
+                        'comment' => $comment,
+                    ]
+                );
+            }
 
             DB::commit();
+            $order->refresh();
             return true;
-
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
             DB::rollBack();
             Log::error('Failed to update payment status', [
                 'order_id' => $order->id,
-                'error' => $e->getMessage()
+                'error' => $e->getMessage(),
             ]);
             return false;
         }
@@ -173,19 +260,32 @@ class OrderService
         string $reason,
         bool $restoreStock = true
     ): bool {
-        if ($order->status === Order::STATUS_CANCELLED) {
-            return true;
-        }
-
         try {
             DB::beginTransaction();
 
-            $oldStatus = $order->status;
-            $order->status = Order::STATUS_CANCELLED;
-            $order->save();
+            $lockedOrder = Order::query()
+                ->whereKey($order->getKey())
+                ->lockForUpdate()
+                ->first();
 
-            // Create history entry
-            $this->createHistoryEntry($order, [
+            if (!$lockedOrder) {
+                throw new \RuntimeException('Order not found.');
+            }
+
+            $oldStatus = $lockedOrder->status;
+            if ($oldStatus === Order::STATUS_CANCELLED) {
+                if ($restoreStock) {
+                    $this->restoreStockOnce($lockedOrder);
+                }
+                DB::commit();
+                $order->refresh();
+                return true;
+            }
+
+            $lockedOrder->status = Order::STATUS_CANCELLED;
+            $lockedOrder->save();
+
+            $this->createHistoryEntry($lockedOrder, [
                 'status_from' => $oldStatus,
                 'status_to' => Order::STATUS_CANCELLED,
                 'comment' => "Order cancelled. Reason: {$reason}",
@@ -193,19 +293,17 @@ class OrderService
                 'visible_to_customer' => true,
             ]);
 
-            // Restore stock if requested
             if ($restoreStock) {
-                $this->restoreStock($order);
+                $this->restoreStockOnce($lockedOrder);
             }
 
-            // Send cancellation email
-            $this->sendCancellationEmail($order, $reason);
+            $this->sendCancellationEmail($lockedOrder, $reason);
 
             $this->dispatchOrderEvent(
                 action: 'order.cancelled',
-                title: "Order #{$order->order_number} cancelled",
+                title: "Order #{$lockedOrder->order_number} cancelled",
                 message: "Order was cancelled. Reason: {$reason}",
-                order: $order,
+                order: $lockedOrder,
                 severity: 'warning',
                 context: [
                     'reason' => $reason,
@@ -215,13 +313,13 @@ class OrderService
             );
 
             DB::commit();
+            $order->refresh();
             return true;
-
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
             DB::rollBack();
             Log::error('Failed to cancel order', [
                 'order_id' => $order->id,
-                'error' => $e->getMessage()
+                'error' => $e->getMessage(),
             ]);
             return false;
         }
@@ -473,10 +571,11 @@ class OrderService
      * Handle automatic actions when status changes.
      *
      * @param Order $order
+     * @param string $oldStatus
      * @param string $newStatus
      * @return void
      */
-    protected function handleStatusChangeActions(Order $order, string $newStatus): void
+    protected function handleStatusChangeActions(Order $order, string $oldStatus, string $newStatus): void
     {
         // Auto-generate invoice if configured
         if ($newStatus === Order::STATUS_COMPLETED) {
@@ -486,10 +585,42 @@ class OrderService
             }
         }
 
-        // Reduce stock when order is processing
-        if ($newStatus === Order::STATUS_PROCESSING) {
-            $this->reduceStock($order);
+        if ($newStatus === Order::STATUS_PROCESSING && $oldStatus !== Order::STATUS_PROCESSING) {
+            $this->reduceStockOnce($order);
+        } elseif ($newStatus === Order::STATUS_CANCELLED && $oldStatus !== Order::STATUS_CANCELLED) {
+            $this->restoreStockOnce($order);
         }
+    }
+
+    /**
+     * Deduct stock only once for the current processing cycle.
+     */
+    protected function reduceStockOnce(Order $order): void
+    {
+        if ($order->stock_deducted_at && !$order->stock_restored_at) {
+            return;
+        }
+
+        $this->reduceStock($order);
+        $order->stock_deducted_at = now();
+        $order->stock_restored_at = null;
+        $order->save();
+    }
+
+    /**
+     * Restore stock only when this order's deduction is recorded and has not
+     * already been restored. Legacy orders without the forward-only marker are
+     * deliberately left untouched.
+     */
+    protected function restoreStockOnce(Order $order): void
+    {
+        if (!$order->stock_deducted_at || $order->stock_restored_at) {
+            return;
+        }
+
+        $this->restoreStock($order);
+        $order->stock_restored_at = now();
+        $order->save();
     }
 
     /**

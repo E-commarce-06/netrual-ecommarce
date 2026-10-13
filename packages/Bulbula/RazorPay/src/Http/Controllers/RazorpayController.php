@@ -9,6 +9,7 @@ use Bulbula\Core\Models\EmailTemplate;
 use Bulbula\Core\Services\PaymentGatewayManager;
 use Bulbula\Sales\Services\InvoiceService;
 use Bulbula\Sales\Services\TransactionService;
+use Bulbula\Sales\Services\OrderService;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
 
@@ -55,12 +56,16 @@ class RazorpayController extends Controller
                 ->with('error', 'Payment verification failed: ' . $result['message']);
         }
 
-        // Store payment ID
-        $order->update([
-            'payment_gateway_transaction_id' => $result['payment_id'],
-            'payment_status' => Order::PAYMENT_PAID,
-            'status' => Order::STATUS_PROCESSING,
-        ]);
+        // Store the gateway reference, then apply the shared payment/order transition.
+        $order->update(['payment_gateway_transaction_id' => $result['payment_id']]);
+        if (!app(OrderService::class)->updatePaymentStatus(
+            $order,
+            Order::PAYMENT_PAID,
+            'Payment completed via Razorpay callback'
+        ) || $order->payment_status !== Order::PAYMENT_PAID) {
+            return redirect()->route('cart.index')
+                ->with('error', 'Payment was verified, but the order could not be updated. Please contact support.');
+        }
 
         $invoice = $this->invoiceService->createFromOrderIfMissing($order);
         $this->transactionService->createPaymentIfMissing($order, [
@@ -104,6 +109,7 @@ class RazorpayController extends Controller
 
         // Clear cart after successful payment
         Session::forget('cart');
+        Session::forget('cart_coupon');
 
         // Redirect to order success page
         return redirect()->route('shop.checkout.success', ['order' => $order->id])
@@ -117,10 +123,14 @@ class RazorpayController extends Controller
     {
         $order = Order::findOrFail($orderId);
 
-        // Update order status to payment failed
-        $order->update([
-            'payment_status' => Order::PAYMENT_FAILED,
-        ]);
+        if (!app(OrderService::class)->updatePaymentStatus(
+            $order,
+            Order::PAYMENT_FAILED,
+            'Payment cancelled via Razorpay callback'
+        )) {
+            return redirect()->route('cart.index')
+                ->with('error', 'Payment cancellation could not be recorded. Please contact support.');
+        }
 
         // Redirect back to cart with error
         return redirect()->route('cart.index')

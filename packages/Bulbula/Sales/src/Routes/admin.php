@@ -6,6 +6,7 @@ use Bulbula\Sales\Http\Controllers\Admin\InvoiceController;
 use Bulbula\Sales\Http\Controllers\Admin\ShipmentController;
 use Bulbula\Sales\Http\Controllers\Admin\CreditMemoController;
 use Bulbula\Sales\Http\Controllers\Admin\TransactionController;
+use Bulbula\Sales\Http\Controllers\Admin\ManualPaymentReviewController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,7 +19,15 @@ use Bulbula\Sales\Http\Controllers\Admin\TransactionController;
 */
 
 Route::middleware(['web', 'auth:admin'])->prefix('admin/sales')->name('admin.sales.')->group(function () {
-    
+
+    // Customer-submitted bank / wallet transfer screenshots.
+    Route::prefix('manual-payments')->name('manual-payments.')->group(function () {
+        Route::get('/', [ManualPaymentReviewController::class, 'index'])->name('index');
+        Route::get('/{submission}/proof', [ManualPaymentReviewController::class, 'proof'])->name('proof');
+        Route::post('/{submission}/approve', [ManualPaymentReviewController::class, 'approve'])->name('approve');
+        Route::post('/{submission}/reject', [ManualPaymentReviewController::class, 'reject'])->name('reject');
+    });
+
     // Orders
     Route::prefix('orders')->name('orders.')->group(function () {
         // List orders

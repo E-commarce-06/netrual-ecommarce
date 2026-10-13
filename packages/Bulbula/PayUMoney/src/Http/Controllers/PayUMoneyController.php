@@ -8,6 +8,7 @@ use Bulbula\Core\Services\PaymentGatewayManager;
 use Bulbula\Shop\Models\Order;
 use Bulbula\Sales\Services\InvoiceService;
 use Bulbula\Sales\Services\TransactionService;
+use Bulbula\Sales\Services\OrderService;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
@@ -52,6 +53,14 @@ class PayUMoneyController extends Controller
             if ($result['success']) {
                 // Create transaction
                 DB::transaction(function () use ($order, $result) {
+                    if (!app(OrderService::class)->updatePaymentStatus(
+                        $order,
+                        Order::PAYMENT_PAID,
+                        'Payment completed via PayUMoney callback'
+                    ) || $order->payment_status !== Order::PAYMENT_PAID) {
+                        throw new \RuntimeException('PayUMoney payment was verified, but the order transition failed.');
+                    }
+
                     $invoice = $this->invoiceService->createFromOrderIfMissing($order);
 
                     $this->transactionService->createPaymentIfMissing($order, [
@@ -65,10 +74,7 @@ class PayUMoneyController extends Controller
                         'invoice_id' => $invoice?->id,
                     ]);
 
-                    // Update order status
                     $order->update([
-                        'status' => 'processing',
-                        'payment_status' => 'paid',
                         'payment_gateway_data' => array_merge(
                             $order->payment_gateway_data ?? [],
                             $result['response_data'] ?? []
@@ -78,6 +84,7 @@ class PayUMoneyController extends Controller
 
                 Session::put('checkout.last_order_id', $order->id);
                 Session::forget('cart');
+                Session::forget('cart_coupon');
 
                 return redirect()->route('shop.checkout.success', ['order' => $order->id])
                     ->with('success', 'Payment completed successfully!');
@@ -126,8 +133,21 @@ class PayUMoneyController extends Controller
 
                 if ($order) {
                     DB::transaction(function () use ($order, $result) {
-                        // Idempotent — skip if already paid (redirect callback may have arrived first)
-                        if ($order->payment_status === 'paid') {
+                        // The shared transition is idempotent, while the *IfMissing
+                        // helpers below recover records if a prior callback stopped early.
+                        if (!app(OrderService::class)->updatePaymentStatus(
+                            $order,
+                            Order::PAYMENT_PAID,
+                            'Payment completed via PayUMoney IPN webhook'
+                        )) {
+                            throw new \RuntimeException('PayUMoney IPN order transition failed.');
+                        }
+
+                        if ($order->payment_status !== Order::PAYMENT_PAID) {
+                            Log::warning('PayUMoney IPN success ignored for terminal payment state', [
+                                'order_id' => $order->id,
+                                'payment_status' => $order->payment_status,
+                            ]);
                             return;
                         }
 
@@ -145,8 +165,6 @@ class PayUMoneyController extends Controller
                         ]);
 
                         $order->update([
-                            'status'         => 'processing',
-                            'payment_status' => 'paid',
                             'payment_gateway_data' => array_merge(
                                 $order->payment_gateway_data ?? [],
                                 $result['response_data'] ?? []

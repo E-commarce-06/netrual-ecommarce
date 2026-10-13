@@ -14,6 +14,7 @@ use Bulbula\Shop\Models\ShippingMethod;
 use Bulbula\Shop\Models\Order;
 use Bulbula\Product\Models\Product;
 use Bulbula\Core\Models\PaymentMethod;
+use Bulbula\Core\Models\Currency;
 use Bulbula\Core\Models\Country;
 use Bulbula\Core\Models\EmailTemplate;
 use Bulbula\Core\Services\ThemeViewResolver;
@@ -21,6 +22,8 @@ use Bulbula\Core\Services\SettingService;
 use Bulbula\Core\Services\PaymentGatewayManager;
 use Bulbula\Sales\Services\InvoiceService;
 use Bulbula\Sales\Services\TransactionService;
+use Bulbula\Sales\Services\ManualPaymentService;
+use Bulbula\Sales\Models\ManualPaymentSubmission;
 use Bulbula\UIEditor\Services\LayoutService;
 use Bulbula\CMS\Models\Page;
 use Illuminate\Support\Facades\Session;
@@ -37,6 +40,7 @@ class CheckoutController extends Controller
     protected PaymentGatewayManager $gatewayManager;
     protected InvoiceService $invoiceService;
     protected TransactionService $transactionService;
+    protected ManualPaymentService $manualPaymentService;
     protected LayoutService $layoutService;
 
     public function __construct(
@@ -48,6 +52,7 @@ class CheckoutController extends Controller
         PaymentGatewayManager $gatewayManager,
         InvoiceService $invoiceService,
         TransactionService $transactionService,
+        ManualPaymentService $manualPaymentService,
         LayoutService $layoutService
     ) {
         $this->taxCalculator = $taxCalculator;
@@ -58,6 +63,7 @@ class CheckoutController extends Controller
         $this->gatewayManager = $gatewayManager;
         $this->invoiceService = $invoiceService;
         $this->transactionService = $transactionService;
+        $this->manualPaymentService = $manualPaymentService;
         $this->layoutService = $layoutService;
     }
 
@@ -133,6 +139,12 @@ class CheckoutController extends Controller
         }
 
         $couponData = Session::get('cart_coupon');
+        if (($couponData['type'] ?? null) === 'free_shipping') {
+            $shippingCost = 0;
+            if ($selectedShipping) {
+                $selectedShipping['cost'] = 0;
+            }
+        }
         $discountAmount = $couponData['discount_amount'] ?? 0;
         $grandTotal = $subtotal + $taxResult['total'] + $shippingCost - $discountAmount;
 
@@ -141,6 +153,10 @@ class CheckoutController extends Controller
             ->orderBy('sort_order')
             ->get()
             ->map(function ($method) use ($grandTotal) {
+                $manualAccounts = $method->code === 'bank_transfer'
+                    ? $this->manualPaymentService->publicDestinations($method)
+                    : [];
+
                 return [
                     'id' => $method->code,
                     'code' => $method->code,
@@ -148,11 +164,13 @@ class CheckoutController extends Controller
                     'description' => $method->description,
                     'instructions' => $method->instructions,
                     'is_default' => $method->is_default,
-                    'fee' => $method->calculateFee($grandTotal),
+                    'fee' => $method->code === 'bank_transfer' ? 0 : $method->calculateFee($grandTotal),
                     'is_available' => $method->isAvailableForAmount($grandTotal),
+                    'manual_accounts' => $manualAccounts,
                 ];
             })
-            ->filter(fn($method) => $method['is_available'])
+            ->filter(fn ($method) => $method['is_available']
+                && ($method['code'] !== 'bank_transfer' || count($method['manual_accounts']) > 0))
             ->values()
             ->toArray();
 
@@ -247,6 +265,18 @@ class CheckoutController extends Controller
         }
 
         $requiresShipping = CartTypeHelper::cartRequiresShipping($items);
+        $requestedPaymentMethod = PaymentMethod::query()
+            ->where('code', trim((string) $request->input('payment_method', '')))
+            ->first();
+
+        if (! $requestedPaymentMethod || ! $requestedPaymentMethod->is_active) {
+            return back()->with('error', 'The selected payment method is not currently available.');
+        }
+
+        if ($requestedPaymentMethod->code === 'bank_transfer'
+            && count($this->manualPaymentService->publicDestinations($requestedPaymentMethod)) === 0) {
+            return back()->with('error', 'Manual transfer is not available until a bank or wallet account is configured.');
+        }
 
         $rules = [
             'email' => 'required|email',
@@ -260,6 +290,14 @@ class CheckoutController extends Controller
             'password' => 'required_if:create_account,true|nullable|string|min:8|confirmed',
             'password_confirmation' => 'required_with:password|nullable|string',
         ];
+
+        if ($requestedPaymentMethod->code === 'bank_transfer') {
+            $rules = array_merge($rules, [
+                'manual_payment_account_id' => 'required|string|max:64',
+                'manual_payment_reference' => 'nullable|string|max:150',
+                'payment_proof' => 'required|image|mimes:jpg,jpeg,png,webp|max:5120',
+            ]);
+        }
 
         if ($requiresShipping) {
             $rules = array_merge($rules, [
@@ -324,11 +362,11 @@ class CheckoutController extends Controller
             $shippingCost = $selectedShipping['cost'];
         }
 
-        // Apply coupon discount from session
+        // Carry only the coupon code; the checkout service revalidates it and
+        // recalculates the discount under a coupon-row lock.
         $couponData = Session::get('cart_coupon');
-        $discountAmount = $couponData['discount_amount'] ?? 0;
-
-        $grandTotal = $subtotal + $taxResult['total'] + $shippingCost - $discountAmount;
+        $couponCode = $couponData['code'] ?? null;
+        $grandTotal = $subtotal + $taxResult['total'] + $shippingCost;
 
         $billingAddress = $requiresShipping
             ? (($validated['billing_same_as_shipping'] ?? true)
@@ -350,13 +388,22 @@ class CheckoutController extends Controller
             'subtotal' => $subtotal,
             'tax' => $taxResult['total'],
             'shipping_cost' => $shippingCost,
-            'discount' => round($discountAmount, 2),
+            'discount' => 0,
             'total' => round(max(0, $grandTotal), 2),
+            'coupon_code' => $couponCode,
             'create_account' => $validated['create_account'] ?? false,
             'password' => $validated['password'] ?? null,
             'newsletter_subscribed' => $validated['newsletter_signup'] ?? false,
             'requires_shipping' => $requiresShipping,
         ];
+
+        if ($requestedPaymentMethod->code === 'bank_transfer') {
+            $orderData['manual_payment'] = [
+                'destination_id' => $validated['manual_payment_account_id'],
+                'transfer_reference' => $validated['manual_payment_reference'] ?? null,
+                'proof' => $validated['payment_proof'],
+            ];
+        }
 
         // Create order
         $result = $this->checkoutService->createOrder($orderData);
@@ -366,6 +413,20 @@ class CheckoutController extends Controller
         }
 
         $order = $result['data']['order'];
+
+        // Manual transfer proof is not a payment confirmation. Keep the order
+        // pending for staff verification and do not call a gateway or the
+        // immediate-payment fallback below.
+        if ($requestedPaymentMethod->code === 'bank_transfer') {
+            Session::put('checkout.last_order_id', $order->id);
+            Session::forget('cart');
+            Session::forget('cart_coupon');
+            $this->sendManualOrderPlacedEmail($order, $validated);
+
+            return redirect()->route('shop.checkout.success', [
+                'order' => $order->id,
+            ])->with('success', 'Order received. Your transfer proof is awaiting staff verification.');
+        }
 
         // Handle payment via gateway manager
         $paymentMethod = $validated['payment_method'];
@@ -418,6 +479,7 @@ class CheckoutController extends Controller
                 
                 // For immediate payment methods (COD, etc.), clear cart now
                 Session::forget('cart');
+                Session::forget('cart_coupon');
                 Session::put('checkout.last_order_id', $order->id);
                 
                 // For any other response type, return as-is
@@ -437,10 +499,13 @@ class CheckoutController extends Controller
         
         // No gateway found - treat as COD or immediate payment method
         // This handles COD and any custom payment methods without gateways
-        $order->update([
-            'payment_status' => Order::PAYMENT_PAID,
-            'status' => Order::STATUS_PROCESSING,
-        ]);
+        if (!app(\Bulbula\Sales\Services\OrderService::class)->updatePaymentStatus(
+            $order,
+            Order::PAYMENT_PAID,
+            'Payment completed via manual/instant method'
+        )) {
+            return back()->with('error', 'Payment was received, but the order could not be advanced. Please contact support.');
+        }
 
         $invoice = $this->invoiceService->createFromOrderIfMissing($order);
         $this->transactionService->createPaymentIfMissing($order, [
@@ -484,6 +549,7 @@ class CheckoutController extends Controller
 
         // Clear cart and checkout session
         Session::forget('cart');
+        Session::forget('cart_coupon');
 
         // Redirect to success page
         return redirect()->route('shop.checkout.success', [
@@ -492,11 +558,56 @@ class CheckoutController extends Controller
     }
 
     /**
+     * Replace a rejected manual transfer screenshot for the same order.
+     */
+    public function resubmitManualPayment(Request $request, int $orderId)
+    {
+        $order = Order::findOrFail($orderId);
+        $lastOrderId = (int) Session::get('checkout.last_order_id');
+        $isOrderOwner = Auth::check() && (int) $order->user_id === (int) Auth::id();
+        $isGuestOrderInSession = $lastOrderId === (int) $order->id;
+
+        if (! $isOrderOwner && ! $isGuestOrderInSession) {
+            abort(403);
+        }
+
+        if ($order->payment_method !== 'bank_transfer') {
+            abort(404);
+        }
+
+        $validated = $request->validate([
+            'manual_payment_account_id' => 'required|string|max:64',
+            'manual_payment_reference' => 'nullable|string|max:150',
+            'payment_proof' => 'required|image|mimes:jpg,jpeg,png,webp|max:5120',
+        ]);
+
+        try {
+            $this->manualPaymentService->submitReplacement(
+                $order,
+                $validated['payment_proof'],
+                $validated['manual_payment_account_id'],
+                $validated['manual_payment_reference'] ?? null,
+                Auth::id() ? (int) Auth::id() : null,
+            );
+        } catch (\Throwable $exception) {
+            Log::warning('Manual payment proof replacement failed', [
+                'order_id' => $order->id,
+                'error' => $exception->getMessage(),
+            ]);
+
+            return back()->with('error', $exception->getMessage());
+        }
+
+        return redirect()->route('shop.checkout.success', ['order' => $order->id])
+            ->with('success', 'Your replacement proof was submitted and is awaiting verification.');
+    }
+
+    /**
      * Display order success page
      */
     public function success(Request $request, $order)
     {
-        $order = \Bulbula\Shop\Models\Order::with(['items', 'addresses'])->findOrFail($order);
+        $order = Order::with(['items', 'addresses', 'latestManualPaymentSubmission'])->findOrFail($order);
         $lastOrderId = (int) Session::get('checkout.last_order_id');
 
         if (Auth::check()) {
@@ -512,19 +623,53 @@ class CheckoutController extends Controller
             }
         }
 
-        if (Session::get('checkout.last_order_id') === $order->id) {
+        $isLastOrderInSession = $lastOrderId === (int) $order->id;
+        $canGuestContinueManualReview = $order->payment_method === 'bank_transfer'
+            && $order->status === Order::STATUS_PENDING
+            && in_array($order->payment_status, [Order::PAYMENT_PENDING, Order::PAYMENT_FAILED], true);
+
+        if ($isLastOrderInSession) {
             Session::forget('cart');
+            Session::forget('cart_coupon');
             Session::forget('checkout');
-            Session::forget('checkout.last_order_id');
+
+            if ($canGuestContinueManualReview) {
+                Session::put('checkout.last_order_id', $order->id);
+            } else {
+                Session::forget('checkout.last_order_id');
+            }
         }
 
         $shippingAddress = $order->shippingAddress;
+        $manualSubmission = $order->latestManualPaymentSubmission;
+        $manualPaymentAccounts = [];
+
+        if ($order->payment_method === 'bank_transfer'
+            && $manualSubmission?->status === ManualPaymentSubmission::STATUS_REJECTED) {
+            $activeManualMethod = PaymentMethod::query()
+                ->where('code', 'bank_transfer')
+                ->where('is_active', true)
+                ->first();
+            $manualPaymentAccounts = $this->manualPaymentService->publicDestinations($activeManualMethod);
+        }
 
         return Inertia::render($this->themeResolver->resolve('Checkout/Success'), [
+            'manualPayment' => $order->payment_method === 'bank_transfer' ? [
+                'status' => $manualSubmission?->status,
+                'transfer_reference' => $manualSubmission?->transfer_reference,
+                'review_note' => $manualSubmission?->review_note,
+                'submitted_at' => $manualSubmission?->created_at?->format('F j, Y g:i A'),
+                'accounts' => $manualPaymentAccounts,
+                'can_resubmit' => $manualSubmission?->status === ManualPaymentSubmission::STATUS_REJECTED
+                    && $canGuestContinueManualReview
+                    && count($manualPaymentAccounts) > 0,
+            ] : null,
             'order' => [
                 'id' => $order->id,
                 'order_number' => $order->order_number,
                 'status' => $order->status,
+                'payment_status' => $order->payment_status,
+                'payment_method' => $order->payment_method,
                 'subtotal' => round($order->subtotal, 2),
                 'tax' => round($order->tax, 2),
                 'shipping_cost' => round($order->shipping_cost, 2),
@@ -555,6 +700,39 @@ class CheckoutController extends Controller
                 ] : null,
             ],
         ]);
+    }
+
+    private function sendManualOrderPlacedEmail(Order $order, array $validated): void
+    {
+        try {
+            $template = EmailTemplate::findByCode('order_placed');
+            if (! $template) {
+                return;
+            }
+
+            $customerName = trim(
+                ($validated['shipping_address']['first_name'] ?? $validated['billing_address']['first_name'] ?? '')
+                . ' '
+                . ($validated['shipping_address']['last_name'] ?? $validated['billing_address']['last_name'] ?? '')
+            ) ?: 'Customer';
+            $currency = Currency::getDefault();
+
+            $template->send($order->customer_email, [
+                'customer_name' => $customerName,
+                'order_number' => $order->order_number,
+                'order_date' => $order->created_at->format('F j, Y'),
+                'order_total' => $currency?->format((float) $order->total)
+                    ?? ('USD ' . number_format((float) $order->total, 2)),
+                'payment_status' => 'Awaiting manual transfer verification',
+                'store_name' => config('app.name', config('brand.name')),
+                'store_url' => url('/'),
+            ]);
+        } catch (\Throwable $exception) {
+            Log::error('Manual payment order email failed', [
+                'order_id' => $order->id,
+                'error' => $exception->getMessage(),
+            ]);
+        }
     }
 
     /**
@@ -653,15 +831,16 @@ class CheckoutController extends Controller
         $items = Session::get('cart', []);
 
         foreach ($items as &$item) {
-            if (! isset($item['tax_class_id']) || ! isset($item['weight']) || ! isset($item['type']) || ! array_key_exists('requires_shipping', $item)) {
-                $product = Product::find($item['product_id']);
-                if ($product) {
-                    $item['tax_class_id'] = $item['tax_class_id'] ?? $product->tax_class_id;
-                    $item['weight'] = $item['weight'] ?? $product->weight;
-                    $snapshot = CartTypeHelper::snapshotFromProduct($product);
-                    $item['type'] = $item['type'] ?? $snapshot['type'];
-                    $item['requires_shipping'] = $item['requires_shipping'] ?? $snapshot['requires_shipping'];
-                }
+            $product = Product::find($item['product_id']);
+            if ($product) {
+                // Use the same current price in the displayed totals, tax/shipping
+                // calculations, and the order-item snapshot created at checkout.
+                $item['price'] = (float) ($product->getFinalPrice() ?? $item['price'] ?? 0);
+                $item['tax_class_id'] = $item['tax_class_id'] ?? $product->tax_class_id;
+                $item['weight'] = $item['weight'] ?? $product->weight;
+                $snapshot = CartTypeHelper::snapshotFromProduct($product);
+                $item['type'] = $item['type'] ?? $snapshot['type'];
+                $item['requires_shipping'] = $item['requires_shipping'] ?? $snapshot['requires_shipping'];
             }
         }
 

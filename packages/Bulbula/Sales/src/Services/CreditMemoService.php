@@ -196,9 +196,20 @@ class CreditMemoService
                 'refunded_at' => now(),
             ]);
 
-            // Update order total_refunded
+            // Update order total_refunded and synchronize the shared payment state
+            // once cumulative refunds cover the full order total.
             $order = $creditMemo->order;
             $order->increment('total_refunded', $creditMemo->grand_total);
+            $order->refresh();
+
+            if ((float) $order->total_refunded >= (float) $order->total
+                && !app(OrderService::class)->updatePaymentStatus(
+                    $order,
+                    Order::PAYMENT_REFUNDED,
+                    'Full refund processed for credit memo #' . $creditMemo->id
+                )) {
+                throw new \RuntimeException('Refund was processed, but the order payment transition failed.');
+            }
 
             // Restore inventory if not already done
             if ($creditMemo->restore_inventory && !$creditMemo->isInventoryRestored()) {

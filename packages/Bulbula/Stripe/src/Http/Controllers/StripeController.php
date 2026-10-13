@@ -12,6 +12,7 @@ use Bulbula\Core\Models\PaymentMethod;
 use Bulbula\Core\Services\PaymentGatewayManager;
 use Bulbula\Sales\Services\InvoiceService;
 use Bulbula\Sales\Services\TransactionService;
+use Bulbula\Sales\Services\OrderService;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
 
@@ -56,11 +57,14 @@ class StripeController extends Controller
                 ->with('error', 'Payment verification failed: ' . $result['message']);
         }
 
-        // Update order payment status
-        $order->update([
-            'payment_status' => Order::PAYMENT_PAID,
-            'status' => Order::STATUS_PROCESSING,
-        ]);
+        if (!app(OrderService::class)->updatePaymentStatus(
+            $order,
+            Order::PAYMENT_PAID,
+            'Payment completed via Stripe callback'
+        ) || $order->payment_status !== Order::PAYMENT_PAID) {
+            return redirect()->route('cart.index')
+                ->with('error', 'Payment was verified, but the order could not be updated. Please contact support.');
+        }
 
         $invoice = $this->invoiceService->createFromOrderIfMissing($order);
         $this->transactionService->createPaymentIfMissing($order, [
@@ -101,6 +105,8 @@ class StripeController extends Controller
 
         // Keep last order marker for guest success page authorization
         Session::put('checkout.last_order_id', $order->id);
+        Session::forget('cart');
+        Session::forget('cart_coupon');
 
         // Redirect to order success page
         return redirect()->route('shop.checkout.success', ['order' => $order->id])
@@ -114,10 +120,14 @@ class StripeController extends Controller
     {
         $order = Order::findOrFail($orderId);
 
-        // Update order status to payment failed
-        $order->update([
-            'payment_status' => Order::PAYMENT_FAILED,
-        ]);
+        if (!app(OrderService::class)->updatePaymentStatus(
+            $order,
+            Order::PAYMENT_FAILED,
+            'Payment cancelled via Stripe callback'
+        )) {
+            return redirect()->route('cart.index')
+                ->with('error', 'Payment cancellation could not be recorded. Please contact support.');
+        }
 
         // Redirect back to cart with error
         return redirect()->route('cart.index')
@@ -210,12 +220,16 @@ class StripeController extends Controller
 
         if ($orderId) {
             $order = Order::find($orderId);
-            if ($order && !in_array($order->status, ['paid', 'processing', 'shipped', 'completed'])) {
-                $order->update([
-                    'status' => 'paid',
-                    'payment_status' => 'paid',
-                    'payment_gateway_transaction_id' => $paymentIntent->id,
-                ]);
+            if ($order) {
+                $order->update(['payment_gateway_transaction_id' => $paymentIntent->id]);
+
+                if (!app(OrderService::class)->updatePaymentStatus(
+                    $order,
+                    Order::PAYMENT_PAID,
+                    'Payment completed via Stripe webhook'
+                )) {
+                    throw new \RuntimeException('Stripe payment was verified, but the order transition failed.');
+                }
             }
         }
     }
@@ -230,11 +244,12 @@ class StripeController extends Controller
 
         if ($orderId) {
             $order = Order::find($orderId);
-            if ($order && !in_array($order->status, ['paid', 'shipped', 'completed'])) {
-                $order->update([
-                    'status' => 'payment_failed',
-                    'payment_status' => 'failed',
-                ]);
+            if ($order && !app(OrderService::class)->updatePaymentStatus(
+                $order,
+                Order::PAYMENT_FAILED,
+                'Payment failed via Stripe webhook'
+            )) {
+                throw new \RuntimeException('Stripe payment failure transition failed.');
             }
         }
     }
@@ -246,14 +261,27 @@ class StripeController extends Controller
     {
         $charge = $event->data->object;
         $paymentIntentId = $charge->payment_intent ?? null;
+        $chargeAmount = (int) ($charge->amount ?? 0);
+        $refundedAmount = (int) ($charge->amount_refunded ?? 0);
+
+        // A partial refund does not make the order fully refunded.
+        if ($chargeAmount <= 0 || $refundedAmount < $chargeAmount) {
+            Log::info('Stripe partial refund received; order payment remains paid', [
+                'payment_intent_id' => $paymentIntentId,
+                'amount_refunded' => $refundedAmount,
+                'amount' => $chargeAmount,
+            ]);
+            return;
+        }
 
         if ($paymentIntentId) {
             $order = Order::where('payment_gateway_transaction_id', $paymentIntentId)->first();
-            if ($order) {
-                $order->update([
-                    'status' => 'refunded',
-                    'payment_status' => 'refunded',
-                ]);
+            if ($order && !app(OrderService::class)->updatePaymentStatus(
+                $order,
+                Order::PAYMENT_REFUNDED,
+                'Payment refunded via Stripe webhook'
+            )) {
+                throw new \RuntimeException('Stripe refund transition failed.');
             }
         }
     }

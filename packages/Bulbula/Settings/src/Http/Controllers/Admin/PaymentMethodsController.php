@@ -66,8 +66,22 @@ class PaymentMethodsController extends Controller
             ->orWhere('type', $type)
             ->firstOrFail();
 
-        // Update method with validated data
-        $method->update($request->validated());
+        // The bank-transfer form stores its merchant-owned destination list
+        // under the JSON configuration field. Merge it with legacy settings so
+        // unrelated keys are not silently discarded when the new UI is saved.
+        $validated = $request->validated();
+        if ($method->code === 'bank_transfer' && isset($validated['configuration'])) {
+            $currentConfiguration = $method->configuration ?? [];
+            if (is_string($currentConfiguration)) {
+                $currentConfiguration = json_decode($currentConfiguration, true) ?: [];
+            }
+            $validated['configuration'] = array_merge(
+                is_array($currentConfiguration) ? $currentConfiguration : [],
+                $validated['configuration'],
+            );
+        }
+
+        $method->update($validated);
 
         return back()->with('success', "Payment method '{$method->name}' updated successfully.");
     }

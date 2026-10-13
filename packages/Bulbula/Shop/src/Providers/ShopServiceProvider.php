@@ -138,7 +138,9 @@ class ShopServiceProvider extends ServiceProvider
             function ($app) {
                 return new \Bulbula\Shop\Services\CheckoutService(
                     $app->make(\Bulbula\Shop\Contracts\OrderRepositoryInterface::class),
-                    $app->make(\Bulbula\Admin\Services\AdminNotificationService::class)
+                    $app->make(\Bulbula\Admin\Services\AdminNotificationService::class),
+                    $app->make(\Bulbula\Marketing\Services\CouponService::class),
+                    $app->make(\Bulbula\Sales\Services\ManualPaymentService::class)
                 );
             }
         );

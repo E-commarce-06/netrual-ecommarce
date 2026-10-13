@@ -10,13 +10,19 @@ use Bulbula\Product\Models\Product;
 use Bulbula\Cart\Support\CartTypeHelper;
 use Bulbula\Customer\Models\Customer;
 use Bulbula\Customer\Models\CustomerAddress;
+use Bulbula\Marketing\Models\Coupon;
+use Bulbula\Marketing\Services\CouponService;
+use Bulbula\Sales\Services\ManualPaymentService;
 use Bulbula\Admin\Services\AdminNotificationService;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Http\UploadedFile;
 use Exception;
+use Throwable;
 
 
 class CheckoutService extends ShopService
@@ -30,11 +36,15 @@ class CheckoutService extends ShopService
      * Create a new CheckoutService instance.
      *
      * @param  OrderRepositoryInterface  $orderRepository
+     * @param  AdminNotificationService  $adminNotificationService
+     * @param  CouponService  $couponService
      * @return void
      */
     public function __construct(
         OrderRepositoryInterface $orderRepository,
-        protected AdminNotificationService $adminNotificationService
+        protected AdminNotificationService $adminNotificationService,
+        protected CouponService $couponService,
+        protected ManualPaymentService $manualPaymentService
     ) {
         $this->orderRepository = $orderRepository;
     }
@@ -47,6 +57,8 @@ class CheckoutService extends ShopService
      */
     public function createOrder(array $data): array
     {
+        $manualProofPath = null;
+
         try {
             DB::beginTransaction();
 
@@ -72,6 +84,39 @@ class CheckoutService extends ShopService
                 $totals = $this->calculateTotals(collect($cartItems), $data);
             }
 
+            // Match coupon calculations and the persisted order subtotal to the same
+            // current product prices used for the order-item rows.
+            $couponItems = collect();
+            $checkoutProducts = [];
+            $checkoutPrices = [];
+            $currentSubtotal = 0.0;
+            foreach ($cartItems as $cartKey => $cartItem) {
+                if (is_array($cartItem)) {
+                    $product = Product::find($cartItem['product_id']);
+                    $quantity = (int) $cartItem['quantity'];
+                    $currentPrice = (float) ($product?->getFinalPrice() ?? $cartItem['price']);
+                    $couponItem = (object) $cartItem;
+                    if ($product) {
+                        $couponItem->is_on_sale = $product->hasSpecialPrice();
+                    }
+                } else {
+                    $product = $cartItem->product ?? null;
+                    $quantity = (int) $cartItem->quantity;
+                    $currentPrice = (float) ($product?->getFinalPrice() ?? $cartItem->price);
+                    $couponItem = clone $cartItem;
+                    if ($product) {
+                        $couponItem->is_on_sale = $product->hasSpecialPrice();
+                    }
+                }
+
+                $couponItem->price = $currentPrice;
+                $couponItems->push($couponItem);
+                $checkoutProducts[$cartKey] = $product;
+                $checkoutPrices[$cartKey] = $currentPrice;
+                $currentSubtotal += $currentPrice * $quantity;
+            }
+            $totals['subtotal'] = round($currentSubtotal, 2);
+
             // Generate unique order number
             $orderNumber = Order::generateOrderNumber();
 
@@ -92,6 +137,68 @@ class CheckoutService extends ShopService
                     $guestCustomer = $this->getOrCreateGuestCustomer($data);
                     $customerId = $guestCustomer->id;
                 }
+            } elseif ($userId) {
+                // User IDs and customer IDs are distinct; keep the order/coupon linked to the customer row.
+                $customerId = Customer::where('user_id', $userId)->value('id');
+            }
+
+            $coupon = null;
+            $couponUsageDiscount = 0.0;
+            $shippingCostBeforeCoupon = (float) $totals['shipping_cost'];
+            $couponCode = trim((string) ($data['coupon_code'] ?? ''));
+
+            if ($couponCode !== '') {
+                // Serialize checkout redemptions for this coupon so the total-use limit
+                // and per-customer limit are checked against the same locked row.
+                $lockedCoupon = Coupon::byCode($couponCode)->lockForUpdate()->first();
+                $validation = $this->couponService->validate(
+                    $couponCode,
+                    $customerId,
+                    (float) $totals['subtotal'],
+                    $couponItems,
+                    $userId,
+                    $lockedCoupon
+                );
+
+                if (!$validation['valid']) {
+                    throw new Exception($validation['message']);
+                }
+
+                $coupon = $validation['coupon'];
+                $appliedCoupon = $this->couponService->apply(
+                    $coupon,
+                    (float) $totals['subtotal'],
+                    $couponItems
+                );
+                $discount = min(
+                    max(0, (float) $appliedCoupon['discount_amount']),
+                    max(0, (float) $totals['subtotal'])
+                );
+
+                if ($coupon->type === Coupon::TYPE_FREE_SHIPPING) {
+                    $totals['shipping_cost'] = 0;
+                    $couponUsageDiscount = $discount + $shippingCostBeforeCoupon;
+                } else {
+                    $couponUsageDiscount = $discount;
+                }
+
+                $totals['discount'] = round($discount, 2);
+                $totals['total'] = round(max(
+                    0,
+                    (float) $totals['subtotal']
+                        + (float) $totals['tax']
+                        + (float) $totals['shipping_cost']
+                        - (float) $totals['discount']
+                ), 2);
+            } else {
+                // Never trust a session-provided amount without its coupon code.
+                $totals['discount'] = 0;
+                $totals['total'] = round(max(
+                    0,
+                    (float) $totals['subtotal']
+                        + (float) $totals['tax']
+                        + (float) $totals['shipping_cost']
+                ), 2);
             }
 
             // Create order
@@ -116,12 +223,12 @@ class CheckoutService extends ShopService
             ]);
 
             // Create order items
-            foreach ($cartItems as $cartItem) {
+            foreach ($cartItems as $cartKey => $cartItem) {
+                $product = $checkoutProducts[$cartKey] ?? null;
+                $currentPrice = $checkoutPrices[$cartKey];
+
                 // Handle both array and object cart items
                 if (is_array($cartItem)) {
-                    $product = Product::find($cartItem['product_id']);
-                    // Always use current DB price — prevents stale-cart price leakage
-                    $currentPrice = (float) ($product?->special_price ?? $product?->price ?? $cartItem['price']);
                     $type = $cartItem['type'] ?? $product?->type ?? Product::TYPE_SIMPLE;
                     $requiresShipping = array_key_exists('requires_shipping', $cartItem)
                         ? (bool) $cartItem['requires_shipping']
@@ -143,9 +250,7 @@ class CheckoutService extends ShopService
                         'options' => $cartItem['options'] ?? null,
                     ]);
                 } else {
-                    // Legacy object-based cart items — always use current DB price
-                    $currentPrice = (float) ($cartItem->product?->special_price ?? $cartItem->product?->price ?? $cartItem->price);
-                    $product = $cartItem->product;
+                    // Legacy object-based cart items use the product/price snapshot above.
                     OrderItem::create([
                         'order_id' => $order->id,
                         'product_id' => $cartItem->product_id,
@@ -162,6 +267,19 @@ class CheckoutService extends ShopService
                         'options' => $cartItem->options ?? null,
                     ]);
                 }
+            }
+
+            if ($coupon) {
+                $this->couponService->recordUsage(
+                    couponId: (int) $coupon->id,
+                    orderId: (int) $order->id,
+                    discountAmount: $couponUsageDiscount,
+                    orderSubtotal: (float) $totals['subtotal'],
+                    customerId: $customerId ? (int) $customerId : null,
+                    userId: $userId ? (int) $userId : null,
+                    ipAddress: request()->ip(),
+                    userAgent: request()->userAgent()
+                );
             }
 
             // Create shipping address
@@ -187,6 +305,30 @@ class CheckoutService extends ShopService
                 $this->createAddress($order, $data['shipping_address'], Address::TYPE_BILLING);
             }
 
+            // A manual transfer order is not paid at checkout. Persist the
+            // customer-provided evidence with the order inside this database
+            // transaction; staff approval later advances payment and stock via
+            // the shared OrderService transition.
+            if (($data['payment_method'] ?? null) === 'bank_transfer') {
+                $manualPayment = $data['manual_payment'] ?? [];
+                $proof = $manualPayment['proof'] ?? null;
+
+                if (! $proof instanceof UploadedFile) {
+                    throw new \RuntimeException('A payment screenshot is required for bank or wallet transfer.');
+                }
+
+                $submission = $this->manualPaymentService->createInitialSubmission(
+                    $order,
+                    $proof,
+                    (string) ($manualPayment['destination_id'] ?? ''),
+                    isset($manualPayment['transfer_reference'])
+                        ? (string) $manualPayment['transfer_reference']
+                        : null,
+                    $userId ? (int) $userId : null,
+                );
+                $manualProofPath = $submission->proof_path;
+            }
+
             // Clear cart after successful order creation (handled in controller)
             // Session::forget('cart');
 
@@ -199,8 +341,22 @@ class CheckoutService extends ShopService
                 'order_number' => $orderNumber,
             ], 'Order created successfully');
 
-        } catch (Exception $e) {
+        } catch (Throwable $e) {
             DB::rollBack();
+
+            // Filesystem writes cannot participate in the SQL transaction. If
+            // anything after upload fails, remove the orphaned private proof.
+            if ($manualProofPath) {
+                try {
+                    Storage::disk('local')->delete($manualProofPath);
+                } catch (Throwable $cleanupException) {
+                    Log::warning('Unable to remove manual payment proof after order rollback', [
+                        'path' => $manualProofPath,
+                        'error' => $cleanupException->getMessage(),
+                    ]);
+                }
+            }
+
             Log::error('Order creation failed: ' . $e->getMessage());
             return $this->handleException($e, 'Failed to create order');
         }
@@ -532,7 +688,9 @@ class CheckoutService extends ShopService
                 return $this->formatResponse(null, 'Order cannot be cancelled', false);
             }
 
-            $this->orderRepository->cancel($orderId);
+            if (!$this->orderRepository->cancel($orderId)) {
+                return $this->formatResponse(null, 'Order cancellation failed', false);
+            }
 
             return $this->formatResponse(null, 'Order cancelled successfully');
 

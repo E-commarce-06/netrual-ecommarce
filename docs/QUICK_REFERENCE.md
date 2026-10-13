@@ -787,7 +787,9 @@ Every package with business logic has a `Services/` directory. Services encapsul
 ```php
 $this->app->singleton(CheckoutService::class, function ($app) {
     return new CheckoutService(
-        $app->make(OrderRepositoryInterface::class)
+        $app->make(OrderRepositoryInterface::class),
+        $app->make(AdminNotificationService::class),
+        $app->make(CouponService::class)
     );
 });
 ```

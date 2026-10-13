@@ -10,6 +10,7 @@ use Bulbula\API\Helpers\ApiResponse;
 use Bulbula\Cart\Models\Cart;
 use Bulbula\Shop\Models\Order;
 use Bulbula\Shop\Models\OrderItem;
+use Bulbula\Sales\Services\OrderService;
 use Bulbula\Shop\Models\Address;
 use Bulbula\Customer\Models\Customer;
 use Bulbula\Customer\Models\CustomerAddress;
@@ -852,15 +853,14 @@ class CheckoutController extends Controller
 
                 if ($verified) {
                     $order->update([
-                        'payment_status' => Order::PAYMENT_PAID,
-                        'status'         => Order::STATUS_PROCESSING,
-                        'payment_data'   => json_encode(array_merge($existingData, [
+                        'payment_data' => json_encode(array_merge($existingData, [
                             'razorpay_payment_id' => $request->razorpay_payment_id,
                             'razorpay_order_id'   => $request->razorpay_order_id,
                             'razorpay_signature'  => $request->razorpay_signature,
                             'verified_at'         => now()->toISOString(),
                         ])),
                     ]);
+                    $this->markOrderPaid($order, 'Payment verified via Razorpay API');
 
                     return ApiResponse::success([
                         'verified'       => true,
@@ -887,13 +887,12 @@ class CheckoutController extends Controller
 
                 if ($verified) {
                     $order->update([
-                        'payment_status' => Order::PAYMENT_PAID,
-                        'status'         => Order::STATUS_PROCESSING,
-                        'payment_data'   => json_encode(array_merge($existingData, [
+                        'payment_data' => json_encode(array_merge($existingData, [
                             'payment_intent_id' => $request->payment_intent_id,
                             'verified_at'       => now()->toISOString(),
                         ])),
                     ]);
+                    $this->markOrderPaid($order, 'Payment verified via Stripe API');
 
                     return ApiResponse::success([
                         'verified'       => true,
@@ -918,14 +917,13 @@ class CheckoutController extends Controller
 
                 if ($verified) {
                     $order->update([
-                        'payment_status' => Order::PAYMENT_PAID,
-                        'status'         => Order::STATUS_PROCESSING,
-                        'payment_data'   => json_encode(array_merge($existingData, [
+                        'payment_data' => json_encode(array_merge($existingData, [
                             'transaction_id' => $request->transaction_id,
                             'verified_at'    => now()->toISOString(),
                             'verified_via'   => 'flutter_sdk',
                         ])),
                     ]);
+                    $this->markOrderPaid($order, 'Payment verified via PhonePe API');
 
                     return ApiResponse::success([
                         'verified'       => true,
@@ -959,13 +957,12 @@ class CheckoutController extends Controller
 
                 if ($verified) {
                     $order->update([
-                        'payment_status' => Order::PAYMENT_PAID,
-                        'status'         => Order::STATUS_PROCESSING,
-                        'payment_data'   => json_encode(array_merge($existingData, [
+                        'payment_data' => json_encode(array_merge($existingData, [
                             'paypal_order_id' => $paypalOrderId,
                             'verified_at'     => now()->toISOString(),
                         ])),
                     ]);
+                    $this->markOrderPaid($order, 'Payment verified via PayPal API');
 
                     return ApiResponse::success([
                         'verified'       => true,
@@ -1000,6 +997,14 @@ class CheckoutController extends Controller
             ]);
 
             return ApiResponse::error('Could not verify payment: ' . $e->getMessage(), null, 500);
+        }
+    }
+
+    private function markOrderPaid(Order $order, string $comment): void
+    {
+        if (!app(OrderService::class)->updatePaymentStatus($order, Order::PAYMENT_PAID, $comment)
+            || $order->payment_status !== Order::PAYMENT_PAID) {
+            throw new \RuntimeException('Payment was verified, but the order transition failed.');
         }
     }
 }

@@ -75,7 +75,7 @@ class OrderRepository extends ShopRepository implements OrderRepositoryInterface
             return false;
         }
 
-        return $order->update(['status' => $status]);
+        return app(\Bulbula\Sales\Services\OrderService::class)->updateStatus($order, $status);
     }
 
     /**
@@ -93,7 +93,7 @@ class OrderRepository extends ShopRepository implements OrderRepositoryInterface
             return false;
         }
 
-        return $order->update(['payment_status' => $status]);
+        return app(\Bulbula\Sales\Services\OrderService::class)->updatePaymentStatus($order, $status);
     }
 
     /**
@@ -209,7 +209,11 @@ class OrderRepository extends ShopRepository implements OrderRepositoryInterface
             return false;
         }
 
-        return $order->update(['status' => Order::STATUS_CANCELLED]);
+        return app(\Bulbula\Sales\Services\OrderService::class)->cancelOrder(
+            $order,
+            'Order cancelled through order repository',
+            true
+        );
     }
 
     /**
@@ -226,9 +230,10 @@ class OrderRepository extends ShopRepository implements OrderRepositoryInterface
             return false;
         }
 
-        return $order->update([
-            'payment_status' => Order::PAYMENT_PAID,
-            'status' => Order::STATUS_PROCESSING,
-        ]);
+        return app(\Bulbula\Sales\Services\OrderService::class)->updatePaymentStatus(
+            $order,
+            Order::PAYMENT_PAID,
+            'Order marked as paid through order repository'
+        );
     }
 }

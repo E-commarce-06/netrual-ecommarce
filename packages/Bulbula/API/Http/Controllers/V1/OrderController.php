@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Bulbula\API\Helpers\ApiResponse;
 use Bulbula\API\Http\Resources\OrderResource;
 use Bulbula\Shop\Models\Order;
+use Bulbula\Sales\Services\OrderService;
 
 class OrderController extends Controller
 {
@@ -78,16 +79,18 @@ class OrderController extends Controller
             );
         }
 
-        $order->update([
-            'status' => 'cancelled',
-            'cancelled_at' => now(),
-        ]);
+        if (!app(OrderService::class)->cancelOrder($order, 'Cancelled by customer', true)) {
+            return ApiResponse::error(
+                'Order cancellation failed',
+                null,
+                500,
+                'ORDER_CANCELLATION_FAILED'
+            );
+        }
 
-        // TODO: Restore product inventory
-        // TODO: Process refund if payment was captured
-
+        // Refund processing remains separate from order cancellation.
         return ApiResponse::success(
-            new OrderResource($order),
+            new OrderResource($order->refresh()),
             'Order cancelled successfully'
         );
     }

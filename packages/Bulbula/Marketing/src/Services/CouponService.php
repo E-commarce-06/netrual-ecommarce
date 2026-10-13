@@ -32,10 +32,20 @@ class CouponService
      * 
      * @return array ['valid' => bool, 'message' => string, 'coupon' => ?Coupon]
      */
-    public function validate(string $code, ?int $customerId = null, float $cartTotal = 0, Collection $cartItems = null): array
-    {
-        // 1. Find coupon (case-insensitive)
-        $coupon = $this->findByCode($code);
+    public function validate(
+        string $code,
+        ?int $customerId = null,
+        float $cartTotal = 0,
+        ?Collection $cartItems = null,
+        ?int $userId = null,
+        ?Coupon $couponOverride = null
+    ): array {
+        if (!$customerId && $userId) {
+            $customerId = \Bulbula\Customer\Models\Customer::where('user_id', $userId)->value('id');
+        }
+
+        // 1. Find coupon (case-insensitive); checkout may pass its locked row.
+        $coupon = $couponOverride ?? $this->findByCode($code);
 
         if (!$coupon) {
             return [
@@ -83,8 +93,8 @@ class CouponService
         }
 
         // 5. Check per-customer usage limit
-        if ($customerId && $coupon->usage_limit_per_customer) {
-            $customerUsageCount = $coupon->getCustomerUsageCount($customerId);
+        if (($customerId || $userId) && $coupon->usage_limit_per_customer) {
+            $customerUsageCount = $coupon->getCustomerUsageCount($customerId, $userId);
 
             if ($customerUsageCount >= $coupon->usage_limit_per_customer) {
                 return [
@@ -116,11 +126,23 @@ class CouponService
             ];
         }
 
-        // 8. Check first order only restriction
-        if ($coupon->first_order_only && $customerId) {
-                $orderCount = \Bulbula\Shop\Models\Order::where('customer_id', $customerId)
-                ->where('status', '!=', 'cancelled')
-                ->count();
+        // 8. First-order eligibility counts all created orders, including cancelled ones.
+        if ($coupon->first_order_only && ($customerId || $userId)) {
+            $orders = \Bulbula\Shop\Models\Order::query()
+                ->where(function ($query) use ($customerId, $userId) {
+                    if ($customerId) {
+                        $query->where('customer_id', $customerId);
+                    }
+
+                    if ($userId) {
+                        if ($customerId) {
+                            $query->orWhere('user_id', $userId);
+                        } else {
+                            $query->where('user_id', $userId);
+                        }
+                    }
+                });
+            $orderCount = $orders->count();
 
             if ($orderCount > 0) {
                 return [
@@ -132,10 +154,12 @@ class CouponService
         }
 
         // 9. Check customer group eligibility
-        if ($coupon->customer_groups && $customerId) {
-                $customer = \Bulbula\Customer\Models\Customer::find($customerId);
-            
-            if (!$customer || !in_array($customer->group_id, $coupon->customer_groups)) {
+        if ($coupon->customer_groups && ($customerId || $userId)) {
+            $customer = $customerId
+                ? \Bulbula\Customer\Models\Customer::find($customerId)
+                : null;
+
+            if (!$customer || !in_array($customer->customer_group_id, $coupon->customer_groups)) {
                 return [
                     'valid' => false,
                     'message' => 'This coupon is not available for your customer group.',
@@ -145,19 +169,26 @@ class CouponService
         }
 
         // 10. Check account age requirement
-        if ($coupon->min_account_age_days && $customerId) {
-                $customer = \Bulbula\Customer\Models\Customer::find($customerId);
-            
-            if ($customer) {
-                $accountAge = now()->diffInDays($customer->created_at);
-                
-                if ($accountAge < $coupon->min_account_age_days) {
-                    return [
-                        'valid' => false,
-                        'message' => "This coupon requires an account age of at least {$coupon->min_account_age_days} days.",
-                        'coupon' => $coupon,
-                    ];
-                }
+        if ($coupon->min_account_age_days && ($customerId || $userId)) {
+            $customer = $customerId
+                ? \Bulbula\Customer\Models\Customer::find($customerId)
+                : null;
+
+            if (!$customer) {
+                return [
+                    'valid' => false,
+                    'message' => 'This coupon requires an eligible customer account.',
+                    'coupon' => $coupon,
+                ];
+            }
+
+            $accountAge = now()->diffInDays($customer->created_at);
+            if ($accountAge < $coupon->min_account_age_days) {
+                return [
+                    'valid' => false,
+                    'message' => "This coupon requires an account age of at least {$coupon->min_account_age_days} days.",
+                    'coupon' => $coupon,
+                ];
             }
         }
 
@@ -186,7 +217,7 @@ class CouponService
     }
 
     /**
-     * Record coupon usage after order completion.
+     * Record coupon usage when an order is created.
      */
     public function recordUsage(
         int $couponId, 
@@ -198,6 +229,19 @@ class CouponService
         ?string $ipAddress = null,
         ?string $userAgent = null
     ): CouponUsage {
+        $coupon = Coupon::query()
+            ->whereKey($couponId)
+            ->lockForUpdate()
+            ->firstOrFail();
+
+        $existingUsage = CouponUsage::where('coupon_id', $couponId)
+            ->where('order_id', $orderId)
+            ->first();
+
+        if ($existingUsage) {
+            return $existingUsage;
+        }
+
         $usage = CouponUsage::create([
             'coupon_id' => $couponId,
             'order_id' => $orderId,
@@ -210,8 +254,6 @@ class CouponService
             'user_agent' => $userAgent,
         ]);
 
-        // Increment coupon usage count
-        $coupon = Coupon::find($couponId);
         $coupon->incrementUsage();
 
         return $usage;

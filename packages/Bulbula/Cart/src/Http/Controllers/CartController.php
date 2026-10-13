@@ -61,6 +61,13 @@ class CartController extends Controller
             $shippingResult = $shippingCalculator->calculate($items, $customerAddress);
             $selectedShipping = $shippingResult['default'] ?? null;
             $shippingCost = $selectedShipping['cost'] ?? 0;
+
+            if (($couponData['type'] ?? null) === 'free_shipping') {
+                $shippingCost = 0;
+                if ($selectedShipping) {
+                    $selectedShipping['cost'] = 0;
+                }
+            }
         } else {
             $selectedShipping = null;
         }
@@ -240,6 +247,7 @@ class CartController extends Controller
     public function clear()
     {
         Session::forget('cart');
+        Session::forget('cart_coupon');
         return back()->with('success', 'Cart cleared');
     }
 }

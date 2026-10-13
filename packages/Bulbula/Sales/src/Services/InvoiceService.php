@@ -117,8 +117,13 @@ class InvoiceService
 
             $updated = $invoice->markAsPaid();
 
-            // Update order payment status
-            $invoice->order->update(['payment_status' => 'paid']);
+            if (!app(OrderService::class)->updatePaymentStatus(
+                $invoice->order,
+                Order::PAYMENT_PAID,
+                'Invoice marked as paid'
+            )) {
+                throw new Exception('Invoice was paid, but the order payment transition failed');
+            }
 
             DB::commit();
 
