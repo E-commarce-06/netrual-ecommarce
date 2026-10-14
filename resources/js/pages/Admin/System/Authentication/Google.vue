@@ -26,22 +26,24 @@ const props = defineProps<{
   callbackUrl: string
 }>()
 
-const form = useForm({
-  enabled: props.settings.enabled,
-  active_environment: props.settings.active_environment,
-  web_enabled: props.settings.web_enabled,
-  api_enabled: props.settings.api_enabled,
-  registration_enabled: props.settings.registration_enabled,
-  max_id_token_age_minutes: props.settings.max_id_token_age_minutes,
-  test_client_id: props.settings.test_client_id,
+const formDataFromSettings = (settings: Settings) => ({
+  enabled: settings.enabled,
+  active_environment: settings.active_environment,
+  web_enabled: settings.web_enabled,
+  api_enabled: settings.api_enabled,
+  registration_enabled: settings.registration_enabled,
+  max_id_token_age_minutes: settings.max_id_token_age_minutes,
+  test_client_id: settings.test_client_id,
   test_client_secret: '',
   clear_test_client_secret: false,
-  test_api_audiences_text: props.settings.test_api_audiences_text,
-  live_client_id: props.settings.live_client_id,
+  test_api_audiences_text: settings.test_api_audiences_text,
+  live_client_id: settings.live_client_id,
   live_client_secret: '',
   clear_live_client_secret: false,
-  live_api_audiences_text: props.settings.live_api_audiences_text,
+  live_api_audiences_text: settings.live_api_audiences_text,
 })
+
+const form = useForm(formDataFromSettings(props.settings))
 
 const testWebReady = computed(() => {
   const savedSecretRemains = props.settings.test_client_secret_configured
@@ -78,11 +80,23 @@ const activeStatusLabel = computed(() => {
 const save = () => {
   form.put('/admin/system/authentication/google', {
     preserveScroll: true,
-    onSuccess: () => {
+    onSuccess: (page) => {
+      const flash = page.props.flash as { success?: string | null; error?: string | null } | undefined
+
+      // A redirect with a flash error is still an HTTP/Inertia success. Do not clear
+      // secrets or reset the form unless the server confirms the database write.
+      if (!flash?.success || flash.error) return
+
       form.test_client_secret = ''
       form.live_client_secret = ''
       form.clear_test_client_secret = false
       form.clear_live_client_secret = false
+
+      const savedSettings = page.props.settings as Settings | undefined
+      if (!savedSettings) return
+
+      form.defaults(formDataFromSettings(savedSettings))
+      form.reset()
     },
   })
 }
@@ -118,6 +132,16 @@ const save = () => {
             <p>Google's verified-email claim updates the local verification timestamp when present; it is not a sign-in requirement. This feature adds no terms-acceptance requirement.</p>
           </div>
         </div>
+      </div>
+
+      <div v-if="!form.enabled" role="status" class="rounded-lg border border-amber-300 bg-amber-50 p-4 text-sm text-amber-950">
+        <p class="font-semibold">Google sign-in is currently off.</p>
+        <p class="mt-1">
+          Saving credentials does not activate sign-in. To enable the selected {{ form.active_environment }} profile, turn on “Enable Google authentication” below and save again.
+        </p>
+        <p v-if="form.active_environment === 'test'" class="mt-1">
+          The test profile may be limited to users listed as test users in Google Cloud. Use the live profile for public customer sign-in after its web client is configured.
+        </p>
       </div>
 
       <form @submit.prevent="save" class="space-y-6">
@@ -217,6 +241,9 @@ const save = () => {
                 <label for="test_client_secret" class="mb-1 block text-sm font-medium text-gray-800">Web OAuth client secret</label>
                 <input id="test_client_secret" v-model="form.test_client_secret" type="password" autocomplete="new-password" :placeholder="settings.test_client_secret_configured ? 'Saved; leave blank to keep it' : 'Enter the Google client secret'" class="w-full rounded-md border border-gray-300 px-3 py-2 text-sm shadow-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200" />
                 <p v-if="form.errors.test_client_secret" class="mt-1 text-sm text-red-600">{{ form.errors.test_client_secret }}</p>
+                <p v-if="settings.test_client_secret_configured && form.test_client_id.trim() === settings.test_client_id.trim() && !form.test_client_secret.trim()" class="mt-1 text-xs font-medium text-green-700">
+                  Secret saved securely. This password field is blank by design; leave it blank to keep the saved secret.
+                </p>
                 <label v-if="settings.test_client_secret_configured" class="mt-2 inline-flex items-center gap-2 text-xs text-gray-600">
                   <input v-model="form.clear_test_client_secret" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-red-600 focus:ring-red-500" />
                   Remove saved test secret
@@ -247,6 +274,9 @@ const save = () => {
                 <label for="live_client_secret" class="mb-1 block text-sm font-medium text-gray-800">Web OAuth client secret</label>
                 <input id="live_client_secret" v-model="form.live_client_secret" type="password" autocomplete="new-password" :placeholder="settings.live_client_secret_configured ? 'Saved; leave blank to keep it' : 'Enter the Google client secret'" class="w-full rounded-md border border-gray-300 px-3 py-2 text-sm shadow-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200" />
                 <p v-if="form.errors.live_client_secret" class="mt-1 text-sm text-red-600">{{ form.errors.live_client_secret }}</p>
+                <p v-if="settings.live_client_secret_configured && form.live_client_id.trim() === settings.live_client_id.trim() && !form.live_client_secret.trim()" class="mt-1 text-xs font-medium text-green-700">
+                  Secret saved securely. This password field is blank by design; leave it blank to keep the saved secret.
+                </p>
                 <label v-if="settings.live_client_secret_configured" class="mt-2 inline-flex items-center gap-2 text-xs text-gray-600">
                   <input v-model="form.clear_live_client_secret" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-red-600 focus:ring-red-500" />
                   Remove saved live secret

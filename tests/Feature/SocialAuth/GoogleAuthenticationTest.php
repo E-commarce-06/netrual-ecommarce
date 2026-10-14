@@ -185,11 +185,16 @@ test('admin can configure separate OAuth profiles without exposing secrets', fun
         'live_client_secret' => 'live-web-client-secret',
         'clear_live_client_secret' => false,
         'live_api_audiences_text' => "live-android-client\nlive-ios-client",
-    ])->assertRedirect(route('admin.system.authentication.google.index'));
+    ])->assertRedirect(route('admin.system.authentication.google.index'))
+        ->assertSessionHas('success', 'Google authentication settings saved.');
 
     $configuration = SocialAuthConfiguration::query()->where('provider', 'google')->firstOrFail();
 
-    expect($configuration->test_client_secret)->toBe('test-web-client-secret')
+    expect($configuration->enabled)->toBeTrue()
+        ->and($configuration->active_environment)->toBe('test')
+        ->and($configuration->web_enabled)->toBeTrue()
+        ->and($configuration->api_enabled)->toBeTrue()
+        ->and($configuration->test_client_secret)->toBe('test-web-client-secret')
         ->and($configuration->live_client_secret)->toBe('live-web-client-secret')
         ->and($configuration->getRawOriginal('test_client_secret'))->not->toBe('test-web-client-secret')
         ->and($configuration->getRawOriginal('live_client_secret'))->not->toBe('live-web-client-secret')
@@ -201,11 +206,36 @@ test('admin can configure separate OAuth profiles without exposing secrets', fun
             ->component('Admin/System/Authentication/Google')
             ->where('settings.test_client_secret_configured', true)
             ->where('settings.live_client_secret_configured', true)
+            ->where('settings.active_web_ready', true)
+            ->where('settings.active_api_ready', true)
             ->missing('settings.test_client_secret')
             ->missing('settings.live_client_secret'));
 
     expect($response->getContent())->not->toContain('test-web-client-secret')
         ->and($response->getContent())->not->toContain('live-web-client-secret');
+
+    $this->put(route('admin.system.authentication.google.update'), [
+        'enabled' => true,
+        'active_environment' => 'test',
+        'web_enabled' => true,
+        'api_enabled' => true,
+        'registration_enabled' => true,
+        'max_id_token_age_minutes' => 10,
+        'test_client_id' => 'test-web-client-id',
+        'test_client_secret' => '',
+        'clear_test_client_secret' => false,
+        'test_api_audiences_text' => "test-android-client\ntest-ios-client",
+        'live_client_id' => 'live-web-client-id',
+        'live_client_secret' => '',
+        'clear_live_client_secret' => false,
+        'live_api_audiences_text' => "live-android-client\nlive-ios-client",
+    ])->assertRedirect(route('admin.system.authentication.google.index'))
+        ->assertSessionHas('success', 'Google authentication settings saved.');
+
+    $configuration->refresh();
+    expect($configuration->test_client_secret)->toBe('test-web-client-secret')
+        ->and($configuration->live_client_secret)->toBe('live-web-client-secret')
+        ->and($configuration->enabled)->toBeTrue();
 });
 
 test('admin cannot enable a web profile without both OAuth credentials', function () {
