@@ -1,0 +1,1 @@
+import{d as t,o,m as n,I as s}from"./app-CENAJD_R.js";const l=t({__name:"SpacerBlock",props:{settings:{},editorMode:{type:Boolean}},setup(a){return(e,r)=>(o(),n("div",{style:s({height:`${e.settings.height??40}px`})},null,4))}});export{l as default};
