@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import RegisteredUserController from '@/actions/App/Http/Controllers/Auth/RegisteredUserController';
+import GoogleAuthButton from '@/components/auth/GoogleAuthButton.vue';
 import InputError from '@/components/InputError.vue';
 import TextLink from '@/components/TextLink.vue';
 import { Button } from '@/components/ui/button';
@@ -15,6 +16,11 @@ const page = usePage();
 const theme = computed(() => page.props.theme as any);
 const siteConfig = computed(() => page.props.siteConfig as any);
 const primaryColor = computed(() => theme.value?.settings?.['colors.primary'] || theme.value?.settings?.['colors.primary_color'] || theme.value?.settings?.primary_color || '#3b82f6');
+
+defineProps<{
+    googleSignUpEnabled?: boolean;
+    googleAuthError?: string | null;
+}>();
 
 const showPassword = ref(false);
 const showConfirmPassword = ref(false);
@@ -38,6 +44,22 @@ const showConfirmPassword = ref(false);
 
                 <!-- Card -->
                 <div class="bg-white rounded-lg shadow-lg p-8">
+                    <div
+                        v-if="googleAuthError"
+                        role="alert"
+                        class="mb-6 p-3 text-center text-sm text-red-700 bg-red-50 border border-red-200 rounded-md"
+                    >
+                        {{ googleAuthError }}
+                    </div>
+
+                    <div v-if="googleSignUpEnabled" class="mb-6 space-y-5">
+                        <GoogleAuthButton label="Sign up with Google" />
+                        <div class="relative flex items-center justify-center text-xs text-gray-500">
+                            <span class="absolute inset-x-0 border-t border-gray-300"></span>
+                            <span class="relative bg-white px-3">or create an account with email</span>
+                        </div>
+                    </div>
+
                     <!-- Register Form -->
                     <Form
                         v-bind="RegisteredUserController.store.form()"

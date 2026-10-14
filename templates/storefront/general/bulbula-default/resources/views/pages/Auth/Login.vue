@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import AuthenticatedSessionController from '@/actions/App/Http/Controllers/Auth/AuthenticatedSessionController';
+import GoogleAuthButton from '@/components/auth/GoogleAuthButton.vue';
 import InputError from '@/components/InputError.vue';
 import TextLink from '@/components/TextLink.vue';
 import { Button } from '@/components/ui/button';
@@ -19,6 +20,8 @@ const primaryColor = computed(() => theme.value?.settings?.['colors.primary'] ||
 defineProps<{
     status?: string;
     canResetPassword: boolean;
+    googleSignInEnabled?: boolean;
+    googleAuthError?: string | null;
 }>();
 
 const showPassword = ref(false);
@@ -48,6 +51,22 @@ const showPassword = ref(false);
                         class="mb-6 p-3 text-center text-sm font-medium text-green-700 bg-green-50 border border-green-200 rounded-md"
                     >
                         {{ status }}
+                    </div>
+
+                    <div
+                        v-if="googleAuthError"
+                        role="alert"
+                        class="mb-6 p-3 text-center text-sm text-red-700 bg-red-50 border border-red-200 rounded-md"
+                    >
+                        {{ googleAuthError }}
+                    </div>
+
+                    <div v-if="googleSignInEnabled" class="mb-6 space-y-5">
+                        <GoogleAuthButton label="Continue with Google" />
+                        <div class="relative flex items-center justify-center text-xs text-gray-500">
+                            <span class="absolute inset-x-0 border-t border-gray-300"></span>
+                            <span class="relative bg-white px-3">or continue with email</span>
+                        </div>
                     </div>
 
                     <!-- Login Form -->

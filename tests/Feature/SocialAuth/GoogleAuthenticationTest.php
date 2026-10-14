@@ -70,10 +70,24 @@ test('a linked Google identity remains usable when new registration is disabled'
 });
 
 test('storefront auth screens expose Google actions only when the active web profile is configured', function () {
+    $loginPage = base_path('templates/storefront/general/bulbula-default/resources/views/pages/Auth/Login.vue');
+    $registerPage = base_path('templates/storefront/general/bulbula-default/resources/views/pages/Auth/Register.vue');
+
+    expect(file_get_contents($loginPage))
+        ->toContain('v-if="googleSignInEnabled"')
+        ->toContain('<GoogleAuthButton label="Continue with Google" />')
+        ->and(file_get_contents($registerPage))
+        ->toContain('v-if="googleSignUpEnabled"')
+        ->toContain('<GoogleAuthButton label="Sign up with Google" />');
+
     $this->get(route('login'))
-        ->assertInertia(fn ($page) => $page->where('googleSignInEnabled', false));
+        ->assertInertia(fn ($page) => $page
+            ->component('templates/bulbula-default/pages/Auth/Login')
+            ->where('googleSignInEnabled', false));
     $this->get(route('register'))
-        ->assertInertia(fn ($page) => $page->where('googleSignUpEnabled', false));
+        ->assertInertia(fn ($page) => $page
+            ->component('templates/bulbula-default/pages/Auth/Register')
+            ->where('googleSignUpEnabled', false));
 
     $configuration = SocialAuthConfiguration::query()->where('provider', 'google')->firstOrFail();
     $configuration->enabled = true;
@@ -85,9 +99,13 @@ test('storefront auth screens expose Google actions only when the active web pro
     $configuration->save();
 
     $this->get(route('login'))
-        ->assertInertia(fn ($page) => $page->where('googleSignInEnabled', true));
+        ->assertInertia(fn ($page) => $page
+            ->component('templates/bulbula-default/pages/Auth/Login')
+            ->where('googleSignInEnabled', true));
     $this->get(route('register'))
-        ->assertInertia(fn ($page) => $page->where('googleSignUpEnabled', true));
+        ->assertInertia(fn ($page) => $page
+            ->component('templates/bulbula-default/pages/Auth/Register')
+            ->where('googleSignUpEnabled', true));
 });
 
 test('API Google login stores a short-lived token matching expires_in', function () {
