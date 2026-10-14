@@ -296,8 +296,10 @@ class CheckoutService extends ShopService
             if (isset($data['billing_address'])) {
                 $this->createAddress($order, $data['billing_address'], Address::TYPE_BILLING);
                 
-                // Save to customer address book if this is their first order
-                if ($customerId) {
+                // Digital-only billing details are an order/invoice contact, not a
+                // postal address to copy into the separate CustomerAddress book.
+                // Keep the existing address-book behavior for shipping orders.
+                if ($customerId && ($data['requires_shipping'] ?? true)) {
                     $this->saveToCustomerAddressBook($customerId, $data['billing_address'], 'billing');
                 }
             } elseif (isset($data['shipping_address']) && ($data['same_as_shipping'] ?? false)) {

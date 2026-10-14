@@ -77,8 +77,7 @@ Route::group([
         Route::post('/addresses', [Bulbula\Shop\Http\Controllers\Account\AddressController::class, 'store'])->name('addresses.store');
         Route::put('/addresses/{address}', [Bulbula\Shop\Http\Controllers\Account\AddressController::class, 'update'])->name('addresses.update');
         Route::delete('/addresses/{address}', [Bulbula\Shop\Http\Controllers\Account\AddressController::class, 'destroy'])->name('addresses.destroy');
-        Route::post('/addresses/{address}/default-shipping', [Bulbula\Shop\Http\Controllers\Account\AddressController::class, 'setDefaultShipping'])->name('addresses.default-shipping');
-        Route::post('/addresses/{address}/default-billing', [Bulbula\Shop\Http\Controllers\Account\AddressController::class, 'setDefaultBilling'])->name('addresses.default-billing');
+        Route::put('/addresses/{address}/default', [Bulbula\Shop\Http\Controllers\Account\AddressController::class, 'setDefault'])->name('addresses.default');
         Route::get('/wishlist', [Bulbula\Shop\Http\Controllers\Account\WishlistController::class, 'index'])->name('wishlist.index');
         Route::get('/wishlist/get', [Bulbula\Shop\Http\Controllers\Account\WishlistController::class, 'get'])->name('wishlist.get');
         Route::post('/wishlist/add', [Bulbula\Shop\Http\Controllers\Account\WishlistController::class, 'add'])->name('wishlist.add');

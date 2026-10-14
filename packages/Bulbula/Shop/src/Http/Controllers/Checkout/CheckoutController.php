@@ -10,6 +10,7 @@ use Bulbula\Cart\Services\CartTaxCalculator;
 use Bulbula\Cart\Services\CartShippingCalculator;
 use Bulbula\Cart\Support\CartTypeHelper;
 use Bulbula\Shop\Services\CheckoutService;
+use Bulbula\Shop\Models\Address;
 use Bulbula\Shop\Models\ShippingMethod;
 use Bulbula\Shop\Models\Order;
 use Bulbula\Product\Models\Product;
@@ -183,31 +184,34 @@ class CheckoutController extends Controller
             'enable_order_notes' => (bool) config('shop.checkout.enable_order_notes', true),
         ];
 
-        // Get user addresses if authenticated
+        // The storefront address book uses Shop\Models\Address, distinct from
+        // the Customer\Models\CustomerAddress API address book. Only expose
+        // this user's shipping addresses for carts that actually need delivery.
         $userAddresses = [];
-        // TODO: Add addresses() relationship to User model
-        // if (Auth::check()) {
-        //     $userAddresses = Auth::user()->addresses()
-        //         ->where('type', 'shipping')
-        //         ->get()
-        //         ->map(function ($address) {
-        //             return [
-        //                 'id' => $address->id,
-        //                 'first_name' => $address->first_name,
-        //                 'last_name' => $address->last_name,
-        //                 'company' => $address->company,
-        //                 'address_line1' => $address->address_line1,
-        //                 'address_line2' => $address->address_line2,
-        //                 'city' => $address->city,
-        //                 'state' => $address->state,
-        //                 'postal_code' => $address->postal_code,
-        //                 'country' => $address->country,
-        //                 'phone' => $address->phone,
-        //                 'is_default' => $address->is_default,
-        //             ];
-        //         })
-        //         ->toArray();
-        // }
+        if (Auth::check() && $requiresShipping) {
+            $userAddresses = Address::query()
+                ->where('addressable_type', \App\Models\User::class)
+                ->where('addressable_id', Auth::id())
+                ->where('type', Address::TYPE_SHIPPING)
+                ->orderByDesc('is_default')
+                ->orderByDesc('created_at')
+                ->get()
+                ->map(fn (Address $address) => [
+                    'id' => (int) $address->id,
+                    'first_name' => $address->first_name,
+                    'last_name' => $address->last_name,
+                    'company' => $address->company,
+                    'address_line1' => $address->address_line1,
+                    'address_line2' => $address->address_line2,
+                    'city' => $address->city,
+                    'state' => $address->state,
+                    'postal_code' => $address->postal_code,
+                    'country' => $address->country,
+                    'phone' => $address->phone,
+                    'is_default' => (bool) $address->is_default,
+                ])
+                ->all();
+        }
 
         return Inertia::render($this->themeResolver->resolve('Checkout/Index'), [
             'cartItems' => collect($items)->map(function ($item) {
@@ -265,6 +269,9 @@ class CheckoutController extends Controller
         }
 
         $requiresShipping = CartTypeHelper::cartRequiresShipping($items);
+        $useSavedShippingAddress = $requiresShipping
+            && Auth::check()
+            && $request->filled('shipping_address_id');
         $requestedPaymentMethod = PaymentMethod::query()
             ->where('code', trim((string) $request->input('payment_method', '')))
             ->first();
@@ -300,16 +307,23 @@ class CheckoutController extends Controller
         }
 
         if ($requiresShipping) {
+            if ($useSavedShippingAddress) {
+                $rules['shipping_address_id'] = 'required|integer';
+            } else {
+                $rules = array_merge($rules, [
+                    'shipping_address' => 'required|array',
+                    'shipping_address.first_name' => 'required|string',
+                    'shipping_address.last_name' => 'required|string',
+                    'shipping_address.address_line1' => 'required|string',
+                    'shipping_address.city' => 'required|string',
+                    'shipping_address.state' => 'required|string',
+                    'shipping_address.postal_code' => 'required|string',
+                    'shipping_address.country' => 'required|string',
+                    'shipping_address.phone' => 'required|string',
+                ]);
+            }
+
             $rules = array_merge($rules, [
-                'shipping_address' => 'required|array',
-                'shipping_address.first_name' => 'required|string',
-                'shipping_address.last_name' => 'required|string',
-                'shipping_address.address_line1' => 'required|string',
-                'shipping_address.city' => 'required|string',
-                'shipping_address.state' => 'required|string',
-                'shipping_address.postal_code' => 'required|string',
-                'shipping_address.country' => 'required|string',
-                'shipping_address.phone' => 'required|string',
                 'shipping_method_id' => 'required|exists:shipping_methods,id',
                 'billing_address' => 'required_if:billing_same_as_shipping,false|array',
             ]);
@@ -328,6 +342,61 @@ class CheckoutController extends Controller
         }
 
         $validated = $request->validate($rules);
+
+        if (! $requiresShipping) {
+            // Digital checkout asks only for an order contact. The shared order
+            // address snapshot has NOT NULL location columns, so store absent
+            // optional values as empty strings rather than making them required.
+            foreach (['address_line1', 'city', 'state', 'postal_code', 'country'] as $locationField) {
+                $validated['billing_address'][$locationField] = $validated['billing_address'][$locationField] ?? '';
+            }
+        }
+
+        if ($useSavedShippingAddress) {
+            $savedShippingAddress = Address::query()
+                ->whereKey($validated['shipping_address_id'])
+                ->where('addressable_type', \App\Models\User::class)
+                ->where('addressable_id', Auth::id())
+                ->where('type', Address::TYPE_SHIPPING)
+                ->first();
+
+            if (! $savedShippingAddress) {
+                return back()->withErrors([
+                    'shipping_address_id' => 'That saved shipping address is no longer available. Please choose another address.',
+                ]);
+            }
+
+            foreach ([
+                'first_name',
+                'last_name',
+                'address_line1',
+                'city',
+                'state',
+                'postal_code',
+                'country',
+                'phone',
+            ] as $requiredField) {
+                if (blank($savedShippingAddress->{$requiredField})) {
+                    return back()->withErrors([
+                        'shipping_address_id' => 'This saved address is missing required delivery details. Update it in your address book or enter another address.',
+                    ]);
+                }
+            }
+
+            $validated['shipping_address'] = $savedShippingAddress->only([
+                'first_name',
+                'last_name',
+                'company',
+                'address_line1',
+                'address_line2',
+                'city',
+                'state',
+                'postal_code',
+                'country',
+                'phone',
+                'email',
+            ]);
+        }
 
         $requireAccount = (bool) $this->settingService->get('checkout_require_account', false);
         $allowGuest = (bool) $this->settingService->get('checkout_allow_guest', true);

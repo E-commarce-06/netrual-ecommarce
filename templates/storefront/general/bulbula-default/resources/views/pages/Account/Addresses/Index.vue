@@ -20,11 +20,41 @@ interface Address {
   type: 'shipping' | 'billing';
 }
 
+interface CountryOption {
+  name: string;
+  code: string;
+}
+
 interface Props {
   addresses: Address[];
+  countries: CountryOption[];
 }
 
 const props = defineProps<Props>();
+// Prefer Ethiopia for this local storefront, then the first active country.
+const defaultCountryCode = props.countries.find(country => country.code === 'ET')?.code
+  || props.countries[0]?.code
+  || 'ET';
+
+const countryCodeFor = (countryCodeOrName: string) => {
+  const normalized = countryCodeOrName.trim().toLowerCase();
+  return props.countries.find(country =>
+    country.code.toLowerCase() === normalized || country.name.toLowerCase() === normalized
+  )?.code || countryCodeOrName;
+};
+
+const countryName = (countryCodeOrName: string) => {
+  const normalized = countryCodeOrName.trim().toLowerCase();
+  return props.countries.find(country =>
+    country.code.toLowerCase() === normalized || country.name.toLowerCase() === normalized
+  )?.name || countryCodeOrName;
+};
+
+const isListedCountry = (countryCodeOrName: string) =>
+  props.countries.some(country =>
+    country.code.toLowerCase() === countryCodeOrName.trim().toLowerCase()
+    || country.name.toLowerCase() === countryCodeOrName.trim().toLowerCase()
+  );
 
 const showAddModal = ref(false);
 const showEditModal = ref(false);
@@ -41,7 +71,7 @@ const addForm = useForm({
   city: '',
   state: '',
   postal_code: '',
-  country: 'India',
+  country: defaultCountryCode,
   phone: '',
   is_default: false,
   address_type: 'shipping' as 'shipping' | 'billing',
@@ -90,10 +120,10 @@ const openEditModal = (address: Address) => {
   editForm.city = address.city;
   editForm.state = address.state;
   editForm.postal_code = address.postal_code;
-  editForm.country = address.country;
+  editForm.country = countryCodeFor(address.country);
   editForm.phone = address.phone;
   editForm.is_default = address.is_default;
-  editForm.type = address.type;
+  editForm.address_type = address.type;
   showEditModal.value = true;
 };
 
@@ -131,7 +161,7 @@ const formatAddress = (address: Address) => {
     address.address_line1,
     address.address_line2,
     `${address.city}, ${address.state} ${address.postal_code}`,
-    address.country,
+    countryName(address.country),
   ].filter(Boolean);
   return parts.join(', ');
 };
@@ -182,7 +212,7 @@ const formatAddress = (address: Address) => {
               <p>{{ address.address_line1 }}</p>
               <p v-if="address.address_line2">{{ address.address_line2 }}</p>
               <p>{{ address.city }}, {{ address.state }} {{ address.postal_code }}</p>
-              <p>{{ address.country }}</p>
+              <p>{{ countryName(address.country) }}</p>
               <p class="pt-1">{{ address.phone }}</p>
             </div>
 
@@ -350,6 +380,7 @@ const formatAddress = (address: Address) => {
               id="add-address2"
               v-model="addForm.address_line2"
               type="text"
+              placeholder="Area / sub-city / Woreda, building, landmark, or apartment (optional)"
               class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
             />
           </div>
@@ -370,7 +401,7 @@ const formatAddress = (address: Address) => {
             </div>
             <div>
               <label for="add-state" class="block text-sm font-medium text-gray-700 mb-1">
-                State <span class="text-red-500">*</span>
+                Region / State <span class="text-red-500">*</span>
               </label>
               <input
                 id="add-state"
@@ -400,7 +431,19 @@ const formatAddress = (address: Address) => {
               <label for="add-country" class="block text-sm font-medium text-gray-700 mb-1">
                 Country <span class="text-red-500">*</span>
               </label>
+              <select
+                v-if="props.countries.length > 0"
+                id="add-country"
+                v-model="addForm.country"
+                required
+                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              >
+                <option v-for="country in props.countries" :key="country.code" :value="country.code">
+                  {{ country.name }}
+                </option>
+              </select>
               <input
+                v-else
                 id="add-country"
                 v-model="addForm.country"
                 type="text"
@@ -518,7 +561,12 @@ const formatAddress = (address: Address) => {
 
           <div>
             <label class="block text-sm font-medium text-gray-700 mb-1">Address Line 2 (Optional)</label>
-            <input v-model="editForm.address_line2" type="text" class="w-full px-4 py-2 border border-gray-300 rounded-lg" />
+            <input
+              v-model="editForm.address_line2"
+              type="text"
+              placeholder="Area / sub-city / Woreda, building, landmark, or apartment (optional)"
+              class="w-full px-4 py-2 border border-gray-300 rounded-lg"
+            />
           </div>
 
           <div class="grid grid-cols-3 gap-4">
@@ -527,7 +575,7 @@ const formatAddress = (address: Address) => {
               <input v-model="editForm.city" type="text" required class="w-full px-4 py-2 border border-gray-300 rounded-lg" />
             </div>
             <div>
-              <label class="block text-sm font-medium text-gray-700 mb-1">State <span class="text-red-500">*</span></label>
+              <label class="block text-sm font-medium text-gray-700 mb-1">Region / State <span class="text-red-500">*</span></label>
               <input v-model="editForm.state" type="text" required class="w-full px-4 py-2 border border-gray-300 rounded-lg" />
             </div>
             <div>
@@ -539,7 +587,29 @@ const formatAddress = (address: Address) => {
           <div class="grid grid-cols-2 gap-4">
             <div>
               <label class="block text-sm font-medium text-gray-700 mb-1">Country <span class="text-red-500">*</span></label>
-              <input v-model="editForm.country" type="text" required class="w-full px-4 py-2 border border-gray-300 rounded-lg" />
+              <select
+                v-if="props.countries.length > 0"
+                v-model="editForm.country"
+                required
+                class="w-full px-4 py-2 border border-gray-300 rounded-lg"
+              >
+                <option
+                  v-if="editForm.country && !isListedCountry(editForm.country)"
+                  :value="editForm.country"
+                >
+                  {{ editForm.country }}
+                </option>
+                <option v-for="country in props.countries" :key="country.code" :value="country.code">
+                  {{ country.name }}
+                </option>
+              </select>
+              <input
+                v-else
+                v-model="editForm.country"
+                type="text"
+                required
+                class="w-full px-4 py-2 border border-gray-300 rounded-lg"
+              />
             </div>
             <div>
               <label class="block text-sm font-medium text-gray-700 mb-1">Phone <span class="text-red-500">*</span></label>

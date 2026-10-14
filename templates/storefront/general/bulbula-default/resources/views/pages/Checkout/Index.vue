@@ -68,6 +68,12 @@ interface ManualAccount {
   instructions?: string;
 }
 
+interface CountryOption {
+  id: number;
+  name: string;
+  code: string;
+}
+
 interface PaymentMethod {
   id: string;
   code: string;
@@ -94,6 +100,7 @@ interface Props {
   checkoutConfig: CheckoutConfig;
   userAddresses: Address[];
   paymentMethods: PaymentMethod[];
+  countries: CountryOption[];
   cartEmpty: boolean;
   error?: string;
 }
@@ -104,10 +111,17 @@ const page = usePage();
 const { formatPrice } = useCurrency();
 
 const requiresShipping = computed(() => props.cartSummary.requires_shipping !== false);
+// Prefer Ethiopia for this local storefront, then the first active country.
+const defaultCountryCode = props.countries.find(country => country.code === 'ET')?.code
+  || props.countries[0]?.code
+  || 'ET';
+const preferredShippingAddress = props.userAddresses.find(address => address.is_default)
+  || props.userAddresses[0]
+  || null;
 
 const processing = ref(false);
-const selectedAddressId = ref<number | null>(props.userAddresses.find(a => a.is_default)?.id || null);
-const useNewAddress = ref(!selectedAddressId.value);
+const selectedAddressId = ref<number | null>(preferredShippingAddress?.id ?? null);
+const useNewAddress = ref(!preferredShippingAddress);
 const selectedShippingId = ref(props.cartSummary.shipping.selected?.id || null);
 const selectedPaymentMethod = ref(props.paymentMethods.find(m => m.is_default)?.code || props.paymentMethods[0]?.code || 'cod');
 const manualPaymentAccounts = computed(() => props.paymentMethods.find(method => method.code === 'bank_transfer')?.manual_accounts || []);
@@ -151,7 +165,7 @@ const shippingAddress = ref<Address>({
   city: '',
   state: '',
   postal_code: '',
-  country: 'US',
+  country: defaultCountryCode,
   phone: '',
 });
 
@@ -164,7 +178,7 @@ const billingAddress = ref<Address>({
   city: '',
   state: '',
   postal_code: '',
-  country: 'US',
+  country: defaultCountryCode,
   phone: '',
 });
 
@@ -177,6 +191,13 @@ const currentUser = computed(() => {
   const auth = (page.props as any).auth;
   return auth?.user || null;
 });
+
+const countryName = (countryCodeOrName: string) => {
+  const normalized = countryCodeOrName.trim().toLowerCase();
+  return props.countries.find(country =>
+    country.code.toLowerCase() === normalized || country.name.toLowerCase() === normalized
+  )?.name || countryCodeOrName;
+};
 
 const mustCreateAccount = computed(() => {
   return !isAuthenticated.value
@@ -200,8 +221,15 @@ watch(mustCreateAccount, (required) => {
 
 const selectedAddress = computed(() => {
   if (!selectedAddressId.value) return null;
-  return props.userAddresses.find(a => a.id === selectedAddressId.value);
+  return props.userAddresses.find(address => address.id === selectedAddressId.value) || null;
 });
+
+const isUsingSavedShippingAddress = computed(() =>
+  requiresShipping.value
+  && isAuthenticated.value
+  && !useNewAddress.value
+  && !!selectedAddress.value
+);
 
 const selectAddress = (addressId: number) => {
   selectedAddressId.value = addressId;
@@ -358,37 +386,41 @@ const submitOrder = () => {
     fieldErrors.value.email = 'Email address is required';
   }
 
-  // Validate shipping address - name
-  if (!shippingAddress.value.first_name) {
-    fieldErrors.value.first_name = 'First name is required';
-  }
-  if (!shippingAddress.value.last_name) {
-    fieldErrors.value.last_name = 'Last name is required';
+  const usesSavedShippingAddress = isUsingSavedShippingAddress.value;
+
+  // Saved addresses contain their own contact name. Digital-only orders still
+  // require a contact name, but no delivery address.
+  if (!requiresShipping.value || !usesSavedShippingAddress) {
+    if (!shippingAddress.value.first_name) {
+      fieldErrors.value.first_name = 'First name is required';
+    }
+    if (!shippingAddress.value.last_name) {
+      fieldErrors.value.last_name = 'Last name is required';
+    }
   }
 
   if (requiresShipping.value) {
-    // Validate street address
-    if (!shippingAddress.value.address_line1) {
-      fieldErrors.value.address = 'Street address is required';
+    if (!usesSavedShippingAddress) {
+      if (!shippingAddress.value.address_line1) {
+        fieldErrors.value.address = 'Street address is required';
+      }
+      if (!shippingAddress.value.city) {
+        fieldErrors.value.city = 'City is required';
+      }
+      if (!shippingAddress.value.state) {
+        fieldErrors.value.state = 'Region / state is required';
+      }
+      if (!shippingAddress.value.postal_code) {
+        fieldErrors.value.postal_code = 'Postal code is required';
+      }
+      if (!shippingAddress.value.country) {
+        fieldErrors.value.country = 'Country is required';
+      }
+      if (!shippingAddress.value.phone) {
+        fieldErrors.value.phone = 'Phone number is required';
+      }
     }
 
-    // Validate city, state, postal code
-    if (!shippingAddress.value.city) {
-      fieldErrors.value.city = 'City is required';
-    }
-    if (!shippingAddress.value.state) {
-      fieldErrors.value.state = 'State is required';
-    }
-    if (!shippingAddress.value.postal_code) {
-      fieldErrors.value.postal_code = 'Postal code is required';
-    }
-
-    // Validate phone number
-    if (!shippingAddress.value.phone) {
-      fieldErrors.value.phone = 'Phone number is required';
-    }
-
-    // Validate shipping method selection
     if (!selectedShippingId.value) {
       fieldErrors.value.shipping_method = 'Please select a shipping method';
     }
@@ -463,8 +495,8 @@ const submitOrder = () => {
 
   // Add shipping / billing address
   if (requiresShipping.value) {
-    if (isAuthenticated.value && !useNewAddress.value && selectedAddress.value) {
-      formData.shipping_address = selectedAddress.value;
+    if (isUsingSavedShippingAddress.value && selectedAddress.value) {
+      formData.shipping_address_id = selectedAddress.value.id;
     } else {
       formData.shipping_address = shippingAddress.value;
     }
@@ -695,7 +727,13 @@ const submitOrder = () => {
 
           <!-- Shipping Address (physical carts) / Billing contact (digital-only) -->
           <div class="bg-white p-6 rounded-lg shadow">
-            <h2 class="text-xl font-bold mb-4">{{ requiresShipping ? 'Shipping Address' : 'Billing Details' }}</h2>
+            <h2 class="text-xl font-bold mb-4">{{ requiresShipping ? 'Shipping Address' : 'Order Contact' }}</h2>
+            <p v-if="requiresShipping" class="mb-4 rounded-md bg-blue-50 p-3 text-sm text-blue-800">
+              The shipping address is also saved as the order’s billing snapshot for invoicing. Manual-payment proof is collected separately, so you don’t need to enter the same address twice.
+            </p>
+            <p v-else class="mb-4 rounded-md bg-blue-50 p-3 text-sm text-blue-800">
+              Digital orders don’t need a delivery address. Your name is kept as the order and invoice contact.
+            </p>
             
             <!-- Saved Addresses (for authenticated users) -->
             <div v-if="requiresShipping && isAuthenticated && userAddresses.length > 0" class="mb-4">
@@ -717,7 +755,7 @@ const submitOrder = () => {
                     <p class="text-sm text-gray-600">{{ address.address_line1 }}</p>
                     <p v-if="address.address_line2" class="text-sm text-gray-600">{{ address.address_line2 }}</p>
                     <p class="text-sm text-gray-600">{{ address.city }}, {{ address.state }} {{ address.postal_code }}</p>
-                    <p class="text-sm text-gray-600">{{ address.country }}</p>
+                    <p class="text-sm text-gray-600">{{ countryName(address.country) }}</p>
                   </div>
                 </label>
               </div>
@@ -730,6 +768,9 @@ const submitOrder = () => {
                 + Use a different address
               </button>
             </div>
+            <p v-if="fieldErrors.shipping_address_id" class="mb-3 text-sm text-red-600">
+              {{ fieldErrors.shipping_address_id }}
+            </p>
 
             <!-- New Address Form -->
             <div v-if="!isAuthenticated || useNewAddress" class="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -787,7 +828,7 @@ const submitOrder = () => {
                   v-model="shippingAddress.address_line2"
                   type="text"
                   class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
-                  placeholder="Apartment, suite, etc. (optional)"
+                  placeholder="Area / sub-city / Woreda, building, or landmark (optional)"
                 />
               </div>
               <div>
@@ -804,7 +845,7 @@ const submitOrder = () => {
                 <p v-if="fieldErrors.city" class="mt-1 text-sm text-red-600">{{ fieldErrors.city }}</p>
               </div>
               <div>
-                <label class="block text-sm font-medium mb-2">State *</label>
+                <label class="block text-sm font-medium mb-2">Region / State *</label>
                 <input
                   v-model="shippingAddress.state"
                   type="text"
@@ -832,15 +873,23 @@ const submitOrder = () => {
               <div>
                 <label class="block text-sm font-medium mb-2">Country *</label>
                 <select
+                  v-if="props.countries.length > 0"
                   v-model="shippingAddress.country"
                   required
                   class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
                 >
-                  <option value="US">United States</option>
-                  <option value="CA">Canada</option>
-                  <option value="IN">India</option>
-                  <option value="GB">United Kingdom</option>
+                  <option v-for="country in props.countries" :key="country.code" :value="country.code">
+                    {{ country.name }}
+                  </option>
                 </select>
+                <input
+                  v-else
+                  v-model="shippingAddress.country"
+                  type="text"
+                  required
+                  class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+                />
+                <p v-if="fieldErrors.country" class="mt-1 text-sm text-red-600">{{ fieldErrors.country }}</p>
               </div>
               <div class="md:col-span-2">
                 <label class="block text-sm font-medium mb-2">Phone Number *</label>
