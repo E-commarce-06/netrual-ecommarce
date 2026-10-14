@@ -582,6 +582,16 @@ class AdminMenuSeeder extends Seeder
                 'location' => 'admin',
                 'active' => true,
             ],
+            [
+                'key' => 'system-authentication',
+                'title' => 'Authentication',
+                'icon' => 'shield-check',
+                'route' => 'admin.system.authentication.google.index',
+                'parent_id' => $systemId,
+                'order' => 10,
+                'location' => 'admin',
+                'active' => true,
+            ],
         ];
 
         // Insert child menus

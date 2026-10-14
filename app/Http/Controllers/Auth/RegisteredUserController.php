@@ -13,22 +13,28 @@ use Illuminate\Validation\Rules;
 use Inertia\Inertia;
 use Inertia\Response;
 use Bulbula\Core\Services\ThemeViewResolver;
+use Bulbula\SocialAuth\Services\GoogleAuthSettings;
 
 class RegisteredUserController extends Controller
 {
     protected ThemeViewResolver $themeResolver;
 
-    public function __construct(ThemeViewResolver $themeResolver)
-    {
+    public function __construct(
+        ThemeViewResolver $themeResolver,
+        protected GoogleAuthSettings $googleAuthSettings
+    ) {
         $this->themeResolver = $themeResolver;
     }
 
     /**
      * Show the registration page.
      */
-    public function create(): Response
+    public function create(Request $request): Response
     {
-        return Inertia::render($this->themeResolver->resolve('Auth/Register'));
+        return Inertia::render($this->themeResolver->resolve('Auth/Register'), [
+            'googleSignUpEnabled' => $this->googleAuthSettings->webRegistrationEnabled(),
+            'googleAuthError' => $request->session()->get('error'),
+        ]);
     }
 
     /**

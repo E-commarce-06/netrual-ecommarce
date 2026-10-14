@@ -24,6 +24,7 @@ class AdminMenuSyncService
         $marketingId = $this->parentId('marketing');
         $settingsId = $this->parentId('settings');
         $catalogId = $this->parentId('catalog');
+        $systemId = $this->parentId('system');
 
         if ($marketingId) {
             $this->syncMarketingChildren($marketingId);
@@ -36,6 +37,10 @@ class AdminMenuSyncService
 
         if ($catalogId) {
             $this->syncCatalogQuoteRequests($catalogId);
+        }
+
+        if ($systemId) {
+            $this->syncSystemAuthentication($systemId);
         }
     }
 
@@ -176,5 +181,25 @@ class AdminMenuSyncService
                 'order' => 6,
                 'updated_at' => now(),
             ]);
+    }
+
+    private function syncSystemAuthentication(int $systemId): void
+    {
+        DB::table('menu_items')->updateOrInsert(
+            ['key' => 'system-authentication'],
+            [
+                'title' => 'Authentication',
+                'icon' => 'shield-check',
+                'route' => 'admin.system.authentication.google.index',
+                'url' => null,
+                'parent_id' => $systemId,
+                'order' => 10,
+                'permission' => null,
+                'location' => 'admin',
+                'active' => true,
+                'updated_at' => now(),
+                'created_at' => now(),
+            ]
+        );
     }
 }

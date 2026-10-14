@@ -13,13 +13,16 @@ use Inertia\Inertia;
 use Inertia\Response;
 use Laravel\Fortify\Features;
 use Bulbula\Core\Services\ThemeViewResolver;
+use Bulbula\SocialAuth\Services\GoogleAuthSettings;
 
 class AuthenticatedSessionController extends Controller
 {
     protected ThemeViewResolver $themeResolver;
 
-    public function __construct(ThemeViewResolver $themeResolver)
-    {
+    public function __construct(
+        ThemeViewResolver $themeResolver,
+        protected GoogleAuthSettings $googleAuthSettings
+    ) {
         $this->themeResolver = $themeResolver;
     }
 
@@ -31,6 +34,8 @@ class AuthenticatedSessionController extends Controller
         return Inertia::render($this->themeResolver->resolve('Auth/Login'), [
             'canResetPassword' => Route::has('password.request'),
             'status' => $request->session()->get('status'),
+            'googleSignInEnabled' => $this->googleAuthSettings->webLoginEnabled(),
+            'googleAuthError' => $request->session()->get('error'),
         ]);
     }
 

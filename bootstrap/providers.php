@@ -24,4 +24,5 @@ return [
     Bulbula\Reports\ReportsServiceProvider::class,
     Bulbula\Marketing\MarketingServiceProvider::class,
     Bulbula\API\Providers\APIServiceProvider::class,
+    Bulbula\SocialAuth\Providers\SocialAuthServiceProvider::class,
 ];

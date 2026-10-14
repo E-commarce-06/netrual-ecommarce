@@ -22,11 +22,13 @@
     "require": {
         "php": "^8.3",
         "aws/aws-sdk-php": "^3.357",
+        "google/apiclient": "^2.20.1",
         "inertiajs/inertia-laravel": "^2.0",
         "intervention/image": "^3.0",
         "laravel/fortify": "^1.30",
         "laravel/framework": "^13.0",
         "laravel/sanctum": "^4.0",
+        "laravel/socialite": "^5.31",
         "laravel/tinker": "^3.0",
         "laravel/wayfinder": "^0.1.9",
         "mews/purifier": "^3.4.4",
@@ -35,7 +37,8 @@
         "phonepe/pg-php-sdk-v2": "^2.0",
         "razorpay/razorpay": "^2.9",
         "spatie/laravel-backup": "^10.0",
-        "stripe/stripe-php": "^18.0"
+        "stripe/stripe-php": "^18.0",
+        "symfony/cache": "^7.4"
     },
     "require-dev": {
         "fakerphp/faker": "^1.23",
@@ -79,6 +82,7 @@
             "Bulbula\\Reports\\": "packages/Bulbula/Reports/src/",
             "Bulbula\\Marketing\\": "packages/Bulbula/Marketing/src/",
             "Bulbula\\API\\": "packages/Bulbula/API/",
+            "Bulbula\\SocialAuth\\": "packages/Bulbula/SocialAuth/src/",
             "Bulbula\\Setup\\": "packages/Bulbula/Setup/src/",
             "Bulbula\\Setup\\Database\\Seeders\\": "packages/Bulbula/Setup/src/Database/Seeders/",
             "Bulbula\\Blog\\": "packages/Bulbula/Blog/src/"
@@ -111,6 +115,9 @@
             "@php artisan config:clear --ansi",
             "@php artisan test"
         ],
+        "pre-autoload-dump": [
+            "Google\\Task\\Composer::cleanup"
+        ],
         "post-autoload-dump": [
             "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
             "@php artisan package:discover --ansi"
@@ -130,6 +137,9 @@
         ]
     },
     "extra": {
+        "google/apiclient-services": [
+            ""
+        ],
         "laravel": {
             "dont-discover": []
         }
@@ -141,6 +151,9 @@
         "allow-plugins": {
             "pestphp/pest-plugin": true,
             "php-http/discovery": true
+        },
+        "platform": {
+            "php": "8.3.0"
         }
     },
     "archive": {

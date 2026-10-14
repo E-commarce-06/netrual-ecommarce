@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import RegisteredUserController from '@/actions/App/Http/Controllers/Auth/RegisteredUserController';
+import GoogleAuthButton from '@/components/auth/GoogleAuthButton.vue';
 import InputError from '@/components/InputError.vue';
 import TextLink from '@/components/TextLink.vue';
 import { Button } from '@/components/ui/button';
@@ -9,6 +10,11 @@ import AuthBase from '@/layouts/AuthLayout.vue';
 import { login } from '@/routes';
 import { Form, Head } from '@inertiajs/vue3';
 import { LoaderCircle } from 'lucide-vue-next';
+
+defineProps<{
+    googleSignUpEnabled?: boolean;
+    googleAuthError?: string | null;
+}>();
 </script>
 
 <template>
@@ -17,6 +23,22 @@ import { LoaderCircle } from 'lucide-vue-next';
         description="Enter your details below to create your account"
     >
         <Head title="Register" />
+
+        <div
+            v-if="googleAuthError"
+            role="alert"
+            class="mb-4 rounded-md border border-red-200 bg-red-50 p-3 text-center text-sm text-red-700"
+        >
+            {{ googleAuthError }}
+        </div>
+
+        <div v-if="googleSignUpEnabled" class="mb-6 space-y-5">
+            <GoogleAuthButton label="Sign up with Google" />
+            <div class="relative flex items-center justify-center text-xs text-muted-foreground">
+                <span class="absolute inset-x-0 border-t border-border"></span>
+                <span class="relative bg-background px-3">or create an account with email</span>
+            </div>
+        </div>
 
         <Form
             v-bind="RegisteredUserController.store.form()"

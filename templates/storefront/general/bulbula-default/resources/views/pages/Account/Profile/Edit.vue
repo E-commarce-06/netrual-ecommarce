@@ -152,6 +152,18 @@ const confirmDelete = () => {
             </form>
           </div>
 
+          <!-- Connected accounts -->
+          <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+            <h2 class="text-xl font-semibold mb-2">Connected accounts</h2>
+            <p class="mb-4 text-sm text-gray-600">Manage the sign-in methods linked to your customer account.</p>
+            <a
+              href="/account/security/social"
+              class="inline-flex items-center rounded-md border border-gray-300 px-4 py-2 text-sm font-medium text-gray-800 hover:bg-gray-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
+            >
+              Manage connected accounts
+            </a>
+          </div>
+
           <!-- Change Password -->
           <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
             <h2 class="text-xl font-semibold mb-6">Change Password</h2>
