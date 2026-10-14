@@ -59,6 +59,10 @@ test('manual transfer is listed and its instructions and multiple receiving acco
         ],
     ];
 
+    // Laravel converts blank optional form values to null before validation/storage.
+    $expectedDestinations = $destinations;
+    $expectedDestinations[1]['instructions'] = null;
+
     $instructions = 'Transfer the exact order total and upload the receipt for verification.';
 
     $this->from($configureUrl)
@@ -83,7 +87,7 @@ test('manual transfer is listed and its instructions and multiple receiving acco
 
     expect($method->description)->toBe('Choose a business bank account or mobile wallet.')
         ->and($method->instructions)->toBe($instructions)
-        ->and($method->configuration['account_destinations'])->toBe($destinations);
+        ->and($method->configuration['account_destinations'])->toBe($expectedDestinations);
 
     // Running the installer seeder again must not erase merchant-owned details.
     $this->seed(PaymentMethodsTableSeeder::class);
@@ -91,5 +95,5 @@ test('manual transfer is listed and its instructions and multiple receiving acco
 
     expect($method->description)->toBe('Choose a business bank account or mobile wallet.')
         ->and($method->instructions)->toBe($instructions)
-        ->and($method->configuration['account_destinations'])->toBe($destinations);
+        ->and($method->configuration['account_destinations'])->toBe($expectedDestinations);
 });

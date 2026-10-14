@@ -85,11 +85,16 @@ test('admin order details show manual transfer evidence through the protected pr
             ->has('reasonTemplates')
         );
 
-    $this->get(route('admin.sales.manual-payments.proof', $submission))
+    $proofResponse = $this->get(route('admin.sales.manual-payments.proof', $submission))
         ->assertOk()
         ->assertHeader('Content-Type', 'image/png')
-        ->assertHeader('Cache-Control', 'private, no-store, max-age=0')
         ->assertHeader('Content-Security-Policy', 'sandbox');
+
+    $cacheControlDirectives = array_map(
+        static fn (string $directive): string => strtolower(trim($directive)),
+        explode(',', (string) $proofResponse->headers->get('Cache-Control')),
+    );
+    expect($cacheControlDirectives)->toContain('private', 'no-store', 'max-age=0');
 });
 
 test('staff can reject a transfer with a saved reason and the customer sees the decision and reason', function () {
@@ -132,7 +137,7 @@ test('staff can reject a transfer with a saved reason and the customer sees the 
     expect($renderedEmail['html'])->toContain(nl2br(e($reason)))
         ->and($renderedEmail['text'])->toContain($reason);
 
-    $this->actingAs($customer)
+    $this->actingAs($customer, 'web')
         ->get(route('shop.account.orders.show', $order->id))
         ->assertOk()
         ->assertInertia(fn (Assert $page) => $page
