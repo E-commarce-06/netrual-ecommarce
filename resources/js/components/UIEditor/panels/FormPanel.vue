@@ -200,6 +200,7 @@ function moveField(index: number, dir: -1 | 1) {
 
 <style scoped>
 @reference "tailwindcss";
+@custom-variant dark (&:is(.dark *));
 .uie-input {
   @apply w-full px-2 py-1.5 text-sm border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent;
 }

@@ -109,6 +109,7 @@ function onKeyDown(e: KeyboardEvent) {
 
 <style scoped>
 @reference "tailwindcss";
+@custom-variant dark (&:is(.dark *));
 .uie-code-textarea {
   @apply w-full px-3 py-2.5 text-xs font-mono border border-gray-300 dark:border-gray-600 rounded-lg bg-gray-900 dark:bg-gray-950 text-green-400 dark:text-green-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-y;
   tab-size: 2;

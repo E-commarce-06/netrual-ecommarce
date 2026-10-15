@@ -441,3 +441,76 @@ html:not(.dark) .admin-contrast-scope :is(.bg-gray-800, .bg-gray-900).text-gray-
 html:not(.dark) .admin-contrast-scope :is(.bg-gray-800, .bg-gray-900).text-gray-400:not([class*='hover:text-'], [class*='group-hover:text-']) {
     color: #d1d5db;
 }
+
+/* Dark mode: EVERY text field gets a dark surface and light text.
+   This must beat both the light-surface rule above and component-scoped
+   field styles (e.g. .uie-input[data-v-…] in the UI-editor panels, whose
+   @apply dark styles previously followed prefers-color-scheme and could
+   split the cascade — white background from one rule, white text from
+   another — leaving typed text invisible). The doubled scope class
+   raises specificity above those single-class component rules. */
+.dark .admin-contrast-scope.admin-contrast-scope :where(input, select, textarea):not(
+    [type='checkbox'],
+    [type='radio'],
+    [type='range'],
+    [type='submit'],
+    [type='button'],
+    [type='reset'],
+    [type='hidden'],
+    [type='image'],
+    [type='color'],
+    [type='file'],
+    [data-slot='input'],
+    [data-slot='select'],
+    [data-slot='textarea']
+) {
+    background-color: #1f2937;
+    color: #f9fafb;
+    border-color: #9ca3af;
+    color-scheme: dark;
+}
+
+.dark .admin-contrast-scope.admin-contrast-scope :where(input, select, textarea):not(
+    [type='checkbox'],
+    [type='radio'],
+    [type='range'],
+    [type='submit'],
+    [type='button'],
+    [type='reset'],
+    [type='hidden'],
+    [type='image'],
+    [type='color'],
+    [type='file'],
+    [data-slot='input'],
+    [data-slot='select'],
+    [data-slot='textarea']
+)::placeholder {
+    color: #d1d5db;
+    opacity: 1;
+}
+
+.dark .admin-contrast-scope.admin-contrast-scope :where(select):not(
+    [data-slot='select']
+) option {
+    background-color: #1f2937;
+    color: #f9fafb;
+}
+
+.dark .admin-contrast-scope.admin-contrast-scope :where(input, select, textarea):not(
+    [type='checkbox'],
+    [type='radio'],
+    [type='range'],
+    [type='submit'],
+    [type='button'],
+    [type='reset'],
+    [type='hidden'],
+    [type='image'],
+    [type='color'],
+    [type='file'],
+    [data-slot='input'],
+    [data-slot='select'],
+    [data-slot='textarea']
+):disabled {
+    color: #d1d5db;
+    opacity: 0.75;
+}

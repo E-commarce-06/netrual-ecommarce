@@ -241,6 +241,7 @@ watch(() => props.modelValue, (value) => {
 
 <style>
 @reference "tailwindcss";
+@custom-variant dark (&:is(.dark *));
 
 /* TipTap Editor Styles */
 .ProseMirror {
