@@ -490,6 +490,16 @@ class AdminMenuSeeder extends Seeder
                 'location' => 'admin',
                 'active' => true,
             ],
+            [
+                'key' => 'settings-theme',
+                'title' => 'Theme',
+                'icon' => 'palette',
+                'route' => 'admin.settings.theme.index',
+                'parent_id' => $settingsId,
+                'order' => 10,
+                'location' => 'admin',
+                'active' => true,
+            ],
 
             // System Children (Maintenance tools)
             [

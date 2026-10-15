@@ -33,6 +33,7 @@ class AdminMenuSyncService
 
         if ($settingsId) {
             $this->syncSettingsMcp($settingsId);
+            $this->syncSettingsTheme($settingsId);
         }
 
         if ($catalogId) {
@@ -145,6 +146,26 @@ class AdminMenuSyncService
                 'url' => null,
                 'parent_id' => $settingsId,
                 'order' => 9,
+                'permission' => null,
+                'location' => 'admin',
+                'active' => true,
+                'updated_at' => now(),
+                'created_at' => now(),
+            ]
+        );
+    }
+
+    private function syncSettingsTheme(int $settingsId): void
+    {
+        DB::table('menu_items')->updateOrInsert(
+            ['key' => 'settings-theme'],
+            [
+                'title' => 'Theme',
+                'icon' => 'palette',
+                'route' => 'admin.settings.theme.index',
+                'url' => null,
+                'parent_id' => $settingsId,
+                'order' => 10,
                 'permission' => null,
                 'location' => 'admin',
                 'active' => true,

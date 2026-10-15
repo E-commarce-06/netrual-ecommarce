@@ -28,6 +28,10 @@ Route::middleware(['web', 'auth:admin'])
         Route::get('general', [GeneralSettingsController::class, 'index'])->name('general.index');
         Route::post('general', [GeneralSettingsController::class, 'save'])->name('general.save');
 
+        // Theme Settings (active theme: colors, typography, layout, features)
+        Route::get('theme', [ThemeSettingsController::class, 'index'])->name('theme.index');
+        Route::post('theme', [ThemeSettingsController::class, 'save'])->name('theme.save');
+
         // Store Configuration
         Route::get('store', [StoreConfigurationController::class, 'index'])->name('store.index');
         Route::post('store', [StoreConfigurationController::class, 'save'])->name('store.save');
