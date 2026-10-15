@@ -20,6 +20,24 @@ class HomepageEditorController extends Controller
     ) {}
 
     /**
+     * Open the block editor for the homepage.
+     *
+     * The editor itself is page-based, so redirect to the editor of the
+     * CMS page flagged is_homepage. Falls back to the pages list when no
+     * homepage page exists yet (older installs before the backfill).
+     */
+    public function editor(): \Illuminate\Http\RedirectResponse
+    {
+        $page = Page::homepage()->first();
+
+        if ($page) {
+            return redirect()->route('admin.uieditor.pages.editor', $page);
+        }
+
+        return redirect('/admin/content/pages');
+    }
+
+    /**
      * Save the homepage layout as a draft.
      */
     public function save(Request $request): JsonResponse
