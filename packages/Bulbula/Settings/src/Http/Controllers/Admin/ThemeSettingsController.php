@@ -90,9 +90,9 @@ class ThemeSettingsController extends Controller
     }
 
     /**
-     * Flattened effective values: schema defaults, overlaid with the
-     * theme.json config defaults, overlaid with saved DB settings.
-     * Keys are "{section}.{field}" to match the storefront flattening.
+     * Effective values, nested by section → field: schema defaults,
+     * overlaid with the theme.json config defaults, overlaid with
+     * saved DB settings (themes.settings, also nested).
      */
     private function effectiveValues(Theme $theme, array $schema): array
     {
@@ -101,18 +101,18 @@ class ThemeSettingsController extends Controller
         foreach ($schema['sections'] ?? [] as $section) {
             foreach ($section['fields'] ?? [] as $field) {
                 if (isset($section['id'], $field['id']) && array_key_exists('default', $field)) {
-                    $values[$section['id'] . '.' . $field['id']] = $field['default'];
+                    $values[$section['id']][$field['id']] = $field['default'];
                 }
             }
         }
 
         $configDefaults = $theme->getConfig()['settings'] ?? [];
         if (is_array($configDefaults)) {
-            $values = array_merge($values, $this->flatten($configDefaults));
+            $values = array_replace_recursive($values, $configDefaults);
         }
 
         if (is_array($theme->settings)) {
-            $values = array_merge($values, $this->flatten($theme->settings));
+            $values = array_replace_recursive($values, $theme->settings);
         }
 
         return $values;
@@ -151,18 +151,4 @@ class ThemeSettingsController extends Controller
         return $value;
     }
 
-    private function flatten(array $settings, string $prefix = ''): array
-    {
-        $flat = [];
-        foreach ($settings as $key => $value) {
-            $fullKey = $prefix === '' ? (string) $key : $prefix . '.' . $key;
-            if (is_array($value) && ! array_is_list($value)) {
-                $flat = array_merge($flat, $this->flatten($value, $fullKey));
-            } else {
-                $flat[$fullKey] = $value;
-            }
-        }
-
-        return $flat;
-    }
 }

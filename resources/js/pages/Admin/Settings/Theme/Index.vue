@@ -25,17 +25,15 @@ interface ThemeSection {
 const props = defineProps<{
     theme: { name: string; slug: string } | null;
     sections: ThemeSection[];
-    values: Record<string, unknown>;
+    values: Record<string, Record<string, unknown>>;
 }>();
 
-// Build the nested settings object (settings[section][field]) from the
-// flattened "section.field" values sent by the server.
+// The server sends effective values nested by section → field.
 const initial: Record<string, Record<string, unknown>> = {};
 for (const section of props.sections) {
     initial[section.id] = {};
     for (const field of section.fields) {
-        const key = `${section.id}.${field.id}`;
-        initial[section.id][field.id] = props.values[key] ?? field.default ?? '';
+        initial[section.id][field.id] = props.values[section.id]?.[field.id] ?? field.default ?? '';
     }
 }
 
