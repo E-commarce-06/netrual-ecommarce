@@ -22,6 +22,7 @@ class AdminMenuSyncService
         }
 
         $marketingId = $this->parentId('marketing');
+        $contentId = $this->parentId('content');
         $settingsId = $this->parentId('settings');
         $catalogId = $this->parentId('catalog');
         $systemId = $this->parentId('system');
@@ -166,6 +167,26 @@ class AdminMenuSyncService
                 'url' => null,
                 'parent_id' => $settingsId,
                 'order' => 10,
+                'permission' => null,
+                'location' => 'admin',
+                'active' => true,
+                'updated_at' => now(),
+                'created_at' => now(),
+            ]
+        );
+    }
+
+    private function syncContentHomepage(int $contentId): void
+    {
+        DB::table('menu_items')->updateOrInsert(
+            ['key' => 'content-homepage'],
+            [
+                'title' => 'Homepage',
+                'icon' => 'home',
+                'route' => 'admin.uieditor.homepage.editor',
+                'url' => null,
+                'parent_id' => $contentId,
+                'order' => 0,
                 'permission' => null,
                 'location' => 'admin',
                 'active' => true,

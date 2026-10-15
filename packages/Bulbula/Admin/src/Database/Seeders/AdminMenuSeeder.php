@@ -306,6 +306,16 @@ class AdminMenuSeeder extends Seeder
 
             // Content Children
             [
+                'key' => 'content-homepage',
+                'title' => 'Homepage',
+                'icon' => 'home',
+                'route' => 'admin.uieditor.homepage.editor',
+                'parent_id' => $contentId,
+                'order' => 0,
+                'location' => 'admin',
+                'active' => true,
+            ],
+            [
                 'key' => 'content-pages',
                 'title' => 'Pages',
                 'icon' => 'book-open',

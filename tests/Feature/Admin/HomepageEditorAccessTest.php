@@ -56,6 +56,14 @@ test('admin can open the homepage in the block editor', function () {
     );
 });
 
+test('the homepage editor shortcut redirects into the homepage block editor', function () {
+    $homepage = Page::homepage()->firstOrFail();
+
+    $this->actingAs($this->admin, 'admin')
+        ->get(route('admin.uieditor.homepage.editor'))
+        ->assertRedirect(route('admin.uieditor.pages.editor', $homepage));
+});
+
 test('guests cannot open the homepage block editor', function () {
     $homepage = Page::homepage()->firstOrFail();
 

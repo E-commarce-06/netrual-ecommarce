@@ -24,13 +24,12 @@ Route::middleware(['web', 'auth:admin'])->prefix('admin')->name('admin.')->group
         });
 
         // ── Homepage Editor ───────────────────────────────────────────────────
-        // The homepage is now just another page in the Pages list (is_homepage = true).
-        // The GET /homepage/editor URL redirects to the pages list for bookmarks.
+        // The homepage is edited through the CMS page flagged is_homepage = true.
+        // GET /homepage/editor redirects straight into that page's block editor
+        // (falling back to the pages list when no homepage page exists yet).
         // The save/publish/unpublish POST routes are kept because EditorController delegates here.
         Route::prefix('homepage')->name('homepage.')->group(function () {
-            Route::get('/editor', function () {
-                return redirect('/admin/content/pages');
-            })->name('editor');
+            Route::get('/editor', [HomepageEditorController::class, 'editor'])->name('editor');
             Route::post('/save',     [HomepageEditorController::class, 'save'])->name('save');
             Route::post('/publish',  [HomepageEditorController::class, 'publish'])->name('publish');
             Route::post('/unpublish',[HomepageEditorController::class, 'unpublish'])->name('unpublish');

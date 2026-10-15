@@ -9,6 +9,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
+use Bulbula\CMS\Models\Page;
 use Bulbula\UIEditor\Models\PageLayout;
 use Bulbula\UIEditor\Services\LayoutService;
 

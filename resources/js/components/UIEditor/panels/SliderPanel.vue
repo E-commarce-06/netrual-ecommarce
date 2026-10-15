@@ -62,6 +62,23 @@ function removeSlide(idx: number) {
   if (slides.value.length <= 1) return
   update('slides', slides.value.filter((_, i) => i !== idx))
 }
+
+function moveSlide(idx: number, direction: -1 | 1) {
+  const target = idx + direction
+  if (target < 0 || target >= slides.value.length) return
+  const copy = [...slides.value]
+  const [moved] = copy.splice(idx, 1)
+  copy.splice(target, 0, moved)
+  update('slides', copy)
+}
+
+function duplicateSlide(idx: number) {
+  const source = slides.value[idx]
+  if (!source) return
+  const copy = [...slides.value]
+  copy.splice(idx + 1, 0, { ...source, id: `s${Date.now()}` })
+  update('slides', copy)
+}
 </script>
 
 <template>
@@ -106,11 +123,30 @@ function removeSlide(idx: number) {
       <div v-for="(slide, idx) in slides" :key="slide.id ?? idx" class="rounded-lg border border-gray-200 dark:border-gray-700 overflow-hidden">
         <div class="flex items-center justify-between px-3 py-2 bg-gray-50 dark:bg-gray-800">
           <span class="text-xs font-semibold text-gray-600 dark:text-gray-400">Slide {{ idx + 1 }}</span>
-          <button
-            v-if="slides.length > 1"
-            @click="removeSlide(idx)"
-            class="text-xs text-red-500 hover:text-red-700"
-          >Remove</button>
+          <span class="flex items-center gap-2">
+            <button
+              v-if="idx > 0"
+              @click="moveSlide(idx, -1)"
+              class="text-xs text-gray-500 hover:text-blue-600 dark:text-gray-400 dark:hover:text-blue-400"
+              title="Move slide up"
+            >↑ Up</button>
+            <button
+              v-if="idx < slides.length - 1"
+              @click="moveSlide(idx, 1)"
+              class="text-xs text-gray-500 hover:text-blue-600 dark:text-gray-400 dark:hover:text-blue-400"
+              title="Move slide down"
+            >↓ Down</button>
+            <button
+              @click="duplicateSlide(idx)"
+              class="text-xs text-gray-500 hover:text-blue-600 dark:text-gray-400 dark:hover:text-blue-400"
+              title="Duplicate slide"
+            >Duplicate</button>
+            <button
+              v-if="slides.length > 1"
+              @click="removeSlide(idx)"
+              class="text-xs text-red-500 hover:text-red-700"
+            >Remove</button>
+          </span>
         </div>
         <div class="p-3 space-y-3">
           <!-- Image field with media picker -->

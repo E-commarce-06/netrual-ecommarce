@@ -49,6 +49,7 @@ import {
   RefreshCw,
   Save,
   Palette,
+  Home,
   Paintbrush,
   SlidersHorizontal,
 } from 'lucide-vue-next'
@@ -105,6 +106,7 @@ export function useMenuIcons() {
     'refresh-cw': RefreshCw,
     'save': Save,
     'palette': Palette,
+    'home': Home,
     'brush': Paintbrush,
     'sliders': SlidersHorizontal,
     'message-circle': MessageCircle,
