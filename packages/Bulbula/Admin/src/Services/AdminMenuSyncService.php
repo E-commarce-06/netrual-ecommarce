@@ -37,6 +37,10 @@ class AdminMenuSyncService
             $this->syncSettingsTheme($settingsId);
         }
 
+        if ($contentId) {
+            $this->syncContentHomepage($contentId);
+        }
+
         if ($catalogId) {
             $this->syncCatalogQuoteRequests($catalogId);
         }
