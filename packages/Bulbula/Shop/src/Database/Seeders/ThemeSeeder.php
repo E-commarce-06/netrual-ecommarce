@@ -5,6 +5,7 @@ namespace Bulbula\Shop\Database\Seeders;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Artisan;
 use Bulbula\Core\Models\Theme;
+use Bulbula\CMS\Models\Page;
 use Bulbula\CMS\Services\StorefrontMenuSyncService;
 use Bulbula\UIEditor\Models\PageLayout;
 use Bulbula\UIEditor\Database\Seeders\UIEditorPageSeeder;
@@ -45,6 +46,31 @@ class ThemeSeeder extends Seeder
         // Publish theme public assets (hero images, etc.)
         Artisan::call('theme:discover');
         $this->command->info('  ↳ Theme assets published to public/templates/'.$slug.'/.');
+
+        // ── 1b. Homepage CMS page (block-editor entry point) ─────────────
+        // The editor opens the homepage through a CMS page flagged
+        // is_homepage = true. Seed it alongside the layout so installs made
+        // through the web setup wizard (which seeds pages separately) still
+        // get an editable homepage.
+        if (! Page::homepage()->exists()) {
+            Page::firstOrCreate(
+                ['url_key' => 'home'],
+                [
+                    'title'       => 'Homepage',
+                    'content'     => '',
+                    'meta_title'  => 'Home',
+                    'status'      => 'published',
+                    'is_homepage' => true,
+                ]
+            );
+
+            // firstOrCreate leaves an existing unflagged "home" page as-is.
+            Page::where('url_key', 'home')
+                ->where('is_homepage', false)
+                ->update(['is_homepage' => true]);
+
+            $this->command->info('  ↳ Homepage CMS page seeded (block-editor entry point).');
+        }
 
         // ── 2. Homepage UIEditor layout ────────────────────────────────────
         // Only seed if NO published homepage layout exists yet.

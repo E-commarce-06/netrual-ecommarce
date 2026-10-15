@@ -18,6 +18,26 @@
                 </Link>
             </div>
 
+            <!-- Homepage design shortcut -->
+            <div
+                v-if="homepagePage"
+                class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 rounded-xl border border-blue-200 bg-blue-50 px-5 py-4 dark:border-blue-800 dark:bg-blue-900/20"
+            >
+                <div>
+                    <p class="text-sm font-semibold text-blue-900 dark:text-blue-100">Homepage design</p>
+                    <p class="text-sm text-blue-700 dark:text-blue-300">
+                        Edit the hero slider, discount banners, blue announcement bar and every other homepage section visually.
+                    </p>
+                </div>
+                <a
+                    :href="`/admin/uieditor/pages/${homepagePage.id}/editor`"
+                    class="inline-flex shrink-0 items-center px-4 py-2 bg-blue-600 border border-transparent rounded-lg font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition"
+                >
+                    <LayoutGrid class="w-4 h-4 mr-2" />
+                    Design Homepage
+                </a>
+            </div>
+
             <!-- Statistics Cards -->
             <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
                 <div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700 p-5 group hover:border-blue-200 dark:hover:border-blue-800 transition-colors">
@@ -275,6 +295,16 @@
                                             >
                                                 <ExternalLink class="w-4 h-4" />
                                             </a>
+                                            <a
+                                                :href="`/admin/uieditor/pages/${page.id}/editor`"
+                                                class="p-2 rounded-lg transition-colors"
+                                                :class="page.is_homepage
+                                                    ? 'text-blue-600 bg-blue-50 hover:bg-blue-100 dark:text-blue-300 dark:bg-blue-900/30 dark:hover:bg-blue-900/50'
+                                                    : 'text-gray-400 hover:text-blue-600 hover:bg-blue-50 dark:hover:bg-blue-900/20'"
+                                                :title="page.is_homepage ? 'Design Homepage in Block Editor (hero, banners, sections)' : 'Open in Block Editor'"
+                                            >
+                                                <LayoutGrid class="w-4 h-4" />
+                                            </a>
                                             <Link
                                                 :href="pageRoutes.edit({ page: page.id }).url"
                                                 class="p-2 text-gray-400 hover:text-indigo-600 hover:bg-indigo-50 dark:hover:bg-indigo-900/20 rounded-lg transition-colors"
@@ -379,6 +409,7 @@ import {
     ArrowUpDown, 
     X,
     ExternalLink,
+    LayoutGrid,
     Edit,
     Copy,
     Trash2,
@@ -394,6 +425,8 @@ interface Props {
 }
 
 const props = defineProps<Props>();
+
+const homepagePage = computed(() => props.pages.data.find((page) => page.is_homepage) ?? null);
 
 const form = ref<PageFilters>({
     search: props.filters.search || '',
