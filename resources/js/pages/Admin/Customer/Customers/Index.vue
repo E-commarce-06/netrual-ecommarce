@@ -448,7 +448,7 @@ function formatDate(dateString: string): string {
             
           <button
             @click="clearFilters"
-             class="px-4 py-2 text-sm text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-200 font-medium bg-gray-100 hover:bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-600 rounded-lg transition-colors flex items-center gap-2"
+             class="px-4 py-2 text-sm text-gray-600 hover:text-gray-900 dark:hover:text-gray-200 font-medium bg-gray-100 hover:bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-600 rounded-lg transition-colors flex items-center gap-2 dark:text-gray-300"
           >
             <X class="w-4 h-4" />
             Clear Filters
@@ -485,7 +485,7 @@ function formatDate(dateString: string): string {
         <div class="flex gap-2">
           <button
             @click="confirmBulkDelete"
-            class="px-3 py-1.5 text-xs font-semibold bg-white/20 hover:bg-white/30 rounded-lg transition-colors flex items-center"
+            class="px-3 py-1.5 text-xs font-semibold bg-white/8 hover:bg-white/30 rounded-lg transition-colors flex items-center text-white"
           >
             <Trash2 class="w-3 h-3 mr-1.5" />
             Delete Selected
@@ -676,12 +676,12 @@ function formatDate(dateString: string): string {
                 <td colspan="9" class="px-6 py-4 border-t border-gray-100 dark:border-gray-700">
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
                         <div class="md:hidden flex flex-col gap-2">
-                             <span class="text-xs text-gray-500 font-medium uppercase tracking-wider">Contact</span>
+                             <span class="text-xs text-gray-500 font-medium uppercase tracking-wider dark:text-gray-400">Contact</span>
                              <div class="text-sm font-medium text-gray-900 dark:text-white">{{ customer.email }}</div>
-                             <div v-if="customer.phone" class="text-xs text-gray-500">{{ customer.phone }}</div>
+                             <div v-if="customer.phone" class="text-xs text-gray-500 dark:text-gray-400">{{ customer.phone }}</div>
                         </div>
                         <div class="lg:hidden flex flex-col gap-2">
-                            <span class="text-xs text-gray-500 font-medium uppercase tracking-wider">Group</span>
+                            <span class="text-xs text-gray-500 font-medium uppercase tracking-wider dark:text-gray-400">Group</span>
                              <span
                                 class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium border shadow-sm w-fit"
                                 :style="{ 
@@ -694,20 +694,20 @@ function formatDate(dateString: string): string {
                             </span>
                         </div>
                          <div class="lg:hidden flex flex-col gap-2">
-                             <span class="text-xs text-gray-500 font-medium uppercase tracking-wider">Financials</span>
+                             <span class="text-xs text-gray-500 font-medium uppercase tracking-wider dark:text-gray-400">Financials</span>
                              <div class="grid grid-cols-2 gap-4">
                                  <div>
-                                     <span class="text-xs text-gray-500 block">Orders</span>
+                                     <span class="text-xs text-gray-500 block dark:text-gray-400">Orders</span>
                                      <span class="font-medium text-gray-900 dark:text-white">{{ customer.total_orders }}</span>
                                  </div>
                                   <div>
-                                     <span class="text-xs text-gray-500 block">Spent</span>
+                                     <span class="text-xs text-gray-500 block dark:text-gray-400">Spent</span>
                                      <span class="font-bold text-gray-900 dark:text-white">{{ formatCurrency(customer.total_spent) }}</span>
                                  </div>
                              </div>
                         </div>
                         <div class="xl:hidden flex flex-col gap-2">
-                            <span class="text-xs text-gray-500 font-medium uppercase tracking-wider">Joined</span>
+                            <span class="text-xs text-gray-500 font-medium uppercase tracking-wider dark:text-gray-400">Joined</span>
                             <span class="text-sm text-gray-600 dark:text-gray-300">{{ formatDate(customer.created_at) }}</span>
                         </div>
                     </div>
@@ -735,7 +735,7 @@ function formatDate(dateString: string): string {
              <button
               v-else
               disabled
-              class="px-3 py-1.5 text-xs font-medium text-gray-400 dark:text-gray-600 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-600 rounded-lg cursor-not-allowed flex items-center gap-1 opacity-50"
+              class="px-3 py-1.5 text-xs font-medium text-gray-400 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-600 rounded-lg cursor-not-allowed flex items-center gap-1 opacity-50 dark:text-gray-400"
             >
               <ChevronLeft class="w-3 h-3" />
               Previous
@@ -751,7 +751,7 @@ function formatDate(dateString: string): string {
              <button
               v-else
               disabled
-              class="px-3 py-1.5 text-xs font-medium text-gray-400 dark:text-gray-600 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-600 rounded-lg cursor-not-allowed flex items-center gap-1 opacity-50"
+              class="px-3 py-1.5 text-xs font-medium text-gray-400 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-600 rounded-lg cursor-not-allowed flex items-center gap-1 opacity-50 dark:text-gray-400"
             >
               Next
               <ChevronRight class="w-3 h-3" />

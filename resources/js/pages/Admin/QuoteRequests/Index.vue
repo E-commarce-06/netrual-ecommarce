@@ -107,7 +107,7 @@ const formatDate = (value: string) => {
         </div>
         <div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700 p-5">
           <p class="text-sm font-medium text-gray-600 dark:text-gray-400">New</p>
-          <p class="text-3xl font-bold text-yellow-600 dark:text-yellow-400 mt-1">{{ stats.new }}</p>
+          <p class="text-3xl font-bold dark:text-yellow-400 mt-1 text-yellow-700">{{ stats.new }}</p>
         </div>
         <div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700 p-5">
           <p class="text-sm font-medium text-gray-600 dark:text-gray-400">Reviewed</p>

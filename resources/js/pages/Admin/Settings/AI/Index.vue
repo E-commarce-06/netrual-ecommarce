@@ -389,11 +389,11 @@ const save = () => {
                   
                   <div class="p-6 grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
-                      <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Provider Name <span class="text-red-500">*</span></label>
+                      <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Provider Name <span class="text-red-600 dark:text-red-400">*</span></label>
                       <input v-model="provider.name" type="text" class="w-full px-4 py-2.5 bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-blue-500 dark:text-white" placeholder="e.g. OpenAI Main" />
                     </div>
                     <div>
-                      <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Type <span class="text-red-500">*</span></label>
+                      <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Type <span class="text-red-600 dark:text-red-400">*</span></label>
                       <select v-model="provider.type" class="w-full px-4 py-2.5 bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-blue-500 dark:text-white">
                         <option value="openai">OpenAI</option>
                         <option value="gemini">Gemini</option>
@@ -406,7 +406,7 @@ const save = () => {
                       <input v-model="provider.base_url" type="text" class="w-full px-4 py-2.5 bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-blue-500 dark:text-white" placeholder="https://api.openai.com/v1" />
                     </div>
                     <div class="md:col-span-2">
-                       <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">API Key <span class="text-red-500">*</span></label>
+                       <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">API Key <span class="text-red-600 dark:text-red-400">*</span></label>
                        <div class="relative">
                         <input 
                           v-model="provider.api_key" 
@@ -476,11 +476,11 @@ const save = () => {
 
                   <div class="p-6 grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
-                      <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Model ID <span class="text-red-500">*</span></label>
+                      <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Model ID <span class="text-red-600 dark:text-red-400">*</span></label>
                       <input v-model="model.name" type="text" class="w-full px-4 py-2.5 bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-blue-500 dark:text-white" placeholder="gpt-4-turbo" />
                     </div>
                     <div>
-                      <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Provider <span class="text-red-500">*</span></label>
+                      <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Provider <span class="text-red-600 dark:text-red-400">*</span></label>
                       <select v-model="model.provider" class="w-full px-4 py-2.5 bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-blue-500 dark:text-white">
                         <option value="">Select provider</option>
                         <option v-for="provider in providerOptions" :key="provider" :value="provider">{{ provider }}</option>
@@ -552,7 +552,7 @@ const save = () => {
 
                   <div v-show="expandedAgentIndex === index" class="p-6 grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
-                      <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Agent Name <span class="text-red-500">*</span></label>
+                      <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Agent Name <span class="text-red-600 dark:text-red-400">*</span></label>
                       <input v-model="agent.name" type="text" class="w-full px-4 py-2.5 bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-blue-500 dark:text-white" placeholder="Product Describer" />
                     </div>
                      <div>

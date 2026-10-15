@@ -72,9 +72,9 @@ const getStatusBadgeClass = (isActive: boolean) => {
         <div class="mb-8">
           <div class="flex items-center gap-3 mb-2">
             <Users class="w-8 h-8 text-primary" />
-            <h1 class="text-3xl font-bold text-gray-900">User Management</h1>
+            <h1 class="text-3xl font-bold text-gray-900 dark:text-gray-400">User Management</h1>
           </div>
-          <p class="text-gray-600">Manage user accounts and permissions</p>
+          <p class="text-gray-600 dark:text-gray-400">Manage user accounts and permissions</p>
         </div>
 
         <!-- Search Bar -->
@@ -167,7 +167,7 @@ const getStatusBadgeClass = (isActive: boolean) => {
                 <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                   <Link
                     :href="userRoutes.edit.url({ user: user.id })"
-                    class="text-primary hover:text-primary/80 mr-3 inline-flex items-center"
+                    class="text-primary hover:text-primary/80 mr-3 inline-flex items-center dark:text-gray-500"
                   >
                     <Edit class="w-4 h-4 mr-1" />
                     Edit

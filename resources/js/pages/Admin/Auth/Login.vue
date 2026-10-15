@@ -27,7 +27,7 @@ const submit = () => {
 <template>
   <Head :title="`Admin Login - ${brand.name}`" />
 
-  <div class="min-h-screen relative overflow-hidden bg-gray-50 dark:bg-transparent flex items-center justify-center">
+  <div class="admin-contrast-scope min-h-screen relative overflow-hidden bg-gray-50 dark:bg-transparent flex items-center justify-center">
 
     <!-- ============================================ -->
     <!-- BACKGROUND: LIGHT MODE                       -->

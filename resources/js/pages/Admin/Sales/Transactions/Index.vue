@@ -245,7 +245,7 @@ const exportTransactions = () => {
             </div>
             <div class="flex justify-between items-center">
               <span class="text-sm text-gray-600 dark:text-gray-400">Total Amount</span>
-              <span class="text-sm font-bold text-green-600 dark:text-green-400">{{ formatPrice(statistics.payment_amount) }}</span>
+              <span class="text-sm font-bold dark:text-green-400 text-green-700">{{ formatPrice(statistics.payment_amount) }}</span>
             </div>
           </div>
         </div>
@@ -422,7 +422,7 @@ const exportTransactions = () => {
          <div v-if="search || typeFilter || statusFilter || gatewayFilter || dateFrom || dateTo || amountMin || amountMax" class="mt-4 pt-4 border-t border-gray-100 dark:border-gray-700 flex justify-end">
           <button
             @click="clearFilters"
-             class="px-4 py-2 text-sm text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-200 font-medium bg-gray-100 hover:bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-600 rounded-lg transition-colors flex items-center gap-2"
+             class="px-4 py-2 text-sm text-gray-600 hover:text-gray-900 dark:hover:text-gray-200 font-medium bg-gray-100 hover:bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-600 rounded-lg transition-colors flex items-center gap-2 dark:text-gray-300"
           >
             <X class="w-4 h-4" />
             Clear Filters
@@ -559,24 +559,24 @@ const exportTransactions = () => {
                  <td colspan="9" class="px-6 py-4 border-t border-gray-100 dark:border-gray-700">
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
                         <div class="sm:hidden flex flex-col gap-2">
-                           <span class="text-xs text-gray-500 font-medium uppercase tracking-wider">Order Reference</span>
+                           <span class="text-xs text-gray-500 font-medium uppercase tracking-wider dark:text-gray-400">Order Reference</span>
                            <Link v-if="transaction.order" :href="`/admin/sales/orders/${transaction.order.id}`" class="text-sm text-blue-600 dark:text-blue-400 font-medium">
                               {{ transaction.order.order_number }}
                            </Link>
-                           <span v-else class="text-sm text-gray-500">N/A</span>
+                           <span v-else class="text-sm text-gray-500 dark:text-gray-400">N/A</span>
                        </div>
                        <div class="md:hidden flex flex-col gap-2">
-                           <span class="text-xs text-gray-500 font-medium uppercase tracking-wider">Type</span>
+                           <span class="text-xs text-gray-500 font-medium uppercase tracking-wider dark:text-gray-400">Type</span>
                             <span :class="['inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium border shadow-sm w-fit', getTypeBadge(transaction.type)]">
                                 {{ transaction.type }}
                             </span>
                         </div>
                         <div class="lg:hidden flex flex-col gap-2">
-                            <span class="text-xs text-gray-500 font-medium uppercase tracking-wider">Gateway</span>
+                            <span class="text-xs text-gray-500 font-medium uppercase tracking-wider dark:text-gray-400">Gateway</span>
                             <span class="text-sm text-gray-900 dark:text-white capitalize">{{ transaction.gateway }}</span>
                         </div>
                          <div class="xl:hidden flex flex-col gap-2">
-                            <span class="text-xs text-gray-500 font-medium uppercase tracking-wider">Date</span>
+                            <span class="text-xs text-gray-500 font-medium uppercase tracking-wider dark:text-gray-400">Date</span>
                             <span class="text-sm text-gray-500 dark:text-gray-400">{{ formatDate(transaction.created_at) }}</span>
                         </div>
                     </div>
@@ -615,7 +615,7 @@ const exportTransactions = () => {
              <button
               v-else
               disabled
-              class="px-3 py-1.5 text-xs font-medium text-gray-400 dark:text-gray-600 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-600 rounded-lg cursor-not-allowed flex items-center gap-1 opacity-50"
+              class="px-3 py-1.5 text-xs font-medium text-gray-400 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-600 rounded-lg cursor-not-allowed flex items-center gap-1 opacity-50 dark:text-gray-400"
             >
               <ChevronLeft class="w-3 h-3" />
               Previous
@@ -632,7 +632,7 @@ const exportTransactions = () => {
              <button
               v-else
               disabled
-              class="px-3 py-1.5 text-xs font-medium text-gray-400 dark:text-gray-600 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-600 rounded-lg cursor-not-allowed flex items-center gap-1 opacity-50"
+              class="px-3 py-1.5 text-xs font-medium text-gray-400 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-600 rounded-lg cursor-not-allowed flex items-center gap-1 opacity-50 dark:text-gray-400"
             >
               Next
               <ChevronRight class="w-3 h-3" />

@@ -135,8 +135,8 @@ const submit = () => {
         <div class="mb-6">
           <div class="flex items-center justify-between">
             <div>
-              <h1 class="text-2xl font-semibold text-gray-900">Create New Category</h1>
-              <p class="mt-1 text-sm text-gray-600">Add a new category to organize your products</p>
+              <h1 class="text-2xl font-semibold text-gray-900 dark:text-gray-400">Create New Category</h1>
+              <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">Add a new category to organize your products</p>
             </div>
             <Link
               :href="categoryRoutes.index().url"
@@ -190,7 +190,7 @@ const submit = () => {
                 <!-- Name -->
                 <div>
                   <label for="name" class="block text-sm font-medium text-gray-700">
-                    Category Name <span class="text-red-500">*</span>
+                    Category Name <span class="text-red-600 dark:text-red-600">*</span>
                   </label>
                   <input
                     id="name"
@@ -269,7 +269,7 @@ const submit = () => {
                     :maxSize="5" 
                     accept="image/*"
                   />
-                  <p v-if="images.length > 0" class="mt-2 text-xs text-green-600">
+                  <p v-if="images.length > 0" class="mt-2 text-xs text-green-700 dark:text-green-700">
                     ✓ {{ images.length }} image selected (will be uploaded on save)
                   </p>
                   <p v-if="form.errors.image" class="mt-2 text-sm text-red-600">{{ form.errors.image }}</p>

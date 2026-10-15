@@ -313,7 +313,7 @@ const cancelCreditMemo = (id: number) => {
          <div v-if="search || statusFilter || refundMethodFilter || dateFrom || dateTo || minAmount || maxAmount" class="mt-4 pt-4 border-t border-gray-100 dark:border-gray-700 flex justify-end">
           <button
             @click="clearFilters"
-             class="px-4 py-2 text-sm text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-200 font-medium bg-gray-100 hover:bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-600 rounded-lg transition-colors flex items-center gap-2"
+             class="px-4 py-2 text-sm text-gray-600 hover:text-gray-900 dark:hover:text-gray-200 font-medium bg-gray-100 hover:bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-600 rounded-lg transition-colors flex items-center gap-2 dark:text-gray-300"
           >
             <X class="w-4 h-4" />
             Clear Filters
@@ -472,13 +472,13 @@ const cancelCreditMemo = (id: number) => {
                  <td colspan="9" class="px-6 py-4 border-t border-gray-100 dark:border-gray-700">
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
                         <div class="sm:hidden flex flex-col gap-2">
-                          <span class="text-xs text-gray-500 font-medium uppercase tracking-wider">Order Reference</span>
+                          <span class="text-xs text-gray-500 font-medium uppercase tracking-wider dark:text-gray-400">Order Reference</span>
                            <span class="text-sm text-gray-600 dark:text-gray-300">
                               {{ creditMemo.order?.order_number || '-' }}
                             </span>
                        </div>
                        <div class="md:hidden flex flex-col gap-2">
-                           <span class="text-xs text-gray-500 font-medium uppercase tracking-wider">Customer</span>
+                           <span class="text-xs text-gray-500 font-medium uppercase tracking-wider dark:text-gray-400">Customer</span>
                            <div class="flex items-center">
                                <div class="h-8 w-8 rounded-full bg-gray-100 dark:bg-gray-700 flex items-center justify-center text-gray-500 dark:text-gray-400 border border-gray-200 dark:border-gray-600 mr-3">
                                 <User class="w-4 h-4" />
@@ -492,16 +492,16 @@ const cancelCreditMemo = (id: number) => {
                            </div>
                         </div>
                         <div class="lg:hidden flex flex-col gap-2">
-                            <span class="text-xs text-gray-500 font-medium uppercase tracking-wider">Details</span>
+                            <span class="text-xs text-gray-500 font-medium uppercase tracking-wider dark:text-gray-400">Details</span>
                             <div class="grid grid-cols-2 gap-4">
                                <div>
-                                  <span class="text-xs text-gray-500 block">Method</span>
+                                  <span class="text-xs text-gray-500 block dark:text-gray-400">Method</span>
                                   <span :class="['inline-flex items-center px-2 py-0.5 rounded text-xs font-medium border shadow-sm mt-1', getRefundMethodBadge(creditMemo.refund_method)]">
                                     {{ creditMemo.refund_method }}
                                   </span>
                                </div>
                                <div>
-                                  <span class="text-xs text-gray-500 block">Date</span>
+                                  <span class="text-xs text-gray-500 block dark:text-gray-400">Date</span>
                                   <span class="text-gray-700 dark:text-gray-300 mt-1 block">{{ formatDate(creditMemo.created_at) }}</span>
                                </div>
                             </div>

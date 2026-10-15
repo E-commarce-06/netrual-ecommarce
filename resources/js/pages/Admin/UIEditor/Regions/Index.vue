@@ -161,12 +161,12 @@ const regionTypes: { value: RegionType; label: string }[] = [
               </span>
               <span
                 v-if="region.status === 'published'"
-                class="inline-flex items-center gap-1 text-xs text-green-600 dark:text-green-400"
+                class="inline-flex items-center gap-1 text-xs dark:text-green-400 text-green-700"
               >
                 <CheckCircle class="w-3 h-3" />
                 Live
               </span>
-              <span v-else class="inline-flex items-center gap-1 text-xs text-amber-600 dark:text-amber-400">
+              <span v-else class="inline-flex items-center gap-1 text-xs dark:text-amber-400 text-amber-700">
                 <Clock class="w-3 h-3" />
                 Draft
               </span>
@@ -184,7 +184,7 @@ const regionTypes: { value: RegionType; label: string }[] = [
           <div class="px-4 pb-2 flex-1">
             <h3 class="text-sm font-semibold text-gray-900 dark:text-white truncate">{{ region.name }}</h3>
             <p v-if="region.description" class="mt-0.5 text-xs text-gray-500 dark:text-gray-400 line-clamp-2">{{ region.description }}</p>
-            <p v-else class="mt-0.5 text-xs text-gray-400 dark:text-gray-500 italic">No description</p>
+            <p v-else class="mt-0.5 text-xs text-gray-400 italic dark:text-gray-400">No description</p>
           </div>
 
           <!-- Card footer -->
@@ -231,7 +231,7 @@ const regionTypes: { value: RegionType; label: string }[] = [
               <!-- Name -->
               <div>
                 <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                  Section Name <span class="text-red-500">*</span>
+                  Section Name <span class="text-red-600 dark:text-red-500">*</span>
                 </label>
                 <input
                   v-model="form.name"
@@ -264,7 +264,7 @@ const regionTypes: { value: RegionType; label: string }[] = [
                 />
               </div>
 
-              <p v-if="createError" class="text-sm text-red-600">{{ createError }}</p>
+              <p v-if="createError" class="text-sm text-red-600 dark:text-red-500">{{ createError }}</p>
             </div>
 
             <!-- Modal footer -->

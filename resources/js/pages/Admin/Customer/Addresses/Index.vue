@@ -78,8 +78,8 @@ function setDefaultBilling(id: number) {
       <div class="mb-6">
         <div class="flex items-center justify-between">
           <div>
-            <h1 class="text-2xl font-bold text-gray-900">Customer Addresses</h1>
-            <p class="mt-1 text-sm text-gray-600">
+            <h1 class="text-2xl font-bold text-gray-900 dark:text-gray-400">Customer Addresses</h1>
+            <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">
               Manage addresses for {{ props.customer.first_name }} {{ props.customer.last_name }}
             </p>
           </div>
@@ -138,7 +138,7 @@ function setDefaultBilling(id: number) {
               </td>
               <td class="px-6 py-4">
                 <div class="flex flex-col gap-2">
-                  <div v-if="addr.is_default_shipping" class="inline-flex items-center text-xs text-green-600">
+                  <div v-if="addr.is_default_shipping" class="inline-flex items-center text-xs text-green-700 dark:text-green-700">
                     <svg class="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 20 20">
                       <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
                     </svg>
@@ -148,7 +148,7 @@ function setDefaultBilling(id: number) {
                     Set as default shipping
                   </button>
                   
-                  <div v-if="addr.is_default_billing" class="inline-flex items-center text-xs text-green-600">
+                  <div v-if="addr.is_default_billing" class="inline-flex items-center text-xs text-green-700 dark:text-green-700">
                     <svg class="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 20 20">
                       <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
                     </svg>

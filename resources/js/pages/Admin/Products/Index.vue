@@ -385,7 +385,7 @@ function formatDate(date: string): string {
             <div class="w-px h-6 bg-blue-400 mx-1"></div>
             <button
               @click="confirmBulkDelete"
-              class="px-3 py-1.5 text-xs font-bold text-white bg-red-500 rounded-lg hover:bg-red-600 transition-colors flex items-center uppercase tracking-wide"
+              class="px-3 py-1.5 text-xs font-bold text-white bg-red-600 rounded-lg hover:bg-red-600 transition-colors flex items-center uppercase tracking-wide dark:text-gray-50"
             >
               <Trash2 class="w-3 h-3 mr-1.5" />
               Delete
@@ -481,7 +481,7 @@ function formatDate(date: string): string {
                     </div>
                     <p class="text-lg font-semibold text-gray-900 dark:text-white">No products found</p>
                     <p class="text-sm text-gray-500 dark:text-gray-400 mt-1 max-w-sm">No products matched your search criteria. Try adjusting your filters or add a new product.</p>
-                    <button @click="clearFilters" v-if="search || statusFilter || categoryFilter" class="mt-4 text-blue-600 hover:text-blue-700 font-medium text-sm">Clear all filters</button>
+                    <button @click="clearFilters" v-if="search || statusFilter || categoryFilter" class="mt-4 text-blue-600 hover:text-blue-700 font-medium text-sm dark:text-blue-400">Clear all filters</button>
                   </div>
                 </td>
               </tr>
@@ -522,10 +522,10 @@ function formatDate(date: string): string {
                     <div>
                       <div class="text-sm font-bold text-gray-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors line-clamp-2 leading-snug">{{ product.name }}</div>
                       <div v-if="product.categories.length > 0" class="flex flex-wrap gap-1 mt-1.5 ">
-                        <span class="inline-flex items-center text-[10px] text-gray-500 dark:text-gray-400 bg-gray-100 dark:bg-gray-700/50 px-1.5 py-0.5 rounded">
+                        <span class="inline-flex items-center text-[10px] dark:text-gray-400 bg-gray-100 dark:bg-gray-700/50 px-1.5 py-0.5 rounded text-gray-600">
                            <Layers class="w-3 h-3 mr-1 opacity-70" />
                            {{ product.categories[0].name }}
-                           <span v-if="product.categories.length > 1" class="ml-0.5">+{{ product.categories.length - 1 }}</span>
+                           <span v-if="product.categories.length > 1" class="ml-0.5 text-gray-600 dark:text-gray-400">+{{ product.categories.length - 1 }}</span>
                         </span>
                       </div>
                       <div class="flex gap-1.5 mt-2" v-if="product.featured || product.new">
@@ -555,7 +555,7 @@ function formatDate(date: string): string {
                 <td class="hidden md:table-cell px-6 py-4 text-sm text-gray-900 dark:text-white align-top pt-5">
                   <div v-if="product.special_price" class="flex flex-col">
                     <span class="font-bold text-red-600 dark:text-red-400">{{ formatPrice(product.special_price) }}</span>
-                    <span class="text-xs text-gray-400 dark:text-gray-500 line-through decoration-gray-400">{{ formatPrice(product.price) }}</span>
+                    <span class="text-xs text-gray-400 line-through decoration-gray-400 dark:text-gray-400">{{ formatPrice(product.price) }}</span>
                   </div>
                   <span v-else class="font-bold">{{ formatPrice(product.price) }}</span>
                 </td>
@@ -619,15 +619,15 @@ function formatDate(date: string): string {
                  <td colspan="8" class="px-6 py-4 border-t border-gray-100 dark:border-gray-700">
                     <div class="grid grid-cols-2 gap-4 text-sm">
                        <div class="flex flex-col gap-1">
-                          <span class="text-xs text-gray-500 font-medium uppercase tracking-wider">Price</span>
+                          <span class="text-xs text-gray-500 font-medium uppercase tracking-wider dark:text-gray-400">Price</span>
                           <div v-if="product.special_price">
-                             <span class="font-bold text-red-600">{{ formatPrice(product.special_price) }}</span>
+                             <span class="font-bold text-red-600 dark:text-red-400">{{ formatPrice(product.special_price) }}</span>
                              <span class="text-xs line-through text-gray-400 ml-1">{{ formatPrice(product.price) }}</span>
                           </div>
                           <span v-else class="font-bold text-gray-900 dark:text-gray-100">{{ formatPrice(product.price) }}</span>
                        </div>
                        <div class="flex flex-col gap-1">
-                          <span class="text-xs text-gray-500 font-medium uppercase tracking-wider">Stock</span>
+                          <span class="text-xs text-gray-500 font-medium uppercase tracking-wider dark:text-gray-400">Stock</span>
                           <div class="flex items-center gap-2">
                              <span class="font-semibold text-gray-900 dark:text-white">{{ product.quantity }} units</span>
                              <span class="px-1.5 py-0.5 text-[10px] rounded border" :class="{
@@ -638,14 +638,14 @@ function formatDate(date: string): string {
                           </div>
                        </div>
                        <div class="flex flex-col gap-1">
-                          <span class="text-xs text-gray-500 font-medium uppercase tracking-wider">SKU & Type</span>
+                          <span class="text-xs text-gray-500 font-medium uppercase tracking-wider dark:text-gray-400">SKU & Type</span>
                           <div class="flex flex-col gap-1">
-                             <span class="font-mono text-xs text-gray-600">{{ product.sku || 'N/A' }}</span>
+                             <span class="font-mono text-xs text-gray-600 dark:text-gray-400">{{ product.sku || 'N/A' }}</span>
                              <span class="text-xs px-1.5 py-0.5 bg-gray-100 dark:bg-gray-800 rounded w-fit capitalize">{{ product.type }}</span>
                           </div>
                        </div>
                        <div class="flex flex-col gap-1">
-                          <span class="text-xs text-gray-500 font-medium uppercase tracking-wider">Status</span>
+                          <span class="text-xs text-gray-500 font-medium uppercase tracking-wider dark:text-gray-400">Status</span>
                           <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium w-fit border" :class="{
                            'bg-green-50 text-green-700 border-green-200': product.status === 'enabled',
                            'bg-gray-100 text-gray-600 border-gray-200': product.status === 'disabled',

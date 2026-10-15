@@ -47,8 +47,8 @@ const props = defineProps<Props>();
       <div class="mb-8">
         <div class="flex items-center justify-between">
           <div>
-            <h1 class="text-2xl md:text-3xl text-gray-800 font-bold">{{ brand.name }}</h1>
-            <p class="text-sm text-gray-600 mt-1">Brand details and products</p>
+            <h1 class="text-2xl md:text-3xl text-gray-800 font-bold dark:text-gray-400">{{ brand.name }}</h1>
+            <p class="text-sm text-gray-600 mt-1 dark:text-gray-400">Brand details and products</p>
           </div>
           <div class="flex items-center space-x-3">
             <Link 

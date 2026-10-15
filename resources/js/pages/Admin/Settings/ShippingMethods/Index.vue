@@ -58,7 +58,7 @@
               <Link
                 v-if="extensions.delivery.enabled"
                 href="/admin/settings/delivery"
-                class="inline-flex items-center px-3 py-1.5 border border-indigo-300 text-indigo-700 hover:bg-indigo-50 rounded-lg text-xs font-medium transition-colors"
+                class="inline-flex items-center px-3 py-1.5 border border-indigo-300 text-indigo-700 hover:bg-indigo-50 rounded-lg text-xs font-medium transition-colors dark:text-indigo-400"
               >
                 Configure
               </Link>
@@ -89,7 +89,7 @@
               <Link
                 v-if="extensions.shiprocket.enabled"
                 href="/admin/settings/shiprocket"
-                class="inline-flex items-center px-3 py-1.5 border border-cyan-300 text-cyan-700 hover:bg-cyan-50 rounded-lg text-xs font-medium transition-colors"
+                class="inline-flex items-center px-3 py-1.5 border border-cyan-300 text-cyan-700 hover:bg-cyan-50 rounded-lg text-xs font-medium transition-colors dark:text-cyan-500"
               >
                 Configure
               </Link>
@@ -188,9 +188,9 @@
                   <div class="text-sm text-gray-900 dark:text-white font-medium">
                     {{ formatPrice(method.base_cost) }}
                     <span class="text-gray-400 mx-1">+</span>
-                    {{ formatPrice(method.cost_per_kg) }}<span class="text-gray-500 text-xs">/kg</span>
+                    {{ formatPrice(method.cost_per_kg) }}<span class="text-gray-500 text-xs dark:text-gray-400">/kg</span>
                   </div>
-                  <div class="text-xs text-gray-500 mt-0.5">
+                  <div class="text-xs text-gray-500 mt-0.5 dark:text-gray-400">
                     {{ method.rates?.length || 0 }} defined tiers
                   </div>
                 </td>

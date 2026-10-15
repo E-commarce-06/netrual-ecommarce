@@ -242,7 +242,7 @@ const billingAddress = props.order.addresses.find(a => a.type === 'billing');
       <div class="flex items-center justify-between">
         <div>
           <div class="flex items-center gap-3">
-            <h1 class="text-2xl font-bold text-gray-900">Order #{{ order.order_number }}</h1>
+            <h1 class="text-2xl font-bold text-gray-900 dark:text-gray-400">Order #{{ order.order_number }}</h1>
             <span
               v-if="order.source_channel === 'mobile_app'"
               class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold bg-indigo-100 text-indigo-800"
@@ -259,7 +259,7 @@ const billingAddress = props.order.addresses.find(a => a.type === 'billing');
               {{ order.source_channel }}
             </span>
           </div>
-          <p class="mt-1 text-sm text-gray-600">{{ formatDate(order.created_at) }}</p>
+          <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">{{ formatDate(order.created_at) }}</p>
         </div>
         <div class="flex gap-2">
           <button

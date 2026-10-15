@@ -97,7 +97,7 @@ const save = () => {
             <!-- Name -->
             <div>
               <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                Method Name <span class="text-red-500">*</span>
+                Method Name <span class="text-red-600 dark:text-red-400">*</span>
               </label>
               <input
                 v-model="form.name"
@@ -105,7 +105,7 @@ const save = () => {
                 :class="['w-full px-3 py-2 border rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:ring-2 focus:ring-blue-500 focus:border-transparent', errors.name ? 'border-red-500' : 'border-gray-300 dark:border-gray-600']"
                 placeholder="PhonePe"
               />
-              <p v-if="errors.name" class="mt-1 text-sm text-red-600">{{ errors.name }}</p>
+              <p v-if="errors.name" class="mt-1 text-sm text-red-600 dark:text-red-400">{{ errors.name }}</p>
             </div>
 
             <!-- Description -->
@@ -196,7 +196,7 @@ const save = () => {
             <template v-if="form.configuration.mode === 'test'">
               <div>
                 <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                  Test Merchant ID <span class="text-red-500">*</span>
+                  Test Merchant ID <span class="text-red-600 dark:text-red-400">*</span>
                 </label>
                 <input
                   v-model="form.configuration.test_merchant_id"
@@ -204,12 +204,12 @@ const save = () => {
                   :class="['w-full px-3 py-2 border rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:ring-2 focus:ring-blue-500 focus:border-transparent font-mono text-sm', errors['configuration.test_merchant_id'] ? 'border-red-500' : 'border-gray-300 dark:border-gray-600']"
                   placeholder="e.g. M22TUU3OAID7Z"
                 />
-                <p v-if="errors['configuration.test_merchant_id']" class="mt-1 text-sm text-red-600">{{ errors['configuration.test_merchant_id'] }}</p>
+                <p v-if="errors['configuration.test_merchant_id']" class="mt-1 text-sm text-red-600 dark:text-red-400">{{ errors['configuration.test_merchant_id'] }}</p>
                 <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">PhonePe Merchant ID for UAT / test environment</p>
               </div>
               <div>
                 <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                  Test Client ID <span class="text-red-500">*</span>
+                  Test Client ID <span class="text-red-600 dark:text-red-400">*</span>
                 </label>
                 <input
                   v-model="form.configuration.test_client_id"
@@ -217,11 +217,11 @@ const save = () => {
                   :class="['w-full px-3 py-2 border rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:ring-2 focus:ring-blue-500 focus:border-transparent font-mono text-sm', errors['configuration.test_client_id'] ? 'border-red-500' : 'border-gray-300 dark:border-gray-600']"
                   placeholder="Enter your PhonePe Test Client ID"
                 />
-                <p v-if="errors['configuration.test_client_id']" class="mt-1 text-sm text-red-600">{{ errors['configuration.test_client_id'] }}</p>
+                <p v-if="errors['configuration.test_client_id']" class="mt-1 text-sm text-red-600 dark:text-red-400">{{ errors['configuration.test_client_id'] }}</p>
               </div>
               <div>
                 <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                  Test Client Secret <span class="text-red-500">*</span>
+                  Test Client Secret <span class="text-red-600 dark:text-red-400">*</span>
                 </label>
                 <input
                   v-model="form.configuration.test_client_secret"
@@ -229,12 +229,12 @@ const save = () => {
                   :class="['w-full px-3 py-2 border rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:ring-2 focus:ring-blue-500 focus:border-transparent font-mono text-sm', errors['configuration.test_client_secret'] ? 'border-red-500' : 'border-gray-300 dark:border-gray-600']"
                   placeholder="Enter your PhonePe Test Client Secret"
                 />
-                <p v-if="errors['configuration.test_client_secret']" class="mt-1 text-sm text-red-600">{{ errors['configuration.test_client_secret'] }}</p>
+                <p v-if="errors['configuration.test_client_secret']" class="mt-1 text-sm text-red-600 dark:text-red-400">{{ errors['configuration.test_client_secret'] }}</p>
                 <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">Keep this secret secure — never share it publicly</p>
               </div>
               <div>
                 <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                  Test Client Version <span class="text-red-500">*</span>
+                  Test Client Version <span class="text-red-600 dark:text-red-400">*</span>
                 </label>
                 <input
                   v-model.number="form.configuration.test_client_version"
@@ -243,7 +243,7 @@ const save = () => {
                   :class="['w-full px-3 py-2 border rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:ring-2 focus:ring-blue-500 focus:border-transparent', errors['configuration.test_client_version'] ? 'border-red-500' : 'border-gray-300 dark:border-gray-600']"
                   placeholder="1"
                 />
-                <p v-if="errors['configuration.test_client_version']" class="mt-1 text-sm text-red-600">{{ errors['configuration.test_client_version'] }}</p>
+                <p v-if="errors['configuration.test_client_version']" class="mt-1 text-sm text-red-600 dark:text-red-400">{{ errors['configuration.test_client_version'] }}</p>
                 <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">PhonePe API version for UAT (typically 1)</p>
               </div>
             </template>
@@ -252,7 +252,7 @@ const save = () => {
             <template v-else>
               <div>
                 <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                  Live Merchant ID <span class="text-red-500">*</span>
+                  Live Merchant ID <span class="text-red-600 dark:text-red-400">*</span>
                 </label>
                 <input
                   v-model="form.configuration.merchant_id"
@@ -260,12 +260,12 @@ const save = () => {
                   :class="['w-full px-3 py-2 border rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:ring-2 focus:ring-blue-500 focus:border-transparent font-mono text-sm', errors['configuration.merchant_id'] ? 'border-red-500' : 'border-gray-300 dark:border-gray-600']"
                   placeholder="e.g. M22TUU3OAID7Z"
                 />
-                <p v-if="errors['configuration.merchant_id']" class="mt-1 text-sm text-red-600">{{ errors['configuration.merchant_id'] }}</p>
+                <p v-if="errors['configuration.merchant_id']" class="mt-1 text-sm text-red-600 dark:text-red-400">{{ errors['configuration.merchant_id'] }}</p>
                 <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">PhonePe Merchant ID for production</p>
               </div>
               <div>
                 <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                  Live Client ID <span class="text-red-500">*</span>
+                  Live Client ID <span class="text-red-600 dark:text-red-400">*</span>
                 </label>
                 <input
                   v-model="form.configuration.client_id"
@@ -273,11 +273,11 @@ const save = () => {
                   :class="['w-full px-3 py-2 border rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:ring-2 focus:ring-blue-500 focus:border-transparent font-mono text-sm', errors['configuration.client_id'] ? 'border-red-500' : 'border-gray-300 dark:border-gray-600']"
                   placeholder="Enter your PhonePe Live Client ID"
                 />
-                <p v-if="errors['configuration.client_id']" class="mt-1 text-sm text-red-600">{{ errors['configuration.client_id'] }}</p>
+                <p v-if="errors['configuration.client_id']" class="mt-1 text-sm text-red-600 dark:text-red-400">{{ errors['configuration.client_id'] }}</p>
               </div>
               <div>
                 <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                  Live Client Secret <span class="text-red-500">*</span>
+                  Live Client Secret <span class="text-red-600 dark:text-red-400">*</span>
                 </label>
                 <input
                   v-model="form.configuration.client_secret"
@@ -285,12 +285,12 @@ const save = () => {
                   :class="['w-full px-3 py-2 border rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:ring-2 focus:ring-blue-500 focus:border-transparent font-mono text-sm', errors['configuration.client_secret'] ? 'border-red-500' : 'border-gray-300 dark:border-gray-600']"
                   placeholder="Enter your PhonePe Live Client Secret"
                 />
-                <p v-if="errors['configuration.client_secret']" class="mt-1 text-sm text-red-600">{{ errors['configuration.client_secret'] }}</p>
+                <p v-if="errors['configuration.client_secret']" class="mt-1 text-sm text-red-600 dark:text-red-400">{{ errors['configuration.client_secret'] }}</p>
                 <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">Keep this secret secure — never share it publicly</p>
               </div>
               <div>
                 <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                  Live Client Version <span class="text-red-500">*</span>
+                  Live Client Version <span class="text-red-600 dark:text-red-400">*</span>
                 </label>
                 <input
                   v-model.number="form.configuration.client_version"
@@ -299,7 +299,7 @@ const save = () => {
                   :class="['w-full px-3 py-2 border rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:ring-2 focus:ring-blue-500 focus:border-transparent', errors['configuration.client_version'] ? 'border-red-500' : 'border-gray-300 dark:border-gray-600']"
                   placeholder="1"
                 />
-                <p v-if="errors['configuration.client_version']" class="mt-1 text-sm text-red-600">{{ errors['configuration.client_version'] }}</p>
+                <p v-if="errors['configuration.client_version']" class="mt-1 text-sm text-red-600 dark:text-red-400">{{ errors['configuration.client_version'] }}</p>
                 <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">PhonePe API version for production (typically 1)</p>
               </div>
             </template>
@@ -321,7 +321,7 @@ const save = () => {
             <!-- Callback Username -->
             <div>
               <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                Callback Username <span class="text-gray-400 dark:text-gray-500">(Optional)</span>
+                Callback Username <span class="text-gray-400 dark:text-gray-400">(Optional)</span>
               </label>
               <input
                 v-model="form.configuration.callback_username"
@@ -335,7 +335,7 @@ const save = () => {
             <!-- Callback Password -->
             <div>
               <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                Callback Password <span class="text-gray-400 dark:text-gray-500">(Optional)</span>
+                Callback Password <span class="text-gray-400 dark:text-gray-400">(Optional)</span>
               </label>
               <input
                 v-model="form.configuration.callback_password"

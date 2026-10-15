@@ -26,7 +26,7 @@
                     <!-- Title -->
                     <div>
                         <label for="title" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                            Title <span class="text-red-500">*</span>
+                            Title <span class="text-red-600 dark:text-red-400">*</span>
                         </label>
                         <input
                             id="title"
@@ -38,13 +38,13 @@
                             :class="{ 'border-red-500': form.errors.title }"
                             placeholder="Enter page title"
                         />
-                        <p v-if="form.errors.title" class="mt-1 text-sm text-red-600">{{ form.errors.title }}</p>
+                        <p v-if="form.errors.title" class="mt-1 text-sm text-red-600 dark:text-red-400">{{ form.errors.title }}</p>
                     </div>
 
                     <!-- URL Key -->
                     <div>
                         <label for="url_key" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                            URL Key <span class="text-red-500">*</span>
+                            URL Key <span class="text-red-600 dark:text-red-400">*</span>
                         </label>
                         <div class="flex gap-2">
                             <div class="flex-1">
@@ -58,9 +58,9 @@
                                     :class="{ 'border-red-500': form.errors.url_key || !slugAvailable }"
                                     placeholder="page-url-key"
                                 />
-                                <p v-if="form.errors.url_key" class="mt-1 text-sm text-red-600">{{ form.errors.url_key }}</p>
-                                <p v-else-if="!slugAvailable && form.url_key" class="mt-1 text-sm text-red-600">This URL key is already taken</p>
-                                <p v-else-if="slugAvailable && form.url_key && slugChecked" class="mt-1 text-sm text-green-600">✓ URL key is available</p>
+                                <p v-if="form.errors.url_key" class="mt-1 text-sm text-red-600 dark:text-red-400">{{ form.errors.url_key }}</p>
+                                <p v-else-if="!slugAvailable && form.url_key" class="mt-1 text-sm text-red-600 dark:text-red-400">This URL key is already taken</p>
+                                <p v-else-if="slugAvailable && form.url_key && slugChecked" class="mt-1 text-sm text-green-700 dark:text-green-500">✓ URL key is available</p>
                             </div>
                             <button
                                 type="button"
@@ -95,7 +95,7 @@
                                 :class="{ 'border-red-500': form.errors.meta_title }"
                                 placeholder="SEO title for search engines"
                             />
-                            <p v-if="form.errors.meta_title" class="mt-1 text-sm text-red-600">{{ form.errors.meta_title }}</p>
+                            <p v-if="form.errors.meta_title" class="mt-1 text-sm text-red-600 dark:text-red-400">{{ form.errors.meta_title }}</p>
                             <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">
                                 {{ form.meta_title?.length || 0 }}/255 characters. Leave empty to use page title.
                             </p>
@@ -115,7 +115,7 @@
                                 :class="{ 'border-red-500': form.errors.meta_description }"
                                 placeholder="Brief description for search results"
                             ></textarea>
-                            <p v-if="form.errors.meta_description" class="mt-1 text-sm text-red-600">{{ form.errors.meta_description }}</p>
+                            <p v-if="form.errors.meta_description" class="mt-1 text-sm text-red-600 dark:text-red-400">{{ form.errors.meta_description }}</p>
                             <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">
                                 {{ form.meta_description?.length || 0 }}/500 characters. Recommended: 150-160 characters.
                             </p>
@@ -135,7 +135,7 @@
                                 :class="{ 'border-red-500': form.errors.meta_keywords }"
                                 placeholder="keyword1, keyword2, keyword3"
                             />
-                            <p v-if="form.errors.meta_keywords" class="mt-1 text-sm text-red-600">{{ form.errors.meta_keywords }}</p>
+                            <p v-if="form.errors.meta_keywords" class="mt-1 text-sm text-red-600 dark:text-red-400">{{ form.errors.meta_keywords }}</p>
                             <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">
                                 Comma-separated keywords. Not widely used by search engines anymore.
                             </p>
@@ -145,7 +145,7 @@
                     <!-- Status -->
                     <div class="border-t border-gray-200 dark:border-gray-700 pt-6">
                         <label for="status" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                            Status <span class="text-red-500">*</span>
+                            Status <span class="text-red-600 dark:text-red-400">*</span>
                         </label>
                         <select
                             id="status"
@@ -158,7 +158,7 @@
                             <option value="published">Published</option>
                             <option value="disabled">Disabled</option>
                         </select>
-                        <p v-if="form.errors.status" class="mt-1 text-sm text-red-600">{{ form.errors.status }}</p>
+                        <p v-if="form.errors.status" class="mt-1 text-sm text-red-600 dark:text-red-400">{{ form.errors.status }}</p>
                         <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">
                             Draft pages are not visible on storefront. Published pages are live.
                         </p>

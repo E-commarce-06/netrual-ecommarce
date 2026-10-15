@@ -90,7 +90,7 @@ const save = () => {
           <div class="space-y-4">
             <div>
               <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                Method Name <span class="text-red-500">*</span>
+                Method Name <span class="text-red-600 dark:text-red-400">*</span>
               </label>
               <input
                 v-model="form.name"
@@ -98,7 +98,7 @@ const save = () => {
                 :class="['w-full px-3 py-2 border rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:ring-2 focus:ring-blue-500 focus:border-transparent', errors.name ? 'border-red-500' : 'border-gray-300 dark:border-gray-600']"
                 placeholder="Stripe"
               />
-              <p v-if="errors.name" class="mt-1 text-sm text-red-600">{{ errors.name }}</p>
+              <p v-if="errors.name" class="mt-1 text-sm text-red-600 dark:text-red-400">{{ errors.name }}</p>
             </div>
             <div>
               <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Description</label>
@@ -189,7 +189,7 @@ const save = () => {
             <template v-if="form.configuration.mode === 'test'">
               <div>
                 <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                  Test Publishable Key <span class="text-red-500">*</span>
+                  Test Publishable Key <span class="text-red-600 dark:text-red-400">*</span>
                 </label>
                 <input
                   v-model="form.configuration.test_publishable_key"
@@ -197,12 +197,12 @@ const save = () => {
                   :class="['w-full px-3 py-2 border rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:ring-2 focus:ring-blue-500 focus:border-transparent font-mono text-sm', errors['configuration.test_publishable_key'] ? 'border-red-500' : 'border-gray-300 dark:border-gray-600']"
                   placeholder="pk_test_..."
                 />
-                <p v-if="errors['configuration.test_publishable_key']" class="mt-1 text-sm text-red-600">{{ errors['configuration.test_publishable_key'] }}</p>
+                <p v-if="errors['configuration.test_publishable_key']" class="mt-1 text-sm text-red-600 dark:text-red-400">{{ errors['configuration.test_publishable_key'] }}</p>
                 <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">Starts with <code>pk_test_</code></p>
               </div>
               <div>
                 <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                  Test Secret Key <span class="text-red-500">*</span>
+                  Test Secret Key <span class="text-red-600 dark:text-red-400">*</span>
                 </label>
                 <input
                   v-model="form.configuration.test_secret_key"
@@ -210,7 +210,7 @@ const save = () => {
                   :class="['w-full px-3 py-2 border rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:ring-2 focus:ring-blue-500 focus:border-transparent font-mono text-sm', errors['configuration.test_secret_key'] ? 'border-red-500' : 'border-gray-300 dark:border-gray-600']"
                   placeholder="sk_test_..."
                 />
-                <p v-if="errors['configuration.test_secret_key']" class="mt-1 text-sm text-red-600">{{ errors['configuration.test_secret_key'] }}</p>
+                <p v-if="errors['configuration.test_secret_key']" class="mt-1 text-sm text-red-600 dark:text-red-400">{{ errors['configuration.test_secret_key'] }}</p>
                 <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">Starts with <code>sk_test_</code> — keep secure</p>
               </div>
               <div>
@@ -231,7 +231,7 @@ const save = () => {
             <template v-else>
               <div>
                 <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                  Live Publishable Key <span class="text-red-500">*</span>
+                  Live Publishable Key <span class="text-red-600 dark:text-red-400">*</span>
                 </label>
                 <input
                   v-model="form.configuration.publishable_key"
@@ -239,12 +239,12 @@ const save = () => {
                   :class="['w-full px-3 py-2 border rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:ring-2 focus:ring-blue-500 focus:border-transparent font-mono text-sm', errors['configuration.publishable_key'] ? 'border-red-500' : 'border-gray-300 dark:border-gray-600']"
                   placeholder="pk_live_..."
                 />
-                <p v-if="errors['configuration.publishable_key']" class="mt-1 text-sm text-red-600">{{ errors['configuration.publishable_key'] }}</p>
+                <p v-if="errors['configuration.publishable_key']" class="mt-1 text-sm text-red-600 dark:text-red-400">{{ errors['configuration.publishable_key'] }}</p>
                 <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">Starts with <code>pk_live_</code></p>
               </div>
               <div>
                 <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                  Live Secret Key <span class="text-red-500">*</span>
+                  Live Secret Key <span class="text-red-600 dark:text-red-400">*</span>
                 </label>
                 <input
                   v-model="form.configuration.secret_key"
@@ -252,7 +252,7 @@ const save = () => {
                   :class="['w-full px-3 py-2 border rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:ring-2 focus:ring-blue-500 focus:border-transparent font-mono text-sm', errors['configuration.secret_key'] ? 'border-red-500' : 'border-gray-300 dark:border-gray-600']"
                   placeholder="sk_live_..."
                 />
-                <p v-if="errors['configuration.secret_key']" class="mt-1 text-sm text-red-600">{{ errors['configuration.secret_key'] }}</p>
+                <p v-if="errors['configuration.secret_key']" class="mt-1 text-sm text-red-600 dark:text-red-400">{{ errors['configuration.secret_key'] }}</p>
                 <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">Starts with <code>sk_live_</code> — keep secure</p>
               </div>
               <div>

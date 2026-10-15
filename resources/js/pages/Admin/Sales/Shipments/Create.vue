@@ -117,8 +117,8 @@ function cancel() {
     <div class="space-y-6">
       <!-- Header -->
       <div>
-        <h1 class="text-2xl font-bold text-gray-900">Create Shipment</h1>
-        <p class="text-gray-600 mt-1">Create a new shipment for an order</p>
+        <h1 class="text-2xl font-bold text-gray-900 dark:text-gray-400">Create Shipment</h1>
+        <p class="text-gray-600 mt-1 dark:text-gray-400">Create a new shipment for an order</p>
       </div>
 
       <form @submit.prevent="submit" class="space-y-6">
@@ -317,7 +317,7 @@ function cancel() {
 
         <!-- Actions -->
         <div class="flex items-center justify-between">
-          <p class="text-sm text-gray-600">
+          <p class="text-sm text-gray-600 dark:text-gray-400">
             {{ form.shipment_mode === 'shiprocket'
               ? 'Shipment will be created and pushed to Shiprocket in one step.'
               : form.shipment_mode === 'delivery'

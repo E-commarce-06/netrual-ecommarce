@@ -208,7 +208,7 @@ function confirmBulkDelete() {
                     <div class="flex items-center justify-between">
                         <div>
                             <p class="text-sm font-medium text-gray-600 dark:text-gray-400">Pending</p>
-                            <p class="text-3xl font-bold text-yellow-600 dark:text-yellow-400 mt-1">{{ stats.pending }}</p>
+                            <p class="text-3xl font-bold dark:text-yellow-400 mt-1 text-yellow-700">{{ stats.pending }}</p>
                         </div>
                         <div class="p-3 bg-yellow-50 dark:bg-yellow-900/20 rounded-xl">
                             <Eye class="w-6 h-6 text-yellow-600 dark:text-yellow-400" />
@@ -221,7 +221,7 @@ function confirmBulkDelete() {
                     <div class="flex items-center justify-between">
                         <div>
                             <p class="text-sm font-medium text-gray-600 dark:text-gray-400">Approved</p>
-                            <p class="text-3xl font-bold text-green-600 dark:text-green-400 mt-1">{{ stats.approved }}</p>
+                            <p class="text-3xl font-bold dark:text-green-400 mt-1 text-green-700">{{ stats.approved }}</p>
                         </div>
                         <div class="p-3 bg-green-50 dark:bg-green-900/20 rounded-xl">
                             <ThumbsUp class="w-6 h-6 text-green-600 dark:text-green-400" />
@@ -331,7 +331,7 @@ function confirmBulkDelete() {
                 <div v-if="search || selectedStatus || selectedRating || selectedProduct" class="mt-4 pt-4 border-t border-gray-100 dark:border-gray-700 flex justify-end">
                     <button
                         @click="clearFilters"
-                         class="px-4 py-2 text-sm text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-200 font-medium bg-gray-100 hover:bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-600 rounded-lg transition-colors flex items-center gap-2"
+                         class="px-4 py-2 text-sm text-gray-600 hover:text-gray-900 dark:hover:text-gray-200 font-medium bg-gray-100 hover:bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-600 rounded-lg transition-colors flex items-center gap-2 dark:text-gray-300"
                     >
                         <X class="w-4 h-4" />
                         Clear Filters
@@ -350,14 +350,14 @@ function confirmBulkDelete() {
                         <button
                             @click="bulkApprove"
                             :disabled="isLoading"
-                            class="px-3 py-1.5 text-xs font-bold text-green-600 bg-white rounded-lg hover:bg-green-50 transition-colors uppercase tracking-wide disabled:opacity-50"
+                            class="px-3 py-1.5 text-xs font-bold bg-white rounded-lg hover:bg-green-50 transition-colors uppercase tracking-wide disabled:opacity-50 text-green-700 dark:text-green-700"
                         >
                             Approve
                         </button>
                         <button
                             @click="bulkReject"
                             :disabled="isLoading"
-                            class="px-3 py-1.5 text-xs font-bold text-yellow-600 bg-white rounded-lg hover:bg-yellow-50 transition-colors uppercase tracking-wide disabled:opacity-50"
+                            class="px-3 py-1.5 text-xs font-bold bg-white rounded-lg hover:bg-yellow-50 transition-colors uppercase tracking-wide disabled:opacity-50 text-yellow-700 dark:text-yellow-700"
                         >
                             Reject
                         </button>
@@ -365,7 +365,7 @@ function confirmBulkDelete() {
                         <button
                             @click="bulkDelete"
                             :disabled="isLoading"
-                            class="px-3 py-1.5 text-xs font-bold text-white bg-red-500 rounded-lg hover:bg-red-600 transition-colors flex items-center uppercase tracking-wide disabled:opacity-50"
+                            class="px-3 py-1.5 text-xs font-bold text-white bg-red-600 rounded-lg hover:bg-red-600 transition-colors flex items-center uppercase tracking-wide disabled:opacity-50 dark:text-gray-50"
                         >
                             <Trash2 class="w-3 h-3 mr-1.5" />
                             Delete
@@ -422,7 +422,7 @@ function confirmBulkDelete() {
                                      <div class="flex items-center gap-3">
                                         <div class="h-10 w-10 flex-shrink-0 bg-gray-100 dark:bg-gray-700 rounded-lg overflow-hidden border border-gray-200 dark:border-gray-600 flex items-center justify-center">
                                             <img v-if="review.product.featured_image" :src="`/storage/${review.product.featured_image}`" :alt="review.product.name" class="w-full h-full object-cover" />
-                                            <div v-else class="text-xs font-semibold text-gray-400 text-center p-1 leading-tight">{{ review.product.name.substring(0, 2).toUpperCase() }}</div>
+                                            <div v-else class="text-xs font-semibold text-gray-400 text-center p-1 leading-tight dark:text-gray-300">{{ review.product.name.substring(0, 2).toUpperCase() }}</div>
                                         </div>
                                         <div>
                                             <div class="text-sm font-bold text-gray-900 dark:text-white line-clamp-1 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">{{ review.product.name }}</div>
@@ -433,7 +433,7 @@ function confirmBulkDelete() {
                                 <td class="hidden md:table-cell px-6 py-4">
                                     <div class="flex items-center">
                                         <div class="flex-shrink-0 h-8 w-8 bg-gray-100 dark:bg-gray-700 rounded-full flex items-center justify-center border border-gray-200 dark:border-gray-600">
-                                            <span class="text-xs font-bold text-gray-500 dark:text-gray-400">{{ review.reviewer.charAt(0).toUpperCase() }}</span>
+                                            <span class="text-xs font-bold text-gray-600 dark:text-gray-300">{{ review.reviewer.charAt(0).toUpperCase() }}</span>
                                         </div>
                                         <div class="ml-3">
                                             <div class="text-sm font-medium text-gray-900 dark:text-white">{{ review.reviewer }}</div>
@@ -457,7 +457,7 @@ function confirmBulkDelete() {
                                     <div class="max-w-xs">
                                         <div class="text-sm font-semibold text-gray-900 dark:text-white mb-1 line-clamp-1">{{ review.title }}</div>
                                         <div class="text-xs text-gray-500 dark:text-gray-400 line-clamp-2 leading-relaxed">{{ review.comment }}</div>
-                                        <div v-if="review.admin_reply" class="mt-2 flex items-center text-xs text-green-600 dark:text-green-400 font-medium bg-green-50 dark:bg-green-900/10 w-fit px-2 py-1 rounded">
+                                        <div v-if="review.admin_reply" class="mt-2 flex items-center text-xs dark:text-green-400 font-medium bg-green-50 dark:bg-green-900/10 w-fit px-2 py-1 rounded text-green-700">
                                             <MessageSquare class="w-3 h-3 mr-1.5" />
                                             Admin replied
                                         </div>
@@ -497,16 +497,16 @@ function confirmBulkDelete() {
                                 <td colspan="8" class="px-6 py-4 border-t border-gray-100 dark:border-gray-700">
                                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-sm">
                                         <div class="md:hidden flex flex-col gap-1">
-                                             <span class="text-xs text-gray-500 font-medium uppercase tracking-wider">Reviewer</span>
+                                             <span class="text-xs text-gray-500 font-medium uppercase tracking-wider dark:text-gray-400">Reviewer</span>
                                              <div class="flex items-center">
                                                 <div class="flex-shrink-0 h-6 w-6 bg-gray-100 dark:bg-gray-700 rounded-full flex items-center justify-center border border-gray-200 dark:border-gray-600 mr-2">
-                                                    <span class="text-xs font-bold text-gray-500 dark:text-gray-400">{{ review.reviewer.charAt(0).toUpperCase() }}</span>
+                                                    <span class="text-xs font-bold text-gray-600 dark:text-gray-300">{{ review.reviewer.charAt(0).toUpperCase() }}</span>
                                                 </div>
                                                 <span class="text-gray-900 dark:text-white">{{ review.reviewer }}</span>
                                             </div>
                                         </div>
                                         <div class="sm:hidden flex flex-col gap-1">
-                                             <span class="text-xs text-gray-500 font-medium uppercase tracking-wider">Rating</span>
+                                             <span class="text-xs text-gray-500 font-medium uppercase tracking-wider dark:text-gray-400">Rating</span>
                                              <div class="flex items-center">
                                                 <span class="text-sm font-bold text-gray-900 dark:text-white mr-2">{{ review.rating }}/5</span>
                                                 <div class="flex">
@@ -520,18 +520,18 @@ function confirmBulkDelete() {
                                             </div>
                                         </div>
                                          <div class="lg:hidden flex flex-col gap-2 col-span-1 md:col-span-2">
-                                            <span class="text-xs text-gray-500 font-medium uppercase tracking-wider">Review Content</span>
+                                            <span class="text-xs text-gray-500 font-medium uppercase tracking-wider dark:text-gray-400">Review Content</span>
                                              <div class="bg-white dark:bg-gray-800 p-3 rounded-lg border border-gray-100 dark:border-gray-700">
                                                 <div class="font-bold text-gray-900 dark:text-white mb-1">{{ review.title }}</div>
                                                 <div class="text-gray-600 dark:text-gray-400 italic">"{{ review.comment }}"</div>
                                                 <div v-if="review.admin_reply" class="mt-3 pl-3 border-l-2 border-green-500">
-                                                    <div class="text-xs text-green-600 font-semibold mb-0.5">Admin Response</div>
+                                                    <div class="text-xs font-semibold mb-0.5 text-green-700 dark:text-green-500">Admin Response</div>
                                                     <div class="text-sm text-gray-600 dark:text-gray-400">{{ review.admin_reply }}</div>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="xl:hidden flex flex-col gap-1">
-                                            <span class="text-xs text-gray-500 font-medium uppercase tracking-wider">Date</span>
+                                            <span class="text-xs text-gray-500 font-medium uppercase tracking-wider dark:text-gray-400">Date</span>
                                             <span class="text-gray-700 dark:text-gray-300 font-mono">{{ new Date(review.created_at).toLocaleString() }}</span>
                                         </div>
                                     </div>

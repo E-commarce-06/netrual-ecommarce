@@ -274,7 +274,7 @@ watch(() => form.store_email, (newEmail) => {
                   <div class="grid grid-cols-1 gap-6 sm:grid-cols-2">
                     <div>
                       <label for="store_name" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">
-                        Business Name <span class="text-red-500">*</span>
+                        Business Name <span class="text-red-600 dark:text-red-400">*</span>
                       </label>
                       <input
                         id="store_name"
@@ -283,7 +283,7 @@ watch(() => form.store_email, (newEmail) => {
                         class="block w-full px-3 py-2.5 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg text-sm shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-shadow duration-200"
                         required
                       />
-                      <p v-if="form.errors.store_name" class="mt-1 text-sm text-red-600">{{ form.errors.store_name }}</p>
+                      <p v-if="form.errors.store_name" class="mt-1 text-sm text-red-600 dark:text-red-400">{{ form.errors.store_name }}</p>
                     </div>
 
                     <div>
@@ -296,7 +296,7 @@ watch(() => form.store_email, (newEmail) => {
                         type="text"
                         class="block w-full px-3 py-2.5 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg text-sm shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-shadow duration-200"
                       />
-                      <p v-if="form.errors.business_registration" class="mt-1 text-sm text-red-600">{{ form.errors.business_registration }}</p>
+                      <p v-if="form.errors.business_registration" class="mt-1 text-sm text-red-600 dark:text-red-400">{{ form.errors.business_registration }}</p>
                     </div>
                   </div>
               </div>
@@ -312,7 +312,7 @@ watch(() => form.store_email, (newEmail) => {
                     type="text"
                     class="block w-full px-3 py-2.5 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg text-sm shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-shadow duration-200"
                   />
-                  <p v-if="form.errors.vat_number" class="mt-1 text-sm text-red-600">{{ form.errors.vat_number }}</p>
+                  <p v-if="form.errors.vat_number" class="mt-1 text-sm text-red-600 dark:text-red-400">{{ form.errors.vat_number }}</p>
                 </div>
 
                 <div>
@@ -325,12 +325,12 @@ watch(() => form.store_email, (newEmail) => {
                     type="text"
                     class="block w-full px-3 py-2.5 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg text-sm shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-shadow duration-200"
                   />
-                  <p v-if="form.errors.store_license" class="mt-1 text-sm text-red-600">{{ form.errors.store_license }}</p>
+                  <p v-if="form.errors.store_license" class="mt-1 text-sm text-red-600 dark:text-red-400">{{ form.errors.store_license }}</p>
                 </div>
 
                 <div>
                   <label for="store_timezone" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">
-                    Store Timezone <span class="text-red-500">*</span>
+                    Store Timezone <span class="text-red-600 dark:text-red-400">*</span>
                   </label>
                   <div class="relative">
                       <div class="absolute inset-y-0 left-0 padding-l-3 flex items-center pl-3 pointer-events-none">
@@ -356,7 +356,7 @@ watch(() => form.store_email, (newEmail) => {
                         <option value="Australia/Sydney">Australia/Sydney</option>
                       </select>
                   </div>
-                  <p v-if="form.errors.store_timezone" class="mt-1 text-sm text-red-600">{{ form.errors.store_timezone }}</p>
+                  <p v-if="form.errors.store_timezone" class="mt-1 text-sm text-red-600 dark:text-red-400">{{ form.errors.store_timezone }}</p>
                 </div>
               </div>
 
@@ -371,7 +371,7 @@ watch(() => form.store_email, (newEmail) => {
                   class="block w-full px-3 py-2.5 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg text-sm shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-shadow duration-200"
                   placeholder="Brief description of your business for SEO purposes..."
                 ></textarea>
-                <p v-if="form.errors.store_description" class="mt-1 text-sm text-red-600">{{ form.errors.store_description }}</p>
+                <p v-if="form.errors.store_description" class="mt-1 text-sm text-red-600 dark:text-red-400">{{ form.errors.store_description }}</p>
               </div>
             </div>
           </div>
@@ -387,7 +387,7 @@ watch(() => form.store_email, (newEmail) => {
                   <div class="grid grid-cols-1 gap-6 sm:grid-cols-2">
                     <div>
                       <label for="store_email" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">
-                        Primary Email <span class="text-red-500">*</span>
+                        Primary Email <span class="text-red-600 dark:text-red-400">*</span>
                       </label>
                       <input
                         id="store_email"
@@ -396,7 +396,7 @@ watch(() => form.store_email, (newEmail) => {
                         class="block w-full px-3 py-2.5 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg text-sm shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-shadow duration-200"
                         required
                       />
-                      <p v-if="form.errors.store_email" class="mt-1 text-sm text-red-600">{{ form.errors.store_email }}</p>
+                      <p v-if="form.errors.store_email" class="mt-1 text-sm text-red-600 dark:text-red-400">{{ form.errors.store_email }}</p>
                     </div>
 
                     <div>
@@ -409,14 +409,14 @@ watch(() => form.store_email, (newEmail) => {
                         type="email"
                         class="block w-full px-3 py-2.5 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg text-sm shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-shadow duration-200"
                       />
-                      <p v-if="form.errors.support_email" class="mt-1 text-sm text-red-600">{{ form.errors.support_email }}</p>
+                      <p v-if="form.errors.support_email" class="mt-1 text-sm text-red-600 dark:text-red-400">{{ form.errors.support_email }}</p>
                     </div>
                   </div>
 
                   <div class="grid grid-cols-1 gap-6 sm:grid-cols-3 mt-6">
                     <div>
                       <label for="store_phone" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">
-                        Phone Number <span class="text-red-500">*</span>
+                        Phone Number <span class="text-red-600 dark:text-red-400">*</span>
                       </label>
                       <input
                         id="store_phone"
@@ -425,7 +425,7 @@ watch(() => form.store_email, (newEmail) => {
                         class="block w-full px-3 py-2.5 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg text-sm shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-shadow duration-200"
                         required
                       />
-                      <p v-if="form.errors.store_phone" class="mt-1 text-sm text-red-600">{{ form.errors.store_phone }}</p>
+                      <p v-if="form.errors.store_phone" class="mt-1 text-sm text-red-600 dark:text-red-400">{{ form.errors.store_phone }}</p>
                     </div>
 
                     <div>
@@ -438,7 +438,7 @@ watch(() => form.store_email, (newEmail) => {
                         type="tel"
                         class="block w-full px-3 py-2.5 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg text-sm shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-shadow duration-200"
                       />
-                      <p v-if="form.errors.store_phone_alt" class="mt-1 text-sm text-red-600">{{ form.errors.store_phone_alt }}</p>
+                      <p v-if="form.errors.store_phone_alt" class="mt-1 text-sm text-red-600 dark:text-red-400">{{ form.errors.store_phone_alt }}</p>
                     </div>
 
                     <div>
@@ -451,7 +451,7 @@ watch(() => form.store_email, (newEmail) => {
                         type="tel"
                         class="block w-full px-3 py-2.5 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg text-sm shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-shadow duration-200"
                       />
-                      <p v-if="form.errors.store_whatsapp" class="mt-1 text-sm text-red-600">{{ form.errors.store_whatsapp }}</p>
+                      <p v-if="form.errors.store_whatsapp" class="mt-1 text-sm text-red-600 dark:text-red-400">{{ form.errors.store_whatsapp }}</p>
                     </div>
                   </div>
                </div>
@@ -462,7 +462,7 @@ watch(() => form.store_email, (newEmail) => {
                 <div class="space-y-6">
                   <div>
                     <label for="store_address_1" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">
-                      Street Address <span class="text-red-500">*</span>
+                      Street Address <span class="text-red-600 dark:text-red-400">*</span>
                     </label>
                     <input
                       id="store_address_1"
@@ -471,7 +471,7 @@ watch(() => form.store_email, (newEmail) => {
                       class="block w-full px-3 py-2.5 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg text-sm shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-shadow duration-200"
                       required
                     />
-                    <p v-if="form.errors.store_address_1" class="mt-1 text-sm text-red-600">{{ form.errors.store_address_1 }}</p>
+                    <p v-if="form.errors.store_address_1" class="mt-1 text-sm text-red-600 dark:text-red-400">{{ form.errors.store_address_1 }}</p>
                   </div>
 
                   <div>
@@ -484,13 +484,13 @@ watch(() => form.store_email, (newEmail) => {
                       type="text"
                       class="block w-full px-3 py-2.5 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg text-sm shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-shadow duration-200"
                     />
-                    <p v-if="form.errors.store_address_2" class="mt-1 text-sm text-red-600">{{ form.errors.store_address_2 }}</p>
+                    <p v-if="form.errors.store_address_2" class="mt-1 text-sm text-red-600 dark:text-red-400">{{ form.errors.store_address_2 }}</p>
                   </div>
 
                   <div class="grid grid-cols-1 gap-6 sm:grid-cols-3">
                     <div>
                       <label for="store_city" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">
-                        City <span class="text-red-500">*</span>
+                        City <span class="text-red-600 dark:text-red-400">*</span>
                       </label>
                       <input
                         id="store_city"
@@ -499,12 +499,12 @@ watch(() => form.store_email, (newEmail) => {
                         class="block w-full px-3 py-2.5 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg text-sm shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-shadow duration-200"
                         required
                       />
-                      <p v-if="form.errors.store_city" class="mt-1 text-sm text-red-600">{{ form.errors.store_city }}</p>
+                      <p v-if="form.errors.store_city" class="mt-1 text-sm text-red-600 dark:text-red-400">{{ form.errors.store_city }}</p>
                     </div>
 
                     <div>
                       <label for="store_state" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">
-                        State/Province <span class="text-red-500">*</span>
+                        State/Province <span class="text-red-600 dark:text-red-400">*</span>
                       </label>
                       <input
                         id="store_state"
@@ -513,12 +513,12 @@ watch(() => form.store_email, (newEmail) => {
                         class="block w-full px-3 py-2.5 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg text-sm shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-shadow duration-200"
                         required
                       />
-                      <p v-if="form.errors.store_state" class="mt-1 text-sm text-red-600">{{ form.errors.store_state }}</p>
+                      <p v-if="form.errors.store_state" class="mt-1 text-sm text-red-600 dark:text-red-400">{{ form.errors.store_state }}</p>
                     </div>
 
                     <div>
                       <label for="store_postal_code" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">
-                        Postal Code <span class="text-red-500">*</span>
+                        Postal Code <span class="text-red-600 dark:text-red-400">*</span>
                       </label>
                       <input
                         id="store_postal_code"
@@ -527,13 +527,13 @@ watch(() => form.store_email, (newEmail) => {
                         class="block w-full px-3 py-2.5 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg text-sm shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-shadow duration-200"
                         required
                       />
-                      <p v-if="form.errors.store_postal_code" class="mt-1 text-sm text-red-600">{{ form.errors.store_postal_code }}</p>
+                      <p v-if="form.errors.store_postal_code" class="mt-1 text-sm text-red-600 dark:text-red-400">{{ form.errors.store_postal_code }}</p>
                     </div>
                   </div>
 
                   <div>
                     <label for="store_country" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">
-                      Country <span class="text-red-500">*</span>
+                      Country <span class="text-red-600 dark:text-red-400">*</span>
                     </label>
                     <select
                       id="store_country"
@@ -738,7 +738,7 @@ watch(() => form.store_email, (newEmail) => {
                       <option value="Zambia">Zambia</option>
                       <option value="Zimbabwe">Zimbabwe</option>
                     </select>
-                    <p v-if="form.errors.store_country" class="mt-1 text-sm text-red-600">{{ form.errors.store_country }}</p>
+                    <p v-if="form.errors.store_country" class="mt-1 text-sm text-red-600 dark:text-red-400">{{ form.errors.store_country }}</p>
                   </div>
                 </div>
               </div>
@@ -764,7 +764,7 @@ watch(() => form.store_email, (newEmail) => {
                     class="block w-full px-3 py-2.5 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg text-sm shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-shadow duration-200"
                     placeholder="https://facebook.com/yourstore"
                   />
-                  <p v-if="form.errors.social_facebook" class="mt-1 text-sm text-red-600">{{ form.errors.social_facebook }}</p>
+                  <p v-if="form.errors.social_facebook" class="mt-1 text-sm text-red-600 dark:text-red-400">{{ form.errors.social_facebook }}</p>
                 </div>
 
                 <div>
@@ -778,7 +778,7 @@ watch(() => form.store_email, (newEmail) => {
                     class="block w-full px-3 py-2.5 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg text-sm shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-shadow duration-200"
                     placeholder="https://instagram.com/yourstore"
                   />
-                  <p v-if="form.errors.social_instagram" class="mt-1 text-sm text-red-600">{{ form.errors.social_instagram }}</p>
+                  <p v-if="form.errors.social_instagram" class="mt-1 text-sm text-red-600 dark:text-red-400">{{ form.errors.social_instagram }}</p>
                 </div>
 
                 <div>
@@ -792,7 +792,7 @@ watch(() => form.store_email, (newEmail) => {
                     class="block w-full px-3 py-2.5 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg text-sm shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-shadow duration-200"
                     placeholder="https://twitter.com/yourstore"
                   />
-                  <p v-if="form.errors.social_twitter" class="mt-1 text-sm text-red-600">{{ form.errors.social_twitter }}</p>
+                  <p v-if="form.errors.social_twitter" class="mt-1 text-sm text-red-600 dark:text-red-400">{{ form.errors.social_twitter }}</p>
                 </div>
 
                 <div>
@@ -806,7 +806,7 @@ watch(() => form.store_email, (newEmail) => {
                       class="block w-full px-3 py-2.5 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg text-sm shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-shadow duration-200"
                       placeholder="https://linkedin.com/company/yourstore"
                     />
-                    <p v-if="form.errors.social_linkedin" class="mt-1 text-sm text-red-600">{{ form.errors.social_linkedin }}</p>
+                    <p v-if="form.errors.social_linkedin" class="mt-1 text-sm text-red-600 dark:text-red-400">{{ form.errors.social_linkedin }}</p>
                   </div>
     
                   <div>
@@ -820,7 +820,7 @@ watch(() => form.store_email, (newEmail) => {
                       class="block w-full px-3 py-2.5 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg text-sm shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-shadow duration-200"
                       placeholder="https://youtube.com/@yourstore"
                     />
-                    <p v-if="form.errors.social_youtube" class="mt-1 text-sm text-red-600">{{ form.errors.social_youtube }}</p>
+                    <p v-if="form.errors.social_youtube" class="mt-1 text-sm text-red-600 dark:text-red-400">{{ form.errors.social_youtube }}</p>
                   </div>
     
                   <div>
@@ -834,7 +834,7 @@ watch(() => form.store_email, (newEmail) => {
                       class="block w-full px-3 py-2.5 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg text-sm shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-shadow duration-200"
                       placeholder="https://tiktok.com/@yourstore"
                     />
-                    <p v-if="form.errors.social_tiktok" class="mt-1 text-sm text-red-600">{{ form.errors.social_tiktok }}</p>
+                    <p v-if="form.errors.social_tiktok" class="mt-1 text-sm text-red-600 dark:text-red-400">{{ form.errors.social_tiktok }}</p>
                   </div>
     
                   <div>
@@ -848,7 +848,7 @@ watch(() => form.store_email, (newEmail) => {
                       class="block w-full px-3 py-2.5 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg text-sm shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-shadow duration-200"
                       placeholder="https://pinterest.com/yourstore"
                     />
-                    <p v-if="form.errors.social_pinterest" class="mt-1 text-sm text-red-600">{{ form.errors.social_pinterest }}</p>
+                    <p v-if="form.errors.social_pinterest" class="mt-1 text-sm text-red-600 dark:text-red-400">{{ form.errors.social_pinterest }}</p>
                   </div>
               </div>
             </div>
@@ -948,7 +948,7 @@ watch(() => form.store_email, (newEmail) => {
                       v-model="form.policy_privacy"
                       placeholder="Enter your privacy policy content..."
                     />
-                    <p v-if="form.errors.policy_privacy" class="mt-1 text-sm text-red-600">{{ form.errors.policy_privacy }}</p>
+                    <p v-if="form.errors.policy_privacy" class="mt-1 text-sm text-red-600 dark:text-red-400">{{ form.errors.policy_privacy }}</p>
                   </div>
 
                   <div>
@@ -959,7 +959,7 @@ watch(() => form.store_email, (newEmail) => {
                       v-model="form.policy_terms"
                       placeholder="Enter your terms and conditions..."
                     />
-                    <p v-if="form.errors.policy_terms" class="mt-1 text-sm text-red-600">{{ form.errors.policy_terms }}</p>
+                    <p v-if="form.errors.policy_terms" class="mt-1 text-sm text-red-600 dark:text-red-400">{{ form.errors.policy_terms }}</p>
                   </div>
 
                   <div>
@@ -970,7 +970,7 @@ watch(() => form.store_email, (newEmail) => {
                       v-model="form.policy_return"
                       placeholder="Enter your return and refund policy..."
                     />
-                    <p v-if="form.errors.policy_return" class="mt-1 text-sm text-red-600">{{ form.errors.policy_return }}</p>
+                    <p v-if="form.errors.policy_return" class="mt-1 text-sm text-red-600 dark:text-red-400">{{ form.errors.policy_return }}</p>
                   </div>
 
                   <div>
@@ -981,7 +981,7 @@ watch(() => form.store_email, (newEmail) => {
                       v-model="form.policy_shipping"
                       placeholder="Enter your shipping terms and conditions..."
                     />
-                    <p v-if="form.errors.policy_shipping" class="mt-1 text-sm text-red-600">{{ form.errors.policy_shipping }}</p>
+                    <p v-if="form.errors.policy_shipping" class="mt-1 text-sm text-red-600 dark:text-red-400">{{ form.errors.policy_shipping }}</p>
                   </div>
               </div>
             </div>

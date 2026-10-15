@@ -232,8 +232,8 @@ const getSegmentColor = (segment: string) => {
             <!-- Page Header -->
             <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
                 <div>
-                    <h1 class="text-2xl font-bold text-gray-900">Customer Reports</h1>
-                    <p class="mt-1 text-sm text-gray-500">
+                    <h1 class="text-2xl font-bold text-gray-900 dark:text-gray-400">Customer Reports</h1>
+                    <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">
                         Analyze customer behavior, segments, and lifetime value
                     </p>
                 </div>
@@ -312,7 +312,7 @@ const getSegmentColor = (segment: string) => {
                             <p class="mt-2 text-2xl font-bold text-gray-900">{{ formatNumber(statistics.total_customers) }}</p>
                             <div class="mt-2 flex items-center text-xs text-green-600 bg-green-50 w-fit px-2 py-1 rounded-full">
                                 <ArrowUpRight class="w-3 h-3 mr-1" />
-                                <span class="font-medium">Active Base</span>
+                                <span class="font-medium text-green-700 dark:text-green-700">Active Base</span>
                             </div>
                         </div>
                         <div class="p-3 bg-blue-50 rounded-xl border border-blue-100">
@@ -363,7 +363,7 @@ const getSegmentColor = (segment: string) => {
                             <p class="mt-2 text-2xl font-bold text-gray-900">{{ formatPercentage(statistics.repeat_rate) }}</p>
                             <div class="mt-2 flex items-center text-xs text-orange-600 bg-orange-50 w-fit px-2 py-1 rounded-full">
                                 <RefreshCcw class="w-3 h-3 mr-1" />
-                                <span class="font-medium">Retention</span>
+                                <span class="font-medium text-orange-700 dark:text-orange-700">Retention</span>
                             </div>
                         </div>
                         <div class="p-3 bg-orange-50 rounded-xl border border-orange-100">
@@ -532,7 +532,7 @@ const getSegmentColor = (segment: string) => {
                                         </div>
                                     </td>
                                     <td class="px-6 py-4 text-center">
-                                        <span class="font-mono text-xs">{{ customer.rfm_score }}</span>
+                                        <span class="font-mono text-xs dark:text-gray-500">{{ customer.rfm_score }}</span>
                                     </td>
                                     <td class="px-6 py-4 text-right">
                                         <span :class="getSegmentColor(customer.segment)" class="px-2 py-1 text-xs font-semibold rounded-full border border-opacity-20 border-gray-300">

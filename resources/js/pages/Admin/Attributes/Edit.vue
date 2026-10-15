@@ -144,8 +144,8 @@ const submit = () => {
         <div class="mb-6">
           <div class="flex items-center justify-between">
             <div>
-              <h1 class="text-2xl font-semibold text-gray-900">Edit Attribute</h1>
-              <p class="mt-1 text-sm text-gray-600">Update attribute: {{ attribute.name }}</p>
+              <h1 class="text-2xl font-semibold text-gray-900 dark:text-gray-400">Edit Attribute</h1>
+              <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">Update attribute: {{ attribute.name }}</p>
             </div>
             <Link
               :href="attributeRoutes.index().url"
@@ -170,7 +170,7 @@ const submit = () => {
                 <!-- Name -->
                 <div>
                   <label for="name" class="block text-sm font-medium text-gray-700">
-                    Attribute Name <span class="text-red-500">*</span>
+                    Attribute Name <span class="text-red-600 dark:text-red-600">*</span>
                   </label>
                   <input
                     id="name"
@@ -188,7 +188,7 @@ const submit = () => {
                 <!-- Code -->
                 <div>
                   <label for="code" class="block text-sm font-medium text-gray-700">
-                    Attribute Code <span class="text-red-500">*</span>
+                    Attribute Code <span class="text-red-600 dark:text-red-600">*</span>
                   </label>
                   <input
                     id="code"
@@ -206,7 +206,7 @@ const submit = () => {
                 <!-- Type -->
                 <div>
                   <label for="type" class="block text-sm font-medium text-gray-700">
-                    Input Type <span class="text-red-500">*</span>
+                    Input Type <span class="text-red-600 dark:text-red-600">*</span>
                   </label>
                   <select
                     id="type"

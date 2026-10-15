@@ -425,15 +425,15 @@ function submit() {
             <div class="space-y-2">
               <div class="flex justify-between text-sm">
                 <span class="text-gray-600">Subtotal:</span>
-                <span class="font-medium">{{ formatPrice(form.subtotal) }}</span>
+                <span class="font-medium dark:text-gray-500">{{ formatPrice(form.subtotal) }}</span>
               </div>
               <div class="flex justify-between text-sm">
                 <span class="text-gray-600">Tax (10%):</span>
-                <span class="font-medium">{{ formatPrice(form.tax) }}</span>
+                <span class="font-medium dark:text-gray-500">{{ formatPrice(form.tax) }}</span>
               </div>
               <div class="flex justify-between text-sm">
                 <span class="text-gray-600">Shipping:</span>
-                <span class="font-medium">{{ formatPrice(form.shipping_cost) }}</span>
+                <span class="font-medium dark:text-gray-500">{{ formatPrice(form.shipping_cost) }}</span>
               </div>
               <div class="flex justify-between text-sm">
                 <label class="text-gray-600">Discount:</label>
@@ -448,7 +448,7 @@ function submit() {
               </div>
               <div class="border-t border-gray-300 pt-2 mt-2">
                 <div class="flex justify-between text-lg font-bold">
-                  <span>Total:</span>
+                  <span class="dark:text-gray-500">Total:</span>
                   <span class="text-blue-600">{{ formatPrice(form.total) }}</span>
                 </div>
               </div>

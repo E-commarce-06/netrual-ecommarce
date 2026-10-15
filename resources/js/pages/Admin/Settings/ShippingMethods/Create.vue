@@ -79,7 +79,7 @@ const submit = () => {
                   placeholder="e.g., Standard Shipping"
                   class="block w-full px-3 py-2.5 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-xl text-sm shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-shadow dark:text-white"
                 />
-                <p v-if="errors.name" class="text-red-600 text-sm mt-1">{{ errors.name }}</p>
+                <p v-if="errors.name" class="text-red-600 text-sm mt-1 dark:text-red-400">{{ errors.name }}</p>
               </div>
 
               <!-- Slug -->
@@ -92,7 +92,7 @@ const submit = () => {
                   class="block w-full px-3 py-2.5 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-xl text-sm shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-shadow dark:text-white"
                 />
                 <p class="text-gray-500 dark:text-gray-400 text-xs mt-1">URL-friendly identifier</p>
-                <p v-if="errors.slug" class="text-red-600 text-sm mt-1">{{ errors.slug }}</p>
+                <p v-if="errors.slug" class="text-red-600 text-sm mt-1 dark:text-red-400">{{ errors.slug }}</p>
               </div>
 
               <!-- Type -->
@@ -141,7 +141,7 @@ const submit = () => {
                     </div>
                   </div>
                 </div>
-                <p v-if="errors.type" class="text-red-600 text-sm mt-1">{{ errors.type }}</p>
+                <p v-if="errors.type" class="text-red-600 text-sm mt-1 dark:text-red-400">{{ errors.type }}</p>
               </div>
 
               <!-- Cost Fields -->
@@ -156,7 +156,7 @@ const submit = () => {
                     placeholder="0.00"
                     class="block w-full px-3 py-2.5 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl text-sm shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-shadow dark:text-white"
                   />
-                  <p v-if="errors.base_cost" class="text-red-600 text-sm mt-1">{{ errors.base_cost }}</p>
+                  <p v-if="errors.base_cost" class="text-red-600 text-sm mt-1 dark:text-red-400">{{ errors.base_cost }}</p>
                 </div>
 
                 <div>
@@ -169,7 +169,7 @@ const submit = () => {
                     placeholder="0.0000"
                     class="block w-full px-3 py-2.5 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl text-sm shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-shadow dark:text-white"
                   />
-                  <p v-if="errors.cost_per_kg" class="text-red-600 text-sm mt-1">{{ errors.cost_per_kg }}</p>
+                  <p v-if="errors.cost_per_kg" class="text-red-600 text-sm mt-1 dark:text-red-400">{{ errors.cost_per_kg }}</p>
                 </div>
               </div>
 
@@ -182,7 +182,7 @@ const submit = () => {
                   rows="4"
                   class="block w-full px-3 py-2.5 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl text-sm shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-shadow dark:text-white"
                 ></textarea>
-                <p v-if="errors.description" class="text-red-600 text-sm mt-1">{{ errors.description }}</p>
+                <p v-if="errors.description" class="text-red-600 text-sm mt-1 dark:text-red-400">{{ errors.description }}</p>
               </div>
 
               <!-- Default -->

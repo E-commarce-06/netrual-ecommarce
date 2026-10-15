@@ -73,14 +73,14 @@ const save = () => {
 
           <div class="space-y-4">
             <div>
-              <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Method Name <span class="text-red-500">*</span></label>
+              <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Method Name <span class="text-red-600 dark:text-red-400">*</span></label>
               <input
                 v-model="form.name"
                 type="text"
                 :class="['w-full px-3 py-2 border rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:ring-2 focus:ring-blue-500 focus:border-transparent', errors.name ? 'border-red-500' : 'border-gray-300 dark:border-gray-600']"
                 placeholder="PayUMoney"
               />
-              <p v-if="errors.name" class="mt-1 text-sm text-red-600">{{ errors.name }}</p>
+              <p v-if="errors.name" class="mt-1 text-sm text-red-600 dark:text-red-400">{{ errors.name }}</p>
             </div>
 
             <div>
@@ -116,29 +116,29 @@ const save = () => {
 
           <div class="space-y-4">
             <div>
-              <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Merchant Key <span class="text-red-500">*</span></label>
+              <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Merchant Key <span class="text-red-600 dark:text-red-400">*</span></label>
               <input
                 v-model="form.configuration.merchant_key"
                 type="text"
                 :class="['w-full px-3 py-2 border rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:ring-2 focus:ring-blue-500 focus:border-transparent font-mono text-sm', errors['configuration.merchant_key'] ? 'border-red-500' : 'border-gray-300 dark:border-gray-600']"
                 placeholder="Merchant Key"
               />
-              <p v-if="errors['configuration.merchant_key']" class="mt-1 text-sm text-red-600">{{ errors['configuration.merchant_key'] }}</p>
+              <p v-if="errors['configuration.merchant_key']" class="mt-1 text-sm text-red-600 dark:text-red-400">{{ errors['configuration.merchant_key'] }}</p>
             </div>
 
             <div>
-              <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Merchant Salt <span class="text-red-500">*</span></label>
+              <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Merchant Salt <span class="text-red-600 dark:text-red-400">*</span></label>
               <input
                 v-model="form.configuration.merchant_salt"
                 type="password"
                 :class="['w-full px-3 py-2 border rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:ring-2 focus:ring-blue-500 focus:border-transparent font-mono text-sm', errors['configuration.merchant_salt'] ? 'border-red-500' : 'border-gray-300 dark:border-gray-600']"
                 placeholder="Merchant Salt"
               />
-              <p v-if="errors['configuration.merchant_salt']" class="mt-1 text-sm text-red-600">{{ errors['configuration.merchant_salt'] }}</p>
+              <p v-if="errors['configuration.merchant_salt']" class="mt-1 text-sm text-red-600 dark:text-red-400">{{ errors['configuration.merchant_salt'] }}</p>
             </div>
 
             <div>
-              <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Mode <span class="text-red-500">*</span></label>
+              <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Mode <span class="text-red-600 dark:text-red-400">*</span></label>
               <select
                 v-model="form.configuration.mode"
                 :class="['w-full px-3 py-2 border rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent', errors['configuration.mode'] ? 'border-red-500' : 'border-gray-300 dark:border-gray-600']"
@@ -146,11 +146,11 @@ const save = () => {
                 <option value="test">Test</option>
                 <option value="production">Production</option>
               </select>
-              <p v-if="errors['configuration.mode']" class="mt-1 text-sm text-red-600">{{ errors['configuration.mode'] }}</p>
+              <p v-if="errors['configuration.mode']" class="mt-1 text-sm text-red-600 dark:text-red-400">{{ errors['configuration.mode'] }}</p>
             </div>
 
             <div>
-              <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Auth Header <span class="text-gray-400 dark:text-gray-500">(Optional)</span></label>
+              <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Auth Header <span class="text-gray-400 dark:text-gray-400">(Optional)</span></label>
               <input
                 v-model="form.configuration.auth_header"
                 type="text"

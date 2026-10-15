@@ -165,7 +165,7 @@
                       <span v-if="taxClass.is_default" class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-300">
                         Default
                       </span>
-                      <span v-else class="text-gray-400 dark:text-gray-600">—</span>
+                      <span v-else class="text-gray-400 dark:text-gray-400">—</span>
                     </td>
                     <td class="px-6 py-4 text-right">
                       <div class="flex items-center justify-end gap-2">
@@ -228,7 +228,7 @@
                       <span v-if="rate.is_compound" class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-purple-100 text-purple-800 dark:bg-purple-900/30 dark:text-purple-300">
                         Compound
                       </span>
-                      <span v-else class="text-gray-400 dark:text-gray-600">—</span>
+                      <span v-else class="text-gray-400 dark:text-gray-400">—</span>
                     </td>
                     <td class="px-6 py-4">
                       <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium capitalize"
@@ -376,7 +376,7 @@
       </div>
       <form @submit.prevent="saveTaxClass" class="p-6 space-y-4">
         <div>
-          <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">Name <span class="text-red-500">*</span></label>
+          <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">Name <span class="text-red-600 dark:text-red-400">*</span></label>
           <input
             v-model="taxClassForm.name"
             type="text"
@@ -385,7 +385,7 @@
           />
         </div>
         <div>
-          <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">Code <span class="text-red-500">*</span></label>
+          <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">Code <span class="text-red-600 dark:text-red-400">*</span></label>
           <input
             v-model="taxClassForm.code"
             type="text"
@@ -446,7 +446,7 @@
       <form @submit.prevent="saveTaxRate" class="p-6 space-y-4">
         <div class="grid grid-cols-2 gap-4">
            <div class="col-span-2">
-            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">Name <span class="text-red-500">*</span></label>
+            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">Name <span class="text-red-600 dark:text-red-400">*</span></label>
             <input
               v-model="taxRateForm.name"
               type="text"
@@ -455,7 +455,7 @@
             />
           </div>
           <div>
-            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">Code <span class="text-red-500">*</span></label>
+            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">Code <span class="text-red-600 dark:text-red-400">*</span></label>
             <input
               v-model="taxRateForm.code"
               type="text"
@@ -464,7 +464,7 @@
             />
           </div>
            <div>
-            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">Priority <span class="text-red-500">*</span></label>
+            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">Priority <span class="text-red-600 dark:text-red-400">*</span></label>
             <input
               v-model="taxRateForm.priority"
               type="number"
@@ -474,7 +474,7 @@
             />
           </div>
           <div class="col-span-2">
-            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">Percentage (%) <span class="text-red-500">*</span></label>
+            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">Percentage (%) <span class="text-red-600 dark:text-red-400">*</span></label>
             <input
               v-model="taxRateForm.percentage"
               type="number"
@@ -542,7 +542,7 @@
       <form @submit.prevent="saveTaxZone" class="p-6 space-y-4">
         <div class="grid grid-cols-2 gap-4">
           <div>
-            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">Name <span class="text-red-500">*</span></label>
+            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">Name <span class="text-red-600 dark:text-red-400">*</span></label>
             <input
               v-model="taxZoneForm.name"
               type="text"
@@ -551,7 +551,7 @@
             />
           </div>
           <div>
-            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">Code <span class="text-red-500">*</span></label>
+            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">Code <span class="text-red-600 dark:text-red-400">*</span></label>
             <input
               v-model="taxZoneForm.code"
               type="text"

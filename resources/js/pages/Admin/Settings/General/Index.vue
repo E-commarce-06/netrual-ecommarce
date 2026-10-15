@@ -190,7 +190,7 @@ const save = () => {
                     <!-- Site Name -->
                     <div class="sm:col-span-2">
                         <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">
-                        Site Name <span class="text-red-500">*</span>
+                        Site Name <span class="text-red-600 dark:text-red-400">*</span>
                         </label>
                         <input
                         v-model="form.site_name"
@@ -199,7 +199,7 @@ const save = () => {
                         :class="{ 'border-red-500': form.errors.site_name }"
                         placeholder="Your Store Name"
                         />
-                        <p v-if="form.errors.site_name" class="mt-1 text-sm text-red-600">{{ form.errors.site_name }}</p>
+                        <p v-if="form.errors.site_name" class="mt-1 text-sm text-red-600 dark:text-red-400">{{ form.errors.site_name }}</p>
                     </div>
 
                     <!-- Site Tagline -->
@@ -212,7 +212,7 @@ const save = () => {
                         :class="{ 'border-red-500': form.errors.site_tagline }"
                         placeholder="Your store's tagline or motto"
                         />
-                        <p v-if="form.errors.site_tagline" class="mt-1 text-sm text-red-600">{{ form.errors.site_tagline }}</p>
+                        <p v-if="form.errors.site_tagline" class="mt-1 text-sm text-red-600 dark:text-red-400">{{ form.errors.site_tagline }}</p>
                     </div>
                 </div>
               </div>
@@ -227,7 +227,7 @@ const save = () => {
                      <!-- Admin Email -->
                     <div>
                         <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">
-                        Admin Email <span class="text-red-500">*</span>
+                        Admin Email <span class="text-red-600 dark:text-red-400">*</span>
                         </label>
                         <div class="relative rounded-lg shadow-sm">
                             <div class="absolute inset-y-0 left-0 padding-l-3 flex items-center pl-3 pointer-events-none">
@@ -241,7 +241,7 @@ const save = () => {
                             placeholder="admin@example.com"
                             />
                         </div>
-                        <p v-if="form.errors.admin_email" class="mt-1 text-sm text-red-600">{{ form.errors.admin_email }}</p>
+                        <p v-if="form.errors.admin_email" class="mt-1 text-sm text-red-600 dark:text-red-400">{{ form.errors.admin_email }}</p>
                     </div>
 
                     <!-- Contact Phone -->
@@ -259,7 +259,7 @@ const save = () => {
                             placeholder="+1 (555) 123-4567"
                             />
                         </div>
-                        <p v-if="form.errors.contact_phone" class="mt-1 text-sm text-red-600">{{ form.errors.contact_phone }}</p>
+                        <p v-if="form.errors.contact_phone" class="mt-1 text-sm text-red-600 dark:text-red-400">{{ form.errors.contact_phone }}</p>
                     </div>
 
                     <!-- Contact Address -->
@@ -277,13 +277,13 @@ const save = () => {
                             placeholder="Your business address"
                             ></textarea>
                         </div>
-                        <p v-if="form.errors.contact_address" class="mt-1 text-sm text-red-600">{{ form.errors.contact_address }}</p>
+                        <p v-if="form.errors.contact_address" class="mt-1 text-sm text-red-600 dark:text-red-400">{{ form.errors.contact_address }}</p>
                     </div>
 
                       <!-- Store Country -->
                       <div>
                         <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">
-                          Store Country <span class="text-red-500">*</span>
+                          Store Country <span class="text-red-600 dark:text-red-400">*</span>
                         </label>
                         <div class="relative rounded-lg shadow-sm">
                           <div class="absolute inset-y-0 left-0 padding-l-3 flex items-center pl-3 pointer-events-none">
@@ -467,7 +467,7 @@ const save = () => {
                             <option value="Zimbabwe">Zimbabwe</option>
                           </select>
                         </div>
-                        <p v-if="form.errors.store_country" class="mt-1 text-sm text-red-600">{{ form.errors.store_country }}</p>
+                        <p v-if="form.errors.store_country" class="mt-1 text-sm text-red-600 dark:text-red-400">{{ form.errors.store_country }}</p>
                       </div>
                 </div>
               </div>
@@ -487,14 +487,14 @@ const save = () => {
                             <button type="button" @click="removeSiteLogo = true" class="ml-1 p-1 text-gray-400 hover:text-red-500 rounded transition-colors" title="Remove logo"><X class="w-4 h-4" /></button>
                         </div>
                         <div v-else-if="removeSiteLogo && siteLogoFiles.length === 0" class="mb-3 px-3 py-2 bg-red-50 dark:bg-red-900/20 rounded-lg border border-red-200 dark:border-red-800 flex items-center gap-2 text-sm text-red-600 dark:text-red-400">
-                            <span>Logo will be removed on save.</span>
-                            <button type="button" @click="removeSiteLogo = false" class="underline text-xs">Undo</button>
+                            <span class="text-red-700 dark:text-red-400">Logo will be removed on save.</span>
+                            <button type="button" @click="removeSiteLogo = false" class="underline text-xs text-red-700 dark:text-red-400">Undo</button>
                         </div>
                         <ImageUploader v-model="siteLogoFiles" :maxFiles="1" :maxSize="2" accept="image/*" />
                         <p class="mt-2 text-xs text-gray-500 dark:text-gray-400">
                             Frontend header logo. Recommended: 200x60px.
                         </p>
-                        <p v-if="form.errors.site_logo" class="mt-1 text-sm text-red-600">{{ form.errors.site_logo }}</p>
+                        <p v-if="form.errors.site_logo" class="mt-1 text-sm text-red-600 dark:text-red-400">{{ form.errors.site_logo }}</p>
                     </div>
 
                     <!-- Admin Logo -->
@@ -505,14 +505,14 @@ const save = () => {
                             <button type="button" @click="removeAdminLogo = true" class="ml-1 p-1 text-gray-400 hover:text-red-500 rounded transition-colors" title="Remove logo"><X class="w-4 h-4" /></button>
                         </div>
                         <div v-else-if="removeAdminLogo && adminLogoFiles.length === 0" class="mb-3 px-3 py-2 bg-red-50 dark:bg-red-900/20 rounded-lg border border-red-200 dark:border-red-800 flex items-center gap-2 text-sm text-red-600 dark:text-red-400">
-                            <span>Logo will be removed on save.</span>
-                            <button type="button" @click="removeAdminLogo = false" class="underline text-xs">Undo</button>
+                            <span class="text-red-700 dark:text-red-400">Logo will be removed on save.</span>
+                            <button type="button" @click="removeAdminLogo = false" class="underline text-xs text-red-700 dark:text-red-400">Undo</button>
                         </div>
                         <ImageUploader v-model="adminLogoFiles" :maxFiles="1" :maxSize="2" accept="image/*" />
                         <p class="mt-2 text-xs text-gray-500 dark:text-gray-400">
                             Dashboard sidebar logo. Recommended: 150x40px.
                         </p>
-                        <p v-if="form.errors.admin_logo" class="mt-1 text-sm text-red-600">{{ form.errors.admin_logo }}</p>
+                        <p v-if="form.errors.admin_logo" class="mt-1 text-sm text-red-600 dark:text-red-400">{{ form.errors.admin_logo }}</p>
                     </div>
 
                     <!-- Site Favicon -->
@@ -523,14 +523,14 @@ const save = () => {
                             <button type="button" @click="removeSiteFavicon = true" class="ml-1 p-1 text-gray-400 hover:text-red-500 rounded transition-colors" title="Remove favicon"><X class="w-4 h-4" /></button>
                         </div>
                         <div v-else-if="removeSiteFavicon && siteFaviconFiles.length === 0" class="mb-3 px-3 py-2 bg-red-50 dark:bg-red-900/20 rounded-lg border border-red-200 dark:border-red-800 flex items-center gap-2 text-sm text-red-600 dark:text-red-400">
-                            <span>Favicon will be removed on save.</span>
-                            <button type="button" @click="removeSiteFavicon = false" class="underline text-xs">Undo</button>
+                            <span class="text-red-700 dark:text-red-400">Favicon will be removed on save.</span>
+                            <button type="button" @click="removeSiteFavicon = false" class="underline text-xs text-red-700 dark:text-red-400">Undo</button>
                         </div>
                         <ImageUploader v-model="siteFaviconFiles" :maxFiles="1" :maxSize="1" accept="image/*" />
                         <p class="mt-2 text-xs text-gray-500 dark:text-gray-400">
                             Browser tab icon. Recommended: 32x32px ICO/PNG.
                         </p>
-                        <p v-if="form.errors.site_favicon" class="mt-1 text-sm text-red-600">{{ form.errors.site_favicon }}</p>
+                        <p v-if="form.errors.site_favicon" class="mt-1 text-sm text-red-600 dark:text-red-400">{{ form.errors.site_favicon }}</p>
                     </div>
                 </div>
               </div>
@@ -551,14 +551,14 @@ const save = () => {
                             <button type="button" @click="removeMobileAuthLogo = true" class="ml-1 p-1 text-gray-400 hover:text-red-500 rounded transition-colors" title="Remove logo"><X class="w-4 h-4" /></button>
                         </div>
                         <div v-else-if="removeMobileAuthLogo && mobileAuthLogoFiles.length === 0" class="mb-3 px-3 py-2 bg-red-50 dark:bg-red-900/20 rounded-lg border border-red-200 dark:border-red-800 flex items-center gap-2 text-sm text-red-600 dark:text-red-400">
-                            <span>Logo will be removed on save.</span>
-                            <button type="button" @click="removeMobileAuthLogo = false" class="underline text-xs">Undo</button>
+                            <span class="text-red-700 dark:text-red-400">Logo will be removed on save.</span>
+                            <button type="button" @click="removeMobileAuthLogo = false" class="underline text-xs text-red-700 dark:text-red-400">Undo</button>
                         </div>
                         <ImageUploader v-model="mobileAuthLogoFiles" :maxFiles="1" :maxSize="2" accept="image/*" />
                         <p class="mt-2 text-xs text-gray-500 dark:text-gray-400">
                             Shown on login &amp; register screens. Recommended: 300x100px PNG/SVG.
                         </p>
-                        <p v-if="form.errors.mobile_auth_logo" class="mt-1 text-sm text-red-600">{{ form.errors.mobile_auth_logo }}</p>
+                        <p v-if="form.errors.mobile_auth_logo" class="mt-1 text-sm text-red-600 dark:text-red-400">{{ form.errors.mobile_auth_logo }}</p>
                     </div>
                 </div>
               </div>
@@ -587,7 +587,7 @@ const save = () => {
                           placeholder="Your Store - Best Products Online"
                         />
                         <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">Recommended length: 50-60 characters</p>
-                        <p v-if="form.errors.meta_title" class="mt-1 text-sm text-red-600">{{ form.errors.meta_title }}</p>
+                        <p v-if="form.errors.meta_title" class="mt-1 text-sm text-red-600 dark:text-red-400">{{ form.errors.meta_title }}</p>
                       </div>
 
                       <!-- Meta Description -->
@@ -601,7 +601,7 @@ const save = () => {
                           placeholder="Brief description of your store for search engines"
                         ></textarea>
                         <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">Recommended length: 150-160 characters</p>
-                        <p v-if="form.errors.meta_description" class="mt-1 text-sm text-red-600">{{ form.errors.meta_description }}</p>
+                        <p v-if="form.errors.meta_description" class="mt-1 text-sm text-red-600 dark:text-red-400">{{ form.errors.meta_description }}</p>
                       </div>
 
                       <!-- Meta Keywords -->
@@ -620,7 +620,7 @@ const save = () => {
                             />
                         </div>
                         <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">Comma-separated keywords</p>
-                        <p v-if="form.errors.meta_keywords" class="mt-1 text-sm text-red-600">{{ form.errors.meta_keywords }}</p>
+                        <p v-if="form.errors.meta_keywords" class="mt-1 text-sm text-red-600 dark:text-red-400">{{ form.errors.meta_keywords }}</p>
                       </div>
                   </div>
                </div>

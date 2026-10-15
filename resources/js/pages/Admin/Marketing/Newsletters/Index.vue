@@ -151,8 +151,8 @@ const formatDate = (iso: string) =>
       <!-- Page Header -->
       <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <h1 class="text-2xl font-bold text-gray-900">Newsletter Subscribers</h1>
-          <p class="mt-1 text-sm text-gray-500">Manage all email newsletter subscribers</p>
+          <h1 class="text-2xl font-bold text-gray-900 dark:text-gray-400">Newsletter Subscribers</h1>
+          <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">Manage all email newsletter subscribers</p>
         </div>
         <div class="flex items-center gap-3">
           <a
@@ -313,8 +313,8 @@ const formatDate = (iso: string) =>
               <tr v-if="!subscribers.data.length">
                 <td colspan="6" class="px-4 py-16 text-center text-gray-400">
                   <Mail class="w-10 h-10 mx-auto mb-3 text-gray-300" />
-                  <p class="font-medium">No subscribers found</p>
-                  <p class="text-sm mt-1">Try adjusting your search or filters.</p>
+                  <p class="font-medium dark:text-gray-500">No subscribers found</p>
+                  <p class="text-sm mt-1 dark:text-gray-500">Try adjusting your search or filters.</p>
                 </td>
               </tr>
               <tr

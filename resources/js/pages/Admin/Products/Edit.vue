@@ -711,7 +711,7 @@ const deleteProduct = () => {
           <h1 class="text-2xl font-bold text-gray-900 dark:text-white">Edit Product</h1>
           <div class="flex items-center gap-2 mt-1 text-sm text-gray-500 dark:text-gray-400">
             <Link :href="productRoutes.index().url" class="hover:text-blue-600 transition-colors">Products</Link>
-            <span class="text-gray-300 dark:text-gray-600">/</span>
+            <span class="text-gray-300 dark:text-gray-400">/</span>
             <span>{{ product.name }}</span>
           </div>
         </div>
@@ -822,7 +822,7 @@ const deleteProduct = () => {
                 <!-- Product Name -->
                 <div>
                   <label for="name" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                    Product Name <span class="text-red-500">*</span>
+                    Product Name <span class="text-red-600 dark:text-red-400">*</span>
                   </label>
                   <input
                     id="name"
@@ -833,13 +833,13 @@ const deleteProduct = () => {
                     :class="{ 'border-red-500': errors?.name }"
                     placeholder="Enter product name"
                   />
-                  <p v-if="errors?.name" class="mt-1 text-sm text-red-600">{{ errors.name }}</p>
+                  <p v-if="errors?.name" class="mt-1 text-sm text-red-600 dark:text-red-400">{{ errors.name }}</p>
                 </div>
 
                 <!-- Slug -->
                 <div>
                   <label for="slug" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                    Slug <span class="text-red-500">*</span>
+                    Slug <span class="text-red-600 dark:text-red-400">*</span>
                   </label>
                   <input
                     id="slug"
@@ -849,14 +849,14 @@ const deleteProduct = () => {
                     :class="{ 'border-red-500': errors?.slug }"
                     placeholder="auto-generated-from-name"
                   />
-                  <p v-if="errors?.slug" class="mt-1 text-sm text-red-600">{{ errors.slug }}</p>
+                  <p v-if="errors?.slug" class="mt-1 text-sm text-red-600 dark:text-red-400">{{ errors.slug }}</p>
                   <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">Auto-generated from product name</p>
                 </div>
 
                 <!-- SKU -->
                 <div>
                   <label for="sku" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                    SKU <span class="text-red-500">*</span>
+                    SKU <span class="text-red-600 dark:text-red-400">*</span>
                   </label>
                   <input
                     id="sku"
@@ -866,13 +866,13 @@ const deleteProduct = () => {
                     :class="{ 'border-red-500': errors?.sku }"
                     placeholder="Enter SKU"
                   />
-                  <p v-if="errors?.sku" class="mt-1 text-sm text-red-600">{{ errors.sku }}</p>
+                  <p v-if="errors?.sku" class="mt-1 text-sm text-red-600 dark:text-red-400">{{ errors.sku }}</p>
                 </div>
 
                 <!-- Product Type -->
                 <div>
                   <label for="type" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                    Product Type <span class="text-red-500">*</span>
+                    Product Type <span class="text-red-600 dark:text-red-400">*</span>
                   </label>
                   <select
                     id="type"
@@ -893,7 +893,7 @@ const deleteProduct = () => {
                     <span v-else-if="form.type === 'downloadable'">Digital file product with download links</span>
                     <span v-else-if="form.type === 'quote'">Customers request a quote instead of buying</span>
                   </p>
-                  <p v-if="errors?.type" class="mt-1 text-sm text-red-600">{{ errors.type }}</p>
+                  <p v-if="errors?.type" class="mt-1 text-sm text-red-600 dark:text-red-400">{{ errors.type }}</p>
                 </div>
 
                 <!-- Brand -->
@@ -968,7 +968,7 @@ const deleteProduct = () => {
                     </div>
                   </div>
 
-                  <p v-if="aiError" class="text-xs text-red-600">{{ aiError }}</p>
+                  <p v-if="aiError" class="text-xs text-red-600 dark:text-red-400">{{ aiError }}</p>
 
                   <div v-if="aiResult" class="border-t border-gray-200 dark:border-gray-700 pt-4 space-y-3">
                     <div>
@@ -1123,7 +1123,7 @@ const deleteProduct = () => {
                   <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
                       <label for="price" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                        Regular Price <span class="text-red-500">*</span>
+                        Regular Price <span class="text-red-600 dark:text-red-400">*</span>
                       </label>
                       <div class="relative">
                         <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-gray-500 dark:text-gray-400">{{ currencySymbol }}</span>
@@ -1136,7 +1136,7 @@ const deleteProduct = () => {
                           :class="{ 'border-red-500': errors?.price }"
                         />
                       </div>
-                      <p v-if="errors?.price" class="mt-1 text-sm text-red-600">{{ errors.price }}</p>
+                      <p v-if="errors?.price" class="mt-1 text-sm text-red-600 dark:text-red-400">{{ errors.price }}</p>
                     </div>
 
                     <div>
@@ -1275,11 +1275,11 @@ const deleteProduct = () => {
                     >
                       <div class="min-w-0">
                         <p class="font-medium text-gray-900 dark:text-white truncate">{{ file.title }}</p>
-                        <p class="text-xs text-gray-500 truncate">{{ file.file_name }} · {{ formatFileSize(file.file_size) }}</p>
+                        <p class="text-xs text-gray-500 truncate dark:text-gray-400">{{ file.file_name }} · {{ formatFileSize(file.file_size) }}</p>
                       </div>
                       <button
                         type="button"
-                        class="text-sm text-red-600 hover:text-red-500"
+                        class="text-sm text-red-600 hover:text-red-500 dark:text-red-400"
                         @click="removeDownload(file.id)"
                       >
                         Remove
@@ -1296,7 +1296,7 @@ const deleteProduct = () => {
                       @change="uploadDownload"
                     />
                     <p class="text-xs text-gray-500 dark:text-gray-400 mt-2">Any file type up to 50MB</p>
-                    <p v-if="downloadUploading" class="text-sm text-blue-600 mt-3">Uploading…</p>
+                    <p v-if="downloadUploading" class="text-sm text-blue-600 mt-3 dark:text-blue-400">Uploading…</p>
                   </div>
                 </div>
               </div>
@@ -1396,7 +1396,7 @@ const deleteProduct = () => {
                       <div>
                         <label class="block text-sm font-medium text-gray-900 dark:text-white">
                           {{ attribute.name }}
-                          <span v-if="attribute.is_required" class="text-red-500 ml-1">*</span>
+                          <span v-if="attribute.is_required" class="ml-1 text-red-600 dark:text-red-400">*</span>
                         </label>
                         <div class="flex items-center gap-2 mt-1">
                           <span v-if="attribute.is_configurable" class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-purple-100 dark:bg-purple-900 text-purple-800 dark:text-purple-200">
@@ -1600,7 +1600,7 @@ const deleteProduct = () => {
                 <span class="ml-2 text-sm text-gray-700 dark:text-gray-300">{{ category.name }}</span>
               </label>
             </div>
-            <p v-if="errors?.category_ids" class="mt-2 text-sm text-red-600">{{ errors.category_ids }}</p>
+            <p v-if="errors?.category_ids" class="mt-2 text-sm text-red-600 dark:text-red-400">{{ errors.category_ids }}</p>
           </div>
         </div>
       </div>
@@ -1687,7 +1687,7 @@ const deleteProduct = () => {
                         </td>
                         <td class="px-4 py-3 text-sm text-right text-gray-900 dark:text-gray-100">
                           <span v-if="costNumber > 0">{{ currencySymbol }}{{ (option.price - costNumber).toFixed(2) }}</span>
-                          <span v-else class="text-xs text-gray-400 dark:text-gray-500">Add cost to calculate</span>
+                          <span v-else class="text-xs text-gray-400 dark:text-gray-400">Add cost to calculate</span>
                         </td>
                       </tr>
                     </tbody>

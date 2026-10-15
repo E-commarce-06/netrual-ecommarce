@@ -107,7 +107,7 @@ const submit = () => {
                         >
                             <p
                                 v-show="form.recentlySuccessful"
-                                class="text-sm text-green-600 dark:text-green-400"
+                                class="text-sm dark:text-green-400 text-green-700"
                             >
                                 Password changed successfully!
                             </p>

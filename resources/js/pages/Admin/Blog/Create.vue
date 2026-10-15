@@ -28,7 +28,7 @@
                             <!-- Title -->
                             <div>
                                 <label for="title" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                                    Title <span class="text-red-500">*</span>
+                                    Title <span class="text-red-600 dark:text-red-400">*</span>
                                 </label>
                                 <input
                                     id="title"
@@ -40,13 +40,13 @@
                                     :class="{ 'border-red-500': form.errors.title }"
                                     placeholder="Enter post title"
                                 />
-                                <p v-if="form.errors.title" class="mt-1 text-sm text-red-600">{{ form.errors.title }}</p>
+                                <p v-if="form.errors.title" class="mt-1 text-sm text-red-600 dark:text-red-400">{{ form.errors.title }}</p>
                             </div>
 
                             <!-- Slug -->
                             <div>
                                 <label for="slug" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                                    URL Slug <span class="text-red-500">*</span>
+                                    URL Slug <span class="text-red-600 dark:text-red-400">*</span>
                                 </label>
                                 <div class="flex gap-2">
                                     <div class="flex-1">
@@ -60,15 +60,15 @@
                                             :class="{ 'border-red-500': form.errors.slug || !slugAvailable }"
                                             placeholder="post-url-slug"
                                         />
-                                        <p v-if="form.errors.slug" class="mt-1 text-sm text-red-600">{{ form.errors.slug }}</p>
-                                        <p v-else-if="!slugAvailable && form.slug" class="mt-1 text-sm text-red-600">This slug is already taken</p>
-                                        <p v-else-if="slugAvailable && form.slug && slugChecked" class="mt-1 text-sm text-green-600">✓ Slug is available</p>
+                                        <p v-if="form.errors.slug" class="mt-1 text-sm text-red-600 dark:text-red-400">{{ form.errors.slug }}</p>
+                                        <p v-else-if="!slugAvailable && form.slug" class="mt-1 text-sm text-red-600 dark:text-red-400">This slug is already taken</p>
+                                        <p v-else-if="slugAvailable && form.slug && slugChecked" class="mt-1 text-sm text-green-700 dark:text-green-500">✓ Slug is available</p>
                                     </div>
                                     <button type="button" @click="generateSlug" class="px-4 py-2 h-10 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors dark:bg-gray-700 dark:text-gray-300 dark:border-gray-600">
                                         Generate
                                     </button>
                                 </div>
-                                <p class="mt-1 text-xs text-gray-500">Preview: {{ previewUrl }}</p>
+                                <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">Preview: {{ previewUrl }}</p>
                             </div>
 
                             <!-- Excerpt -->
@@ -82,20 +82,20 @@
                                     class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 dark:border-gray-600 dark:text-white"
                                     placeholder="Brief summary shown in post listings (max 500 chars)"
                                 ></textarea>
-                                <p class="mt-1 text-xs text-gray-500">{{ form.excerpt?.length || 0 }}/500 characters</p>
+                                <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">{{ form.excerpt?.length || 0 }}/500 characters</p>
                             </div>
 
                             <!-- Content -->
                             <div>
                                 <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                                    Content <span class="text-red-500">*</span>
+                                    Content <span class="text-red-600 dark:text-red-400">*</span>
                                 </label>
                                 <TipTapEditor
                                     v-model="form.content"
                                     placeholder="Write your blog post content here..."
                                     :show-character-count="true"
                                 />
-                                <p v-if="form.errors.content" class="mt-1 text-sm text-red-600">{{ form.errors.content }}</p>
+                                <p v-if="form.errors.content" class="mt-1 text-sm text-red-600 dark:text-red-400">{{ form.errors.content }}</p>
                             </div>
                         </div>
 
@@ -105,12 +105,12 @@
                             <div>
                                 <label for="meta_title" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Meta Title</label>
                                 <input id="meta_title" v-model="form.meta_title" type="text" maxlength="255" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 dark:border-gray-600 dark:text-white" placeholder="SEO title for search engines" />
-                                <p class="mt-1 text-xs text-gray-500">{{ form.meta_title?.length || 0 }}/255 characters</p>
+                                <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">{{ form.meta_title?.length || 0 }}/255 characters</p>
                             </div>
                             <div>
                                 <label for="meta_description" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Meta Description</label>
                                 <textarea id="meta_description" v-model="form.meta_description" rows="2" maxlength="500" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 dark:border-gray-600 dark:text-white" placeholder="Brief description for search results"></textarea>
-                                <p class="mt-1 text-xs text-gray-500">{{ form.meta_description?.length || 0 }}/500 characters</p>
+                                <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">{{ form.meta_description?.length || 0 }}/500 characters</p>
                             </div>
                             <div>
                                 <label for="meta_keywords" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Meta Keywords</label>
@@ -125,7 +125,7 @@
                         <div class="bg-white dark:bg-gray-800 shadow-sm rounded-lg p-6 space-y-4">
                             <h3 class="text-base font-medium text-gray-900 dark:text-white">Publish Settings</h3>
                             <div>
-                                <label for="status" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Status <span class="text-red-500">*</span></label>
+                                <label for="status" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Status <span class="text-red-600 dark:text-red-400">*</span></label>
                                 <select id="status" v-model="form.status" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 dark:border-gray-600 dark:text-white">
                                     <option value="draft">Draft</option>
                                     <option value="published">Published</option>
@@ -168,7 +168,7 @@
                                 class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 dark:border-gray-600 dark:text-white text-sm"
                                 placeholder="Enter image URL"
                             />
-                            <p class="mt-1 text-xs text-gray-500">Paste a URL or upload via Media Library</p>
+                            <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">Paste a URL or upload via Media Library</p>
                         </div>
                     </div>
                 </div>

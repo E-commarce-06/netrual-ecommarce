@@ -432,7 +432,7 @@ const confirmDelete = () => {
                                     <button @click="bulkEnableCountries" class="px-3 py-1.5 text-xs font-bold text-blue-600 bg-white rounded-lg hover:bg-blue-50 transition-colors uppercase tracking-wide">Enable</button>
                                     <button @click="bulkDisableCountries" class="px-3 py-1.5 text-xs font-bold text-blue-600 bg-white rounded-lg hover:bg-blue-50 transition-colors uppercase tracking-wide">Disable</button>
                                     <div class="w-px h-6 bg-blue-400 mx-1"></div>
-                                    <button @click="countrySelectedIds = []" class="px-3 py-1.5 text-xs font-bold text-blue-200 hover:text-white rounded-lg transition-colors uppercase tracking-wide">Clear</button>
+                                    <button @click="countrySelectedIds = []" class="px-3 py-1.5 text-xs font-bold hover:text-white rounded-lg transition-colors uppercase tracking-wide text-blue-50 dark:text-blue-50">Clear</button>
                                 </div>
                             </div>
                         </transition>
@@ -500,7 +500,7 @@ const confirmDelete = () => {
                                 </tbody>
                             </table>
                         </div>
-                        <p class="mt-3 text-xs text-gray-400 dark:text-gray-500">Showing {{ filteredCountries.length }} of {{ countries.length }} countries</p>
+                        <p class="mt-3 text-xs text-gray-400 dark:text-gray-400">Showing {{ filteredCountries.length }} of {{ countries.length }} countries</p>
                     </div>
 
                     <!-- Languages Tab -->
@@ -653,7 +653,7 @@ const confirmDelete = () => {
                 
                 <div class="px-6 py-6 space-y-4 overflow-y-auto flex-1">
                     <div>
-                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">Language Code <span class="text-red-500">*</span></label>
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">Language Code <span class="text-red-600 dark:text-red-400">*</span></label>
                         <input 
                             v-model="localeForm.code" 
                             type="text" 
@@ -661,18 +661,18 @@ const confirmDelete = () => {
                             maxlength="10" 
                             :class="['w-full px-4 py-2.5 border rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white dark:border-gray-600', errors.code ? 'border-red-500' : 'border-gray-300']"
                         >
-                        <p v-if="errors.code" class="mt-1 text-sm text-red-600">{{ errors.code }}</p>
+                        <p v-if="errors.code" class="mt-1 text-sm text-red-600 dark:text-red-400">{{ errors.code }}</p>
                     </div>
                     
                     <div>
-                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">Display Name <span class="text-red-500">*</span></label>
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">Display Name <span class="text-red-600 dark:text-red-400">*</span></label>
                         <input 
                             v-model="localeForm.name" 
                             type="text" 
                             placeholder="English, Spanish..." 
                             :class="['w-full px-4 py-2.5 border rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white dark:border-gray-600', errors.name ? 'border-red-500' : 'border-gray-300']"
                         >
-                        <p v-if="errors.name" class="mt-1 text-sm text-red-600">{{ errors.name }}</p>
+                        <p v-if="errors.name" class="mt-1 text-sm text-red-600 dark:text-red-400">{{ errors.name }}</p>
                     </div>
                     
                     <div>
@@ -683,11 +683,11 @@ const confirmDelete = () => {
                             placeholder="Español, Français..." 
                             :class="['w-full px-4 py-2.5 border rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white dark:border-gray-600', errors.native_name ? 'border-red-500' : 'border-gray-300']"
                         >
-                        <p v-if="errors.native_name" class="mt-1 text-sm text-red-600">{{ errors.native_name }}</p>
+                        <p v-if="errors.native_name" class="mt-1 text-sm text-red-600 dark:text-red-400">{{ errors.native_name }}</p>
                     </div>
                     
                     <div>
-                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">Text Direction <span class="text-red-500">*</span></label>
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">Text Direction <span class="text-red-600 dark:text-red-400">*</span></label>
                         <div class="relative">
                             <select 
                                 v-model="localeForm.direction" 
@@ -702,7 +702,7 @@ const confirmDelete = () => {
                                 </svg>
                             </div>
                         </div>
-                        <p v-if="errors.direction" class="mt-1 text-sm text-red-600">{{ errors.direction }}</p>
+                        <p v-if="errors.direction" class="mt-1 text-sm text-red-600 dark:text-red-400">{{ errors.direction }}</p>
                     </div>
                     
                     <div>
@@ -712,7 +712,7 @@ const confirmDelete = () => {
                             type="number" 
                             :class="['w-full px-4 py-2.5 border rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white dark:border-gray-600', errors.sort_order ? 'border-red-500' : 'border-gray-300']"
                         >
-                        <p v-if="errors.sort_order" class="mt-1 text-sm text-red-600">{{ errors.sort_order }}</p>
+                        <p v-if="errors.sort_order" class="mt-1 text-sm text-red-600 dark:text-red-400">{{ errors.sort_order }}</p>
                     </div>
                     
                     <div class="flex items-center space-x-6 pt-2">
@@ -767,14 +767,14 @@ const confirmDelete = () => {
                 <div class="px-6 py-6 space-y-4 overflow-y-auto flex-1">
                     <div class="grid grid-cols-2 gap-4">
                         <div>
-                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">Country Name <span class="text-red-500">*</span></label>
+                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">Country Name <span class="text-red-600 dark:text-red-400">*</span></label>
                             <input v-model="countryForm.name" type="text" placeholder="United States" :class="['w-full px-4 py-2.5 border rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white dark:border-gray-600', errors.name ? 'border-red-500' : 'border-gray-300']">
-                            <p v-if="errors.name" class="mt-1 text-sm text-red-600">{{ errors.name }}</p>
+                            <p v-if="errors.name" class="mt-1 text-sm text-red-600 dark:text-red-400">{{ errors.name }}</p>
                         </div>
                         <div>
-                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">ISO Code (2-char) <span class="text-red-500">*</span></label>
+                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">ISO Code (2-char) <span class="text-red-600 dark:text-red-400">*</span></label>
                             <input v-model="countryForm.code" type="text" placeholder="US" maxlength="2" :class="['w-full px-4 py-2.5 border rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white dark:border-gray-600 uppercase', errors.code ? 'border-red-500' : 'border-gray-300']">
-                            <p v-if="errors.code" class="mt-1 text-sm text-red-600">{{ errors.code }}</p>
+                            <p v-if="errors.code" class="mt-1 text-sm text-red-600 dark:text-red-400">{{ errors.code }}</p>
                         </div>
                     </div>
                     <div class="grid grid-cols-2 gap-4">
@@ -840,7 +840,7 @@ const confirmDelete = () => {
                 
                 <div class="px-6 py-6 space-y-4 overflow-y-auto flex-1">
                     <div>
-                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">Currency Code <span class="text-red-500">*</span></label>
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">Currency Code <span class="text-red-600 dark:text-red-400">*</span></label>
                         <input 
                             v-model="currencyForm.code" 
                             type="text" 
@@ -848,23 +848,23 @@ const confirmDelete = () => {
                             maxlength="10" 
                             :class="['w-full px-4 py-2.5 border rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white dark:border-gray-600', errors.code ? 'border-red-500' : 'border-gray-300']"
                         >
-                        <p v-if="errors.code" class="mt-1 text-sm text-red-600">{{ errors.code }}</p>
+                        <p v-if="errors.code" class="mt-1 text-sm text-red-600 dark:text-red-400">{{ errors.code }}</p>
                     </div>
                     
                     <div>
-                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">Display Name <span class="text-red-500">*</span></label>
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">Display Name <span class="text-red-600 dark:text-red-400">*</span></label>
                         <input 
                             v-model="currencyForm.name" 
                             type="text" 
                             placeholder="US Dollar, Euro..." 
                             :class="['w-full px-4 py-2.5 border rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white dark:border-gray-600', errors.name ? 'border-red-500' : 'border-gray-300']"
                         >
-                        <p v-if="errors.name" class="mt-1 text-sm text-red-600">{{ errors.name }}</p>
+                        <p v-if="errors.name" class="mt-1 text-sm text-red-600 dark:text-red-400">{{ errors.name }}</p>
                     </div>
                     
                     <div class="grid grid-cols-2 gap-4">
                         <div>
-                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">Symbol <span class="text-red-500">*</span></label>
+                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">Symbol <span class="text-red-600 dark:text-red-400">*</span></label>
                             <input 
                                 v-model="currencyForm.symbol" 
                                 type="text" 
@@ -873,7 +873,7 @@ const confirmDelete = () => {
                             >
                         </div>
                         <div>
-                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">Position <span class="text-red-500">*</span></label>
+                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">Position <span class="text-red-600 dark:text-red-400">*</span></label>
                             <div class="relative">
                                 <select 
                                     v-model="currencyForm.symbol_position" 
@@ -890,12 +890,12 @@ const confirmDelete = () => {
                             </div>
                         </div>
                     </div>
-                    <p v-if="errors.symbol" class="mt-1 text-sm text-red-600">{{ errors.symbol }}</p>
-                    <p v-if="errors.symbol_position" class="mt-1 text-sm text-red-600">{{ errors.symbol_position }}</p>
+                    <p v-if="errors.symbol" class="mt-1 text-sm text-red-600 dark:text-red-400">{{ errors.symbol }}</p>
+                    <p v-if="errors.symbol_position" class="mt-1 text-sm text-red-600 dark:text-red-400">{{ errors.symbol_position }}</p>
                     
                     <div class="grid grid-cols-2 gap-4">
                         <div>
-                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">Decimal Places <span class="text-red-500">*</span></label>
+                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">Decimal Places <span class="text-red-600 dark:text-red-400">*</span></label>
                             <input 
                                 v-model.number="currencyForm.decimal_places" 
                                 type="number" 
@@ -905,7 +905,7 @@ const confirmDelete = () => {
                             >
                         </div>
                         <div>
-                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">Exchange Rate <span class="text-red-500">*</span></label>
+                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">Exchange Rate <span class="text-red-600 dark:text-red-400">*</span></label>
                             <input 
                                 v-model.number="currencyForm.exchange_rate" 
                                 type="number" 
@@ -914,8 +914,8 @@ const confirmDelete = () => {
                             >
                         </div>
                     </div>
-                    <p v-if="errors.decimal_places" class="mt-1 text-sm text-red-600">{{ errors.decimal_places }}</p>
-                    <p v-if="errors.exchange_rate" class="mt-1 text-sm text-red-600">{{ errors.exchange_rate }}</p>
+                    <p v-if="errors.decimal_places" class="mt-1 text-sm text-red-600 dark:text-red-400">{{ errors.decimal_places }}</p>
+                    <p v-if="errors.exchange_rate" class="mt-1 text-sm text-red-600 dark:text-red-400">{{ errors.exchange_rate }}</p>
                     
                     <div>
                         <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">Sort Order</label>

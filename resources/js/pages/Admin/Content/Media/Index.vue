@@ -344,7 +344,7 @@ const copyUrlToClipboard = async (url: string) => {
                 <div>
                     <h1 class="text-2xl font-bold text-gray-900 dark:text-white tracking-tight">Media Library</h1>
                     <div class="flex items-center gap-2 mt-1 text-sm text-gray-500">
-                        <Link href="/admin/dashboard" class="hover:text-blue-600 transition-colors">Dashboard</Link>
+                        <Link href="/admin/dashboard" class="hover:text-blue-600 transition-colors dark:text-gray-400">Dashboard</Link>
                         <ChevronRight :size="14" />
                         <span class="text-gray-900 dark:text-gray-300 font-medium">Media</span>
                     </div>
@@ -557,13 +557,13 @@ const copyUrlToClipboard = async (url: string) => {
                             <div class="flex items-center gap-2">
                                 <button
                                     @click="bulkDelete"
-                                    class="px-3 py-1.5 text-sm font-medium text-red-600 hover:text-red-700 hover:bg-red-50 rounded-md transition-colors"
+                                    class="px-3 py-1.5 text-sm font-medium hover:text-red-700 hover:bg-red-50 rounded-md transition-colors text-red-700 dark:text-red-400"
                                 >
                                     Delete Selected
                                 </button>
                                 <button
                                     @click="clearSelection"
-                                    class="px-3 py-1.5 text-sm font-medium text-gray-500 hover:text-gray-700 hover:bg-gray-100 rounded-md transition-colors"
+                                    class="px-3 py-1.5 text-sm font-medium hover:text-gray-700 hover:bg-gray-100 rounded-md transition-colors text-gray-600 dark:text-gray-400"
                                 >
                                     Clear
                                 </button>
@@ -657,22 +657,22 @@ const copyUrlToClipboard = async (url: string) => {
                                         class="w-4 h-4 text-blue-600 bg-white border-gray-300 rounded focus:ring-blue-500"
                                     />
                                 </th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider dark:text-gray-300">
                                     Preview
                                 </th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider dark:text-gray-300">
                                     Name
                                 </th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider dark:text-gray-300">
                                     Size
                                 </th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider dark:text-gray-300">
                                     Type
                                 </th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider dark:text-gray-300">
                                     Uploaded
                                 </th>
-                                <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                                <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider dark:text-gray-300">
                                     Actions
                                 </th>
                             </tr>

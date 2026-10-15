@@ -36,7 +36,7 @@
             <!-- Rule Name -->
             <div>
               <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">
-                Rule Name <span class="text-red-500">*</span>
+                Rule Name <span class="text-red-600 dark:text-red-400">*</span>
               </label>
               <div class="relative">
                 <input
@@ -48,14 +48,14 @@
                 />
                 <Type class="w-4 h-4 text-gray-400 absolute left-3 top-1/2 -translate-y-1/2" />
               </div>
-              <p v-if="errors.name" class="mt-1 text-sm text-red-600">{{ errors.name }}</p>
+              <p v-if="errors.name" class="mt-1 text-sm text-red-600 dark:text-red-400">{{ errors.name }}</p>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
               <!-- Tax Class -->
               <div>
                 <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">
-                  Tax Class <span class="text-red-500">*</span>
+                  Tax Class <span class="text-red-600 dark:text-red-400">*</span>
                 </label>
                 <div class="relative">
                   <select
@@ -73,13 +73,13 @@
                     <ChevronDown class="h-4 w-4 text-gray-400" />
                   </div>
                 </div>
-                <p v-if="errors.tax_class_id" class="mt-1 text-sm text-red-600">{{ errors.tax_class_id }}</p>
+                <p v-if="errors.tax_class_id" class="mt-1 text-sm text-red-600 dark:text-red-400">{{ errors.tax_class_id }}</p>
               </div>
 
               <!-- Tax Zone -->
               <div>
                 <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">
-                  Tax Zone <span class="text-red-500">*</span>
+                  Tax Zone <span class="text-red-600 dark:text-red-400">*</span>
                 </label>
                 <div class="relative">
                   <select
@@ -97,13 +97,13 @@
                     <ChevronDown class="h-4 w-4 text-gray-400" />
                   </div>
                 </div>
-                <p v-if="errors.tax_zone_id" class="mt-1 text-sm text-red-600">{{ errors.tax_zone_id }}</p>
+                <p v-if="errors.tax_zone_id" class="mt-1 text-sm text-red-600 dark:text-red-400">{{ errors.tax_zone_id }}</p>
               </div>
 
               <!-- Tax Rate -->
               <div>
                 <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">
-                  Tax Rate <span class="text-red-500">*</span>
+                  Tax Rate <span class="text-red-600 dark:text-red-400">*</span>
                 </label>
                 <div class="relative">
                   <select
@@ -121,7 +121,7 @@
                     <ChevronDown class="h-4 w-4 text-gray-400" />
                   </div>
                 </div>
-                <p v-if="errors.tax_rate_id" class="mt-1 text-sm text-red-600">{{ errors.tax_rate_id }}</p>
+                <p v-if="errors.tax_rate_id" class="mt-1 text-sm text-red-600 dark:text-red-400">{{ errors.tax_rate_id }}</p>
               </div>
 
               <!-- Priority -->
@@ -140,7 +140,7 @@
                   <Layers class="w-4 h-4 text-gray-400 absolute left-3 top-1/2 -translate-y-1/2" />
                 </div>
                 <p class="mt-1.5 text-xs text-gray-500 dark:text-gray-400">Lower numbers have higher priority in calculation.</p>
-                <p v-if="errors.priority" class="mt-1 text-sm text-red-600">{{ errors.priority }}</p>
+                <p v-if="errors.priority" class="mt-1 text-sm text-red-600 dark:text-red-400">{{ errors.priority }}</p>
               </div>
             </div>
           </div>

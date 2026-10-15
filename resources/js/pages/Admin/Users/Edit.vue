@@ -65,16 +65,16 @@ const changePassword = () => {
         <div class="mb-8">
           <Link
             :href="userRoutes.index.url()"
-            class="inline-flex items-center text-sm text-gray-600 hover:text-gray-900 mb-4"
+            class="inline-flex items-center text-sm text-gray-600 hover:text-gray-900 mb-4 dark:text-gray-400"
           >
             <ArrowLeft class="w-4 h-4 mr-2" />
             Back to Users
           </Link>
           <div class="flex items-center gap-3 mb-2">
             <User class="w-8 h-8 text-primary" />
-            <h1 class="text-3xl font-bold text-gray-900">Edit User</h1>
+            <h1 class="text-3xl font-bold text-gray-900 dark:text-gray-400">Edit User</h1>
           </div>
-          <p class="text-gray-600">Update user information and manage permissions</p>
+          <p class="text-gray-600 dark:text-gray-400">Update user information and manage permissions</p>
         </div>
 
         <!-- User Profile Form -->
@@ -84,7 +84,7 @@ const changePassword = () => {
           <form @submit.prevent="updateProfile" class="space-y-6">
             <!-- Name -->
             <div>
-              <Label for="name">Name</Label>
+              <Label class="dark:text-gray-500" for="name">Name</Label>
               <Input
                 id="name"
                 v-model="profileForm.name"
@@ -100,7 +100,7 @@ const changePassword = () => {
 
             <!-- Email -->
             <div>
-              <Label for="email">Email</Label>
+              <Label class="dark:text-gray-500" for="email">Email</Label>
               <Input
                 id="email"
                 v-model="profileForm.email"
@@ -116,7 +116,7 @@ const changePassword = () => {
 
             <!-- Role -->
             <div>
-              <Label for="role">Role</Label>
+              <Label class="dark:text-gray-500" for="role">Role</Label>
               <select
                 id="role"
                 v-model="profileForm.role"
@@ -139,7 +139,7 @@ const changePassword = () => {
                 type="checkbox"
                 class="rounded border-gray-300 text-primary shadow-sm focus:border-primary focus:ring focus:ring-primary focus:ring-opacity-50"
               />
-              <Label for="is_active" class="ml-2 mb-0">Active Account</Label>
+              <Label for="is_active" class="ml-2 mb-0 dark:text-gray-500">Active Account</Label>
             </div>
 
             <!-- Additional Info -->
@@ -154,7 +154,7 @@ const changePassword = () => {
 
             <!-- Submit Button -->
             <div class="flex justify-end">
-              <Button type="submit" :disabled="profileForm.processing">
+              <Button class="dark:text-gray-500" type="submit" :disabled="profileForm.processing">
                 <Save class="w-4 h-4 mr-2" />
                 {{ profileForm.processing ? 'Saving...' : 'Save Changes' }}
               </Button>
@@ -172,7 +172,7 @@ const changePassword = () => {
           <form @submit.prevent="changePassword" class="space-y-6">
             <!-- Current Password -->
             <div>
-              <Label for="current_password">Current Password</Label>
+              <Label class="dark:text-gray-500" for="current_password">Current Password</Label>
               <Input
                 id="current_password"
                 v-model="passwordForm.current_password"
@@ -188,7 +188,7 @@ const changePassword = () => {
 
             <!-- New Password -->
             <div>
-              <Label for="password">New Password</Label>
+              <Label class="dark:text-gray-500" for="password">New Password</Label>
               <Input
                 id="password"
                 v-model="passwordForm.password"
@@ -204,7 +204,7 @@ const changePassword = () => {
 
             <!-- Confirm Password -->
             <div>
-              <Label for="password_confirmation">Confirm Password</Label>
+              <Label class="dark:text-gray-500" for="password_confirmation">Confirm Password</Label>
               <Input
                 id="password_confirmation"
                 v-model="passwordForm.password_confirmation"
@@ -223,7 +223,7 @@ const changePassword = () => {
 
             <!-- Submit Button -->
             <div class="flex justify-end">
-              <Button type="submit" :disabled="passwordForm.processing">
+              <Button class="dark:text-gray-500" type="submit" :disabled="passwordForm.processing">
                 <Key class="w-4 h-4 mr-2" />
                 {{ passwordForm.processing ? 'Changing...' : 'Change Password' }}
               </Button>

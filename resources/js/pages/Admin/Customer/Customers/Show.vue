@@ -116,7 +116,7 @@ const formatDateTime = (dateString: string) => {
                 <div class="flex items-center justify-between mb-4">
                     <div>
                         <div class="flex items-center gap-3">
-                            <h1 class="text-2xl font-semibold text-gray-900">{{ customer.full_name }}</h1>
+                            <h1 class="text-2xl font-semibold text-gray-900 dark:text-gray-400">{{ customer.full_name }}</h1>
                             <span
                                 :class="[
                                     'px-2.5 py-0.5 rounded-full text-xs font-medium',
@@ -138,7 +138,7 @@ const formatDateTime = (dateString: string) => {
                                 Verified
                             </span>
                         </div>
-                        <p class="mt-1 text-sm text-gray-600">Customer ID: #{{ customer.id }}</p>
+                        <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">Customer ID: #{{ customer.id }}</p>
                     </div>
                     <div class="flex items-center gap-2">
                         <button

@@ -83,8 +83,8 @@ const submit = () => {
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <!-- Header -->
         <div class="mb-6">
-          <h1 class="text-2xl font-bold text-gray-900">Edit Promotion</h1>
-          <p class="mt-1 text-sm text-gray-600">Update promotional campaign settings</p>
+          <h1 class="text-2xl font-bold text-gray-900 dark:text-gray-400">Edit Promotion</h1>
+          <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">Update promotional campaign settings</p>
         </div>
 
         <form @submit.prevent="submit" class="space-y-6">
@@ -150,7 +150,7 @@ const submit = () => {
                   <!-- Name -->
                   <div class="md:col-span-2">
                     <label for="name" class="block text-sm font-medium text-gray-700 mb-2">
-                      Promotion Name <span class="text-red-500">*</span>
+                      Promotion Name <span class="text-red-600 dark:text-red-600">*</span>
                     </label>
                     <input
                       id="name"
@@ -166,7 +166,7 @@ const submit = () => {
                   <!-- Type -->
                   <div>
                     <label for="type" class="block text-sm font-medium text-gray-700 mb-2">
-                      Promotion Type <span class="text-red-500">*</span>
+                      Promotion Type <span class="text-red-600 dark:text-red-600">*</span>
                     </label>
                     <select
                       id="type"
@@ -184,7 +184,7 @@ const submit = () => {
                   <!-- Discount Type -->
                   <div>
                     <label for="discount_type" class="block text-sm font-medium text-gray-700 mb-2">
-                      Discount Type <span class="text-red-500">*</span>
+                      Discount Type <span class="text-red-600 dark:text-red-600">*</span>
                     </label>
                     <select
                       id="discount_type"
@@ -201,7 +201,7 @@ const submit = () => {
                   <!-- Discount Value -->
                   <div>
                     <label for="discount_value" class="block text-sm font-medium text-gray-700 mb-2">
-                      Discount Value <span class="text-red-500">*</span>
+                      Discount Value <span class="text-red-600 dark:text-red-600">*</span>
                     </label>
                     <input
                       id="discount_value"

@@ -39,7 +39,7 @@
                             <!-- Title -->
                             <div>
                                 <label for="title" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                                    Title <span class="text-red-500">*</span>
+                                    Title <span class="text-red-600 dark:text-red-400">*</span>
                                 </label>
                                 <input
                                     id="title"
@@ -49,13 +49,13 @@
                                     class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 dark:border-gray-600 dark:text-white"
                                     :class="{ 'border-red-500': form.errors.title }"
                                 />
-                                <p v-if="form.errors.title" class="mt-1 text-sm text-red-600">{{ form.errors.title }}</p>
+                                <p v-if="form.errors.title" class="mt-1 text-sm text-red-600 dark:text-red-400">{{ form.errors.title }}</p>
                             </div>
 
                             <!-- Slug -->
                             <div>
                                 <label for="slug" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                                    URL Slug <span class="text-red-500">*</span>
+                                    URL Slug <span class="text-red-600 dark:text-red-400">*</span>
                                 </label>
                                 <div class="flex gap-2">
                                     <div class="flex-1">
@@ -68,12 +68,12 @@
                                             class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 dark:border-gray-600 dark:text-white font-mono"
                                             :class="{ 'border-red-500': form.errors.slug || !slugAvailable }"
                                         />
-                                        <p v-if="form.errors.slug" class="mt-1 text-sm text-red-600">{{ form.errors.slug }}</p>
-                                        <p v-else-if="!slugAvailable && form.slug" class="mt-1 text-sm text-red-600">This slug is already taken</p>
-                                        <p v-else-if="slugAvailable && slugChecked" class="mt-1 text-sm text-green-600">✓ Slug is available</p>
+                                        <p v-if="form.errors.slug" class="mt-1 text-sm text-red-600 dark:text-red-400">{{ form.errors.slug }}</p>
+                                        <p v-else-if="!slugAvailable && form.slug" class="mt-1 text-sm text-red-600 dark:text-red-400">This slug is already taken</p>
+                                        <p v-else-if="slugAvailable && slugChecked" class="mt-1 text-sm text-green-700 dark:text-green-500">✓ Slug is available</p>
                                     </div>
                                 </div>
-                                <p class="mt-1 text-xs text-gray-500">Preview: {{ previewUrl }}</p>
+                                <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">Preview: {{ previewUrl }}</p>
                             </div>
 
                             <!-- Excerpt -->
@@ -86,20 +86,20 @@
                                     maxlength="500"
                                     class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 dark:border-gray-600 dark:text-white"
                                 ></textarea>
-                                <p class="mt-1 text-xs text-gray-500">{{ form.excerpt?.length || 0 }}/500 characters</p>
+                                <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">{{ form.excerpt?.length || 0 }}/500 characters</p>
                             </div>
 
                             <!-- Content -->
                             <div>
                                 <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                                    Content <span class="text-red-500">*</span>
+                                    Content <span class="text-red-600 dark:text-red-400">*</span>
                                 </label>
                                 <TipTapEditor
                                     v-model="form.content"
                                     placeholder="Write your blog post content here..."
                                     :show-character-count="true"
                                 />
-                                <p v-if="form.errors.content" class="mt-1 text-sm text-red-600">{{ form.errors.content }}</p>
+                                <p v-if="form.errors.content" class="mt-1 text-sm text-red-600 dark:text-red-400">{{ form.errors.content }}</p>
                             </div>
                         </div>
 
@@ -174,15 +174,15 @@
                             <h3 class="text-base font-medium text-gray-900 dark:text-white mb-4">Post Info</h3>
                             <dl class="space-y-2 text-sm">
                                 <div class="flex justify-between">
-                                    <dt class="text-gray-500">Views</dt>
+                                    <dt class="text-gray-500 dark:text-gray-400">Views</dt>
                                     <dd class="text-gray-900 dark:text-white font-medium">{{ post.view_count }}</dd>
                                 </div>
                                 <div class="flex justify-between">
-                                    <dt class="text-gray-500">Created</dt>
+                                    <dt class="text-gray-500 dark:text-gray-400">Created</dt>
                                     <dd class="text-gray-900 dark:text-white">{{ formatDate(post.created_at) }}</dd>
                                 </div>
                                 <div v-if="post.creator" class="flex justify-between">
-                                    <dt class="text-gray-500">Author</dt>
+                                    <dt class="text-gray-500 dark:text-gray-400">Author</dt>
                                     <dd class="text-gray-900 dark:text-white">{{ post.creator.name }}</dd>
                                 </div>
                             </dl>

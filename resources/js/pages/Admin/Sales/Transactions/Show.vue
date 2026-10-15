@@ -101,9 +101,9 @@ const formatJson = (data: any) => {
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
               </svg>
             </button>
-            <h1 class="text-2xl font-bold text-gray-900">Transaction Details</h1>
+            <h1 class="text-2xl font-bold text-gray-900 dark:text-gray-400">Transaction Details</h1>
           </div>
-          <p class="text-gray-600">{{ transaction.transaction_number }}</p>
+          <p class="text-gray-600 dark:text-gray-400">{{ transaction.transaction_number }}</p>
         </div>
 
         <div class="flex items-center gap-2">
@@ -236,7 +236,7 @@ const formatJson = (data: any) => {
           <!-- Gateway Response Data -->
           <div v-if="transaction.response_data" class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
             <h2 class="text-lg font-semibold text-gray-900 mb-4">Gateway Response</h2>
-            <pre class="bg-gray-50 p-4 rounded-lg overflow-x-auto text-sm">{{ formatJson(transaction.response_data) }}</pre>
+            <pre class="bg-gray-50 p-4 rounded-lg overflow-x-auto text-sm dark:text-gray-500">{{ formatJson(transaction.response_data) }}</pre>
           </div>
 
           <!-- Related Transactions -->
@@ -372,7 +372,7 @@ const formatJson = (data: any) => {
           <div class="mt-6 flex justify-end gap-3">
             <button
               @click="showRefundModal = false"
-              class="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50"
+              class="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 dark:text-gray-500"
             >
               Cancel
             </button>

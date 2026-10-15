@@ -281,8 +281,8 @@ function cancel() {
       <div class="mb-6">
         <div class="flex items-center justify-between">
           <div>
-            <h1 class="text-2xl font-bold text-gray-900">Add Address</h1>
-            <p class="mt-1 text-sm text-gray-600">
+            <h1 class="text-2xl font-bold text-gray-900 dark:text-gray-400">Add Address</h1>
+            <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">
               Add a new address for {{ props.customer.first_name }} {{ props.customer.last_name }}
             </p>
           </div>

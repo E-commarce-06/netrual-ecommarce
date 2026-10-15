@@ -155,8 +155,8 @@ const deleteCategory = () => {
         <div class="mb-6">
           <div class="flex items-center justify-between">
             <div>
-              <h1 class="text-2xl font-semibold text-gray-900">Edit Category</h1>
-              <p class="mt-1 text-sm text-gray-600">Update category information and settings</p>
+              <h1 class="text-2xl font-semibold text-gray-900 dark:text-gray-400">Edit Category</h1>
+              <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">Update category information and settings</p>
             </div>
             <div class="flex items-center space-x-3">
               <button
@@ -222,7 +222,7 @@ const deleteCategory = () => {
                 <!-- Name -->
                 <div>
                   <label for="name" class="block text-sm font-medium text-gray-700">
-                    Category Name <span class="text-red-500">*</span>
+                    Category Name <span class="text-red-600 dark:text-red-600">*</span>
                   </label>
                   <input
                     id="name"
@@ -319,7 +319,7 @@ const deleteCategory = () => {
                       :maxSize="5" 
                       accept="image/*"
                     />
-                    <p v-if="images.length > 0" class="mt-2 text-xs text-green-600">
+                    <p v-if="images.length > 0" class="mt-2 text-xs text-green-700 dark:text-green-700">
                       ✓ {{ images.length }} image selected (will be uploaded on save)
                     </p>
                   </div>

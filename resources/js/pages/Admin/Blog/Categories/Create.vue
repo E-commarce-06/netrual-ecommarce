@@ -28,7 +28,7 @@
                             <!-- Name -->
                             <div>
                                 <label for="name" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                                    Name <span class="text-red-500">*</span>
+                                    Name <span class="text-red-600 dark:text-red-400">*</span>
                                 </label>
                                 <input
                                     id="name"
@@ -41,13 +41,13 @@
                                     :class="{ 'border-red-500': form.errors.name }"
                                     placeholder="e.g. News, Tutorials"
                                 />
-                                <p v-if="form.errors.name" class="mt-1 text-sm text-red-600">{{ form.errors.name }}</p>
+                                <p v-if="form.errors.name" class="mt-1 text-sm text-red-600 dark:text-red-400">{{ form.errors.name }}</p>
                             </div>
 
                             <!-- Slug -->
                             <div>
                                 <label for="slug" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                                    URL Slug <span class="text-red-500">*</span>
+                                    URL Slug <span class="text-red-600 dark:text-red-400">*</span>
                                 </label>
                                 <div class="flex gap-2">
                                     <input
@@ -63,7 +63,7 @@
                                         Generate
                                     </button>
                                 </div>
-                                <p v-if="form.errors.slug" class="mt-1 text-sm text-red-600">{{ form.errors.slug }}</p>
+                                <p v-if="form.errors.slug" class="mt-1 text-sm text-red-600 dark:text-red-400">{{ form.errors.slug }}</p>
                             </div>
 
                             <!-- Description -->
@@ -85,12 +85,12 @@
                             <div>
                                 <label for="meta_title" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Meta Title</label>
                                 <input id="meta_title" v-model="form.meta_title" type="text" maxlength="255" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 dark:border-gray-600 dark:text-white" placeholder="SEO title" />
-                                <p class="mt-1 text-xs text-gray-500">{{ form.meta_title?.length || 0 }}/255</p>
+                                <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">{{ form.meta_title?.length || 0 }}/255</p>
                             </div>
                             <div>
                                 <label for="meta_description" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Meta Description</label>
                                 <textarea id="meta_description" v-model="form.meta_description" rows="2" maxlength="500" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 dark:border-gray-600 dark:text-white" placeholder="Brief description for search results"></textarea>
-                                <p class="mt-1 text-xs text-gray-500">{{ form.meta_description?.length || 0 }}/500</p>
+                                <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">{{ form.meta_description?.length || 0 }}/500</p>
                             </div>
                         </div>
                     </div>

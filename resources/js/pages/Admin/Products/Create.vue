@@ -347,7 +347,7 @@ const saveDraft = () => {
           <h1 class="text-2xl font-bold text-gray-900 dark:text-white">Create Product</h1>
           <div class="flex items-center gap-2 mt-1 text-sm text-gray-500 dark:text-gray-400">
             <Link :href="productRoutes.index().url" class="hover:text-blue-600 transition-colors">Products</Link>
-            <span class="text-gray-300 dark:text-gray-600">/</span>
+            <span class="text-gray-300 dark:text-gray-400">/</span>
             <span>New Product</span>
           </div>
         </div>
@@ -411,36 +411,36 @@ const saveDraft = () => {
                 <!-- Product Name -->
                 <div>
                   <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                    Product Name <span class="text-red-500">*</span>
+                    Product Name <span class="text-red-600 dark:text-red-400">*</span>
                   </label>
                   <input v-model="form.name" type="text" @input="generateSlug" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" :class="{ 'border-red-500': errors?.name }" placeholder="Enter product name" />
-                  <p v-if="errors?.name" class="mt-1 text-sm text-red-600">{{ errors.name }}</p>
+                  <p v-if="errors?.name" class="mt-1 text-sm text-red-600 dark:text-red-400">{{ errors.name }}</p>
                 </div>
 
                 <!-- Slug -->
                 <div>
                   <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                    Slug <span class="text-red-500">*</span>
+                    Slug <span class="text-red-600 dark:text-red-400">*</span>
                   </label>
                   <input v-model="form.slug" type="text" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" :class="{ 'border-red-500': errors?.slug }" placeholder="product-slug" />
                   <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">URL-friendly version of the product name</p>
-                  <p v-if="errors?.slug" class="mt-1 text-sm text-red-600">{{ errors.slug }}</p>
+                  <p v-if="errors?.slug" class="mt-1 text-sm text-red-600 dark:text-red-400">{{ errors.slug }}</p>
                 </div>
 
                 <!-- SKU -->
                 <div>
                   <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                    SKU <span class="text-red-500">*</span>
+                    SKU <span class="text-red-600 dark:text-red-400">*</span>
                   </label>
                   <input v-model="form.sku" type="text" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" :class="{ 'border-red-500': errors?.sku }" placeholder="PROD-001" />
                   <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">Stock Keeping Unit - Unique product identifier</p>
-                  <p v-if="errors?.sku" class="mt-1 text-sm text-red-600">{{ errors.sku }}</p>
+                  <p v-if="errors?.sku" class="mt-1 text-sm text-red-600 dark:text-red-400">{{ errors.sku }}</p>
                 </div>
 
                 <!-- Product Type -->
                 <div>
                   <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                    Product Type <span class="text-red-500">*</span>
+                    Product Type <span class="text-red-600 dark:text-red-400">*</span>
                   </label>
                   <select v-model="form.type" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" :class="{ 'border-red-500': errors?.type }">
                     <option value="simple">Simple Product</option>
@@ -456,7 +456,7 @@ const saveDraft = () => {
                     <span v-else-if="form.type === 'downloadable'">Digital file product with download links</span>
                     <span v-else-if="form.type === 'quote'">Customers request a quote instead of buying</span>
                   </p>
-                  <p v-if="errors?.type" class="mt-1 text-sm text-red-600">{{ errors.type }}</p>
+                  <p v-if="errors?.type" class="mt-1 text-sm text-red-600 dark:text-red-400">{{ errors.type }}</p>
                 </div>
 
                 <!-- Brand -->
@@ -544,7 +544,7 @@ const saveDraft = () => {
                     <div>
                       <label class="block text-sm font-medium text-gray-900 dark:text-white">
                         {{ attribute.name }}
-                        <span v-if="attribute.is_required" class="text-red-500 ml-1">*</span>
+                        <span v-if="attribute.is_required" class="ml-1 text-red-600 dark:text-red-400">*</span>
                       </label>
                       <div class="flex items-center gap-2 mt-1">
                         <span v-if="attribute.is_configurable" class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-purple-100 text-purple-800 dark:bg-purple-900/50 dark:text-purple-300">
@@ -682,13 +682,13 @@ const saveDraft = () => {
                 <!-- Price -->
                 <div>
                   <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                    Regular Price <span class="text-red-500">*</span>
+                    Regular Price <span class="text-red-600 dark:text-red-400">*</span>
                   </label>
                   <div class="relative">
                     <span class="absolute left-3 top-2 text-gray-500 dark:text-gray-400">{{ currencySymbol }}</span>
                     <input v-model="form.price" type="number" step="0.01" class="w-full pl-7 pr-3 py-2 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" :class="{ 'border-red-500': errors?.price }" placeholder="0.00" />
                   </div>
-                  <p v-if="errors?.price" class="mt-1 text-sm text-red-600">{{ errors.price }}</p>
+                  <p v-if="errors?.price" class="mt-1 text-sm text-red-600 dark:text-red-400">{{ errors.price }}</p>
                 </div>
 
                 <!-- Cost -->
@@ -757,11 +757,11 @@ const saveDraft = () => {
                   <!-- Quantity -->
                   <div>
                     <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                      Quantity <span class="text-red-500">*</span>
+                      Quantity <span class="text-red-600 dark:text-red-400">*</span>
                     </label>
                     <input v-model="form.quantity" type="number" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" :class="{ 'border-red-500': errors?.quantity }" placeholder="0" />
                     <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">Available stock quantity</p>
-                    <p v-if="errors?.quantity" class="mt-1 text-sm text-red-600">{{ errors.quantity }}</p>
+                    <p v-if="errors?.quantity" class="mt-1 text-sm text-red-600 dark:text-red-400">{{ errors.quantity }}</p>
                   </div>
 
                   <!-- Weight - Only for physical products -->
@@ -774,7 +774,7 @@ const saveDraft = () => {
                       :class="props.errors?.weight ? 'border-red-500' : 'border-gray-300'"
                       placeholder="0.00" 
                     />
-                    <p v-if="props.errors?.weight" class="mt-1 text-sm text-red-600">{{ props.errors.weight }}</p>
+                    <p v-if="props.errors?.weight" class="mt-1 text-sm text-red-600 dark:text-red-400">{{ props.errors.weight }}</p>
                     <p v-else class="mt-1 text-xs text-gray-500 dark:text-gray-400">Product weight for shipping</p>
                   </div>
 
@@ -903,7 +903,7 @@ const saveDraft = () => {
               <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">Categories</h3>
 
               <div v-if="errors?.category_ids" class="mb-4 p-3 bg-red-50 dark:bg-red-900/30 border border-red-200 dark:border-red-800 rounded-md">
-                <p class="text-sm text-red-600 dark:text-red-400">{{ errors.category_ids }}</p>
+                <p class="text-sm dark:text-red-400 text-red-700">{{ errors.category_ids }}</p>
               </div>
 
               <div class="max-h-80 overflow-y-auto space-y-2">
@@ -1005,7 +1005,7 @@ const saveDraft = () => {
                         </td>
                         <td class="px-4 py-3 text-sm text-right text-gray-900 dark:text-gray-100">
                           <span v-if="costNumber > 0">{{ currencySymbol }}{{ (option.price - costNumber).toFixed(2) }}</span>
-                          <span v-else class="text-xs text-gray-400 dark:text-gray-500">Add cost to calculate</span>
+                          <span v-else class="text-xs text-gray-400 dark:text-gray-400">Add cost to calculate</span>
                         </td>
                       </tr>
                     </tbody>

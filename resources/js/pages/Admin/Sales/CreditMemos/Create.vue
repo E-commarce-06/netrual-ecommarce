@@ -145,8 +145,8 @@ const formatDate = (date: string) => {
     <div class="space-y-6">
       <!-- Header -->
       <div>
-        <h1 class="text-2xl font-bold text-gray-900">Create Credit Memo</h1>
-        <p class="text-gray-600 mt-1">Issue a refund for an order</p>
+        <h1 class="text-2xl font-bold text-gray-900 dark:text-gray-400">Create Credit Memo</h1>
+        <p class="text-gray-600 mt-1 dark:text-gray-400">Issue a refund for an order</p>
       </div>
 
       <form @submit.prevent="submit" class="space-y-6">
@@ -421,7 +421,7 @@ const formatDate = (date: string) => {
           <button
             type="button"
             @click="cancel"
-            class="px-6 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2"
+            class="px-6 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 dark:text-gray-400"
           >
             Cancel
           </button>

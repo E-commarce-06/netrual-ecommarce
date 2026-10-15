@@ -63,10 +63,10 @@ const save = () => {
       <!-- Page Header -->
       <div class="mb-6">
         <div class="flex items-center gap-3 mb-2">
-          <a href="/admin/settings/payment-methods" class="text-blue-600 hover:text-blue-700 font-medium">← Payment Methods</a>
+          <a href="/admin/settings/payment-methods" class="text-blue-600 hover:text-blue-700 font-medium dark:text-blue-500">← Payment Methods</a>
         </div>
-        <h1 class="text-2xl font-bold text-gray-900">Stripe Configuration</h1>
-        <p class="mt-1 text-sm text-gray-500">Configure Stripe payment gateway settings</p>
+        <h1 class="text-2xl font-bold text-gray-900 dark:text-gray-400">Stripe Configuration</h1>
+        <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">Configure Stripe payment gateway settings</p>
       </div>
 
       <!-- Configuration Form -->
@@ -79,7 +79,7 @@ const save = () => {
             <!-- Name -->
             <div>
               <label class="block text-sm font-medium text-gray-700 mb-2">
-                Method Name <span class="text-red-500">*</span>
+                Method Name <span class="text-red-600 dark:text-red-600">*</span>
               </label>
               <input
                 v-model="form.name"
@@ -128,7 +128,7 @@ const save = () => {
             <!-- Public Key -->
             <div>
               <label class="block text-sm font-medium text-gray-700 mb-2">
-                Publishable Key <span class="text-red-500">*</span>
+                Publishable Key <span class="text-red-600 dark:text-red-600">*</span>
               </label>
               <input
                 v-model="form.configuration.public_key"
@@ -137,7 +137,7 @@ const save = () => {
                 placeholder="pk_live_..."
               />
               <p v-if="errors['configuration.public_key']" class="mt-1 text-sm text-red-600">{{ errors['configuration.public_key'] }}</p>
-              <p class="mt-1 text-xs text-gray-500">Starts with <code class="bg-gray-100 px-1 rounded">pk_</code></p>
+              <p class="mt-1 text-xs text-gray-500">Starts with <code class="bg-gray-100 px-1 rounded text-gray-600 dark:text-gray-600">pk_</code></p>
             </div>
           </div>
         </div>

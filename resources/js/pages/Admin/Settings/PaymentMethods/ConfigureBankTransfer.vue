@@ -128,17 +128,17 @@ const save = () => {
           <div>
             <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Payment method name</label>
             <input v-model="form.name" type="text" maxlength="255" class="w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 px-3 py-2 text-gray-900 dark:text-white" />
-            <p v-if="errors.name" class="mt-1 text-sm text-red-600">{{ errors.name }}</p>
+            <p v-if="errors.name" class="mt-1 text-sm text-red-600 dark:text-red-400">{{ errors.name }}</p>
           </div>
           <div>
             <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Description</label>
             <textarea v-model="form.description" rows="2" maxlength="1000" class="w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 px-3 py-2 text-gray-900 dark:text-white" placeholder="Pay to a bank or mobile wallet and upload your receipt." />
-            <p v-if="errors.description" class="mt-1 text-sm text-red-600">{{ errors.description }}</p>
+            <p v-if="errors.description" class="mt-1 text-sm text-red-600 dark:text-red-400">{{ errors.description }}</p>
           </div>
           <div>
             <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Instructions shown at checkout</label>
             <textarea v-model="form.instructions" rows="3" maxlength="2000" class="w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 px-3 py-2 text-gray-900 dark:text-white" placeholder="Transfer the exact order total, then upload a screenshot of the receipt. We will verify it before confirming payment." />
-            <p v-if="errors.instructions" class="mt-1 text-sm text-red-600">{{ errors.instructions }}</p>
+            <p v-if="errors.instructions" class="mt-1 text-sm text-red-600 dark:text-red-400">{{ errors.instructions }}</p>
           </div>
         </section>
 
@@ -152,7 +152,7 @@ const save = () => {
               <Plus class="w-4 h-4" /> Add account
             </button>
           </div>
-          <p v-if="errors['configuration.account_destinations']" class="text-sm text-red-600">{{ errors['configuration.account_destinations'] }}</p>
+          <p v-if="errors['configuration.account_destinations']" class="text-sm text-red-600 dark:text-red-400">{{ errors['configuration.account_destinations'] }}</p>
 
           <div v-if="form.configuration.account_destinations.length" class="space-y-4">
             <article v-for="(destination, index) in form.configuration.account_destinations" :key="destination.id" class="rounded-lg border border-gray-200 dark:border-gray-700 p-4 space-y-4">
@@ -163,7 +163,7 @@ const save = () => {
                     <input v-model="destination.is_active" type="checkbox" class="rounded border-gray-300 text-blue-600 focus:ring-blue-500" />
                     Active
                   </label>
-                  <button type="button" @click="removeDestination(index)" class="inline-flex items-center gap-1 text-sm text-red-600 hover:text-red-700">
+                  <button type="button" @click="removeDestination(index)" class="inline-flex items-center gap-1 text-sm text-red-600 hover:text-red-700 dark:text-red-400">
                     <Trash2 class="w-4 h-4" /> Remove
                   </button>
                 </div>
@@ -173,12 +173,12 @@ const save = () => {
                 <div>
                   <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Customer-facing label</label>
                   <input v-model="destination.label" type="text" maxlength="100" placeholder="e.g. CBE — Main account" class="w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 px-3 py-2 text-gray-900 dark:text-white" />
-                  <p v-if="destinationError(index, 'label')" class="mt-1 text-sm text-red-600">{{ destinationError(index, 'label') }}</p>
+                  <p v-if="destinationError(index, 'label')" class="mt-1 text-sm text-red-600 dark:text-red-400">{{ destinationError(index, 'label') }}</p>
                 </div>
                 <div>
                   <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Bank or wallet provider</label>
                   <input v-model="destination.provider" type="text" maxlength="100" placeholder="e.g. CBE or Telebirr" class="w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 px-3 py-2 text-gray-900 dark:text-white" />
-                  <p v-if="destinationError(index, 'provider')" class="mt-1 text-sm text-red-600">{{ destinationError(index, 'provider') }}</p>
+                  <p v-if="destinationError(index, 'provider')" class="mt-1 text-sm text-red-600 dark:text-red-400">{{ destinationError(index, 'provider') }}</p>
                 </div>
                 <div>
                   <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Destination type</label>
@@ -186,22 +186,22 @@ const save = () => {
                     <option value="bank">Bank account</option>
                     <option value="wallet">Mobile wallet</option>
                   </select>
-                  <p v-if="destinationError(index, 'type')" class="mt-1 text-sm text-red-600">{{ destinationError(index, 'type') }}</p>
+                  <p v-if="destinationError(index, 'type')" class="mt-1 text-sm text-red-600 dark:text-red-400">{{ destinationError(index, 'type') }}</p>
                 </div>
                 <div>
                   <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Account holder</label>
                   <input v-model="destination.account_name" type="text" maxlength="150" class="w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 px-3 py-2 text-gray-900 dark:text-white" />
-                  <p v-if="destinationError(index, 'account_name')" class="mt-1 text-sm text-red-600">{{ destinationError(index, 'account_name') }}</p>
+                  <p v-if="destinationError(index, 'account_name')" class="mt-1 text-sm text-red-600 dark:text-red-400">{{ destinationError(index, 'account_name') }}</p>
                 </div>
                 <div>
                   <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Account / wallet number</label>
                   <input v-model="destination.account_number" type="text" maxlength="100" autocomplete="off" class="w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 px-3 py-2 text-gray-900 dark:text-white" />
-                  <p v-if="destinationError(index, 'account_number')" class="mt-1 text-sm text-red-600">{{ destinationError(index, 'account_number') }}</p>
+                  <p v-if="destinationError(index, 'account_number')" class="mt-1 text-sm text-red-600 dark:text-red-400">{{ destinationError(index, 'account_number') }}</p>
                 </div>
                 <div>
                   <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Extra customer instructions (optional)</label>
                   <textarea v-model="destination.instructions" rows="2" maxlength="500" placeholder="Branch, wallet name, or payment note" class="w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 px-3 py-2 text-gray-900 dark:text-white" />
-                  <p v-if="destinationError(index, 'instructions')" class="mt-1 text-sm text-red-600">{{ destinationError(index, 'instructions') }}</p>
+                  <p v-if="destinationError(index, 'instructions')" class="mt-1 text-sm text-red-600 dark:text-red-400">{{ destinationError(index, 'instructions') }}</p>
                 </div>
               </div>
             </article>
@@ -224,7 +224,7 @@ const save = () => {
               <input v-model.number="form.configuration.max_order_amount" type="number" min="0" step="0.01" class="w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 px-3 py-2 text-gray-900 dark:text-white" />
             </div>
           </div>
-          <p v-if="errors['configuration.max_order_amount']" class="text-sm text-red-600">{{ errors['configuration.max_order_amount'] }}</p>
+          <p v-if="errors['configuration.max_order_amount']" class="text-sm text-red-600 dark:text-red-400">{{ errors['configuration.max_order_amount'] }}</p>
         </section>
 
         <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 rounded-xl border border-amber-200 bg-amber-50 dark:bg-amber-900/20 dark:border-amber-800 p-4">

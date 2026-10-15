@@ -36,7 +36,7 @@
                   type="text"
                   class="block w-full px-3 py-2.5 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-xl text-sm shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-shadow dark:text-white"
                 />
-                <p v-if="errors.name" class="text-red-600 text-sm mt-1">{{ errors.name }}</p>
+                <p v-if="errors.name" class="text-red-600 text-sm mt-1 dark:text-red-400">{{ errors.name }}</p>
               </div>
 
               <!-- Slug -->
@@ -47,7 +47,7 @@
                   type="text"
                   class="block w-full px-3 py-2.5 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-xl text-sm shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-shadow dark:text-white"
                 />
-                <p v-if="errors.slug" class="text-red-600 text-sm mt-1">{{ errors.slug }}</p>
+                <p v-if="errors.slug" class="text-red-600 text-sm mt-1 dark:text-red-400">{{ errors.slug }}</p>
               </div>
 
               <!-- Type (Read-only) -->
@@ -78,7 +78,7 @@
                     min="0"
                     class="block w-full px-3 py-2.5 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-xl text-sm shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-shadow dark:text-white"
                   />
-                  <p v-if="errors.base_cost" class="text-red-600 text-sm mt-1">{{ errors.base_cost }}</p>
+                  <p v-if="errors.base_cost" class="text-red-600 text-sm mt-1 dark:text-red-400">{{ errors.base_cost }}</p>
                 </div>
 
                 <div>
@@ -90,7 +90,7 @@
                     min="0"
                     class="block w-full px-3 py-2.5 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-xl text-sm shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-shadow dark:text-white"
                   />
-                  <p v-if="errors.cost_per_kg" class="text-red-600 text-sm mt-1">{{ errors.cost_per_kg }}</p>
+                  <p v-if="errors.cost_per_kg" class="text-red-600 text-sm mt-1 dark:text-red-400">{{ errors.cost_per_kg }}</p>
                 </div>
               </div>
 
@@ -102,7 +102,7 @@
                   rows="4"
                   class="block w-full px-3 py-2.5 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-xl text-sm shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-shadow dark:text-white"
                 ></textarea>
-                <p v-if="errors.description" class="text-red-600 text-sm mt-1">{{ errors.description }}</p>
+                <p v-if="errors.description" class="text-red-600 text-sm mt-1 dark:text-red-400">{{ errors.description }}</p>
               </div>
 
               <!-- Default -->
@@ -196,7 +196,7 @@
               <div v-for="rate in method.rates" :key="rate.id" class="flex items-center justify-between pb-2 border-b border-gray-100 dark:border-gray-700 last:border-0 last:pb-0">
                 <div class="flex-1">
                   <div class="font-medium text-gray-900 dark:text-white">{{ rate.country }}</div>
-                  <div class="text-gray-500 text-xs">{{ rate.min_weight }}-{{ rate.max_weight }}kg</div>
+                  <div class="text-gray-500 text-xs dark:text-gray-400">{{ rate.min_weight }}-{{ rate.max_weight }}kg</div>
                 </div>
                 <div class="text-right">
                   <div class="font-medium text-gray-900 dark:text-white">{{ formatPrice(rate.base_cost) }}</div>

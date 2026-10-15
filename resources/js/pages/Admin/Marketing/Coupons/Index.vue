@@ -370,7 +370,7 @@ const isExpired = (endDate: string | null) => {
           <div v-if="searchQuery || statusFilter !== 'all' || typeFilter !== 'all'" class="mt-4 pt-4 border-t border-gray-200 dark:border-gray-700 flex justify-end">
             <button
               @click="clearFilters"
-              class="px-4 py-2 text-sm text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-200 font-medium bg-gray-100 hover:bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-600 rounded-lg transition-colors flex items-center gap-2"
+              class="px-4 py-2 text-sm text-gray-600 hover:text-gray-900 dark:hover:text-gray-200 font-medium bg-gray-100 hover:bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-600 rounded-lg transition-colors flex items-center gap-2 dark:text-gray-300"
             >
               <X class="w-4 h-4" />
               Clear Filters
@@ -554,17 +554,17 @@ const isExpired = (endDate: string | null) => {
                     <td colspan="7" class="px-6 py-4 space-y-3">
                        <div class="grid grid-cols-2 gap-4 text-sm">
                           <div>
-                            <span class="block text-xs font-medium text-gray-500 uppercase">Type</span>
+                            <span class="block text-xs font-medium text-gray-500 uppercase dark:text-gray-400">Type</span>
                             <span class="inline-flex mt-1 px-2 py-1 text-xs font-medium rounded-md" :class="getTypeColor(coupon.type)">
                               {{ getTypeLabel(coupon.type) }}
                             </span>
                           </div>
                           <div>
-                            <span class="block text-xs font-medium text-gray-500 uppercase">Discount</span>
+                            <span class="block text-xs font-medium text-gray-500 uppercase dark:text-gray-400">Discount</span>
                             <span class="block mt-1 text-gray-900 dark:text-white font-medium">{{ formatDiscount(coupon) }}</span>
                           </div>
                           <div>
-                            <span class="block text-xs font-medium text-gray-500 uppercase">Usage</span>
+                            <span class="block text-xs font-medium text-gray-500 uppercase dark:text-gray-400">Usage</span>
                              <div class="mt-1 text-gray-500 dark:text-gray-400">
                                 <span>{{ coupon.usage_count }} used</span>
                                 <span class="text-xs text-gray-400" v-if="coupon.usage_limit_total">
@@ -573,7 +573,7 @@ const isExpired = (endDate: string | null) => {
                              </div>
                           </div>
                           <div>
-                             <span class="block text-xs font-medium text-gray-500 uppercase">Status</span>
+                             <span class="block text-xs font-medium text-gray-500 uppercase dark:text-gray-400">Status</span>
                              <span
                                 class="inline-flex mt-1 px-2 py-1 text-xs font-medium rounded-full"
                                 :class="coupon.is_active
@@ -584,7 +584,7 @@ const isExpired = (endDate: string | null) => {
                               </span>
                           </div>
                            <div class="col-span-2">
-                             <span class="block text-xs font-medium text-gray-500 uppercase">Valid Until</span>
+                             <span class="block text-xs font-medium text-gray-500 uppercase dark:text-gray-400">Valid Until</span>
                               <div class="mt-1" :class="{'text-red-500 font-medium': isExpired(coupon.end_date)}">
                                  {{ formatDate(coupon.end_date) }}
                               </div>

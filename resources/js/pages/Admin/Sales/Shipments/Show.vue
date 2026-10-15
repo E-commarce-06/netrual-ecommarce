@@ -190,8 +190,8 @@ const canCancel = !['delivered', 'cancelled'].includes(props.shipment.status);
       <!-- Header -->
       <div class="flex justify-between items-start">
         <div>
-          <h1 class="text-2xl font-bold text-gray-900">Shipment {{ shipment.shipment_number }}</h1>
-          <p class="text-sm text-gray-500 mt-1">Created: {{ formatDate(shipment.created_at) }}</p>
+          <h1 class="text-2xl font-bold text-gray-900 dark:text-gray-400">Shipment {{ shipment.shipment_number }}</h1>
+          <p class="text-sm text-gray-500 mt-1 dark:text-gray-400">Created: {{ formatDate(shipment.created_at) }}</p>
         </div>
         <div class="flex gap-2">
           <button
@@ -217,14 +217,14 @@ const canCancel = !['delivered', 'cancelled'].includes(props.shipment.status);
           <button
             v-if="!shipment.shiprocket_order_id"
             @click="createInShiprocket"
-            class="px-4 py-2 bg-cyan-600 text-white rounded-lg hover:bg-cyan-700"
+            class="px-4 py-2 bg-cyan-700 text-white rounded-lg hover:bg-cyan-700 dark:text-gray-100"
           >
             Send to Shiprocket
           </button>
           <button
             v-else
             @click="syncShiprocketStatus"
-            class="px-4 py-2 bg-teal-600 text-white rounded-lg hover:bg-teal-700"
+            class="px-4 py-2 bg-teal-700 text-white rounded-lg hover:bg-teal-700 dark:text-gray-100"
           >
             Sync Shiprocket Status
           </button>
@@ -269,7 +269,7 @@ const canCancel = !['delivered', 'cancelled'].includes(props.shipment.status);
         </div>
         <button
           @click="createInShiprocket"
-          class="px-4 py-2 bg-cyan-600 text-white rounded-lg hover:bg-cyan-700"
+          class="px-4 py-2 bg-cyan-700 text-white rounded-lg hover:bg-cyan-700 dark:text-gray-100"
         >
           Send to Shiprocket
         </button>

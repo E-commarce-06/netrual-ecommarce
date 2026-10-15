@@ -213,7 +213,7 @@ onUnmounted(() => {
                 </div>
                 <div v-if="statistics.hit_rate" class="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-100 dark:border-gray-700 p-6">
                     <div class="text-sm font-medium text-gray-500 dark:text-gray-400">Hit Rate</div>
-                    <div class="mt-2 text-2xl font-bold text-green-600 dark:text-green-400">{{ statistics.hit_rate }}</div>
+                    <div class="mt-2 text-2xl font-bold dark:text-green-400 text-green-700">{{ statistics.hit_rate }}</div>
                 </div>
             </div>
 
@@ -234,7 +234,7 @@ onUnmounted(() => {
                 <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
                     <h2 class="text-lg font-bold text-gray-900 dark:text-white flex items-center gap-2">
                         Cache Types
-                        <span class="px-2.5 py-0.5 rounded-full bg-gray-100 dark:bg-gray-700 text-xs font-medium text-gray-600 dark:text-gray-400">
+                        <span class="px-2.5 py-0.5 rounded-full bg-gray-100 dark:bg-gray-700 text-xs font-medium text-gray-600 dark:text-gray-300">
                             {{ cacheTypes.length }}
                         </span>
                     </h2>

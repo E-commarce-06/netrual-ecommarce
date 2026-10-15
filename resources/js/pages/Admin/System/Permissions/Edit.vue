@@ -96,7 +96,7 @@ const submit = () => {
               <p class="text-sm text-gray-500 dark:text-gray-300">
                 Use dot notation for permission keys (e.g., module.resource.action)
               </p>
-              <p v-if="form.errors.name" class="text-sm text-red-600">
+              <p v-if="form.errors.name" class="text-sm text-red-600 dark:text-red-500">
                 {{ form.errors.name }}
               </p>
             </div>
@@ -114,7 +114,7 @@ const submit = () => {
               <p class="text-sm text-gray-500 dark:text-gray-300">
                 A human-readable name for this permission
               </p>
-              <p v-if="form.errors.display_name" class="text-sm text-red-600">
+              <p v-if="form.errors.display_name" class="text-sm text-red-600 dark:text-red-500">
                 {{ form.errors.display_name }}
               </p>
             </div>
@@ -167,7 +167,7 @@ const submit = () => {
               <p class="text-sm text-gray-500 dark:text-gray-300">
                 Group related permissions together
               </p>
-              <p v-if="form.errors.group" class="text-sm text-red-600">
+              <p v-if="form.errors.group" class="text-sm text-red-600 dark:text-red-500">
                 {{ form.errors.group }}
               </p>
             </div>
@@ -184,7 +184,7 @@ const submit = () => {
               <p class="text-sm text-gray-500 dark:text-gray-300">
                 Optional description to explain what this permission controls
               </p>
-              <p v-if="form.errors.description" class="text-sm text-red-600">
+              <p v-if="form.errors.description" class="text-sm text-red-600 dark:text-red-500">
                 {{ form.errors.description }}
               </p>
             </div>

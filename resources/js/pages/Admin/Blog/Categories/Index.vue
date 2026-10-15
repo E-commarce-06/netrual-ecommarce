@@ -103,7 +103,7 @@
                     <div class="md:col-span-3 lg:col-span-2 flex items-end" v-if="filters.search || filters.status">
                         <button
                             @click="clearFilters"
-                            class="w-full py-2.5 px-4 text-xs font-semibold uppercase tracking-wider text-gray-600 dark:text-gray-400 bg-gray-100 dark:bg-gray-700 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors"
+                            class="w-full py-2.5 px-4 text-xs font-semibold uppercase tracking-wider text-gray-600 bg-gray-100 dark:bg-gray-700 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors dark:text-gray-300"
                         >
                             Clear Filters
                         </button>
@@ -131,7 +131,7 @@
                                         <Tags class="w-8 h-8 text-gray-400 dark:text-gray-500" />
                                     </div>
                                     <p class="text-gray-500 dark:text-gray-400 font-medium">No categories found.</p>
-                                    <Link :href="categoryRoutes.create().url" class="text-sm text-blue-600 hover:text-blue-700 font-medium">Create your first category →</Link>
+                                    <Link :href="categoryRoutes.create().url" class="text-sm text-blue-600 hover:text-blue-700 font-medium dark:text-blue-400">Create your first category →</Link>
                                 </div>
                             </td>
                         </tr>
@@ -149,7 +149,7 @@
                                 </div>
                             </td>
                             <td class="px-6 py-4">
-                                <code class="text-xs bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-400 px-2 py-1 rounded">{{ category.slug }}</code>
+                                <code class="text-xs bg-gray-100 dark:bg-gray-700 text-gray-600 px-2 py-1 rounded dark:text-gray-300">{{ category.slug }}</code>
                             </td>
                             <td class="px-6 py-4 text-center">
                                 <span class="inline-flex items-center justify-center min-w-[28px] h-7 px-2 text-xs font-semibold bg-blue-100 text-blue-700 rounded-full dark:bg-blue-900/30 dark:text-blue-300">

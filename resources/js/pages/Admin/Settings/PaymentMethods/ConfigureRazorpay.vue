@@ -82,7 +82,7 @@ const save = () => {
             <!-- Name -->
             <div>
               <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                Method Name <span class="text-red-500">*</span>
+                Method Name <span class="text-red-600 dark:text-red-400">*</span>
               </label>
               <input
                 v-model="form.name"
@@ -90,7 +90,7 @@ const save = () => {
                 :class="['w-full px-3 py-2 border rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:ring-2 focus:ring-blue-500 focus:border-transparent', errors.name ? 'border-red-500' : 'border-gray-300 dark:border-gray-600']"
                 placeholder="Razorpay"
               />
-              <p v-if="errors.name" class="mt-1 text-sm text-red-600">{{ errors.name }}</p>
+              <p v-if="errors.name" class="mt-1 text-sm text-red-600 dark:text-red-400">{{ errors.name }}</p>
             </div>
 
             <!-- Description -->
@@ -175,7 +175,7 @@ const save = () => {
             <template v-if="form.configuration.mode === 'test'">
               <div>
                 <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                  Test Key ID <span class="text-red-500">*</span>
+                  Test Key ID <span class="text-red-600 dark:text-red-400">*</span>
                 </label>
                 <input
                   v-model="form.configuration.test_key_id"
@@ -183,11 +183,11 @@ const save = () => {
                   :class="['w-full px-3 py-2 border rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:ring-2 focus:ring-blue-500 focus:border-transparent font-mono text-sm', errors['configuration.test_key_id'] ? 'border-red-500' : 'border-gray-300 dark:border-gray-600']"
                   placeholder="rzp_test_..."
                 />
-                <p v-if="errors['configuration.test_key_id']" class="mt-1 text-sm text-red-600">{{ errors['configuration.test_key_id'] }}</p>
+                <p v-if="errors['configuration.test_key_id']" class="mt-1 text-sm text-red-600 dark:text-red-400">{{ errors['configuration.test_key_id'] }}</p>
               </div>
               <div>
                 <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                  Test Key Secret <span class="text-red-500">*</span>
+                  Test Key Secret <span class="text-red-600 dark:text-red-400">*</span>
                 </label>
                 <input
                   v-model="form.configuration.test_key_secret"
@@ -195,7 +195,7 @@ const save = () => {
                   :class="['w-full px-3 py-2 border rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:ring-2 focus:ring-blue-500 focus:border-transparent font-mono text-sm', errors['configuration.test_key_secret'] ? 'border-red-500' : 'border-gray-300 dark:border-gray-600']"
                   placeholder="Enter your Test Key Secret"
                 />
-                <p v-if="errors['configuration.test_key_secret']" class="mt-1 text-sm text-red-600">{{ errors['configuration.test_key_secret'] }}</p>
+                <p v-if="errors['configuration.test_key_secret']" class="mt-1 text-sm text-red-600 dark:text-red-400">{{ errors['configuration.test_key_secret'] }}</p>
               </div>
             </template>
 
@@ -203,7 +203,7 @@ const save = () => {
             <template v-else>
               <div>
                 <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                  Live Key ID <span class="text-red-500">*</span>
+                  Live Key ID <span class="text-red-600 dark:text-red-400">*</span>
                 </label>
                 <input
                   v-model="form.configuration.key_id"
@@ -211,11 +211,11 @@ const save = () => {
                   :class="['w-full px-3 py-2 border rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:ring-2 focus:ring-blue-500 focus:border-transparent font-mono text-sm', errors['configuration.key_id'] ? 'border-red-500' : 'border-gray-300 dark:border-gray-600']"
                   placeholder="rzp_live_..."
                 />
-                <p v-if="errors['configuration.key_id']" class="mt-1 text-sm text-red-600">{{ errors['configuration.key_id'] }}</p>
+                <p v-if="errors['configuration.key_id']" class="mt-1 text-sm text-red-600 dark:text-red-400">{{ errors['configuration.key_id'] }}</p>
               </div>
               <div>
                 <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                  Live Key Secret <span class="text-red-500">*</span>
+                  Live Key Secret <span class="text-red-600 dark:text-red-400">*</span>
                 </label>
                 <input
                   v-model="form.configuration.key_secret"
@@ -223,14 +223,14 @@ const save = () => {
                   :class="['w-full px-3 py-2 border rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:ring-2 focus:ring-blue-500 focus:border-transparent font-mono text-sm', errors['configuration.key_secret'] ? 'border-red-500' : 'border-gray-300 dark:border-gray-600']"
                   placeholder="Enter your Live Key Secret"
                 />
-                <p v-if="errors['configuration.key_secret']" class="mt-1 text-sm text-red-600">{{ errors['configuration.key_secret'] }}</p>
+                <p v-if="errors['configuration.key_secret']" class="mt-1 text-sm text-red-600 dark:text-red-400">{{ errors['configuration.key_secret'] }}</p>
               </div>
             </template>
 
             <!-- Currency -->
             <div>
               <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                Currency <span class="text-red-500">*</span>
+                Currency <span class="text-red-600 dark:text-red-400">*</span>
               </label>
               <select
                 v-model="form.configuration.currency"
@@ -241,14 +241,14 @@ const save = () => {
                 <option value="EUR">Euro (EUR)</option>
                 <option value="GBP">British Pound (GBP)</option>
               </select>
-              <p v-if="errors['configuration.currency']" class="mt-1 text-sm text-red-600">{{ errors['configuration.currency'] }}</p>
+              <p v-if="errors['configuration.currency']" class="mt-1 text-sm text-red-600 dark:text-red-400">{{ errors['configuration.currency'] }}</p>
               <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">Razorpay primarily supports INR for domestic Indian payments</p>
             </div>
 
             <!-- Webhook Secret (Optional) -->
             <div>
               <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                Webhook Secret <span class="text-gray-400 dark:text-gray-500">(Optional)</span>
+                Webhook Secret <span class="text-gray-400 dark:text-gray-400">(Optional)</span>
               </label>
               <input
                 v-model="form.configuration.webhook_secret"

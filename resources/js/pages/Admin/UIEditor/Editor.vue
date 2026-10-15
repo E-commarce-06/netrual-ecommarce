@@ -129,7 +129,7 @@ const showFloatingPanel = computed(() => !store.showProperties && hasSelection.v
 
 <template>
   <!-- Full-screen editor — no AdminLayout chrome -->
-  <div class="h-screen flex flex-col bg-gray-100 dark:bg-gray-950 overflow-hidden">
+  <div class="admin-contrast-scope h-screen flex flex-col bg-gray-100 dark:bg-gray-950 overflow-hidden">
     <!-- Top Bar -->
     <header class="h-14 flex-shrink-0 bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-800 flex items-center px-4 gap-3 z-50 shadow-sm">
       <!-- Back -->

@@ -38,7 +38,7 @@
                             <!-- Name -->
                             <div>
                                 <label for="name" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                                    Name <span class="text-red-500">*</span>
+                                    Name <span class="text-red-600 dark:text-red-400">*</span>
                                 </label>
                                 <input
                                     id="name"
@@ -48,13 +48,13 @@
                                     class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 dark:border-gray-600 dark:text-white"
                                     :class="{ 'border-red-500': form.errors.name }"
                                 />
-                                <p v-if="form.errors.name" class="mt-1 text-sm text-red-600">{{ form.errors.name }}</p>
+                                <p v-if="form.errors.name" class="mt-1 text-sm text-red-600 dark:text-red-400">{{ form.errors.name }}</p>
                             </div>
 
                             <!-- Slug -->
                             <div>
                                 <label for="slug" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                                    URL Slug <span class="text-red-500">*</span>
+                                    URL Slug <span class="text-red-600 dark:text-red-400">*</span>
                                 </label>
                                 <input
                                     id="slug"
@@ -64,8 +64,8 @@
                                     class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 dark:border-gray-600 dark:text-white font-mono"
                                     :class="{ 'border-red-500': form.errors.slug }"
                                 />
-                                <p v-if="form.errors.slug" class="mt-1 text-sm text-red-600">{{ form.errors.slug }}</p>
-                                <p class="mt-1 text-xs text-yellow-600 dark:text-yellow-400" v-if="form.slug !== category.slug">
+                                <p v-if="form.errors.slug" class="mt-1 text-sm text-red-600 dark:text-red-400">{{ form.errors.slug }}</p>
+                                <p class="mt-1 text-xs dark:text-yellow-400 text-yellow-700" v-if="form.slug !== category.slug">
                                     ⚠ Changing the slug will break existing URLs for this category.
                                 </p>
                             </div>
@@ -88,12 +88,12 @@
                             <div>
                                 <label for="meta_title" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Meta Title</label>
                                 <input id="meta_title" v-model="form.meta_title" type="text" maxlength="255" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 dark:border-gray-600 dark:text-white" />
-                                <p class="mt-1 text-xs text-gray-500">{{ form.meta_title?.length || 0 }}/255</p>
+                                <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">{{ form.meta_title?.length || 0 }}/255</p>
                             </div>
                             <div>
                                 <label for="meta_description" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Meta Description</label>
                                 <textarea id="meta_description" v-model="form.meta_description" rows="2" maxlength="500" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 dark:border-gray-600 dark:text-white"></textarea>
-                                <p class="mt-1 text-xs text-gray-500">{{ form.meta_description?.length || 0 }}/500</p>
+                                <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">{{ form.meta_description?.length || 0 }}/500</p>
                             </div>
                         </div>
                     </div>
@@ -122,11 +122,11 @@
                                     v-if="category.posts_count === 0"
                                     type="button"
                                     @click="deleteCategory"
-                                    class="w-full px-4 py-2 text-sm font-medium text-red-600 bg-white border border-red-300 rounded-lg hover:bg-red-50 transition-colors dark:bg-transparent dark:border-red-700 dark:hover:bg-red-900/20"
+                                    class="w-full px-4 py-2 text-sm font-medium text-red-600 bg-white border border-red-300 rounded-lg hover:bg-red-50 transition-colors dark:bg-transparent dark:border-red-700 dark:hover:bg-red-900/20 dark:text-red-400"
                                 >
                                     Delete Category
                                 </button>
-                                <p v-else class="text-xs text-center text-gray-400 dark:text-gray-500">
+                                <p v-else class="text-xs text-center text-gray-400 dark:text-gray-400">
                                     Cannot delete — category has {{ category.posts_count }} post{{ category.posts_count !== 1 ? 's' : '' }}
                                 </p>
                             </div>

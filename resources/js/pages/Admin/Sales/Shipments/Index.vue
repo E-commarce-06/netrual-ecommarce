@@ -307,7 +307,7 @@ const formatDate = (date: string): string => {
         <div v-if="search || statusFilter || dateFrom || dateTo" class="mt-4 pt-4 border-t border-gray-100 dark:border-gray-700 flex justify-end">
           <button
             @click="clearFilters"
-             class="px-4 py-2 text-sm text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-200 font-medium bg-gray-100 hover:bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-600 rounded-lg transition-colors flex items-center gap-2"
+             class="px-4 py-2 text-sm text-gray-600 hover:text-gray-900 dark:hover:text-gray-200 font-medium bg-gray-100 hover:bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-600 rounded-lg transition-colors flex items-center gap-2 dark:text-gray-300"
           >
             <X class="w-4 h-4" />
             Clear Filters
@@ -456,7 +456,7 @@ const formatDate = (date: string): string => {
                    </div>
                 </td>
                 <td class="hidden xl:table-cell px-6 py-4 whitespace-nowrap">
-                   <div class="text-sm font-mono text-gray-600 dark:text-gray-400 bg-gray-50 dark:bg-gray-700 px-2 py-1 rounded w-fit">
+                   <div class="text-sm font-mono text-gray-600 bg-gray-50 dark:bg-gray-700 px-2 py-1 rounded w-fit dark:text-gray-300">
                     {{ shipment.tracking_number || 'N/A' }}
                   </div>
                 </td>
@@ -485,7 +485,7 @@ const formatDate = (date: string): string => {
                  <td colspan="9" class="px-6 py-4 border-t border-gray-100 dark:border-gray-700">
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
                         <div class="sm:hidden flex flex-col gap-2">
-                          <span class="text-xs text-gray-500 font-medium uppercase tracking-wider">Order Reference</span>
+                          <span class="text-xs text-gray-500 font-medium uppercase tracking-wider dark:text-gray-400">Order Reference</span>
                            <Link
                               :href="`/admin/sales/orders/${shipment.order.id}`"
                               class="text-sm text-gray-600 dark:text-gray-300 hover:text-blue-600 hover:underline flex items-center gap-2"
@@ -495,7 +495,7 @@ const formatDate = (date: string): string => {
                             </Link>
                        </div>
                        <div class="md:hidden flex flex-col gap-2">
-                           <span class="text-xs text-gray-500 font-medium uppercase tracking-wider">Customer</span>
+                           <span class="text-xs text-gray-500 font-medium uppercase tracking-wider dark:text-gray-400">Customer</span>
                            <div class="flex items-center">
                                <div class="h-8 w-8 rounded-full bg-gray-100 dark:bg-gray-700 flex items-center justify-center text-gray-500 dark:text-gray-400 border border-gray-200 dark:border-gray-600 mr-3">
                                 <User class="w-4 h-4" />
@@ -509,23 +509,23 @@ const formatDate = (date: string): string => {
                            </div>
                         </div>
                         <div class="lg:hidden flex flex-col gap-2">
-                            <span class="text-xs text-gray-500 font-medium uppercase tracking-wider">Shipping Details</span>
+                            <span class="text-xs text-gray-500 font-medium uppercase tracking-wider dark:text-gray-400">Shipping Details</span>
                             <div class="grid grid-cols-2 gap-4">
                                <div>
-                                  <span class="text-xs text-gray-500 block">Carrier</span>
+                                  <span class="text-xs text-gray-500 block dark:text-gray-400">Carrier</span>
                                   <span class="text-gray-700 dark:text-gray-300 flex items-center gap-1.5 mt-0.5">
                                     <Truck class="w-3.5 h-3.5 text-gray-400" />
                                     {{ shipment.carrier || '-' }}
                                   </span>
                                </div>
                                <div>
-                                  <span class="text-xs text-gray-500 block">Tracking</span>
+                                  <span class="text-xs text-gray-500 block dark:text-gray-400">Tracking</span>
                                   <span class="text-gray-700 dark:text-gray-300 font-mono text-xs mt-0.5">{{ shipment.tracking_number || 'N/A' }}</span>
                                </div>
                             </div>
                         </div>
                          <div class="lg:hidden flex flex-col gap-2">
-                           <span class="text-xs text-gray-500 font-medium uppercase tracking-wider">Date</span>
+                           <span class="text-xs text-gray-500 font-medium uppercase tracking-wider dark:text-gray-400">Date</span>
                            <div class="flex items-center gap-1.5 text-gray-700 dark:text-gray-300">
                              <Calendar class="w-3.5 h-3.5 text-gray-400" />
                              {{ formatDate(shipment.created_at) }}

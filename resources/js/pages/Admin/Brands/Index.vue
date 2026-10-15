@@ -210,8 +210,8 @@ function changePage(page: number) {
       <!-- Page Header -->
       <div class="flex items-center justify-between">
         <div>
-          <h1 class="text-2xl font-bold text-gray-900">Brands</h1>
-          <p class="mt-1 text-sm text-gray-600">Manage your product brands</p>
+          <h1 class="text-2xl font-bold text-gray-900 dark:text-gray-400">Brands</h1>
+          <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">Manage your product brands</p>
         </div>
         <Link
           :href="brandRoutes.create().url"
@@ -284,7 +284,7 @@ function changePage(page: number) {
            <div class="flex items-end">
             <button
               @click="clearFilters"
-              class="w-full py-2.5 text-sm text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-200 font-medium bg-gray-100 hover:bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-600 rounded-lg transition-colors flex items-center justify-center gap-2"
+              class="w-full py-2.5 text-sm text-gray-600 hover:text-gray-900 dark:hover:text-gray-200 font-medium bg-gray-100 hover:bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-600 rounded-lg transition-colors flex items-center justify-center gap-2 dark:text-gray-300"
             >
               <X class="w-4 h-4" />
               Clear Filters
@@ -316,7 +316,7 @@ function changePage(page: number) {
              <div class="w-px h-6 bg-blue-400 mx-1"></div>
             <button
               @click="confirmBulkDelete"
-               class="px-3 py-1.5 text-xs font-bold text-white bg-red-500 rounded-lg hover:bg-red-600 transition-colors flex items-center uppercase tracking-wide"
+               class="px-3 py-1.5 text-xs font-bold text-white bg-red-600 rounded-lg hover:bg-red-600 transition-colors flex items-center uppercase tracking-wide dark:text-gray-50"
             >
               <Trash2 class="w-3 h-3 mr-1.5" />
               Delete
@@ -417,11 +417,11 @@ function changePage(page: number) {
                   </div>
                 </td>
                 <td class="hidden md:table-cell px-6 py-4 whitespace-nowrap">
-                  <a v-if="brand.website" :href="brand.website" target="_blank" class="text-sm text-blue-600 hover:text-blue-800 hover:underline flex items-center gap-1">
+                  <a v-if="brand.website" :href="brand.website" target="_blank" class="text-sm text-blue-600 hover:text-blue-800 hover:underline flex items-center gap-1 dark:text-blue-400">
                     <ExternalLink class="w-3 h-3" />
                     Visit
                   </a>
-                  <span v-else class="text-sm text-gray-400 dark:text-gray-600">-</span>
+                  <span v-else class="text-sm text-gray-400 dark:text-gray-400">-</span>
                 </td>
                 <td class="px-6 py-4 whitespace-nowrap text-center">
                   <span
@@ -439,7 +439,7 @@ function changePage(page: number) {
                    <span v-if="brand.is_featured" class="inline-flex items-center justify-center w-6 h-6 rounded-full bg-yellow-50 dark:bg-yellow-900/20 text-yellow-600 dark:text-yellow-400 ring-1 ring-inset ring-yellow-600/20">
                     <svg class="w-4 h-4 fill-current" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
                   </span>
-                  <span v-else class="text-gray-300 dark:text-gray-600">
+                  <span v-else class="text-gray-300 dark:text-gray-400">
                     -
                   </span>
                 </td>
@@ -472,22 +472,22 @@ function changePage(page: number) {
                  <td colspan="7" class="px-6 py-4 border-t border-gray-100 dark:border-gray-700">
                     <div class="grid grid-cols-2 gap-4 text-sm">
                        <div class="flex flex-col gap-1 col-span-2 sm:col-span-1" v-if="brand.website">
-                          <span class="text-xs text-gray-500 font-medium uppercase tracking-wider">Website</span>
-                          <a :href="brand.website" target="_blank" class="text-blue-600 hover:underline flex items-center gap-1">
+                          <span class="text-xs text-gray-500 font-medium uppercase tracking-wider dark:text-gray-400">Website</span>
+                          <a :href="brand.website" target="_blank" class="text-blue-600 hover:underline flex items-center gap-1 dark:text-blue-400">
                              <ExternalLink class="w-3 h-3" /> {{ brand.website }}
                           </a>
                        </div>
                        <div class="flex flex-col gap-1 sm:hidden">
-                          <span class="text-xs text-gray-500 font-medium uppercase tracking-wider">Featured</span>
+                          <span class="text-xs text-gray-500 font-medium uppercase tracking-wider dark:text-gray-400">Featured</span>
                            <span v-if="brand.is_featured" class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-yellow-100 text-yellow-800 w-fit">Featured</span>
-                           <span v-else class="text-gray-500">No</span>
+                           <span v-else class="text-gray-500 dark:text-gray-400">No</span>
                        </div>
                         <div class="flex flex-col gap-1 lg:hidden">
-                          <span class="text-xs text-gray-500 font-medium uppercase tracking-wider">Products</span>
+                          <span class="text-xs text-gray-500 font-medium uppercase tracking-wider dark:text-gray-400">Products</span>
                           <span class="text-gray-700 dark:text-gray-300">{{ brand.products_count || 0 }} products</span>
                        </div>
                         <div class="flex flex-col gap-1">
-                          <span class="text-xs text-gray-500 font-medium uppercase tracking-wider">Created</span>
+                          <span class="text-xs text-gray-500 font-medium uppercase tracking-wider dark:text-gray-400">Created</span>
                           <span class="text-gray-700 dark:text-gray-300">{{ new Date(brand.created_at).toLocaleDateString() }}</span>
                        </div>
                     </div>

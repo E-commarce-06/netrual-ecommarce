@@ -113,8 +113,8 @@ const applyAutoAssignment = () => {
             <div class="mb-6">
                 <div class="flex items-center justify-between">
                     <div>
-                        <h1 class="text-2xl font-bold text-gray-900">Edit Customer Group</h1>
-                        <p class="mt-1 text-sm text-gray-600">Update group settings and auto-assignment rules.</p>
+                        <h1 class="text-2xl font-bold text-gray-900 dark:text-gray-400">Edit Customer Group</h1>
+                        <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">Update group settings and auto-assignment rules.</p>
                     </div>
                     <button
                         v-if="!group.is_default && customersCount === 0"
@@ -123,10 +123,10 @@ const applyAutoAssignment = () => {
                     >
                         Delete Group
                     </button>
-                    <div v-else-if="group.is_default" class="text-sm text-gray-500">
+                    <div v-else-if="group.is_default" class="text-sm text-gray-500 dark:text-gray-400">
                         Cannot delete default group
                     </div>
-                    <div v-else class="text-sm text-gray-500">
+                    <div v-else class="text-sm text-gray-500 dark:text-gray-400">
                         Cannot delete (has {{ customersCount }} customers)
                     </div>
                 </div>
@@ -253,7 +253,7 @@ const applyAutoAssignment = () => {
                                 type="button"
                                 @click="applyAutoAssignment"
                                 v-if="form.auto_assignment_rules.min_orders || form.auto_assignment_rules.min_spent || form.auto_assignment_rules.min_aov"
-                                class="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors text-sm"
+                                class="px-4 py-2 bg-green-700 text-white rounded-lg hover:bg-green-700 transition-colors text-sm dark:text-gray-100"
                             >
                                 Apply Rules Now
                             </button>

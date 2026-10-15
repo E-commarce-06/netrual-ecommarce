@@ -124,14 +124,14 @@ const fetchPickupLocations = async () => {
 
           <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div class="md:col-span-2">
-              <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">API Token <span class="text-red-500">*</span></label>
+              <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">API Token <span class="text-red-600 dark:text-red-400">*</span></label>
               <input
                 v-model="form.api_token"
                 type="password"
                 :class="['w-full px-3 py-2 border rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white', errors.api_token ? 'border-red-500' : 'border-gray-300 dark:border-gray-600']"
                 placeholder="Delhivery API token"
               />
-              <p v-if="errors.api_token" class="mt-1 text-sm text-red-600">{{ errors.api_token }}</p>
+              <p v-if="errors.api_token" class="mt-1 text-sm text-red-600 dark:text-red-400">{{ errors.api_token }}</p>
             </div>
 
             <div>
@@ -148,7 +148,7 @@ const fetchPickupLocations = async () => {
                   {{ location.label }}
                 </option>
               </datalist>
-              <p v-if="errors.pickup_location" class="mt-1 text-sm text-red-600">{{ errors.pickup_location }}</p>
+              <p v-if="errors.pickup_location" class="mt-1 text-sm text-red-600 dark:text-red-400">{{ errors.pickup_location }}</p>
               <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">Delhivery pickup list API may not be available for all accounts. Enter exact warehouse name/code manually.</p>
             </div>
 

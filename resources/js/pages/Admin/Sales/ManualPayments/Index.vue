@@ -206,12 +206,12 @@ const formatDate = (value?: string | null) => value
           <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
             <thead class="bg-gray-50 dark:bg-gray-900/40">
               <tr>
-                <th class="px-5 py-3 text-left text-xs font-semibold uppercase tracking-wide text-gray-500">Order / customer</th>
-                <th class="px-5 py-3 text-left text-xs font-semibold uppercase tracking-wide text-gray-500">Transfer</th>
-                <th class="px-5 py-3 text-left text-xs font-semibold uppercase tracking-wide text-gray-500">Destination paid to</th>
-                <th class="px-5 py-3 text-left text-xs font-semibold uppercase tracking-wide text-gray-500">Evidence</th>
-                <th class="px-5 py-3 text-left text-xs font-semibold uppercase tracking-wide text-gray-500">Status</th>
-                <th class="px-5 py-3 text-right text-xs font-semibold uppercase tracking-wide text-gray-500">Review</th>
+                <th class="px-5 py-3 text-left text-xs font-semibold uppercase tracking-wide text-gray-500 dark:text-gray-400">Order / customer</th>
+                <th class="px-5 py-3 text-left text-xs font-semibold uppercase tracking-wide text-gray-500 dark:text-gray-400">Transfer</th>
+                <th class="px-5 py-3 text-left text-xs font-semibold uppercase tracking-wide text-gray-500 dark:text-gray-400">Destination paid to</th>
+                <th class="px-5 py-3 text-left text-xs font-semibold uppercase tracking-wide text-gray-500 dark:text-gray-400">Evidence</th>
+                <th class="px-5 py-3 text-left text-xs font-semibold uppercase tracking-wide text-gray-500 dark:text-gray-400">Status</th>
+                <th class="px-5 py-3 text-right text-xs font-semibold uppercase tracking-wide text-gray-500 dark:text-gray-400">Review</th>
               </tr>
             </thead>
             <tbody class="divide-y divide-gray-100 dark:divide-gray-700">

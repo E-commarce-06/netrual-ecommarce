@@ -368,7 +368,7 @@ const isScheduled = (promotion: Promotion) => {
             <div v-if="filters.search || filters.status || filters.type" class="md:col-span-12 mt-4 pt-4 border-t border-gray-200 dark:border-gray-700 flex justify-end">
               <button
                 @click="clearFilters"
-                class="px-4 py-2 text-sm text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-200 font-medium bg-gray-100 hover:bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-600 rounded-lg transition-colors flex items-center gap-2"
+                class="px-4 py-2 text-sm text-gray-600 hover:text-gray-900 dark:hover:text-gray-200 font-medium bg-gray-100 hover:bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-600 rounded-lg transition-colors flex items-center gap-2 dark:text-gray-300"
               >
                 <X class="w-4 h-4" />
                 Clear Filters
@@ -575,11 +575,11 @@ const isScheduled = (promotion: Promotion) => {
                     <td colspan="8" class="px-6 py-4 space-y-3">
                        <div class="grid grid-cols-2 gap-4 text-sm">
                            <div>
-                            <span class="block text-xs font-medium text-gray-500 uppercase">Discount</span>
+                            <span class="block text-xs font-medium text-gray-500 uppercase dark:text-gray-400">Discount</span>
                             <span class="block mt-1 text-gray-900 dark:text-white font-medium">{{ formatDiscount(promotion) }}</span>
                           </div>
                           <div>
-                            <span class="block text-xs font-medium text-gray-500 uppercase">Status</span>
+                            <span class="block text-xs font-medium text-gray-500 uppercase dark:text-gray-400">Status</span>
                              <div class="mt-1">
                                 <span
                                     v-if="isExpired(promotion)"
@@ -608,7 +608,7 @@ const isScheduled = (promotion: Promotion) => {
                              </div>
                           </div>
                           <div class="col-span-2">
-                             <span class="block text-xs font-medium text-gray-500 uppercase">Schedule</span>
+                             <span class="block text-xs font-medium text-gray-500 uppercase dark:text-gray-400">Schedule</span>
                              <span class="block mt-1 text-gray-900 dark:text-white">{{ formatDate(promotion.start_date) }} - {{ formatDate(promotion.end_date) }}</span>
                           </div>
                        </div>

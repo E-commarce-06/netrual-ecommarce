@@ -122,7 +122,7 @@
                 <div v-if="form.search || form.status || form.category_id" class="mt-4 pt-4 border-t border-gray-200 dark:border-gray-700 flex justify-end">
                     <button
                         @click="clearFilters"
-                        class="px-4 py-2 text-sm text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-200 font-medium bg-gray-100 hover:bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-600 rounded-lg transition-colors flex items-center gap-2"
+                        class="px-4 py-2 text-sm text-gray-600 hover:text-gray-900 dark:hover:text-gray-200 font-medium bg-gray-100 hover:bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-600 rounded-lg transition-colors flex items-center gap-2 dark:text-gray-300"
                     >
                         <X class="w-4 h-4" />
                         Clear Filters

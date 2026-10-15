@@ -153,8 +153,8 @@ function goToOrder() {
       <!-- Header -->
       <div class="flex justify-between items-start">
         <div>
-          <h1 class="text-2xl font-bold text-gray-900">Invoice {{ invoice.invoice_number }}</h1>
-          <p class="text-sm text-gray-500 mt-1">Issue Date: {{ invoiceData.invoice.issue_date }}</p>
+          <h1 class="text-2xl font-bold text-gray-900 dark:text-gray-400">Invoice {{ invoice.invoice_number }}</h1>
+          <p class="text-sm text-gray-500 mt-1 dark:text-gray-400">Issue Date: {{ invoiceData.invoice.issue_date }}</p>
         </div>
         <div class="flex gap-2">
           <button
@@ -167,7 +167,7 @@ function goToOrder() {
           <button
             v-if="invoice.status !== 'paid' && invoice.status !== 'cancelled'"
             @click="showMarkAsPaidModal = true"
-            class="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700"
+            class="px-4 py-2 bg-green-700 text-white rounded-lg hover:bg-green-700 dark:text-gray-100"
           >
             Mark as Paid
           </button>
@@ -366,7 +366,7 @@ function goToOrder() {
           </button>
           <button
             @click="confirmMarkAsPaid"
-            class="px-4 py-2 text-sm font-medium text-white bg-green-600 rounded-md hover:bg-green-700"
+            class="px-4 py-2 text-sm font-medium text-white bg-green-700 rounded-md hover:bg-green-700 dark:text-gray-100"
           >
             Mark as Paid
           </button>

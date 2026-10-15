@@ -131,7 +131,7 @@
                 <div v-if="form.search || form.status" class="mt-4 pt-4 border-t border-gray-200 dark:border-gray-700 flex justify-end">
                     <button
                     @click="clearFilters"
-                    class="px-4 py-2 text-sm text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-200 font-medium bg-gray-100 hover:bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-600 rounded-lg transition-colors flex items-center gap-2"
+                    class="px-4 py-2 text-sm text-gray-600 hover:text-gray-900 dark:hover:text-gray-200 font-medium bg-gray-100 hover:bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-600 rounded-lg transition-colors flex items-center gap-2 dark:text-gray-300"
                     >
                     <X class="w-4 h-4" />
                     Clear Filters
@@ -313,9 +313,9 @@
                                      <td colspan="6" class="px-6 py-4 border-t border-gray-100 dark:border-gray-700">
                                         <div class="grid grid-cols-1 gap-4 text-sm">
                                             <div>
-                                                <span class="text-xs text-gray-500 font-medium uppercase tracking-wider block mb-1">Created At</span>
+                                                <span class="text-xs text-gray-500 font-medium uppercase tracking-wider block mb-1 dark:text-gray-400">Created At</span>
                                                 <div class="text-sm text-gray-900 dark:text-white">{{ formatDate(page.created_at) }}</div>
-                                                 <div v-if="page.creator" class="text-xs text-gray-500 mt-1">
+                                                 <div v-if="page.creator" class="text-xs text-gray-500 mt-1 dark:text-gray-400">
                                                     by {{ page.creator.name }}
                                                 </div>
                                             </div>

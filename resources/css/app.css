@@ -216,3 +216,228 @@
         @apply cursor-not-allowed;
     }
 }
+
+/* Legacy admin text fields need a stable, readable surface and visible focus. */
+.admin-contrast-scope :where(input, select, textarea):not(
+    [type='checkbox'],
+    [type='radio'],
+    [type='range'],
+    [type='submit'],
+    [type='button'],
+    [type='reset'],
+    [type='hidden'],
+    [type='image'],
+    [type='color'],
+    [type='file'],
+    [data-slot='input'],
+    [data-slot='select'],
+    [data-slot='textarea']
+) {
+    color: #111827;
+    border-color: #6b7280;
+}
+
+.admin-contrast-scope :where(input, select, textarea):not(
+    [type='checkbox'],
+    [type='radio'],
+    [type='range'],
+    [type='submit'],
+    [type='button'],
+    [type='reset'],
+    [type='hidden'],
+    [type='image'],
+    [type='color'],
+    [type='file'],
+    [data-slot='input'],
+    [data-slot='select'],
+    [data-slot='textarea']
+):not([class*='dark:bg-']) {
+    background-color: #ffffff;
+    color-scheme: light;
+}
+
+.admin-contrast-scope :where(input, select, textarea):not(
+    [type='checkbox'],
+    [type='radio'],
+    [type='range'],
+    [type='submit'],
+    [type='button'],
+    [type='reset'],
+    [type='hidden'],
+    [type='image'],
+    [type='color'],
+    [type='file'],
+    [data-slot='input'],
+    [data-slot='select'],
+    [data-slot='textarea']
+)::placeholder {
+    color: #4b5563;
+    opacity: 1;
+}
+
+.admin-contrast-scope :where(input, select, textarea):not(
+    [type='checkbox'],
+    [type='radio'],
+    [type='range'],
+    [type='submit'],
+    [type='button'],
+    [type='reset'],
+    [type='hidden'],
+    [type='image'],
+    [type='color'],
+    [type='file'],
+    [data-slot='input'],
+    [data-slot='select'],
+    [data-slot='textarea']
+):focus-visible {
+    border-color: #2563eb;
+    outline: 2px solid #2563eb;
+    outline-offset: 2px;
+}
+
+.admin-contrast-scope :where(input, select, textarea):not(
+    [type='checkbox'],
+    [type='radio'],
+    [type='range'],
+    [type='submit'],
+    [type='button'],
+    [type='reset'],
+    [type='hidden'],
+    [type='image'],
+    [type='color'],
+    [type='file'],
+    [data-slot='input'],
+    [data-slot='select'],
+    [data-slot='textarea']
+).border-red-500,
+.admin-contrast-scope :where(input, select, textarea):not(
+    [type='checkbox'],
+    [type='radio'],
+    [type='range'],
+    [type='submit'],
+    [type='button'],
+    [type='reset'],
+    [type='hidden'],
+    [type='image'],
+    [type='color'],
+    [type='file'],
+    [data-slot='input'],
+    [data-slot='select'],
+    [data-slot='textarea']
+)[aria-invalid='true'] {
+    border-color: #dc2626;
+}
+
+.admin-contrast-scope :where(input, select, textarea):not(
+    [type='checkbox'],
+    [type='radio'],
+    [type='range'],
+    [type='submit'],
+    [type='button'],
+    [type='reset'],
+    [type='hidden'],
+    [type='image'],
+    [type='color'],
+    [type='file'],
+    [data-slot='input'],
+    [data-slot='select'],
+    [data-slot='textarea']
+)[aria-invalid='true']:focus-visible {
+    outline-color: #dc2626;
+}
+
+/* Dark-mode fields that opt into a dark surface keep light text. */
+.dark .admin-contrast-scope :where(input, select, textarea):not(
+    [type='checkbox'],
+    [type='radio'],
+    [type='range'],
+    [type='submit'],
+    [type='button'],
+    [type='reset'],
+    [type='hidden'],
+    [type='image'],
+    [type='color'],
+    [type='file'],
+    [data-slot='input'],
+    [data-slot='select'],
+    [data-slot='textarea']
+)[class*='dark:bg-'] {
+    color: #f9fafb;
+    border-color: #9ca3af;
+    color-scheme: dark;
+}
+
+.dark .admin-contrast-scope :where(input, select, textarea):not(
+    [type='checkbox'],
+    [type='radio'],
+    [type='range'],
+    [type='submit'],
+    [type='button'],
+    [type='reset'],
+    [type='hidden'],
+    [type='image'],
+    [type='color'],
+    [type='file'],
+    [data-slot='input'],
+    [data-slot='select'],
+    [data-slot='textarea']
+)[class*='dark:bg-']::placeholder {
+    color: #d1d5db;
+    opacity: 1;
+}
+
+.dark .admin-contrast-scope :where(input, select, textarea):not(
+    [type='checkbox'],
+    [type='radio'],
+    [type='range'],
+    [type='submit'],
+    [type='button'],
+    [type='reset'],
+    [type='hidden'],
+    [type='image'],
+    [type='color'],
+    [type='file'],
+    [data-slot='input'],
+    [data-slot='select'],
+    [data-slot='textarea']
+)[class*='dark:bg-']:focus-visible {
+    border-color: #93c5fd;
+    outline-color: #93c5fd;
+}
+
+/* Shared shadcn-style controls retain their semantic backgrounds and text. */
+.admin-contrast-scope :where([data-slot='input'], [data-slot='textarea']) {
+    border-color: #6b7280;
+    color-scheme: light;
+}
+
+.admin-contrast-scope :where([data-slot='input'], [data-slot='textarea']):focus-visible {
+    border-color: #2563eb;
+    outline: 2px solid #2563eb;
+    outline-offset: 2px;
+}
+
+.dark .admin-contrast-scope :where([data-slot='input'], [data-slot='textarea']) {
+    border-color: #9ca3af;
+    color-scheme: dark;
+}
+
+.dark .admin-contrast-scope :where([data-slot='input'], [data-slot='textarea']):focus-visible {
+    border-color: #93c5fd;
+    outline-color: #93c5fd;
+}
+
+/* Gray 300/400 are too faint on light admin surfaces; preserve dark panels. */
+html:not(.dark) .admin-contrast-scope :is(.text-gray-300, .text-gray-400):not(:hover):not([class*='group-hover:text-']),
+html:not(.dark) .admin-contrast-scope :is(.text-gray-300, .text-gray-400):hover:not([class*='hover:text-'], [class*='group-hover:text-']) {
+    color: #4b5563;
+}
+
+html:not(.dark) .admin-contrast-scope :is(.bg-gray-800, .bg-gray-900) :is(.text-gray-300, .text-gray-400):not([class*='hover:text-'], [class*='group-hover:text-']) {
+    color: #d1d5db;
+}
+
+html:not(.dark) .admin-contrast-scope :is(.bg-gray-800, .bg-gray-900).text-gray-300:not([class*='hover:text-'], [class*='group-hover:text-']),
+html:not(.dark) .admin-contrast-scope :is(.bg-gray-800, .bg-gray-900).text-gray-400:not([class*='hover:text-'], [class*='group-hover:text-']) {
+    color: #d1d5db;
+}

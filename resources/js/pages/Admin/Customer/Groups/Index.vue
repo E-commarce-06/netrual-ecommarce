@@ -410,7 +410,7 @@ function handleDragEnd() {
         <div v-if="hasActiveFilters" class="mt-4 pt-4 border-t border-gray-200 dark:border-gray-700">
            <button
             @click="clearFilters"
-             class="px-4 py-2 text-sm text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-200 font-medium bg-gray-100 hover:bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-600 rounded-lg transition-colors flex items-center gap-2"
+             class="px-4 py-2 text-sm text-gray-600 hover:text-gray-900 dark:hover:text-gray-200 font-medium bg-gray-100 hover:bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-600 rounded-lg transition-colors flex items-center gap-2 dark:text-gray-300"
           >
             <X class="w-4 h-4" />
             Clear Filters
@@ -430,19 +430,19 @@ function handleDragEnd() {
           <div class="flex gap-2">
             <button
               @click="bulkUpdateStatus(true)"
-              class="px-3 py-1.5 text-xs font-semibold bg-white/20 hover:bg-white/30 rounded-lg transition-colors"
+              class="px-3 py-1.5 text-xs font-semibold bg-white/8 hover:bg-white/30 rounded-lg transition-colors text-white"
             >
               Activate
             </button>
             <button
               @click="bulkUpdateStatus(false)"
-              class="px-3 py-1.5 text-xs font-semibold bg-white/20 hover:bg-white/30 rounded-lg transition-colors"
+              class="px-3 py-1.5 text-xs font-semibold bg-white/8 hover:bg-white/30 rounded-lg transition-colors text-white"
             >
               Deactivate
             </button>
             <button
               @click="confirmBulkDelete"
-              class="px-3 py-1.5 text-xs font-semibold bg-white/20 hover:bg-white/30 rounded-lg transition-colors flex items-center"
+              class="px-3 py-1.5 text-xs font-semibold bg-white/8 hover:bg-white/30 rounded-lg transition-colors flex items-center text-white"
             >
               <Trash2 class="w-3 h-3 mr-1.5" />
               Delete
@@ -652,7 +652,7 @@ function handleDragEnd() {
              <button
               v-else
               disabled
-               class="px-3 py-1.5 text-xs font-medium text-gray-400 dark:text-gray-600 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-600 rounded-lg cursor-not-allowed flex items-center gap-1 opacity-50"
+               class="px-3 py-1.5 text-xs font-medium text-gray-400 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-600 rounded-lg cursor-not-allowed flex items-center gap-1 opacity-50 dark:text-gray-400"
             >
               <ChevronLeft class="w-3 h-3" />
               Previous
@@ -668,7 +668,7 @@ function handleDragEnd() {
              <button
               v-else
               disabled
-              class="px-3 py-1.5 text-xs font-medium text-gray-400 dark:text-gray-600 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-600 rounded-lg cursor-not-allowed flex items-center gap-1 opacity-50"
+              class="px-3 py-1.5 text-xs font-medium text-gray-400 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-600 rounded-lg cursor-not-allowed flex items-center gap-1 opacity-50 dark:text-gray-400"
             >
               Next
               <ChevronRight class="w-3 h-3" />

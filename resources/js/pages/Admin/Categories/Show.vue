@@ -55,8 +55,8 @@ const props = defineProps<Props>();
         <div class="mb-6">
           <div class="flex items-center justify-between">
             <div>
-              <h1 class="text-2xl font-semibold text-gray-900">{{ category.name }}</h1>
-              <p class="mt-1 text-sm text-gray-600">Category details and relationships</p>
+              <h1 class="text-2xl font-semibold text-gray-900 dark:text-gray-400">{{ category.name }}</h1>
+              <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">Category details and relationships</p>
             </div>
             <div class="flex items-center space-x-3">
               <Link
@@ -135,7 +135,7 @@ const props = defineProps<Props>();
                       >
                         {{ category.parent.name }}
                       </Link>
-                      <span v-else class="text-gray-400">None (Root Category)</span>
+                      <span v-else class="text-gray-400 dark:text-gray-500">None (Root Category)</span>
                     </dd>
                   </div>
                   <div class="sm:col-span-2" v-if="category.description">

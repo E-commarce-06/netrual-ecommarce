@@ -119,8 +119,8 @@ const deleteBrand = () => {
       <div class="mb-8">
         <div class="flex items-center justify-between">
           <div>
-            <h1 class="text-2xl md:text-3xl text-gray-800 font-bold">Edit Brand</h1>
-            <p class="text-sm text-gray-600 mt-1">Update brand information</p>
+            <h1 class="text-2xl md:text-3xl text-gray-800 font-bold dark:text-gray-400">Edit Brand</h1>
+            <p class="text-sm text-gray-600 mt-1 dark:text-gray-400">Update brand information</p>
           </div>
           <Link 
             :href="brandRoutes.index().url"
@@ -177,7 +177,7 @@ const deleteBrand = () => {
                   <!-- Name -->
                   <div>
                     <label for="name" class="block text-sm font-medium text-gray-700 mb-1">
-                      Brand Name <span class="text-red-500">*</span>
+                      Brand Name <span class="text-red-600 dark:text-red-600">*</span>
                     </label>
                     <input
                       id="name"
@@ -265,7 +265,7 @@ const deleteBrand = () => {
                       :maxSize="5" 
                       accept="image/*"
                     />
-                    <p v-if="images.length > 0" class="mt-2 text-xs text-green-600">
+                    <p v-if="images.length > 0" class="mt-2 text-xs text-green-700 dark:text-green-700">
                       ✓ New logo selected (will replace existing on save)
                     </p>
                     <p v-if="form.errors?.logo" class="mt-2 text-sm text-red-600">{{ form.errors.logo }}</p>

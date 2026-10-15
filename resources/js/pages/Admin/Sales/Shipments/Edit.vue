@@ -129,8 +129,8 @@ function cancel() {
     <div class="space-y-6">
       <!-- Header -->
       <div>
-        <h1 class="text-2xl font-bold text-gray-900">Edit Shipment {{ shipment.shipment_number }}</h1>
-        <p class="text-gray-600 mt-1">Update shipment details and items</p>
+        <h1 class="text-2xl font-bold text-gray-900 dark:text-gray-400">Edit Shipment {{ shipment.shipment_number }}</h1>
+        <p class="text-gray-600 mt-1 dark:text-gray-400">Update shipment details and items</p>
       </div>
 
       <form @submit.prevent="submit" class="space-y-6">

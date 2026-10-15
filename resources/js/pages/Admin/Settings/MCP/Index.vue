@@ -380,7 +380,7 @@ if (isLocalHttpsEndpoint.value) {
                 />
                 <button
                   type="button"
-                  class="inline-flex items-center gap-2 rounded-lg bg-amber-600 px-3 py-2 text-sm text-white hover:bg-amber-700"
+                  class="inline-flex items-center gap-2 rounded-lg bg-amber-700 px-3 py-2 text-sm text-white hover:bg-amber-700 dark:text-gray-100"
                   @click="copyText(displayedToken!, 'new-token')"
                 >
                   <Check v-if="copiedKey === 'new-token'" class="w-4 h-4" />
@@ -404,7 +404,7 @@ if (isLocalHttpsEndpoint.value) {
                     class="w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-900 px-3 py-2 text-sm"
                     placeholder="Cursor MCP"
                   />
-                  <p v-if="tokenForm.errors.name" class="mt-1 text-xs text-red-600">{{ tokenForm.errors.name }}</p>
+                  <p v-if="tokenForm.errors.name" class="mt-1 text-xs text-red-600 dark:text-red-400">{{ tokenForm.errors.name }}</p>
                 </div>
                 <div>
                   <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Expires (optional)</label>
@@ -413,7 +413,7 @@ if (isLocalHttpsEndpoint.value) {
                     type="datetime-local"
                     class="w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-900 px-3 py-2 text-sm"
                   />
-                  <p v-if="tokenForm.errors.expires_at" class="mt-1 text-xs text-red-600">{{ tokenForm.errors.expires_at }}</p>
+                  <p v-if="tokenForm.errors.expires_at" class="mt-1 text-xs text-red-600 dark:text-red-400">{{ tokenForm.errors.expires_at }}</p>
                 </div>
               </div>
               <button
@@ -446,13 +446,13 @@ if (isLocalHttpsEndpoint.value) {
                   <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
                     <tr v-for="token in tokens" :key="token.id">
                       <td class="px-4 py-3 text-gray-900 dark:text-gray-100">{{ token.name }}</td>
-                      <td class="px-4 py-3 text-gray-500">{{ token.created_at || '—' }}</td>
-                      <td class="px-4 py-3 text-gray-500">{{ token.last_used_at || 'Never' }}</td>
-                      <td class="px-4 py-3 text-gray-500">{{ token.expires_at || 'Never' }}</td>
+                      <td class="px-4 py-3 text-gray-500 dark:text-gray-400">{{ token.created_at || '—' }}</td>
+                      <td class="px-4 py-3 text-gray-500 dark:text-gray-400">{{ token.last_used_at || 'Never' }}</td>
+                      <td class="px-4 py-3 text-gray-500 dark:text-gray-400">{{ token.expires_at || 'Never' }}</td>
                       <td class="px-4 py-3 text-right">
                         <button
                           type="button"
-                          class="inline-flex items-center gap-1 text-red-600 hover:text-red-700"
+                          class="inline-flex items-center gap-1 text-red-600 hover:text-red-700 dark:text-red-400"
                           @click="revokeToken(token.id)"
                         >
                           <Trash2 class="w-4 h-4" />

@@ -330,7 +330,7 @@ function toggleRow(id: number) {
             <div class="w-px h-6 bg-blue-400 mx-1"></div>
             <button
               @click="confirmBulkDelete"
-              class="px-3 py-1.5 text-xs font-bold text-white bg-red-500 rounded-lg hover:bg-red-600 transition-colors flex items-center uppercase tracking-wide"
+              class="px-3 py-1.5 text-xs font-bold text-white bg-red-600 rounded-lg hover:bg-red-600 transition-colors flex items-center uppercase tracking-wide dark:text-gray-50"
             >
               <Trash2 class="w-3 h-3 mr-1.5" />
               Delete
@@ -416,7 +416,7 @@ function toggleRow(id: number) {
                     </div>
                     <p class="text-lg font-semibold text-gray-900 dark:text-white">No categories found</p>
                     <p class="text-sm text-gray-500 dark:text-gray-400 mt-1 max-w-sm">No categories matched your search criteria. Try adjusting your filters or add a new category.</p>
-                     <button @click="clearFilters" v-if="search || statusFilter || parentFilter" class="mt-4 text-blue-600 hover:text-blue-700 font-medium text-sm">Clear all filters</button>
+                     <button @click="clearFilters" v-if="search || statusFilter || parentFilter" class="mt-4 text-blue-600 hover:text-blue-700 font-medium text-sm dark:text-blue-400">Clear all filters</button>
                   </div>
                 </td>
               </tr>
@@ -458,7 +458,7 @@ function toggleRow(id: number) {
                       <Layers class="w-3 h-3 mr-1.5 opacity-70" />
                       {{ category.parent.name }}
                    </span>
-                   <span v-else class="text-xs text-gray-400 dark:text-gray-500 italic">Root Category</span>
+                   <span v-else class="text-xs text-gray-400 italic dark:text-gray-400">Root Category</span>
                 </td>
                 <td class="px-6 py-4">
                   <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold border shadow-sm" :class="{
@@ -510,7 +510,7 @@ function toggleRow(id: number) {
                           <Layers class="w-3.5 h-3.5 mr-1.5 opacity-70" />
                           {{ category.parent.name }}
                        </span>
-                       <span v-else class="text-gray-400 dark:text-gray-500 italic">Root Category</span>
+                       <span v-else class="text-gray-400 italic dark:text-gray-400">Root Category</span>
                     </div>
 
                     <div>

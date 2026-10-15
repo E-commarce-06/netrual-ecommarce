@@ -109,9 +109,9 @@ const save = () => {
     <div class="mx-auto max-w-6xl space-y-6 p-4 sm:p-6 lg:p-8">
       <header class="flex flex-wrap items-start justify-between gap-4">
         <div>
-          <p class="text-sm font-semibold uppercase tracking-wide text-blue-700">System</p>
-          <h1 class="mt-1 text-2xl font-bold text-gray-900 sm:text-3xl">Google authentication</h1>
-          <p class="mt-2 max-w-3xl text-sm text-gray-600">
+          <p class="text-sm font-semibold uppercase tracking-wide text-blue-700 dark:text-blue-500">System</p>
+          <h1 class="mt-1 text-2xl font-bold text-gray-900 sm:text-3xl dark:text-gray-400">Google authentication</h1>
+          <p class="mt-2 max-w-3xl text-sm text-gray-600 dark:text-gray-400">
             Configure customer Google sign-in for the storefront and API/mobile clients. Admin sign-in is not affected.
           </p>
         </div>
@@ -309,7 +309,7 @@ const save = () => {
         </section>
 
         <div class="flex flex-wrap items-center justify-end gap-3">
-          <p v-if="form.hasErrors" role="alert" class="mr-auto text-sm text-red-700">Please correct the highlighted settings.</p>
+          <p v-if="form.hasErrors" role="alert" class="mr-auto text-sm text-red-700 dark:text-red-500">Please correct the highlighted settings.</p>
           <button type="submit" :disabled="form.processing" class="inline-flex items-center gap-2 rounded-md bg-blue-700 px-5 py-2.5 text-sm font-semibold text-white hover:bg-blue-800 disabled:cursor-not-allowed disabled:opacity-60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2">
             <Save class="h-4 w-4" />
             {{ form.processing ? 'Saving…' : 'Save configuration' }}

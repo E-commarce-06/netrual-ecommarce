@@ -52,8 +52,8 @@ const generateCode = () => {
 
             <!-- Page Header -->
             <div class="mb-6">
-                <h1 class="text-2xl font-bold text-gray-900">Create Customer Group</h1>
-                <p class="mt-1 text-sm text-gray-600">Create a new customer group for segmentation and group-based pricing.</p>
+                <h1 class="text-2xl font-bold text-gray-900 dark:text-gray-400">Create Customer Group</h1>
+                <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">Create a new customer group for segmentation and group-based pricing.</p>
             </div>
 
             <!-- Form -->

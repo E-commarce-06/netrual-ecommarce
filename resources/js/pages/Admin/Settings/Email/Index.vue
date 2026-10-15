@@ -356,9 +356,9 @@
                       <div class="flex items-center gap-4 text-xs text-gray-500 dark:text-gray-500">
                         <span class="flex items-center gap-1.5 bg-white dark:bg-gray-800 px-2 py-1 rounded-md border border-gray-200 dark:border-gray-700">
                           <Mail class="w-3 h-3 text-gray-400" />
-                          <span class="truncate max-w-[200px]">Subject: {{ template.subject }}</span>
+                          <span class="truncate max-w-[200px] dark:text-gray-400">Subject: {{ template.subject }}</span>
                         </span>
-                        <span class="flex items-center gap-1.5 bg-white dark:bg-gray-800 px-2 py-1 rounded-md border border-gray-200 dark:border-gray-700">
+                        <span class="flex items-center gap-1.5 bg-white dark:bg-gray-800 px-2 py-1 rounded-md border border-gray-200 dark:border-gray-700 dark:text-gray-400">
                           <CheckCircle2 class="w-3 h-3 text-gray-400" />
                           {{ template.times_sent }} sent
                         </span>

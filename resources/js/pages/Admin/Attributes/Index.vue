@@ -203,8 +203,8 @@ const getTypeBadgeColor = (type: string): string => {
       <!-- Page Header -->
       <div class="flex items-center justify-between">
         <div>
-          <h1 class="text-2xl font-bold text-gray-900">Attributes</h1>
-          <p class="mt-1 text-sm text-gray-600">Manage product attributes and their options</p>
+          <h1 class="text-2xl font-bold text-gray-900 dark:text-gray-400">Attributes</h1>
+          <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">Manage product attributes and their options</p>
         </div>
         <Link
           :href="attributeRoutes.create().url"
@@ -263,7 +263,7 @@ const getTypeBadgeColor = (type: string): string => {
             <button
               v-if="search || typeFilter"
               @click="clearFilters"
-              class="w-full py-2.5 text-sm text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-200 font-medium bg-gray-100 hover:bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-600 rounded-lg transition-colors flex items-center justify-center gap-2"
+              class="w-full py-2.5 text-sm text-gray-600 hover:text-gray-900 dark:hover:text-gray-200 font-medium bg-gray-100 hover:bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-600 rounded-lg transition-colors flex items-center justify-center gap-2 dark:text-gray-300"
             >
               <X class="w-4 h-4" />
               Clear Filters
@@ -282,7 +282,7 @@ const getTypeBadgeColor = (type: string): string => {
           <div class="flex gap-2">
             <button
               @click="confirmBulkDelete"
-              class="px-3 py-1.5 text-xs font-bold text-white bg-red-500 rounded-lg hover:bg-red-600 transition-colors flex items-center uppercase tracking-wide"
+              class="px-3 py-1.5 text-xs font-bold text-white bg-red-600 rounded-lg hover:bg-red-600 transition-colors flex items-center uppercase tracking-wide dark:text-gray-50"
             >
               <Trash2 class="w-3 h-3 mr-1.5" />
               Delete Selected
@@ -389,7 +389,7 @@ const getTypeBadgeColor = (type: string): string => {
                 <span v-if="['select', 'multiselect'].includes(attribute.type)" class="inline-flex items-center px-2 py-0.5 rounded bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-xs font-mono">
                   {{ attribute.options_count }}
                 </span>
-                <span v-else class="text-gray-300 dark:text-gray-600">-</span>
+                <span v-else class="text-gray-300 dark:text-gray-400">-</span>
               </td>
               <td class="hidden lg:table-cell px-6 py-4 whitespace-nowrap text-center">
                 <span v-if="attribute.is_required" class="text-green-600 dark:text-green-400 inline-flex items-center justify-center p-1 bg-green-50 dark:bg-green-900/20 rounded-full">
@@ -439,18 +439,18 @@ const getTypeBadgeColor = (type: string): string => {
                <td colspan="9" class="px-6 py-4 border-t border-gray-100 dark:border-gray-700">
                   <div class="grid grid-cols-2 gap-4 text-sm">
                      <div class="flex flex-col gap-1 md:hidden">
-                        <span class="text-xs text-gray-500 font-medium uppercase tracking-wider">Code</span>
+                        <span class="text-xs text-gray-500 font-medium uppercase tracking-wider dark:text-gray-400">Code</span>
                          <code class="text-xs bg-gray-100 dark:bg-gray-700/50 px-2 py-1 rounded text-gray-600 dark:text-gray-400 border border-gray-200 dark:border-gray-600 font-mono w-fit">{{ attribute.code }}</code>
                      </div>
                      <div class="flex flex-col gap-1">
-                        <span class="text-xs text-gray-500 font-medium uppercase tracking-wider">Options</span>
+                        <span class="text-xs text-gray-500 font-medium uppercase tracking-wider dark:text-gray-400">Options</span>
                         <span v-if="['select', 'multiselect'].includes(attribute.type)" class="text-gray-900 dark:text-gray-100 font-medium">
                            {{ attribute.options_count }} options
                         </span>
                         <span v-else class="text-gray-400 italic">N/A</span>
                      </div>
                      <div class="flex flex-col gap-1">
-                        <span class="text-xs text-gray-500 font-medium uppercase tracking-wider">Settings</span>
+                        <span class="text-xs text-gray-500 font-medium uppercase tracking-wider dark:text-gray-400">Settings</span>
                         <div class="flex flex-wrap gap-2">
                            <span v-if="attribute.is_required" class="inline-flex items-center text-[10px] text-green-700 bg-green-50 border border-green-100 px-1.5 py-0.5 rounded">Required</span>
                            <span v-if="attribute.is_filterable" class="inline-flex items-center text-[10px] text-blue-700 bg-blue-50 border border-blue-100 px-1.5 py-0.5 rounded">Filterable</span>

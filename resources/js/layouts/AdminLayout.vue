@@ -459,7 +459,7 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <div class="min-h-screen bg-gray-50 dark:bg-gray-900">
+  <div class="admin-contrast-scope min-h-screen bg-gray-50 dark:bg-gray-900">
     <!-- Sidebar -->
     <aside
       :class="[

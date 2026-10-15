@@ -108,7 +108,7 @@ function confirmDelete() {
             <div class="flex items-center justify-between">
                 <Link
                     :href="reviewRoutes.index().url"
-                    class="inline-flex items-center gap-2 text-gray-600 hover:text-gray-900"
+                    class="inline-flex items-center gap-2 text-gray-600 hover:text-gray-900 dark:text-gray-400"
                 >
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
@@ -121,7 +121,7 @@ function confirmDelete() {
                         v-if="review.status === 'pending'"
                         @click="approveReview"
                         :disabled="isLoading"
-                        class="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-white bg-green-600 rounded-lg hover:bg-green-700 disabled:opacity-50"
+                        class="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-white bg-green-700 rounded-lg hover:bg-green-700 disabled:opacity-50 dark:text-gray-100"
                     >
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -200,7 +200,7 @@ function confirmDelete() {
                                 <p class="text-gray-700 leading-relaxed">{{ review.comment }}</p>
                             </div>
 
-                            <div v-if="review.verified_purchase" class="flex items-center gap-2 text-sm text-green-600">
+                            <div v-if="review.verified_purchase" class="flex items-center gap-2 text-sm text-green-700 dark:text-green-700">
                                 <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
                                     <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
                                 </svg>
@@ -234,7 +234,7 @@ function confirmDelete() {
                                         <span class="text-sm font-semibold text-gray-900">
                                             {{ review.admin_replier?.name || 'Admin' }}
                                         </span>
-                                        <span class="text-xs text-gray-500">{{ review.admin_replied_at }}</span>
+                                        <span class="text-xs text-gray-600 dark:text-gray-600">{{ review.admin_replied_at }}</span>
                                     </div>
                                     <p class="text-sm text-gray-700">{{ review.admin_reply }}</p>
                                 </div>

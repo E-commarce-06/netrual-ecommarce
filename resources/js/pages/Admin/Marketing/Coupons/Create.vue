@@ -76,8 +76,8 @@ const submit = () => {
       <!-- Header -->
       <div class="flex items-center justify-between">
         <div>
-          <h1 class="text-2xl font-bold text-gray-900">Create Coupon</h1>
-          <p class="mt-1 text-sm text-gray-600">Create a new discount coupon</p>
+          <h1 class="text-2xl font-bold text-gray-900 dark:text-gray-400">Create Coupon</h1>
+          <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">Create a new discount coupon</p>
         </div>
         <div class="flex gap-3">
           <Link
@@ -156,7 +156,7 @@ const submit = () => {
                 <div class="grid grid-cols-2 gap-4">
                   <div>
                     <label for="code" class="block text-sm font-medium text-gray-700 mb-1">
-                      Coupon Code <span class="text-red-500">*</span>
+                      Coupon Code <span class="text-red-600 dark:text-red-600">*</span>
                     </label>
                     <input
                       id="code"
@@ -171,7 +171,7 @@ const submit = () => {
 
                   <div>
                     <label for="name" class="block text-sm font-medium text-gray-700 mb-1">
-                      Display Name <span class="text-red-500">*</span>
+                      Display Name <span class="text-red-600 dark:text-red-600">*</span>
                     </label>
                     <input
                       id="name"
@@ -199,7 +199,7 @@ const submit = () => {
                 <div class="grid grid-cols-3 gap-4">
                   <div>
                     <label for="type" class="block text-sm font-medium text-gray-700 mb-1">
-                      Discount Type <span class="text-red-500">*</span>
+                      Discount Type <span class="text-red-600 dark:text-red-600">*</span>
                     </label>
                     <select
                       id="type"
@@ -218,7 +218,7 @@ const submit = () => {
 
                   <div v-if="showValue">
                     <label for="value" class="block text-sm font-medium text-gray-700 mb-1">
-                      {{ form.type === 'percentage' ? 'Percentage (%)' : 'Amount ($)' }} <span class="text-red-500">*</span>
+                      {{ form.type === 'percentage' ? 'Percentage (%)' : 'Amount ($)' }} <span class="text-red-600 dark:text-red-600">*</span>
                     </label>
                     <input
                       id="value"
@@ -250,7 +250,7 @@ const submit = () => {
                 <div v-if="showBuyXGetY" class="grid grid-cols-2 gap-4">
                   <div>
                     <label for="buy_quantity" class="block text-sm font-medium text-gray-700 mb-1">
-                      Buy Quantity <span class="text-red-500">*</span>
+                      Buy Quantity <span class="text-red-600 dark:text-red-600">*</span>
                     </label>
                     <input
                       id="buy_quantity"
@@ -263,7 +263,7 @@ const submit = () => {
                   </div>
                   <div>
                     <label for="get_quantity" class="block text-sm font-medium text-gray-700 mb-1">
-                      Get Quantity <span class="text-red-500">*</span>
+                      Get Quantity <span class="text-red-600 dark:text-red-600">*</span>
                     </label>
                     <input
                       id="get_quantity"
@@ -279,7 +279,7 @@ const submit = () => {
                 <div class="grid grid-cols-2 gap-4">
                   <div>
                     <label for="start_date" class="block text-sm font-medium text-gray-700 mb-1">
-                      Start Date <span class="text-red-500">*</span>
+                      Start Date <span class="text-red-600 dark:text-red-600">*</span>
                     </label>
                     <input
                       id="start_date"

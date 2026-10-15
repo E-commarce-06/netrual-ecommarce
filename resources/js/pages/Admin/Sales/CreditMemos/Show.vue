@@ -74,15 +74,15 @@ const viewInvoice = () => {
       <!-- Header -->
       <div class="flex items-center justify-between">
         <div>
-          <h1 class="text-2xl font-bold text-gray-900">{{ creditMemo.credit_memo_number }}</h1>
-          <p class="text-gray-600 mt-1">Credit memo for order {{ creditMemo.order?.order_number }}</p>
+          <h1 class="text-2xl font-bold text-gray-900 dark:text-gray-400">{{ creditMemo.credit_memo_number }}</h1>
+          <p class="text-gray-600 mt-1 dark:text-gray-400">Credit memo for order {{ creditMemo.order?.order_number }}</p>
         </div>
 
         <div class="flex items-center space-x-3">
           <button
             v-if="creditMemo.status === 'pending'"
             @click="processRefund"
-            class="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
+            class="px-4 py-2 bg-green-700 text-white rounded-lg hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 dark:text-gray-100"
           >
             Process Refund
           </button>
@@ -323,7 +323,7 @@ const viewInvoice = () => {
                 </div>
                 <div v-if="creditMemo.adjustment_positive > 0" class="flex justify-between text-sm">
                   <span class="text-gray-600">Adjustment (+)</span>
-                  <span class="font-medium text-green-600">
+                  <span class="font-medium text-green-700 dark:text-green-700">
                     +{{ formatPrice(creditMemo.adjustment_positive) }}
                   </span>
                 </div>
