@@ -50,7 +50,7 @@ onUnmounted(() => {
 
 <template>
     <div
-        class="min-h-screen bg-slate-50 flex flex-col theme-root"
+        class="theme-root min-h-screen flex flex-col bg-background text-foreground"
         :style="cssVars"
     >
         <ThemeHeader

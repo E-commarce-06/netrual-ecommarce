@@ -3,7 +3,7 @@
   "name": "Stripe Payment Gateway",
   "description": "Accept payments via Stripe - credit cards, digital wallets, and more",
   "version": "1.0.0",
-  "author": "Bulbula Commerce",
+  "author": "BNEO",
   "author_url": "https://example.com",
   "icon": "credit-card",
   "requires": {

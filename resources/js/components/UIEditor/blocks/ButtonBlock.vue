@@ -23,7 +23,7 @@ const buttonStyle = computed(() => {
   return {
     backgroundColor: variant.value === 'outline' ? 'transparent' : (bg ?? undefined),
     color: color ?? undefined,
-    borderColor: variant.value === 'outline' ? (bg ?? color ?? '#2563eb') : undefined,
+    borderColor: variant.value === 'outline' ? (bg ?? color ?? '#F47015') : undefined,
   }
 })
 </script>

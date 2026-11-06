@@ -41,7 +41,7 @@ function updateSocial(platform: string, value: string) {
       <select
         :value="str('menu_source', 'footer')"
         @change="update('menu_source', ($event.target as HTMLSelectElement).value)"
-        class="w-full px-3 py-2 text-sm border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:outline-none"
+        class="w-full px-3 py-2 text-sm border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-brand-orange focus:outline-none"
       >
         <option value="footer">Footer Menu</option>
         <option value="header">Header Menu</option>
@@ -79,10 +79,10 @@ function updateSocial(platform: string, value: string) {
         <label class="block text-xs font-medium text-gray-600 dark:text-gray-400 mb-1">Store Name</label>
         <input
           type="text"
-          :value="str('logo_text', 'My Store')"
+          :value="str('logo_text', 'BNEO')"
           @input="update('logo_text', ($event.target as HTMLInputElement).value)"
-          placeholder="My Store"
-          class="w-full px-3 py-2 text-sm border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:outline-none"
+          placeholder="BNEO"
+          class="w-full px-3 py-2 text-sm border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-brand-orange focus:outline-none"
         />
       </div>
 
@@ -93,8 +93,8 @@ function updateSocial(platform: string, value: string) {
           type="text"
           :value="str('logo_image', '')"
           @input="update('logo_image', ($event.target as HTMLInputElement).value)"
-          placeholder="/images/logo.png"
-          class="w-full px-3 py-2 text-sm border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:outline-none font-mono"
+          placeholder="/logos/bneo-logo-primary.png"
+          class="w-full px-3 py-2 text-sm border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-brand-orange focus:outline-none font-mono"
         />
       </div>
 
@@ -106,7 +106,7 @@ function updateSocial(platform: string, value: string) {
           :value="str('logo_url', '/')"
           @input="update('logo_url', ($event.target as HTMLInputElement).value)"
           placeholder="/"
-          class="w-full px-3 py-2 text-sm border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:outline-none font-mono"
+          class="w-full px-3 py-2 text-sm border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-brand-orange focus:outline-none font-mono"
         />
       </div>
 
@@ -118,7 +118,7 @@ function updateSocial(platform: string, value: string) {
           @input="update('tagline', ($event.target as HTMLTextAreaElement).value)"
           rows="2"
           placeholder="Short description shown below logo…"
-          class="w-full px-3 py-2 text-sm border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:outline-none resize-none"
+          class="w-full px-3 py-2 text-sm border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-brand-orange focus:outline-none resize-none"
         />
       </div>
     </div>
@@ -132,7 +132,7 @@ function updateSocial(platform: string, value: string) {
         :value="str('copyright', '')"
         @input="update('copyright', ($event.target as HTMLInputElement).value)"
         placeholder="© {year} {store}. All rights reserved."
-        class="w-full px-3 py-2 text-sm border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:outline-none"
+        class="w-full px-3 py-2 text-sm border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-brand-orange focus:outline-none"
       />
       <p class="mt-1.5 text-[11px] text-gray-400 dark:text-gray-500">
         Use <code class="bg-gray-100 dark:bg-gray-700 px-1 rounded">{year}</code> and
@@ -149,7 +149,7 @@ function updateSocial(platform: string, value: string) {
           type="checkbox"
           :checked="bool('show_social', true)"
           @change="update('show_social', ($event.target as HTMLInputElement).checked)"
-          class="rounded border-gray-300 dark:border-gray-600 text-blue-500 focus:ring-blue-500"
+          class="rounded border-gray-300 dark:border-gray-600 text-blue-500 focus:ring-brand-orange"
         />
         <span class="text-sm text-gray-700 dark:text-gray-300">Show social icons</span>
       </label>
@@ -159,7 +159,7 @@ function updateSocial(platform: string, value: string) {
           type="checkbox"
           :checked="bool('show_payment_icons', true)"
           @change="update('show_payment_icons', ($event.target as HTMLInputElement).checked)"
-          class="rounded border-gray-300 dark:border-gray-600 text-blue-500 focus:ring-blue-500"
+          class="rounded border-gray-300 dark:border-gray-600 text-blue-500 focus:ring-brand-orange"
         />
         <span class="text-sm text-gray-700 dark:text-gray-300">Show payment icons</span>
       </label>
@@ -176,7 +176,7 @@ function updateSocial(platform: string, value: string) {
           :value="strSocial(platform)"
           @input="updateSocial(platform, ($event.target as HTMLInputElement).value)"
           :placeholder="`https://${platform}.com/yourpage`"
-          class="w-full px-3 py-2 text-sm border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:outline-none font-mono"
+          class="w-full px-3 py-2 text-sm border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-brand-orange focus:outline-none font-mono"
         />
       </div>
     </div>
@@ -190,7 +190,7 @@ function updateSocial(platform: string, value: string) {
           ['background_color', 'Background',    '#111827'],
           ['text_color',       'Body Text',      '#9ca3af'],
           ['heading_color',    'Headings',       '#ffffff'],
-          ['accent_color',     'Accent / Links', '#3b82f6'],
+          ['accent_color',     'Accent / Links', '#F47015'],
           ['border_color',     'Border',         '#1f2937'],
         ]"
         :key="key"

@@ -147,7 +147,7 @@ const formatDate = (date: string) =>
 .prose h2 { font-size: 1.5em; }
 .prose h3 { font-size: 1.17em; }
 .prose p { margin: 0.75rem 0; line-height: 1.75; }
-.prose a { color: #2563eb; text-decoration: underline; }
+.prose a { color: var(--brand-orange); text-decoration: underline; }
 .prose ul, .prose ol { padding-left: 1.5rem; margin: 0.5rem 0; }
 .prose ul { list-style-type: disc; }
 .prose ol { list-style-type: decimal; }

@@ -1,6 +1,6 @@
 {
     "name": "bulbula/sales",
-    "description": "Sales Management Module for Bulbula Admin",
+    "description": "Sales Management Module for BNEO Admin",
     "type": "library",
     "require": {
         "php": "^8.3",

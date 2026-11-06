@@ -1,6 +1,6 @@
 {
     "name": "bulbula/setup",
-    "description": "Setup wizard for Bulbula eCommerce platform",
+    "description": "Setup wizard for BNEO eCommerce platform",
     "type": "library",
     "license": "MIT",
     "autoload": {

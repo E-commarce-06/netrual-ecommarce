@@ -1,11 +1,11 @@
 {
     "name": "bulbula/paypal",
-    "description": "PayPal Payment Gateway for Bulbula E-Commerce",
+    "description": "PayPal Payment Gateway for BNEO E-Commerce",
     "type": "library",
     "license": "MIT",
     "authors": [
         {
-            "name": "Bulbula Team",
+            "name": "BNEO Team",
             "email": "support@example.test"
         }
     ],

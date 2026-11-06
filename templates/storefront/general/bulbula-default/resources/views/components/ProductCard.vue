@@ -118,7 +118,7 @@ const handleWishlistToggle = async () => {
 <template>
     <div class="group relative bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-2xl transition-all duration-300">
         <Link :href="`/product/${product.slug}`" class="block">
-            <div class="relative aspect-square bg-gradient-to-br from-blue-50 to-slate-100 overflow-hidden">
+            <div class="relative aspect-square bg-gradient-to-br from-orange-50 to-slate-100 dark:from-[#122b4d] dark:to-[#0b2040] overflow-hidden">
                 <img
                     v-if="product.image"
                     :src="product.image"

@@ -61,7 +61,7 @@ const hasLayout = computed(() => !!(props.layoutData?.sections && (props.layoutD
                                prose-h2:text-2xl prose-h2:font-bold prose-h2:mt-8 prose-h2:mb-4
                                prose-h3:text-xl prose-h3:font-semibold prose-h3:mt-6 prose-h3:mb-3
                                prose-p:text-gray-700 prose-p:leading-relaxed prose-p:mb-4
-                               prose-a:text-indigo-600 prose-a:no-underline hover:prose-a:underline
+                               prose-a:text-brand-orange prose-a:no-underline hover:prose-a:underline
                                prose-ul:list-disc prose-ul:pl-6 prose-ul:mb-4
                                prose-ol:list-decimal prose-ol:pl-6 prose-ol:mb-4
                                prose-li:text-gray-700 prose-li:mb-2

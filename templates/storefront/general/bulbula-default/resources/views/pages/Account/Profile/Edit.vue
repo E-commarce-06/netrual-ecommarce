@@ -315,7 +315,7 @@ const confirmDelete = () => {
     <Teleport to="body">
       <div
         v-if="showDeleteModal"
-        class="fixed inset-0 z-50 flex items-center justify-center bg-black/50"
+        class="storefront-theme-scope fixed inset-0 z-50 flex items-center justify-center bg-black/50"
         @click.self="cancelDelete"
       >
         <div class="bg-white rounded-xl shadow-xl w-full max-w-md mx-4 p-6">

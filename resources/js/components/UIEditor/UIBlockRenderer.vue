@@ -85,6 +85,7 @@ const sections = () => ((props.layout as Layout)?.sections ?? [])
       v-for="section in sections()"
       :key="section.id"
       class="uie-section"
+      :data-section-background="String(section.settings?.background_color ?? '')"
       :style="sectionStyle(section)"
     >
       <div

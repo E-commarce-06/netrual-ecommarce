@@ -130,7 +130,7 @@
         ],
         "post-create-project-cmd": [
             "@php artisan key:generate --ansi",
-            "@php -r \"echo PHP_EOL . '════════════════════════════════════════════════════' . PHP_EOL . '  Bulbula installed! Run: php artisan bulbula:install' . PHP_EOL . '════════════════════════════════════════════════════' . PHP_EOL;\""
+            "@php -r \"echo PHP_EOL . '════════════════════════════════════════════════════' . PHP_EOL . '  BNEO installed! Run: php artisan bulbula:install' . PHP_EOL . '════════════════════════════════════════════════════' . PHP_EOL;\""
         ],
         "pre-package-uninstall": [
             "Illuminate\\Foundation\\ComposerScripts::prePackageUninstall"

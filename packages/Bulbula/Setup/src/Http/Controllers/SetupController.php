@@ -33,7 +33,7 @@ class SetupController extends Controller
     public function welcome(): Response
     {
         return Inertia::render('Setup/Welcome', [
-            'appName' => config('app.name', config('brand.name')),
+            'appName' => config('brand.name', config('app.name', 'BNEO')),
             'appVersion' => config('app.version', '1.0.15'),
         ]);
     }

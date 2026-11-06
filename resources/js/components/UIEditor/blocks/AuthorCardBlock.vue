@@ -29,7 +29,7 @@ const socialIcon = (network: string): string => {
                 />
                 <div
                     v-else
-                    class="w-20 h-20 rounded-full bg-gradient-to-br from-blue-400 to-indigo-600 flex items-center justify-center text-white text-2xl font-bold"
+                    class="w-20 h-20 rounded-full bg-gradient-to-br from-brand-navy to-brand-orange flex items-center justify-center text-white text-2xl font-bold"
                 >
                     {{ (settings.name as string)?.charAt(0)?.toUpperCase() ?? 'A' }}
                 </div>

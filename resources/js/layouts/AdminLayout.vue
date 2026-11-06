@@ -459,12 +459,12 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <div class="admin-contrast-scope min-h-screen bg-gray-50 dark:bg-gray-900">
+  <div class="admin-contrast-scope min-h-screen bg-slate-50 dark:bg-brand-navy">
     <!-- Sidebar -->
     <aside
       :class="[
         'fixed inset-y-0 left-0 z-50 transform transition-all duration-200 ease-in-out flex flex-col',
-        'bg-gradient-to-b from-slate-900 via-slate-900 to-slate-950 dark:from-slate-950 dark:via-slate-950 dark:to-black',
+        'bg-gradient-to-b from-brand-navy via-brand-navy to-[#071e3a]',
         'border-r border-slate-700',
         sidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0',
         sidebarCollapsed ? 'w-[72px]' : 'w-[260px]'
@@ -486,13 +486,13 @@ onUnmounted(() => {
       >
         <Link :href="admin.dashboard.url()" class="flex items-center gap-3 min-w-0">
           <template v-if="adminConfig?.logo && !sidebarCollapsed">
-            <img :src="`/storage/${adminConfig.logo}`" :alt="adminConfig?.site_name || 'Admin'" class="h-8 object-contain" />
+            <img :src="`/storage/${adminConfig.logo}`" :alt="adminConfig?.site_name || 'BNEO'" class="h-8 max-w-[190px] object-contain" />
+          </template>
+          <template v-else-if="!sidebarCollapsed">
+            <img src="/logos/bneo-logo-reversed.png" alt="BNEO" class="h-8 max-w-[190px] object-contain" />
           </template>
           <template v-else>
-            <div class="w-9 h-9 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-xl flex items-center justify-center flex-shrink-0 shadow-lg shadow-blue-500/20">
-              <span class="text-white font-bold text-lg">{{ adminConfig?.site_name?.charAt(0) || 'C' }}</span>
-            </div>
-            <span v-if="!sidebarCollapsed" class="text-white font-semibold text-lg truncate transition-opacity duration-200">{{ adminConfig?.site_name || (page.props.brand as any)?.name || '' }}</span>
+            <img src="/logos/bneo-app-icon.png" alt="BNEO" class="h-9 w-9 flex-shrink-0 rounded-lg object-contain" />
           </template>
         </Link>
       </div>
@@ -517,7 +517,7 @@ onUnmounted(() => {
               'group relative flex items-center gap-3 rounded-lg transition-all duration-150',
               sidebarCollapsed ? 'justify-center p-2.5 mx-auto' : 'px-3 py-2.5',
               isActive(item)
-                ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-md shadow-blue-500/20'
+                ? 'bg-gradient-to-r from-brand-orange to-orange-600 text-brand-navy shadow-md shadow-orange-500/20'
                 : 'text-slate-400 hover:text-white hover:bg-white/[0.06]'
             ]"
             :title="sidebarCollapsed ? item.title : ''"
@@ -559,7 +559,7 @@ onUnmounted(() => {
                 class="flex-shrink-0 transition-colors"
                 :class="[
                   sidebarCollapsed ? 'w-5 h-5' : 'w-[18px] h-[18px]',
-                  (isMenuOpen(item.id) || hasActiveChild(item)) ? 'text-blue-400' : 'text-slate-500 group-hover:text-slate-300'
+                  (isMenuOpen(item.id) || hasActiveChild(item)) ? 'text-orange-400' : 'text-slate-500 group-hover:text-slate-300'
                 ]" 
               />
               <span v-if="!sidebarCollapsed" class="flex-1 text-left text-[15px] font-medium">{{ item.title }}</span>
@@ -590,7 +590,7 @@ onUnmounted(() => {
                     :class="[
                       'group/child flex items-center gap-2.5 px-3 py-2 rounded-lg transition-all duration-150 cursor-pointer',
                       isActive(child)
-                        ? 'bg-blue-500/10 text-blue-400' 
+                        ? 'bg-orange-500/10 text-orange-400'
                         : 'text-slate-500 hover:text-slate-200 hover:bg-white/[0.04]'
                     ]"
                   >
@@ -599,7 +599,7 @@ onUnmounted(() => {
                       v-if="getIcon(child.icon)"
                       :class="[
                         'w-3.5 h-3.5 transition-colors',
-                        isActive(child) ? 'text-blue-400' : 'text-slate-600 group-hover/child:text-slate-400'
+                        isActive(child) ? 'text-orange-400' : 'text-slate-600 group-hover/child:text-slate-400'
                       ]" 
                     />
                     <span class="text-[13px]">{{ child.title }}</span>
@@ -636,7 +636,7 @@ onUnmounted(() => {
                       :class="[
                         'flex items-center gap-2.5 px-3.5 py-2 text-[13px] transition-colors cursor-pointer mx-1.5 rounded-lg',
                         isActive(child)
-                          ? 'bg-blue-500/10 text-blue-400' 
+                          ? 'bg-orange-500/10 text-orange-400'
                           : 'text-slate-400 hover:text-white hover:bg-white/[0.06]'
                       ]"
                     >
@@ -666,7 +666,7 @@ onUnmounted(() => {
     <!-- Main Content -->
     <div :class="['transition-all duration-200', sidebarCollapsed ? 'lg:pl-[72px]' : 'lg:pl-[260px]']">  
       <!-- Header -->
-      <header class="bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-800 sticky top-0 z-40">
+      <header class="bg-white dark:bg-brand-navy border-b border-gray-200 dark:border-gray-800 sticky top-0 z-40">
         <div class="px-4 sm:px-6 lg:px-8">
           <div class="flex items-center justify-between h-16">
             <!-- Mobile menu button -->
@@ -717,14 +717,14 @@ onUnmounted(() => {
                 <button
                   @click="toggleNotifications"
                   class="relative text-gray-500 hover:text-gray-600 dark:text-gray-400 dark:hover:text-gray-300 transition-transform duration-300"
-                  :class="hasNotificationPulse ? 'animate-bounce text-blue-600 dark:text-blue-400' : ''"
+                  :class="hasNotificationPulse ? 'animate-bounce text-orange-600 dark:text-orange-400' : ''"
                   aria-label="Notifications"
                   title="Notifications"
                 >
                   <Bell class="w-5 h-5" />
                   <span
                     v-if="hasNotificationPulse"
-                    class="absolute -top-1 -right-1 inline-flex h-4 w-4 rounded-full bg-blue-400 opacity-75 animate-ping"
+                    class="absolute -top-1 -right-1 inline-flex h-4 w-4 rounded-full bg-orange-400 opacity-75 animate-ping"
                   ></span>
                   <span
                     v-if="notificationsUnreadCount > 0"
@@ -758,7 +758,7 @@ onUnmounted(() => {
                         <button
                           v-if="notificationsUnreadCount > 0"
                           @click="markAllNotificationsAsRead"
-                          class="text-xs font-medium text-blue-600 dark:text-blue-400 hover:underline"
+                          class="text-xs font-medium text-orange-600 dark:text-orange-400 hover:underline"
                         >
                           Mark all as read
                         </button>
@@ -778,10 +778,10 @@ onUnmounted(() => {
                         v-for="notification in notifications"
                         :key="notification.id"
                         class="px-4 py-3 border-b border-gray-100 dark:border-gray-700/60"
-                        :class="notification.read_at ? 'bg-white dark:bg-gray-800' : 'bg-blue-50/60 dark:bg-blue-900/10'"
+                        :class="notification.read_at ? 'bg-white dark:bg-gray-800' : 'bg-orange-50/60 dark:bg-orange-900/10'"
                       >
                         <div class="flex items-start gap-3">
-                          <div class="mt-1 w-2 h-2 rounded-full" :class="notification.read_at ? 'bg-gray-300 dark:bg-gray-600' : 'bg-blue-500'"></div>
+                          <div class="mt-1 w-2 h-2 rounded-full" :class="notification.read_at ? 'bg-gray-300 dark:bg-gray-600' : 'bg-orange-500'"></div>
                           <div class="flex-1 min-w-0">
                             <p class="text-sm font-medium text-gray-900 dark:text-gray-100 truncate">{{ notification.title }}</p>
                             <p v-if="notification.message" class="text-xs mt-0.5 text-gray-600 dark:text-gray-300 line-clamp-2">{{ notification.message }}</p>
@@ -790,7 +790,7 @@ onUnmounted(() => {
                               <a
                                 v-if="notification.action_url"
                                 :href="notification.action_url"
-                                class="text-xs font-medium text-blue-600 dark:text-blue-400 hover:underline"
+                                class="text-xs font-medium text-orange-600 dark:text-orange-400 hover:underline"
                               >
                                 View
                               </a>
@@ -827,7 +827,7 @@ onUnmounted(() => {
                   <div v-if="page.props.auth?.user?.profile_photo_path" class="w-10 h-10 rounded-full overflow-hidden border-2 border-gray-200 dark:border-gray-600">
                     <img :src="`/storage/${page.props.auth.user.profile_photo_path}`" :alt="page.props.auth.user.name" class="w-full h-full object-cover" />
                   </div>
-                  <div v-else class="flex items-center justify-center w-10 h-10 rounded-full bg-blue-600 text-white hover:bg-blue-700 transition-colors">
+                  <div v-else class="flex items-center justify-center w-10 h-10 rounded-full bg-brand-orange text-brand-navy hover:bg-orange-500 transition-colors">
                     <UserCircle class="w-6 h-6" />
                   </div>
                 </button>

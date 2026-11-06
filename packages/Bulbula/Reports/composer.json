@@ -1,6 +1,6 @@
 {
     "name": "bulbula/reports",
-    "description": "Reports and Analytics Module for Bulbula E-commerce Platform",
+    "description": "Reports and Analytics Module for BNEO E-commerce Platform",
     "type": "library",
     "license": "MIT",
     "autoload": {

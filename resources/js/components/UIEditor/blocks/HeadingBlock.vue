@@ -1,11 +1,18 @@
 <script setup lang="ts">
-defineProps<{ settings: Record<string, unknown>; editorMode?: boolean }>()
+import { computed } from 'vue'
+
+const props = defineProps<{ settings: Record<string, unknown>; editorMode?: boolean }>()
+
+const usesDefaultBrandColor = computed(() =>
+  ['#041735', '#0f172a', '#111827'].includes(String(props.settings.color ?? '').toLowerCase()),
+)
 </script>
 
 <template>
   <component
     :is="(settings.level as string) || 'h2'"
-    class="font-bold leading-tight"
+    class="uie-block-heading font-bold leading-tight"
+    :data-bneo-heading="usesDefaultBrandColor ? 'true' : undefined"
     :class="{
       'text-left':   settings.align === 'left',
       'text-center': settings.align === 'center',

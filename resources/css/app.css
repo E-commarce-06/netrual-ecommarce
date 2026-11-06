@@ -14,6 +14,7 @@
 @source '../../themes/**/*.js';
 @source '../../themes/**/*.ts';
 @source '../../themes/**/*.vue';
+@source '../../templates/storefront/**/*.vue';
 
 @custom-variant dark (&:is(.dark *));
 
@@ -26,6 +27,9 @@
     --radius-lg: var(--radius);
     --radius-md: calc(var(--radius) - 2px);
     --radius-sm: calc(var(--radius) - 4px);
+
+    --color-brand-navy: var(--brand-navy);
+    --color-brand-orange: var(--brand-orange);
 
     --color-background: var(--background);
     --color-foreground: var(--foreground);
@@ -100,76 +104,79 @@
 }
 
 :root {
-    --background: hsl(0 0% 100%);
-    --foreground: hsl(0 0% 3.9%);
-    --card: hsl(0 0% 100%);
-    --card-foreground: hsl(0 0% 3.9%);
-    --popover: hsl(0 0% 100%);
-    --popover-foreground: hsl(0 0% 3.9%);
-    --primary: hsl(0 0% 9%);
-    --primary-foreground: hsl(0 0% 98%);
-    --secondary: hsl(0 0% 92.1%);
-    --secondary-foreground: hsl(0 0% 9%);
-    --muted: hsl(0 0% 96.1%);
-    --muted-foreground: hsl(0 0% 45.1%);
-    --accent: hsl(0 0% 96.1%);
-    --accent-foreground: hsl(0 0% 9%);
-    --destructive: hsl(0 84.2% 60.2%);
-    --destructive-foreground: hsl(0 0% 98%);
-    --border: hsl(0 0% 92.8%);
-    --input: hsl(0 0% 89.8%);
-    --ring: hsl(0 0% 3.9%);
-    --chart-1: hsl(12 76% 61%);
-    --chart-2: hsl(173 58% 39%);
-    --chart-3: hsl(197 37% 24%);
-    --chart-4: hsl(43 74% 66%);
-    --chart-5: hsl(27 87% 67%);
+    --brand-navy: #041735;
+    --brand-orange: #f47015;
+
+    --background: #f7f9fc;
+    --foreground: var(--brand-navy);
+    --card: #ffffff;
+    --card-foreground: var(--brand-navy);
+    --popover: #ffffff;
+    --popover-foreground: var(--brand-navy);
+    --primary: var(--brand-navy);
+    --primary-foreground: #ffffff;
+    --secondary: #e9eef5;
+    --secondary-foreground: var(--brand-navy);
+    --muted: #eff3f8;
+    --muted-foreground: #56677f;
+    --accent: #fff1e7;
+    --accent-foreground: #8c3e0a;
+    --destructive: #dc2626;
+    --destructive-foreground: #ffffff;
+    --border: #d8e0eb;
+    --input: #cbd5e1;
+    --ring: var(--brand-orange);
+    --chart-1: var(--brand-navy);
+    --chart-2: var(--brand-orange);
+    --chart-3: #1e4168;
+    --chart-4: #ff9a50;
+    --chart-5: #587596;
     --radius: 0.5rem;
-    --sidebar-background: hsl(0 0% 98%);
-    --sidebar-foreground: hsl(240 5.3% 26.1%);
-    --sidebar-primary: hsl(0 0% 10%);
-    --sidebar-primary-foreground: hsl(0 0% 98%);
-    --sidebar-accent: hsl(0 0% 94%);
-    --sidebar-accent-foreground: hsl(0 0% 30%);
-    --sidebar-border: hsl(0 0% 91%);
-    --sidebar-ring: hsl(217.2 91.2% 59.8%);
-    --sidebar: hsl(0 0% 98%);
+    --sidebar-background: #f2f5fa;
+    --sidebar-foreground: var(--brand-navy);
+    --sidebar-primary: var(--brand-navy);
+    --sidebar-primary-foreground: #ffffff;
+    --sidebar-accent: #e5ebf3;
+    --sidebar-accent-foreground: var(--brand-navy);
+    --sidebar-border: #d8e0eb;
+    --sidebar-ring: var(--brand-orange);
+    --sidebar: #f2f5fa;
 }
 
 .dark {
-    --background: hsl(0 0% 3.9%);
-    --foreground: hsl(0 0% 98%);
-    --card: hsl(0 0% 3.9%);
-    --card-foreground: hsl(0 0% 98%);
-    --popover: hsl(0 0% 3.9%);
-    --popover-foreground: hsl(0 0% 98%);
-    --primary: hsl(0 0% 98%);
-    --primary-foreground: hsl(0 0% 9%);
-    --secondary: hsl(0 0% 14.9%);
-    --secondary-foreground: hsl(0 0% 98%);
-    --muted: hsl(0 0% 16.08%);
-    --muted-foreground: hsl(0 0% 63.9%);
-    --accent: hsl(0 0% 14.9%);
-    --accent-foreground: hsl(0 0% 98%);
-    --destructive: hsl(0 84% 60%);
-    --destructive-foreground: hsl(0 0% 98%);
-    --border: hsl(0 0% 14.9%);
-    --input: hsl(0 0% 14.9%);
-    --ring: hsl(0 0% 83.1%);
-    --chart-1: hsl(220 70% 50%);
-    --chart-2: hsl(160 60% 45%);
-    --chart-3: hsl(30 80% 55%);
-    --chart-4: hsl(280 65% 60%);
-    --chart-5: hsl(340 75% 55%);
-    --sidebar-background: hsl(0 0% 7%);
-    --sidebar-foreground: hsl(0 0% 95.9%);
-    --sidebar-primary: hsl(360, 100%, 100%);
-    --sidebar-primary-foreground: hsl(0 0% 100%);
-    --sidebar-accent: hsl(0 0% 15.9%);
-    --sidebar-accent-foreground: hsl(240 4.8% 95.9%);
-    --sidebar-border: hsl(0 0% 15.9%);
-    --sidebar-ring: hsl(217.2 91.2% 59.8%);
-    --sidebar: hsl(240 5.9% 10%);
+    --background: #041735;
+    --foreground: #f4f7fc;
+    --card: #0b2040;
+    --card-foreground: #f4f7fc;
+    --popover: #0b2040;
+    --popover-foreground: #f4f7fc;
+    --primary: var(--brand-orange);
+    --primary-foreground: var(--brand-navy);
+    --secondary: #122b4d;
+    --secondary-foreground: #f4f7fc;
+    --muted: #102543;
+    --muted-foreground: #afbed2;
+    --accent: #193555;
+    --accent-foreground: #ffd0ad;
+    --destructive: #ef4444;
+    --destructive-foreground: #ffffff;
+    --border: #29415f;
+    --input: #29415f;
+    --ring: var(--brand-orange);
+    --chart-1: #f47015;
+    --chart-2: #ffffff;
+    --chart-3: #8aa1bf;
+    --chart-4: #ff9a50;
+    --chart-5: #526d90;
+    --sidebar-background: #06142b;
+    --sidebar-foreground: #edf3fb;
+    --sidebar-primary: var(--brand-orange);
+    --sidebar-primary-foreground: var(--brand-navy);
+    --sidebar-accent: #142c4c;
+    --sidebar-accent-foreground: #f4f7fc;
+    --sidebar-border: #243d5b;
+    --sidebar-ring: var(--brand-orange);
+    --sidebar: #06142b;
 }
 
 /* Dark sidebar scrollbar */
@@ -290,8 +297,8 @@
     [data-slot='select'],
     [data-slot='textarea']
 ):focus-visible {
-    border-color: #2563eb;
-    outline: 2px solid #2563eb;
+    border-color: var(--brand-orange);
+    outline: 2px solid var(--brand-orange);
     outline-offset: 2px;
 }
 
@@ -401,8 +408,8 @@
     [data-slot='select'],
     [data-slot='textarea']
 )[class*='dark:bg-']:focus-visible {
-    border-color: #93c5fd;
-    outline-color: #93c5fd;
+    border-color: var(--brand-orange);
+    outline-color: var(--brand-orange);
 }
 
 /* Shared shadcn-style controls retain their semantic backgrounds and text. */
@@ -412,8 +419,8 @@
 }
 
 .admin-contrast-scope :where([data-slot='input'], [data-slot='textarea']):focus-visible {
-    border-color: #2563eb;
-    outline: 2px solid #2563eb;
+    border-color: var(--brand-orange);
+    outline: 2px solid var(--brand-orange);
     outline-offset: 2px;
 }
 
@@ -423,8 +430,8 @@
 }
 
 .dark .admin-contrast-scope :where([data-slot='input'], [data-slot='textarea']):focus-visible {
-    border-color: #93c5fd;
-    outline-color: #93c5fd;
+    border-color: var(--brand-orange);
+    outline-color: var(--brand-orange);
 }
 
 /* Gray 300/400 are too faint on light admin surfaces; preserve dark panels. */
@@ -464,7 +471,7 @@ html:not(.dark) .admin-contrast-scope :is(.bg-gray-800, .bg-gray-900).text-gray-
     [data-slot='select'],
     [data-slot='textarea']
 ) {
-    background-color: #1f2937;
+    background-color: var(--card);
     color: #f9fafb;
     border-color: #9ca3af;
     color-scheme: dark;
@@ -492,7 +499,7 @@ html:not(.dark) .admin-contrast-scope :is(.bg-gray-800, .bg-gray-900).text-gray-
 .dark .admin-contrast-scope.admin-contrast-scope :where(select):not(
     [data-slot='select']
 ) option {
-    background-color: #1f2937;
+    background-color: var(--card);
     color: #f9fafb;
 }
 
@@ -513,4 +520,663 @@ html:not(.dark) .admin-contrast-scope :is(.bg-gray-800, .bg-gray-900).text-gray-
 ):disabled {
     color: #d1d5db;
     opacity: 0.75;
+}
+
+/* BNEO storefront and setup surfaces.
+   The bundled theme predates the global token system and uses many fixed
+   gray/blue utility classes, so these scoped rules preserve its layout while
+   translating its surfaces and controls for dark mode and the BNEO palette. */
+.theme-root,
+.storefront-theme-scope {
+    --store-background: #f7f9fc;
+    --store-surface: #ffffff;
+    --store-surface-muted: #eef2f7;
+    --store-foreground: #041735;
+    --store-muted: #53647c;
+    --store-border: #d8e0eb;
+    color: var(--store-foreground);
+}
+
+.theme-root {
+    background-color: var(--store-background);
+}
+
+.dark :is(.theme-root, .storefront-theme-scope) {
+    --store-background: #041735;
+    --store-surface: #0b2040;
+    --store-surface-muted: #122b4d;
+    --store-foreground: #f4f7fc;
+    --store-muted: #b1bfd2;
+    --store-border: #29415f;
+    color: var(--store-foreground);
+    color-scheme: dark;
+}
+
+.dark .theme-root {
+    background-color: var(--store-background) !important;
+}
+
+.dark :is(.theme-root, .storefront-theme-scope) :is(
+    [class~='bg-white'],
+    [class~='bg-white/75'],
+    [class~='bg-white/80'],
+    [class~='bg-white/95']
+) {
+    background-color: var(--store-surface) !important;
+}
+
+.dark :is(.theme-root, .storefront-theme-scope) :is(
+    [class~='bg-gray-50'],
+    [class~='bg-slate-50']
+) {
+    background-color: var(--store-background) !important;
+}
+
+.dark :is(.theme-root, .storefront-theme-scope) :is(
+    [class~='bg-gray-100'],
+    [class~='bg-slate-100'],
+    [class~='bg-gray-200'],
+    [class~='bg-slate-200']
+) {
+    background-color: var(--store-surface-muted) !important;
+}
+
+:is(.theme-root, .storefront-theme-scope) :is(
+    [class~='bg-blue-50'],
+    [class~='bg-indigo-50']
+) {
+    background-color: color-mix(in srgb, var(--brand-orange) 10%, #ffffff) !important;
+}
+
+.dark :is(.theme-root, .storefront-theme-scope) :is(
+    [class~='bg-blue-50'],
+    [class~='bg-indigo-50'],
+    [class~='bg-blue-100'],
+    [class~='bg-indigo-100']
+) {
+    background-color: color-mix(in srgb, var(--brand-orange) 14%, var(--store-surface)) !important;
+}
+
+:is(.theme-root, .storefront-theme-scope) :is(
+    [class~='bg-blue-600'],
+    [class~='bg-indigo-600']
+) {
+    background-color: var(--theme-primary, var(--brand-navy)) !important;
+}
+
+.dark :is(.theme-root, .storefront-theme-scope) :is(
+    [class~='bg-blue-600'],
+    [class~='bg-indigo-600']
+) {
+    background-color: var(--theme-accent, var(--brand-orange)) !important;
+    color: var(--brand-navy) !important;
+}
+
+:is(.theme-root, .storefront-theme-scope) :is(
+    [class~='hover:bg-blue-700'],
+    [class~='hover:bg-indigo-700']
+):hover {
+    background-color: var(--theme-secondary, #17355c) !important;
+}
+
+.dark :is(.theme-root, .storefront-theme-scope) :is(
+    [class~='hover:bg-blue-700'],
+    [class~='hover:bg-indigo-700']
+):hover {
+    background-color: color-mix(in srgb, var(--theme-accent, var(--brand-orange)) 82%, #000000) !important;
+}
+
+:is(.theme-root, .storefront-theme-scope) :is(
+    [class~='text-blue-600'],
+    [class~='text-blue-700'],
+    [class~='text-indigo-600'],
+    [class~='text-indigo-700']
+) {
+    color: var(--theme-primary, var(--brand-navy)) !important;
+}
+
+.dark :is(.theme-root, .storefront-theme-scope) :is(
+    [class~='text-blue-600'],
+    [class~='text-blue-700'],
+    [class~='text-blue-800'],
+    [class~='text-indigo-600'],
+    [class~='text-indigo-700'],
+    [class~='text-indigo-800']
+) {
+    color: var(--theme-accent, var(--brand-orange)) !important;
+}
+
+:is(.theme-root, .storefront-theme-scope) :is(
+    [class~='border-blue-500'],
+    [class~='border-blue-600'],
+    [class~='border-indigo-600'],
+    [class~='ring-blue-500'],
+    [class~='ring-blue-600'],
+    [class~='ring-indigo-600']
+) {
+    --tw-ring-color: var(--brand-orange) !important;
+    border-color: var(--brand-orange) !important;
+}
+
+:is(.theme-root, .storefront-theme-scope) :is(
+    [class~='hover:text-blue-600'],
+    [class~='hover:text-blue-800'],
+    [class~='hover:text-indigo-600'],
+    [class~='hover:text-indigo-700']
+):hover {
+    color: var(--theme-accent, var(--brand-orange)) !important;
+}
+
+:is(.theme-root, .storefront-theme-scope) :is(
+    [class~='focus:ring-blue-500'],
+    [class~='focus:ring-indigo-500']
+):focus {
+    --tw-ring-color: var(--brand-orange) !important;
+}
+
+.dark :is(.theme-root, .storefront-theme-scope) :is(
+    [class~='text-gray-900'],
+    [class~='text-gray-800'],
+    [class~='text-slate-900'],
+    [class~='text-slate-800'],
+    [class~='text-zinc-900'],
+    [class~='text-black']
+) {
+    color: var(--store-foreground) !important;
+}
+
+.dark :is(.theme-root, .storefront-theme-scope) :is(
+    [class~='text-gray-700'],
+    [class~='text-gray-600'],
+    [class~='text-gray-500'],
+    [class~='text-gray-400'],
+    [class~='text-slate-700'],
+    [class~='text-slate-600'],
+    [class~='text-slate-500'],
+    [class~='text-slate-400'],
+    [class~='text-zinc-700'],
+    [class~='text-zinc-600']
+) {
+    color: var(--store-muted) !important;
+}
+
+.dark :is(.theme-root, .storefront-theme-scope) :is(
+    [class*='border-gray-'],
+    [class*='border-slate-'],
+    [class*='border-zinc-']
+) {
+    border-color: var(--store-border) !important;
+}
+
+.dark :is(.theme-root, .storefront-theme-scope) :is(
+    [class~='hover:bg-gray-50'],
+    [class~='hover:bg-gray-100'],
+    [class~='hover:bg-slate-50'],
+    [class~='hover:bg-slate-100']
+):hover {
+    background-color: var(--store-surface-muted) !important;
+}
+
+:is(.theme-root, .storefront-theme-scope) :is(
+    [class~='bg-blue-100'],
+    [class~='bg-indigo-100']
+) {
+    background-color: color-mix(in srgb, var(--brand-orange) 12%, #ffffff) !important;
+}
+
+:is(.theme-root, .storefront-theme-scope) :is(
+    [class~='text-blue-800'],
+    [class~='text-blue-900'],
+    [class~='text-indigo-800'],
+    [class~='text-indigo-900']
+) {
+    color: var(--theme-primary, var(--brand-navy)) !important;
+}
+
+.dark :is(.theme-root, .storefront-theme-scope) :is(
+    [class~='bg-orange-50'],
+    [class~='bg-orange-100']
+) {
+    background-color: color-mix(in srgb, var(--brand-orange) 14%, var(--store-surface)) !important;
+}
+
+.dark :is(.theme-root, .storefront-theme-scope) :is(
+    [class*='border-orange-'],
+    [class*='border-blue-'],
+    [class*='border-indigo-']
+) {
+    border-color: color-mix(in srgb, var(--brand-orange) 35%, var(--store-border)) !important;
+}
+
+:is(.theme-root, .storefront-theme-scope) :is(
+    [class*='border-blue-'],
+    [class*='border-indigo-']
+) {
+    border-color: color-mix(in srgb, var(--brand-orange) 45%, #ffffff) !important;
+}
+
+:is(.theme-root, .storefront-theme-scope) :is(
+    [class~='hover:bg-blue-50'],
+    [class~='hover:bg-indigo-50']
+):hover {
+    background-color: color-mix(in srgb, var(--brand-orange) 10%, #ffffff) !important;
+}
+
+.dark :is(.theme-root, .storefront-theme-scope) :is(
+    [class~='hover:bg-blue-50'],
+    [class~='hover:bg-indigo-50']
+):hover {
+    background-color: color-mix(in srgb, var(--brand-orange) 14%, var(--store-surface)) !important;
+}
+
+/* Default UI-editor sections use inline background/text colors. Keep those
+   authored colors in light mode, but translate neutral brand surfaces into
+   the BNEO dark palette without overriding intentionally dark/colored sections. */
+.dark .theme-root .uie-section:is(
+    [data-section-background='#ffffff'],
+    [data-section-background='#fff'],
+    [data-section-background='#f8fafc'],
+    [data-section-background='#f7f9fc']
+) {
+    background-color: var(--store-surface) !important;
+}
+
+.dark .theme-root .uie-section:is(
+    [data-section-background='#fff3e9'],
+    [data-section-background='#fff1e7'],
+    [data-section-background='#eff6ff']
+) {
+    background-color: color-mix(in srgb, var(--brand-orange) 14%, var(--store-surface)) !important;
+}
+
+.dark .theme-root .uie-block-heading[data-bneo-heading='true'] {
+    color: var(--store-foreground) !important;
+}
+
+.dark .theme-root .uie-text-content :is(
+    [style*='color:#111827'],
+    [style*='color: #111827'],
+    [style*='color:#0f172a'],
+    [style*='color: #0f172a'],
+    [style*='color:#041735'],
+    [style*='color: #041735']
+) {
+    color: var(--store-foreground) !important;
+}
+
+.dark .theme-root .uie-text-content :is(
+    [style*='color:#4b5563'],
+    [style*='color: #4b5563'],
+    [style*='color:#475569'],
+    [style*='color: #475569'],
+    [style*='color:#64748b'],
+    [style*='color: #64748b']
+) {
+    color: var(--store-muted) !important;
+}
+
+.dark .theme-root .uie-text-content :is(
+    [style*='color:#1e40af'],
+    [style*='color: #1e40af']
+) {
+    color: var(--brand-orange) !important;
+}
+
+/* Remaining neutral blue/indigo variants used by shared storefront blocks. */
+:is(.theme-root, .storefront-theme-scope) :is(
+    [class~='bg-blue-500'],
+    [class~='bg-indigo-500'],
+    [class~='bg-indigo-700']
+) {
+    background-color: var(--theme-primary, var(--brand-navy)) !important;
+}
+
+.dark :is(.theme-root, .storefront-theme-scope) :is(
+    [class~='bg-blue-500'],
+    [class~='bg-indigo-500'],
+    [class~='bg-indigo-700']
+) {
+    background-color: var(--theme-accent, var(--brand-orange)) !important;
+    color: var(--brand-navy) !important;
+}
+
+:is(.theme-root, .storefront-theme-scope) :is(
+    [class~='text-blue-400'],
+    [class~='text-blue-500'],
+    [class~='text-indigo-400'],
+    [class~='text-indigo-500']
+) {
+    color: var(--theme-primary, var(--brand-navy)) !important;
+}
+
+.dark :is(.theme-root, .storefront-theme-scope) :is(
+    [class~='text-blue-400'],
+    [class~='text-blue-500'],
+    [class~='text-indigo-400'],
+    [class~='text-indigo-500'],
+    [class~='dark:text-blue-300'],
+    [class~='dark:text-blue-400'],
+    [class~='dark:text-indigo-300'],
+    [class~='dark:text-indigo-400']
+) {
+    color: var(--theme-accent, var(--brand-orange)) !important;
+}
+
+.dark :is(.theme-root, .storefront-theme-scope) :is(
+    [class~='dark:bg-blue-900'],
+    [class~='dark:bg-blue-900/10'],
+    [class~='dark:bg-blue-900/40'],
+    [class~='dark:bg-indigo-900'],
+    [class~='dark:bg-indigo-900/10'],
+    [class~='dark:bg-indigo-900/40']
+) {
+    background-color: color-mix(in srgb, var(--brand-orange) 14%, var(--store-surface)) !important;
+}
+
+.dark :is(.theme-root, .storefront-theme-scope) :is(
+    [class~='dark:border-blue-400'],
+    [class~='dark:border-blue-500'],
+    [class~='dark:border-indigo-400'],
+    [class~='dark:border-indigo-500'],
+    [class~='dark:ring-blue-400'],
+    [class~='dark:ring-blue-500'],
+    [class~='dark:ring-indigo-400'],
+    [class~='dark:ring-indigo-500']
+) {
+    --tw-ring-color: var(--brand-orange) !important;
+    border-color: var(--brand-orange) !important;
+}
+
+/* Brand the fixed blue/indigo utility accents used across admin feature pages. */
+.admin-contrast-scope :is(
+    [class~='bg-blue-50'],
+    [class~='bg-indigo-50'],
+    [class~='bg-blue-100'],
+    [class~='bg-indigo-100']
+) {
+    background-color: color-mix(in srgb, var(--brand-orange) 10%, #ffffff) !important;
+}
+
+.dark .admin-contrast-scope :is(
+    [class~='bg-blue-50'],
+    [class~='bg-indigo-50'],
+    [class~='bg-blue-100'],
+    [class~='bg-indigo-100'],
+    [class~='dark:bg-blue-900/10'],
+    [class~='dark:bg-blue-900/20'],
+    [class~='dark:bg-blue-900/30'],
+    [class~='dark:bg-indigo-900/10'],
+    [class~='dark:bg-indigo-900/20'],
+    [class~='dark:bg-indigo-900/30']
+) {
+    background-color: color-mix(in srgb, var(--brand-orange) 14%, var(--card)) !important;
+}
+
+.admin-contrast-scope :is(
+    [class~='bg-blue-600'],
+    [class~='bg-indigo-600']
+) {
+    background-color: var(--brand-orange) !important;
+    color: var(--brand-navy) !important;
+}
+
+.admin-contrast-scope :is(
+    [class~='hover:bg-blue-700'],
+    [class~='hover:bg-indigo-700']
+):hover {
+    background-color: color-mix(in srgb, var(--brand-orange) 84%, #000000) !important;
+    color: var(--brand-navy) !important;
+}
+
+.admin-contrast-scope :is(
+    [class~='text-blue-600'],
+    [class~='text-blue-700'],
+    [class~='text-blue-800'],
+    [class~='text-indigo-600'],
+    [class~='text-indigo-700'],
+    [class~='text-indigo-800']
+) {
+    color: var(--brand-navy) !important;
+}
+
+.dark .admin-contrast-scope :is(
+    [class~='text-blue-400'],
+    [class~='text-blue-500'],
+    [class~='text-indigo-400'],
+    [class~='text-indigo-500'],
+    [class~='dark:text-blue-300'],
+    [class~='dark:text-blue-400'],
+    [class~='dark:text-indigo-300'],
+    [class~='dark:text-indigo-400']
+) {
+    color: var(--brand-orange) !important;
+}
+
+.admin-contrast-scope :is(
+    [class*='border-blue-'],
+    [class*='border-indigo-'],
+    [class~='ring-blue-500'],
+    [class~='ring-blue-600'],
+    [class~='ring-indigo-500'],
+    [class~='ring-indigo-600']
+) {
+    --tw-ring-color: var(--brand-orange) !important;
+    border-color: color-mix(in srgb, var(--brand-orange) 45%, #ffffff) !important;
+}
+
+.dark .admin-contrast-scope :is(
+    [class*='border-blue-'],
+    [class*='border-indigo-'],
+    [class~='ring-blue-400'],
+    [class~='ring-blue-500'],
+    [class~='ring-indigo-400'],
+    [class~='ring-indigo-500']
+) {
+    --tw-ring-color: var(--brand-orange) !important;
+    border-color: color-mix(in srgb, var(--brand-orange) 40%, var(--border)) !important;
+}
+
+.admin-contrast-scope :is(
+    [class~='focus:ring-blue-500'],
+    [class~='focus:ring-indigo-500'],
+    [class~='focus-visible:ring-blue-500'],
+    [class~='focus-visible:ring-indigo-500']
+):is(:focus, :focus-visible) {
+    --tw-ring-color: var(--brand-orange) !important;
+}
+
+.admin-contrast-scope :is(
+    [class~='hover:bg-blue-50'],
+    [class~='hover:bg-blue-100'],
+    [class~='hover:bg-indigo-50'],
+    [class~='hover:bg-indigo-100']
+):hover {
+    background-color: color-mix(in srgb, var(--brand-orange) 10%, #ffffff) !important;
+}
+
+.dark .admin-contrast-scope :is(
+    [class~='hover:bg-blue-50'],
+    [class~='hover:bg-blue-100'],
+    [class~='hover:bg-indigo-50'],
+    [class~='hover:bg-indigo-100'],
+    [class~='dark:hover:bg-blue-900/20'],
+    [class~='dark:hover:bg-indigo-900/20']
+):hover {
+    background-color: color-mix(in srgb, var(--brand-orange) 14%, var(--card)) !important;
+}
+
+.admin-contrast-scope :is(
+    [class~='hover:text-blue-600'],
+    [class~='hover:text-blue-700'],
+    [class~='hover:text-blue-800'],
+    [class~='hover:text-indigo-600'],
+    [class~='hover:text-indigo-700'],
+    [class~='hover:text-indigo-800']
+):hover {
+    color: var(--brand-orange) !important;
+}
+
+.admin-contrast-scope :is(
+    [class~='bg-blue-500'],
+    [class~='bg-indigo-500'],
+    [class~='bg-indigo-700']
+) {
+    background-color: var(--brand-orange) !important;
+    color: var(--brand-navy) !important;
+}
+
+/* Catch the remaining shade/variant utilities without rewriting every feature view. */
+:is(.theme-root, .storefront-theme-scope) :is(
+    [class~='text-blue-300'],
+    [class~='text-blue-800'],
+    [class~='text-blue-900'],
+    [class~='text-indigo-300'],
+    [class~='text-indigo-800'],
+    [class~='text-indigo-900']
+) {
+    color: var(--theme-primary, var(--brand-navy)) !important;
+}
+
+:is(.theme-root, .storefront-theme-scope) :is(
+    [class*='ring-blue-'],
+    [class*='ring-indigo-']
+) {
+    --tw-ring-color: var(--brand-orange) !important;
+}
+
+.dark :is(.theme-root, .storefront-theme-scope) :is(
+    [class*='dark:bg-blue-'],
+    [class*='dark:bg-indigo-']
+) {
+    background-color: color-mix(in srgb, var(--brand-orange) 14%, var(--store-surface)) !important;
+}
+
+.dark :is(.theme-root, .storefront-theme-scope) :is(
+    [class*='dark:text-blue-'],
+    [class*='dark:text-indigo-']
+) {
+    color: var(--theme-accent, var(--brand-orange)) !important;
+}
+
+.dark :is(.theme-root, .storefront-theme-scope) :is(
+    [class*='dark:hover:bg-blue-'],
+    [class*='dark:hover:bg-indigo-']
+):hover {
+    background-color: color-mix(in srgb, var(--brand-orange) 16%, var(--store-surface)) !important;
+}
+
+.dark :is(.theme-root, .storefront-theme-scope) :is(
+    [class*='dark:ring-blue-'],
+    [class*='dark:ring-indigo-']
+) {
+    --tw-ring-color: var(--brand-orange) !important;
+}
+
+.admin-contrast-scope :is(
+    [class~='bg-blue-200'],
+    [class~='bg-indigo-200']
+) {
+    background-color: color-mix(in srgb, var(--brand-orange) 12%, #ffffff) !important;
+}
+
+.admin-contrast-scope :is(
+    [class~='bg-blue-400'],
+    [class~='bg-blue-700'],
+    [class~='bg-blue-800'],
+    [class~='bg-blue-900'],
+    [class~='bg-indigo-400'],
+    [class~='bg-indigo-700'],
+    [class~='bg-indigo-800'],
+    [class~='bg-indigo-900']
+) {
+    background-color: var(--brand-orange) !important;
+    color: var(--brand-navy) !important;
+}
+
+.admin-contrast-scope :is(
+    [class~='text-blue-300'],
+    [class~='text-blue-400'],
+    [class~='text-blue-500'],
+    [class~='text-blue-900'],
+    [class~='text-indigo-300'],
+    [class~='text-indigo-400'],
+    [class~='text-indigo-500'],
+    [class~='text-indigo-900']
+) {
+    color: var(--brand-navy) !important;
+}
+
+.admin-contrast-scope :is(
+    [class*='ring-blue-'],
+    [class*='ring-indigo-']
+) {
+    --tw-ring-color: var(--brand-orange) !important;
+}
+
+.admin-contrast-scope :is(
+    [class~='hover:bg-blue-200'],
+    [class~='hover:bg-blue-300'],
+    [class~='hover:bg-blue-400'],
+    [class~='hover:bg-blue-500'],
+    [class~='hover:bg-blue-600'],
+    [class~='hover:bg-blue-800'],
+    [class~='hover:bg-blue-900'],
+    [class~='hover:bg-indigo-200'],
+    [class~='hover:bg-indigo-300'],
+    [class~='hover:bg-indigo-400'],
+    [class~='hover:bg-indigo-500'],
+    [class~='hover:bg-indigo-600'],
+    [class~='hover:bg-indigo-800'],
+    [class~='hover:bg-indigo-900']
+):hover {
+    background-color: color-mix(in srgb, var(--brand-orange) 84%, #000000) !important;
+    color: var(--brand-navy) !important;
+}
+
+.admin-contrast-scope :is(
+    [class~='hover:text-blue-300'],
+    [class~='hover:text-blue-400'],
+    [class~='hover:text-blue-500'],
+    [class~='hover:text-blue-900'],
+    [class~='hover:text-indigo-300'],
+    [class~='hover:text-indigo-400'],
+    [class~='hover:text-indigo-500'],
+    [class~='hover:text-indigo-900']
+):hover {
+    color: var(--brand-orange) !important;
+}
+
+.admin-contrast-scope .group:hover :is(
+    [class*='group-hover:text-blue-'],
+    [class*='group-hover:text-indigo-']
+) {
+    color: var(--brand-orange) !important;
+}
+
+.dark .admin-contrast-scope :is(
+    [class*='dark:bg-blue-'],
+    [class*='dark:bg-indigo-']
+) {
+    background-color: color-mix(in srgb, var(--brand-orange) 14%, var(--card)) !important;
+}
+
+.dark .admin-contrast-scope :is(
+    [class*='dark:text-blue-'],
+    [class*='dark:text-indigo-']
+) {
+    color: var(--brand-orange) !important;
+}
+
+.dark .admin-contrast-scope :is(
+    [class*='dark:hover:bg-blue-'],
+    [class*='dark:hover:bg-indigo-']
+):hover {
+    background-color: color-mix(in srgb, var(--brand-orange) 16%, var(--card)) !important;
+}
+
+.dark .admin-contrast-scope :is(
+    [class*='dark:hover:text-blue-'],
+    [class*='dark:hover:text-indigo-']
+):hover {
+    color: var(--brand-orange) !important;
 }

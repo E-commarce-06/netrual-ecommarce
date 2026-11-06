@@ -7,7 +7,7 @@ const submitted = ref(false)
 const email     = ref('')
 const error     = ref('')
 
-const bgColor    = computed(() => (props.settings.bg_color    as string)  || '#0f172a')
+const bgColor    = computed(() => (props.settings.bg_color    as string)  || '#041735')
 const layout     = computed(() => (props.settings.layout      as string)  || 'split')
 const title      = computed(() => (props.settings.title       as string)  || 'Join Thousands of Happy Shoppers')
 const subtitle   = computed(() => (props.settings.subtitle    as string)  || 'Subscribe and get <strong>10% off</strong> your first order, plus exclusive deals and new arrivals straight to your inbox.')
@@ -101,16 +101,16 @@ function submit() {
                 type="email"
                 placeholder="your@email.com"
                 autocomplete="email"
-                class="w-full px-4 py-3 rounded-xl text-sm outline-none bg-white text-gray-900 placeholder-gray-500 focus:ring-2 focus:ring-blue-400 border-0"
+                class="w-full px-4 py-3 rounded-xl text-sm outline-none bg-white text-gray-900 placeholder-gray-500 focus:ring-2 focus:ring-brand-orange border-0"
               />
               <p v-if="error" class="mt-1.5 text-xs text-red-400">{{ error }}</p>
             </div>
             <button
               type="submit"
-              class="w-full py-3 rounded-xl font-bold text-sm text-white transition-all"
-              style="background: #2563eb"
-              onmouseenter="this.style.background='#1d4ed8'"
-              onmouseleave="this.style.background='#2563eb'"
+              class="w-full py-3 rounded-xl font-bold text-sm text-brand-navy transition-all"
+              style="background: #F47015"
+              onmouseenter="this.style.background='#de5b09'"
+              onmouseleave="this.style.background='#F47015'"
             >
               {{ ctaText }}
             </button>

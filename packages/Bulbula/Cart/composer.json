@@ -1,6 +1,6 @@
 {
     "name": "bulbula/cart",
-    "description": "Shopping cart functionality for Bulbula E-commerce platform",
+    "description": "Shopping cart functionality for BNEO E-commerce platform",
     "type": "library",
     "license": "MIT",
     "autoload": {

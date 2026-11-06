@@ -64,7 +64,7 @@ onMounted(async () => {
                     :alt="post.title"
                     class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                 />
-                <div v-else class="w-full h-full bg-gradient-to-br from-blue-600 to-indigo-700" />
+                <div v-else class="w-full h-full bg-gradient-to-br from-brand-navy to-brand-orange" />
             </a>
             <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
             <div class="absolute bottom-0 left-0 right-0 p-8 text-white">
@@ -73,7 +73,7 @@ onMounted(async () => {
                         {{ post.category.name }}
                     </span>
                 </div>
-                <h3 class="text-2xl md:text-3xl font-bold mb-3 group-hover:text-blue-300 transition-colors">
+                <h3 class="text-2xl md:text-3xl font-bold mb-3 group-hover:text-orange-300 transition-colors">
                     <a :href="`/blog/${post.slug}`">{{ post.title }}</a>
                 </h3>
                 <p

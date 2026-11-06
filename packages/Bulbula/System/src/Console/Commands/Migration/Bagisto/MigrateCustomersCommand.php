@@ -13,7 +13,7 @@ class MigrateCustomersCommand extends Command
 {
     protected $signature = 'bagisto:migrate:customers {--dry-run : Preview migration without making changes} {--batch=500 : Number of records per batch}';
     
-    protected $description = 'Migrate Bagisto customers to Bulbula';
+    protected $description = 'Migrate Bagisto customers to BNEO';
     
     private array $errors = [];
     

@@ -1,12 +1,12 @@
 <template>
     <Head title="Business Settings" />
     
-    <div class="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center p-4">
+    <div class="theme-root min-h-screen flex items-center justify-center bg-background p-4 text-foreground">
         <div class="max-w-3xl w-full bg-white rounded-2xl shadow-2xl overflow-hidden">
             <!-- Header -->
-            <div class="bg-gradient-to-r from-blue-600 to-indigo-600 p-6 text-white">
+            <div class="bg-brand-navy border-b-4 border-brand-orange p-6 text-white">
                 <h1 class="text-3xl font-bold text-center">Business Settings</h1>
-                <p class="text-center text-blue-100 mt-2">Configure your store's basic information</p>
+                <p class="text-center text-slate-200 mt-2">Configure your store's basic information</p>
             </div>
 
             <!-- Progress Bar -->
@@ -16,7 +16,7 @@
                     <span class="text-sm font-medium text-gray-700">50%</span>
                 </div>
                 <div class="w-full bg-gray-200 rounded-full h-2">
-                    <div class="bg-blue-600 h-2 rounded-full transition-all duration-300" style="width: 50%"></div>
+                    <div class="bg-brand-orange h-2 rounded-full transition-all duration-300" style="width: 50%"></div>
                 </div>
             </div>
 
@@ -34,7 +34,7 @@
                             type="text"
                             required
                             placeholder="e.g., My Awesome Store"
-                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900"
+                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-orange focus:border-transparent text-gray-900"
                             :class="{ 'border-red-500': errors.store_name }"
                         />
                         <p v-if="errors.store_name" class="mt-1 text-sm text-red-600">{{ errors.store_name }}</p>
@@ -50,7 +50,7 @@
                             v-model="form.contact_phone"
                             type="tel"
                             placeholder="+1 (555) 123-4567"
-                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900"
+                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-orange focus:border-transparent text-gray-900"
                         />
                     </div>
 
@@ -64,7 +64,7 @@
                             v-model="form.store_address"
                             rows="3"
                             placeholder="123 Main Street, City, State, ZIP"
-                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900"
+                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-orange focus:border-transparent text-gray-900"
                         ></textarea>
                     </div>
 
@@ -77,7 +77,7 @@
                             id="store_country"
                             v-model="form.store_country"
                             required
-                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900"
+                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-orange focus:border-transparent text-gray-900"
                             :class="{ 'border-red-500': errors.store_country }"
                         >
                             <option value="">Select country...</option>
@@ -99,7 +99,7 @@
                             id="currency"
                             v-model="form.currency"
                             required
-                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900"
+                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-orange focus:border-transparent text-gray-900"
                         >
                             <option
                                 v-for="currency in props.currencies"
@@ -118,7 +118,7 @@
                             id="timezone"
                             v-model="form.timezone"
                             required
-                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900"
+                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-orange focus:border-transparent text-gray-900"
                         >
                             <option value="UTC">UTC</option>
                             <option value="America/New_York">America/New York (EST)</option>
@@ -154,7 +154,7 @@
                     :disabled="!isValid || processing"
                     class="inline-flex items-center px-6 py-2 font-medium rounded-lg transition-all duration-200"
                     :class="isValid && !processing 
-                        ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white hover:shadow-lg' 
+                        ? 'bg-brand-orange text-brand-navy hover:shadow-lg'
                         : 'bg-gray-300 text-gray-500 cursor-not-allowed'"
                 >
                     <span v-if="processing">Processing...</span>

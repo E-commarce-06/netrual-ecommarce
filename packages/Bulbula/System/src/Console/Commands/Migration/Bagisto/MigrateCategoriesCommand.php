@@ -12,7 +12,7 @@ class MigrateCategoriesCommand extends Command
 {
     protected $signature = 'bagisto:migrate:categories {--dry-run : Preview migration without making changes}';
     
-    protected $description = 'Migrate Bagisto categories to Bulbula';
+    protected $description = 'Migrate Bagisto categories to BNEO';
     
     private array $errors = [];
     

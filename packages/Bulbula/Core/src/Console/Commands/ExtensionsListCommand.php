@@ -12,7 +12,7 @@ class ExtensionsListCommand extends Command
 
     protected $aliases = ['bulbula:extensions:list'];
 
-    protected $description = 'List discovered Bulbula extensions and their install/active status.';
+    protected $description = 'List discovered BNEO extensions and their install/active status.';
 
     public function handle(ExtensionService $extensions): int
     {

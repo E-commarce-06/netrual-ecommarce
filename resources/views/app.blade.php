@@ -23,18 +23,21 @@
         {{-- Inline style to set the HTML background color based on our theme in app.css --}}
         <style>
             html {
-                background-color: oklch(1 0 0);
+                background-color: #f8fafc;
+                color-scheme: light;
             }
 
             html.dark {
-                background-color: oklch(0.145 0 0);
+                background-color: #041735;
+                color-scheme: dark;
             }
         </style>
 
-        <title inertia>{{ config('app.name', 'Laravel') }}</title>
+        <title inertia>{{ config('brand.name', 'BNEO') }}</title>
 
-        <link rel="icon" href="{{ $favicon }}" type="image/png">
-        <link rel="apple-touch-icon" href="{{ $favicon }}">
+        <link rel="icon" type="image/png" sizes="32x32" href="{{ $favicon32 }}">
+        <link rel="icon" type="image/png" sizes="64x64" href="{{ $favicon }}">
+        <link rel="apple-touch-icon" sizes="512x512" href="{{ $appleTouchIcon }}">
 
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=instrument-sans:400,500,600" rel="stylesheet" />
@@ -59,12 +62,14 @@
         @vite(['resources/js/app.ts'])
         @inertiaHead
     </head>
-    <body class="font-sans antialiased" data-force-light="{{ ($forceLightStorefront ?? false) ? '1' : '0' }}">
-        @inertia        @php
+    <body class="font-sans antialiased">
+        @inertia
+        @php
             if (app()->bound('bulbula.hook')) {
                 ob_start();
                 app('bulbula.hook')->doAction('storefront.body.end');
                 echo ob_get_clean();
             }
-        @endphp    </body>
+        @endphp
+    </body>
 </html>

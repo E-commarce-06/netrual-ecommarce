@@ -1,11 +1,11 @@
 ﻿{
     "name": "bulbula/cms",
-    "description": "Content Management System for Bulbula Commerce",
+    "description": "Content Management System for BNEO Commerce",
     "type": "library",
     "license": "MIT",
     "authors": [
         {
-            "name": "Bulbula Team",
+            "name": "BNEO Team",
             "email": "dev@example.com"
         }
     ],

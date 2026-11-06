@@ -23,7 +23,7 @@ const logoImage  = computed(() => props.settings.logo_image  as string | null)
 const logoUrl    = computed(() => (props.settings.logo_url   as string) || '/')
 const bgColor    = computed(() => (props.settings.background_color as string) || '#ffffff')
 const textColor  = computed(() => (props.settings.text_color as string) || '#111827')
-const accent     = computed(() => (props.settings.accent_color as string) || '#2563eb')
+const accent     = computed(() => (props.settings.accent_color as string) || '#F47015')
 const showSearch = computed(() => props.settings.show_search  !== false)
 const showCart   = computed(() => props.settings.show_cart    !== false)
 const showAuth   = computed(() => props.settings.show_auth_buttons !== false)
@@ -209,7 +209,7 @@ watch(menuSource, fetchMenu)
       <!-- Editor badge -->
       <div
         v-if="editorMode"
-        style="position:absolute;top:4px;right:6px;font-size:10px;font-weight:700;background:#dbeafe;color:#1d4ed8;border-radius:4px;padding:2px 6px;pointer-events:none;letter-spacing:.5px;"
+        style="position:absolute;top:4px;right:6px;font-size:10px;font-weight:700;background:#fff1e7;color:#8c3e0a;border-radius:4px;padding:2px 6px;pointer-events:none;letter-spacing:.5px;"
       >HEADER</div>
     </div>
   </header>

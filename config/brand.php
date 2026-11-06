@@ -22,20 +22,20 @@ return [
     /*
     | Product name. Shown in the admin, storefront, emails, and setup wizard.
     */
-    'name' => env('BRAND_NAME', 'Bulbula'),
+    'name' => env('BRAND_NAME', 'BNEO'),
 
     /*
     | Short lowercase identifier. Used for the MCP server key and similar keys.
     */
-    'slug' => env('BRAND_SLUG', 'bulbula'),
+    'slug' => env('BRAND_SLUG', 'bneo'),
 
-    'vendor' => env('BRAND_VENDOR', 'bulbula'),
+    'vendor' => env('BRAND_VENDOR', 'bneo'),
 
     /*
     | Company that publishes the store. Used in copyright lines and the admin
     | footer.
     */
-    'company' => env('BRAND_COMPANY', 'Bulbula Commerce'),
+    'company' => env('BRAND_COMPANY', 'BNEO'),
 
     /*
     | Short line under the store name (for example, in the storefront footer).
@@ -45,26 +45,31 @@ return [
     /*
     | Text shown after "Powered by" in footers. Leave empty to hide the line.
     */
-    'powered_by' => env('BRAND_POWERED_BY', env('BRAND_NAME', 'Bulbula')),
+    'powered_by' => env('BRAND_POWERED_BY', env('BRAND_NAME', 'BNEO')),
 
     /*
     | Copyright holder for the footer line. Defaults to the company name.
     */
-    'copyright_holder' => env('BRAND_COPYRIGHT_HOLDER', env('BRAND_COMPANY', 'Bulbula Commerce')),
+    'copyright_holder' => env('BRAND_COPYRIGHT_HOLDER', env('BRAND_COMPANY', 'BNEO')),
 
     /*
     | Name used for theme and package authorship metadata.
     */
-    'author' => env('BRAND_AUTHOR', env('BRAND_NAME', 'Bulbula') . ' Team'),
+    'author' => env('BRAND_AUTHOR', env('BRAND_NAME', 'BNEO') . ' Team'),
 
     /*
-    | Public paths, relative to /public, for logos and icons.
+    | Public paths, relative to /public, for logos and icons. The dark logo is
+    | the white wordmark variant for use on navy/dark surfaces.
     */
-    'logo' => env('BRAND_LOGO', '/logos/bulbula-transparent.png'),
+    'logo' => env('BRAND_LOGO', '/logos/bneo-logo-primary.png'),
 
-    'logo_icon' => env('BRAND_LOGO_ICON', '/logos/logo_icon.png'),
+    'logo_dark' => env('BRAND_LOGO_DARK', '/logos/bneo-logo-reversed.png'),
 
-    'favicon' => env('BRAND_FAVICON', '/logos/favicon.png'),
+    'logo_icon' => env('BRAND_LOGO_ICON', '/logos/bneo-app-icon.png'),
+
+    'favicon' => env('BRAND_FAVICON', '/logos/bneo-favicon-64.png'),
+
+    'favicon_32' => env('BRAND_FAVICON_32', '/logos/bneo-favicon-32.png'),
 
     /*
     | Theme slug used when the database has no active theme. Must match a folder

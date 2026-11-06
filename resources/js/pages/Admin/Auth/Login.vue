@@ -34,23 +34,23 @@ const submit = () => {
     <!-- ============================================ -->
     <div class="absolute inset-0 dark:hidden">
       <!-- Soft gradient base -->
-      <div class="absolute inset-0 bg-gradient-to-br from-slate-50 via-blue-50/50 to-indigo-50/60"></div>
+      <div class="absolute inset-0 bg-gradient-to-br from-slate-50 via-orange-50/60 to-slate-100"></div>
       <!-- Decorative blobs -->
-      <div class="absolute top-[-15%] right-[-10%] w-[600px] h-[600px] bg-blue-200/30 rounded-full blur-3xl"></div>
-      <div class="absolute bottom-[-20%] left-[-8%] w-[500px] h-[500px] bg-indigo-200/25 rounded-full blur-3xl"></div>
-      <div class="absolute top-[50%] left-[50%] w-[350px] h-[350px] bg-violet-200/15 rounded-full blur-3xl"></div>
+      <div class="absolute top-[-15%] right-[-10%] w-[600px] h-[600px] bg-brand-orange/15 rounded-full blur-3xl"></div>
+      <div class="absolute bottom-[-20%] left-[-8%] w-[500px] h-[500px] bg-orange-200/25 rounded-full blur-3xl"></div>
+      <div class="absolute top-[50%] left-[50%] w-[350px] h-[350px] bg-orange-100/25 rounded-full blur-3xl"></div>
       <!-- Dot grid pattern -->
-      <div class="absolute inset-0 opacity-[0.35]" style="background-image: radial-gradient(circle, #c7d2fe 1px, transparent 1px); background-size: 32px 32px;"></div>
+      <div class="absolute inset-0 opacity-[0.35]" style="background-image: radial-gradient(circle, #ffd9bb 1px, transparent 1px); background-size: 32px 32px;"></div>
     </div>
 
     <!-- ============================================ -->
     <!-- BACKGROUND: DARK MODE                        -->
     <!-- ============================================ -->
-    <div class="absolute inset-0 hidden dark:block bg-gradient-to-br from-slate-950 via-blue-950 to-indigo-950">
+    <div class="absolute inset-0 hidden dark:block bg-gradient-to-br from-brand-navy via-[#061b35] to-[#102543]">
       <!-- Glowing orbs -->
-      <div class="absolute top-[-10%] left-[-5%] w-[500px] h-[500px] bg-blue-500/10 rounded-full blur-3xl animate-pulse"></div>
-      <div class="absolute bottom-[-15%] right-[-10%] w-[600px] h-[600px] bg-indigo-500/10 rounded-full blur-3xl animate-pulse" style="animation-delay: 1s"></div>
-      <div class="absolute top-[40%] left-[30%] w-[300px] h-[300px] bg-violet-500/5 rounded-full blur-3xl animate-pulse" style="animation-delay: 2s"></div>
+      <div class="absolute top-[-10%] left-[-5%] w-[500px] h-[500px] bg-brand-orange/10 rounded-full blur-3xl animate-pulse"></div>
+      <div class="absolute bottom-[-15%] right-[-10%] w-[600px] h-[600px] bg-brand-orange/10 rounded-full blur-3xl animate-pulse" style="animation-delay: 1s"></div>
+      <div class="absolute top-[40%] left-[30%] w-[300px] h-[300px] bg-orange-300/5 rounded-full blur-3xl animate-pulse" style="animation-delay: 2s"></div>
       <!-- Cross grid pattern -->
       <div class="absolute inset-0 opacity-[0.03]" style="background-image: url('data:image/svg+xml,%3Csvg width=&quot;60&quot; height=&quot;60&quot; viewBox=&quot;0 0 60 60&quot; xmlns=&quot;http://www.w3.org/2000/svg&quot;%3E%3Cg fill=&quot;none&quot; fill-rule=&quot;evenodd&quot;%3E%3Cg fill=&quot;%23ffffff&quot; fill-opacity=&quot;1&quot;%3E%3Cpath d=&quot;M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z&quot;/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')"></div>
     </div>
@@ -76,7 +76,7 @@ const submit = () => {
         <div class="max-w-lg space-y-6">
           <h1 class="text-5xl xl:text-6xl font-bold leading-[1.1] tracking-tight text-gray-900 dark:text-white">
             Your store,<br />
-            <span class="bg-gradient-to-r from-blue-600 via-indigo-600 to-violet-600 dark:from-blue-400 dark:via-indigo-400 dark:to-violet-400 bg-clip-text text-transparent">simplified.</span>
+            <span class="bg-gradient-to-r from-brand-navy via-[#17355c] to-brand-orange dark:from-white dark:via-slate-100 dark:to-orange-300 bg-clip-text text-transparent">simplified.</span>
           </h1>
           <p class="text-lg leading-relaxed max-w-md text-gray-500 dark:text-slate-400">
             The all-in-one commerce platform that puts you in control. Manage products, orders, and customers from a single, elegant dashboard with unlimited custom agent creation for agentic commerce.
@@ -86,8 +86,8 @@ const submit = () => {
         <!-- Stats Row -->
         <div class="flex items-center gap-8 mt-12">
           <div class="flex items-center gap-3">
-            <div class="w-10 h-10 rounded-lg flex items-center justify-center bg-blue-100 border border-blue-200/60 dark:bg-blue-500/10 dark:border-blue-500/20">
-              <svg class="w-5 h-5 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div class="w-10 h-10 rounded-lg flex items-center justify-center bg-orange-100 border border-orange-200/60 dark:bg-orange-500/10 dark:border-orange-500/20">
+              <svg class="w-5 h-5 text-brand-orange dark:text-orange-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
               </svg>
             </div>
@@ -98,8 +98,8 @@ const submit = () => {
           </div>
           <div class="w-px h-10 bg-gray-200 dark:bg-slate-800"></div>
           <div class="flex items-center gap-3">
-            <div class="w-10 h-10 rounded-lg flex items-center justify-center bg-indigo-100 border border-indigo-200/60 dark:bg-indigo-500/10 dark:border-indigo-500/20">
-              <svg class="w-5 h-5 text-indigo-600 dark:text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div class="w-10 h-10 rounded-lg flex items-center justify-center bg-orange-100 border border-orange-200/60 dark:bg-orange-500/10 dark:border-orange-500/20">
+              <svg class="w-5 h-5 text-brand-orange dark:text-orange-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
               </svg>
             </div>
@@ -110,8 +110,8 @@ const submit = () => {
           </div>
           <div class="w-px h-10 bg-gray-200 dark:bg-slate-800"></div>
           <div class="flex items-center gap-3">
-            <div class="w-10 h-10 rounded-lg flex items-center justify-center bg-violet-100 border border-violet-200/60 dark:bg-violet-500/10 dark:border-violet-500/20">
-              <svg class="w-5 h-5 text-violet-600 dark:text-violet-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div class="w-10 h-10 rounded-lg flex items-center justify-center bg-orange-100 border border-orange-200/60 dark:bg-orange-500/10 dark:border-orange-500/20">
+              <svg class="w-5 h-5 text-brand-orange dark:text-orange-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
             </div>
@@ -163,7 +163,7 @@ const submit = () => {
               <label class="block text-sm font-medium text-gray-700 dark:text-slate-300">Email</label>
               <div class="relative group">
                 <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none">
-                  <svg class="w-[18px] h-[18px] text-gray-400 dark:text-slate-500 group-focus-within:text-blue-500 dark:group-focus-within:text-blue-400 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg class="w-[18px] h-[18px] text-gray-400 dark:text-slate-500 group-focus-within:text-brand-orange dark:group-focus-within:text-orange-300 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                   </svg>
                 </div>
@@ -173,9 +173,9 @@ const submit = () => {
                   class="
                     w-full pl-11 pr-4 py-3 rounded-xl text-sm transition-all
                     bg-gray-50 border border-gray-200 text-gray-900 placeholder-gray-400
-                    focus:outline-none focus:bg-white focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20
+                    focus:outline-none focus:bg-white focus:border-brand-orange focus:ring-2 focus:ring-brand-orange/20
                     dark:bg-white/[0.05] dark:border-white/[0.08] dark:text-white dark:placeholder-slate-500
-                    dark:focus:bg-white/[0.08] dark:focus:border-blue-500/50 dark:focus:ring-1 dark:focus:ring-blue-500/30
+                    dark:focus:bg-white/[0.08] dark:focus:border-orange-400/50 dark:focus:ring-1 dark:focus:ring-orange-400/30
                   "
                   :class="{ 
                     'border-red-400 focus:border-red-500 focus:ring-red-500/20 dark:border-red-500/50 dark:focus:border-red-500/50 dark:focus:ring-red-500/30': form.errors.email 
@@ -196,7 +196,7 @@ const submit = () => {
               <label class="block text-sm font-medium text-gray-700 dark:text-slate-300">Password</label>
               <div class="relative group">
                 <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none">
-                  <svg class="w-[18px] h-[18px] text-gray-400 dark:text-slate-500 group-focus-within:text-blue-500 dark:group-focus-within:text-blue-400 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg class="w-[18px] h-[18px] text-gray-400 dark:text-slate-500 group-focus-within:text-brand-orange dark:group-focus-within:text-orange-300 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
                   </svg>
                 </div>
@@ -206,9 +206,9 @@ const submit = () => {
                   class="
                     w-full pl-11 pr-12 py-3 rounded-xl text-sm transition-all
                     bg-gray-50 border border-gray-200 text-gray-900 placeholder-gray-400
-                    focus:outline-none focus:bg-white focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20
+                    focus:outline-none focus:bg-white focus:border-brand-orange focus:ring-2 focus:ring-brand-orange/20
                     dark:bg-white/[0.05] dark:border-white/[0.08] dark:text-white dark:placeholder-slate-500
-                    dark:focus:bg-white/[0.08] dark:focus:border-blue-500/50 dark:focus:ring-1 dark:focus:ring-blue-500/30
+                    dark:focus:bg-white/[0.08] dark:focus:border-orange-400/50 dark:focus:ring-1 dark:focus:ring-orange-400/30
                   "
                   :class="{ 
                     'border-red-400 focus:border-red-500 focus:ring-red-500/20 dark:border-red-500/50 dark:focus:border-red-500/50 dark:focus:ring-red-500/30': form.errors.password 
@@ -248,8 +248,8 @@ const submit = () => {
                   />
                   <div class="
                     w-[18px] h-[18px] rounded-md transition-all flex items-center justify-center
-                    border border-gray-300 bg-gray-50 peer-checked:bg-blue-600 peer-checked:border-blue-600
-                    dark:border-white/15 dark:bg-white/5 dark:peer-checked:bg-blue-500 dark:peer-checked:border-blue-500
+                    border border-gray-300 bg-gray-50 peer-checked:bg-brand-orange peer-checked:border-brand-orange
+                    dark:border-white/15 dark:bg-white/5 dark:peer-checked:bg-brand-orange dark:peer-checked:border-brand-orange
                   ">
                     <svg v-show="form.remember" class="w-3 h-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="3">
                       <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
@@ -264,11 +264,11 @@ const submit = () => {
             <button
               type="submit"
               class="
-                w-full relative py-3.5 px-4 text-white font-semibold rounded-xl text-sm tracking-wide overflow-hidden group
-                bg-gradient-to-r from-blue-600 to-indigo-600 
-                hover:from-blue-500 hover:to-indigo-500
-                shadow-lg shadow-blue-600/25 hover:shadow-blue-500/35
-                dark:shadow-blue-500/25 dark:hover:shadow-blue-500/40
+                w-full relative py-3.5 px-4 text-brand-navy font-semibold rounded-xl text-sm tracking-wide overflow-hidden group
+                bg-gradient-to-r from-brand-orange to-orange-500
+                hover:from-orange-500 hover:to-orange-600
+                shadow-lg shadow-orange-500/25 hover:shadow-orange-500/35
+                dark:shadow-orange-500/20 dark:hover:shadow-orange-500/30
                 transition-all duration-300
                 disabled:opacity-40 disabled:cursor-not-allowed disabled:shadow-none
               "
@@ -284,7 +284,7 @@ const submit = () => {
                 </svg>
               </span>
               <span v-else class="relative flex items-center justify-center gap-2">
-                <svg class="animate-spin h-[18px] w-[18px] text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                <svg class="animate-spin h-[18px] w-[18px] text-brand-navy" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                   <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                   <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                 </svg>

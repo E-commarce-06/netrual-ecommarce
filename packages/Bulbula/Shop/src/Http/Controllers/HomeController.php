@@ -70,9 +70,9 @@ class HomeController extends Controller
             'cmsBlocks' => $data['blocks'] ?? [],
             'layoutData' => $homepageLayout?->layout_data,
             'siteConfig' => [
-                'name' => $this->settingService->get('site_name') ?? config('app.name', config('brand.name')),
+                'name' => $this->settingService->get('site_name') ?: config('brand.name'),
                 'url' => config('app.url'),
-                'description' => $this->settingService->get('site_tagline') ?? 'Your trusted e-commerce platform',
+                'description' => $this->settingService->get('site_tagline') ?: config('brand.tagline'),
                 'logo' => $this->settingService->get('site_logo') ?? null,
                 'favicon' => $this->settingService->get('site_favicon') ?? null,
             ],

@@ -3,7 +3,7 @@
   "name": "Razorpay Payment Gateway",
   "description": "Accept payments via Razorpay",
   "version": "1.0.0",
-  "author": "Bulbula Team",
+  "author": "BNEO Team",
   "type": "extension",
   "category": "payment-gateway",
   "provider": "Bulbula\\Razorpay\\Providers\\RazorpayServiceProvider",

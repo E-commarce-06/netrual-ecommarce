@@ -63,11 +63,11 @@ const goBack = () => {
 <template>
     <Head title="How will you sell?" />
 
-    <div class="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center p-4">
+    <div class="theme-root min-h-screen flex items-center justify-center bg-background p-4 text-foreground">
         <div class="max-w-4xl w-full bg-white rounded-2xl shadow-2xl overflow-hidden">
-            <div class="bg-gradient-to-r from-blue-600 to-indigo-600 p-6 text-white">
+            <div class="bg-brand-navy border-b-4 border-brand-orange p-6 text-white">
                 <h1 class="text-3xl font-bold text-center">How will you sell?</h1>
-                <p class="text-center text-blue-100 mt-2 max-w-2xl mx-auto">
+                <p class="text-center text-slate-200 mt-2 max-w-2xl mx-auto">
                     Choose a starting catalog. Physical retail, digital downloads, quote/RFQ, or a blank store — you can change everything later.
                 </p>
             </div>
@@ -78,7 +78,7 @@ const goBack = () => {
                     <span class="text-sm font-medium text-gray-700">25%</span>
                 </div>
                 <div class="w-full bg-gray-200 rounded-full h-2">
-                    <div class="bg-blue-600 h-2 rounded-full transition-all duration-300" style="width: 25%"></div>
+                    <div class="bg-brand-orange h-2 rounded-full transition-all duration-300" style="width: 25%"></div>
                 </div>
             </div>
 
@@ -106,8 +106,8 @@ const goBack = () => {
                             :class="[
                                 'text-left border-2 rounded-xl p-5 transition-all duration-200 hover:shadow-lg',
                                 selectedType === type.id
-                                    ? 'border-blue-600 bg-blue-50 ring-2 ring-blue-600'
-                                    : 'border-gray-200 hover:border-blue-300',
+                                    ? 'border-brand-orange bg-orange-50 ring-2 ring-brand-orange'
+                                    : 'border-gray-200 hover:border-orange-300',
                             ]"
                         >
                             <div class="flex items-start justify-between gap-3 mb-2">
@@ -116,7 +116,7 @@ const goBack = () => {
                                     :class="[
                                         'mt-0.5 w-6 h-6 rounded-full border-2 flex items-center justify-center shrink-0',
                                         selectedType === type.id
-                                            ? 'border-blue-600 bg-blue-600'
+                                            ? 'border-brand-orange bg-brand-navy'
                                             : 'border-gray-300',
                                     ]"
                                 >
@@ -140,7 +140,7 @@ const goBack = () => {
                             </p>
                             <p
                                 v-else
-                                class="mt-3 text-xs font-medium text-blue-700"
+                                class="mt-3 text-xs font-medium text-muted-foreground"
                             >
                                 Optional sample products available next
                             </p>
@@ -148,11 +148,11 @@ const goBack = () => {
                     </div>
                 </section>
 
-                <div class="rounded-xl bg-blue-50 border border-blue-200 px-4 py-3 text-sm text-gray-600 text-center">
+                <div class="rounded-xl bg-orange-50 border border-orange-200 px-4 py-3 text-sm text-gray-600 text-center">
                     Not sure yet?
                     <button
                         type="button"
-                        class="font-semibold text-blue-700 underline underline-offset-2 hover:no-underline ml-1"
+                        class="font-semibold text-brand-navy underline underline-offset-2 dark:text-orange-300 hover:no-underline ml-1"
                         @click="startBlank"
                     >
                         Start with a blank catalog
@@ -178,7 +178,7 @@ const goBack = () => {
                     :class="[
                         'inline-flex items-center px-6 py-2 font-medium rounded-lg transition-all duration-200',
                         selectedType
-                            ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white hover:from-blue-700 hover:to-indigo-700 transform hover:scale-105'
+                            ? 'bg-brand-orange text-brand-navy hover:bg-orange-500 transform hover:scale-105'
                             : 'bg-gray-300 text-gray-500 cursor-not-allowed',
                     ]"
                 >

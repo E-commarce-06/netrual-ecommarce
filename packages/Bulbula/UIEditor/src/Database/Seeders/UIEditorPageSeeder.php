@@ -69,7 +69,7 @@ class UIEditorPageSeeder extends Seeder
 
     // ─── Helper: build a standard page-hero section ──────────────────────────
 
-    private function heroSection(string $id, string $title, string $subtitle, string $bgColor = '#1e40af'): array
+    private function heroSection(string $id, string $title, string $subtitle, string $bgColor = '#041735'): array
     {
         return [
             'id'       => "sec_{$id}_hero",
@@ -135,7 +135,7 @@ class UIEditorPageSeeder extends Seeder
 
     // ─── Helper: 3-column icon-box section ───────────────────────────────────
 
-    private function iconBoxSection(string $id, array $boxes, string $bgColor = '#f9fafb'): array
+    private function iconBoxSection(string $id, array $boxes, string $bgColor = '#f7f9fc'): array
     {
         $columns = array_map(function ($box, $i) use ($id) {
             return [
@@ -151,7 +151,7 @@ class UIEditorPageSeeder extends Seeder
                             'title'       => $box['title'],
                             'description' => $box['description'],
                             'align'       => 'center',
-                            'icon_color'  => '#1e40af',
+                            'icon_color'  => '#F47015',
                             'title_color' => '#111827',
                             'text_color'  => '#6b7280',
                         ],
@@ -180,7 +180,7 @@ class UIEditorPageSeeder extends Seeder
         return [
             'version'  => '1.0',
             'sections' => [
-                $this->heroSection('about', 'About Us', 'We are committed to providing the best products and services to our customers.', '#1e3a5f'),
+                $this->heroSection('about', 'About Us', 'We are committed to providing the best products and services to our customers.', '#041735'),
                 $this->iconBoxSection('about', [
                     ['icon' => 'star', 'title' => 'Our Mission', 'description' => 'To deliver exceptional e-commerce experiences through quality products and outstanding customer service.'],
                     ['icon' => 'users', 'title' => 'Our Team', 'description' => 'A diverse group of passionate professionals united by a shared goal: making shopping easier and better.'],
@@ -212,7 +212,7 @@ class UIEditorPageSeeder extends Seeder
         return [
             'version'  => '1.0',
             'sections' => [
-                $this->heroSection('careers', 'Work With Us', 'Help us shape the future of e-commerce. Great people, innovative products, real impact.', '#0f172a'),
+                $this->heroSection('careers', 'Work With Us', 'Help us shape the future of e-commerce. Great people, innovative products, real impact.', '#041735'),
                 $this->iconBoxSection('careers', [
                     ['icon' => 'trending-up', 'title' => 'Grow Fast', 'description' => 'Accelerate your career with mentorship, learning budgets, and internal mobility.'],
                     ['icon' => 'heart', 'title' => 'Great Culture', 'description' => 'Collaborative, inclusive, and results-focused. We celebrate wins together.'],
@@ -227,7 +227,7 @@ class UIEditorPageSeeder extends Seeder
                     [
                         'id'       => 'blk_careers_open_t',
                         'type'     => 'text',
-                        'settings' => ['content' => '<p style="color:#4b5563;line-height:1.8">We are always looking for talented engineers, designers, marketers and operations professionals. New roles are posted regularly — check back soon or send your CV to <a href="mailto:careers@example.com" style="color:#1e40af">careers@example.com</a> and we will keep you in mind for future openings.</p>'],
+                        'settings' => ['content' => '<p style="color:#4b5563;line-height:1.8">We are always looking for talented engineers, designers, marketers and operations professionals. New roles are posted regularly — check back soon or send your CV to <a href="mailto:careers@example.com" style="color:#F47015">careers@example.com</a> and we will keep you in mind for future openings.</p>'],
                     ],
                     [
                         'id'       => 'blk_careers_cta',
@@ -244,7 +244,7 @@ class UIEditorPageSeeder extends Seeder
         return [
             'version'  => '1.0',
             'sections' => [
-                $this->heroSection('contact', 'Get In Touch', 'We would love to hear from you. Our support team is here to help.', '#1e40af'),
+                $this->heroSection('contact', 'Get In Touch', 'We would love to hear from you. Our support team is here to help.', '#041735'),
                 $this->iconBoxSection('contact', [
                     ['icon' => 'mail', 'title' => 'Email Us', 'description' => 'support@example.com — We reply within 24 hours on business days.'],
                     ['icon' => 'phone', 'title' => 'Call Us', 'description' => '+1 (555) 123-4567 — Available Mon–Fri, 9 AM to 6 PM EST.'],
@@ -266,7 +266,7 @@ class UIEditorPageSeeder extends Seeder
                         'type'     => 'button',
                         'settings' => ['text' => 'Visit FAQ', 'url' => '/faq', 'style' => 'outline', 'align' => 'center'],
                     ],
-                ], '#f9fafb'),
+                ], '#f7f9fc'),
             ],
         ];
     }
@@ -276,7 +276,7 @@ class UIEditorPageSeeder extends Seeder
         return [
             'version'  => '1.0',
             'sections' => [
-                $this->heroSection('help', 'Help Center', 'Find answers, guides and support resources to help you succeed.', '#0369a1'),
+                $this->heroSection('help', 'Help Center', 'Find answers, guides and support resources to help you succeed.', '#041735'),
                 $this->iconBoxSection('help', [
                     ['icon' => 'user', 'title' => 'My Account', 'description' => 'Manage your profile, saved addresses, and notification preferences.'],
                     ['icon' => 'package', 'title' => 'Orders & Tracking', 'description' => 'View order history, track live shipments, and download invoices.'],
@@ -301,7 +301,7 @@ class UIEditorPageSeeder extends Seeder
                         'type'     => 'button',
                         'settings' => ['text' => 'Contact Support', 'url' => '/contact-us', 'style' => 'primary', 'align' => 'center'],
                     ],
-                ], '#f0f9ff'),
+                ], '#fff3e9'),
             ],
         ];
     }
@@ -311,7 +311,7 @@ class UIEditorPageSeeder extends Seeder
         return [
             'version'  => '1.0',
             'sections' => [
-                $this->heroSection('shipping', 'Shipping & Returns', 'Fast, reliable delivery and hassle-free returns — that is our promise to you.', '#065f46'),
+                $this->heroSection('shipping', 'Shipping & Returns', 'Fast, reliable delivery and hassle-free returns — that is our promise to you.', '#041735'),
                 $this->iconBoxSection('shipping', [
                     ['icon' => 'truck', 'title' => 'Standard Shipping', 'description' => '5–7 business days. Free on all orders over $50.'],
                     ['icon' => 'zap', 'title' => 'Express Shipping', 'description' => '2–3 business days. Flat rate of $12.99.'],
@@ -343,7 +343,7 @@ class UIEditorPageSeeder extends Seeder
         return [
             'version'  => '1.0',
             'sections' => [
-                $this->heroSection('faq', 'Frequently Asked Questions', 'Quick answers to the questions we get most often.', '#4338ca'),
+                $this->heroSection('faq', 'Frequently Asked Questions', 'Quick answers to the questions we get most often.', '#041735'),
                 $this->contentSection('faq_ordering', [
                     [
                         'id'   => 'blk_faq_orders_h',
@@ -367,7 +367,7 @@ class UIEditorPageSeeder extends Seeder
                         'type' => 'text',
                         'settings' => ['content' => '<h3 style="font-size:1rem;font-weight:600;color:#111827;margin-top:1.25rem">What payment methods do you accept?</h3><p style="color:#4b5563;margin-top:0.25rem">We accept Visa, Mastercard, American Express, PayPal, Stripe, and Razorpay.</p><h3 style="font-size:1rem;font-weight:600;color:#111827;margin-top:1.25rem">Is my payment information secure?</h3><p style="color:#4b5563;margin-top:0.25rem">Yes. All payments are processed through PCI-DSS compliant payment gateways. We never store your card details directly.</p>'],
                     ],
-                ], '#f9fafb'),
+                ], '#f7f9fc'),
                 $this->contentSection('faq_shipping', [
                     [
                         'id'   => 'blk_faq_ship_h',
@@ -377,7 +377,7 @@ class UIEditorPageSeeder extends Seeder
                     [
                         'id'   => 'blk_faq_ship_t',
                         'type' => 'text',
-                        'settings' => ['content' => '<h3 style="font-size:1rem;font-weight:600;color:#111827;margin-top:1.25rem">How can I track my order?</h3><p style="color:#4b5563;margin-top:0.25rem">You will receive a tracking number via email once your order ships. You can also track orders using the <a href="/checkout/track-order" style="color:#1e40af">Track Order</a> tool.</p><h3 style="font-size:1rem;font-weight:600;color:#111827;margin-top:1.25rem">What is your return policy?</h3><p style="color:#4b5563;margin-top:0.25rem">We offer a 30-day return window from the date of delivery. See our <a href="/shipping-and-returns" style="color:#1e40af">Shipping &amp; Returns</a> page for full details.</p>'],
+                        'settings' => ['content' => '<h3 style="font-size:1rem;font-weight:600;color:#111827;margin-top:1.25rem">How can I track my order?</h3><p style="color:#4b5563;margin-top:0.25rem">You will receive a tracking number via email once your order ships. You can also track orders using the <a href="/checkout/track-order" style="color:#F47015">Track Order</a> tool.</p><h3 style="font-size:1rem;font-weight:600;color:#111827;margin-top:1.25rem">What is your return policy?</h3><p style="color:#4b5563;margin-top:0.25rem">We offer a 30-day return window from the date of delivery. See our <a href="/shipping-and-returns" style="color:#F47015">Shipping &amp; Returns</a> page for full details.</p>'],
                     ],
                 ]),
             ],
@@ -389,7 +389,7 @@ class UIEditorPageSeeder extends Seeder
         return [
             'version'  => '1.0',
             'sections' => [
-                $this->heroSection('privacy', 'Privacy Policy', 'Last updated: March 2026. Your privacy matters to us.', '#374151'),
+                $this->heroSection('privacy', 'Privacy Policy', 'Last updated: March 2026. Your privacy matters to us.', '#041735'),
                 $this->contentSection('privacy_content', [
                     [
                         'id'   => 'blk_privacy_text',
@@ -412,10 +412,10 @@ class UIEditorPageSeeder extends Seeder
 <p style="color:#4b5563;line-height:1.8;margin-top:0.5rem">We implement industry-standard security measures including TLS encryption, access controls, and regular security audits to protect your personal information.</p>
 
 <h2 style="font-size:1.25rem;font-weight:700;color:#111827;margin-top:2rem">6. Your Rights</h2>
-<p style="color:#4b5563;line-height:1.8;margin-top:0.5rem">You have the right to access, correct, or delete your personal data at any time. Contact us at <a href="mailto:privacy@example.com" style="color:#1e40af">privacy@example.com</a> to exercise these rights.</p>
+<p style="color:#4b5563;line-height:1.8;margin-top:0.5rem">You have the right to access, correct, or delete your personal data at any time. Contact us at <a href="mailto:privacy@example.com" style="color:#F47015">privacy@example.com</a> to exercise these rights.</p>
 
 <h2 style="font-size:1.25rem;font-weight:700;color:#111827;margin-top:2rem">7. Contact</h2>
-<p style="color:#4b5563;line-height:1.8;margin-top:0.5rem">For privacy-related enquiries, please contact our Data Protection Officer at <a href="mailto:privacy@example.com" style="color:#1e40af">privacy@example.com</a>.</p>
+<p style="color:#4b5563;line-height:1.8;margin-top:0.5rem">For privacy-related enquiries, please contact our Data Protection Officer at <a href="mailto:privacy@example.com" style="color:#F47015">privacy@example.com</a>.</p>
 ',
                         ],
                     ],
@@ -429,13 +429,13 @@ class UIEditorPageSeeder extends Seeder
         return [
             'version'  => '1.0',
             'sections' => [
-                $this->heroSection('terms', 'Terms of Service', 'Please read these terms carefully before using our platform.', '#374151'),
+                $this->heroSection('terms', 'Terms of Service', 'Please read these terms carefully before using our platform.', '#041735'),
                 $this->contentSection('terms_content', [
                     [
                         'id'   => 'blk_terms_text',
                         'type' => 'text',
                         'settings' => [
-                            'content' => '
+                            'content' => str_replace('__BRAND_COMPANY__', e((string) config('brand.company', 'BNEO')), '
 <h2 style="font-size:1.25rem;font-weight:700;color:#111827;margin-top:0">1. Acceptance of Terms</h2>
 <p style="color:#4b5563;line-height:1.8;margin-top:0.5rem">By accessing and using this website, you accept and agree to be bound by these Terms of Service and our Privacy Policy. If you do not agree, please discontinue use of the site.</p>
 
@@ -449,17 +449,17 @@ class UIEditorPageSeeder extends Seeder
 <p style="color:#4b5563;line-height:1.8;margin-top:0.5rem">All orders are subject to product availability and acceptance. We reserve the right to refuse or cancel orders at our discretion. Prices are subject to change without notice.</p>
 
 <h2 style="font-size:1.25rem;font-weight:700;color:#111827;margin-top:2rem">5. Intellectual Property</h2>
-<p style="color:#4b5563;line-height:1.8;margin-top:0.5rem">All content on this site — including text, graphics, logos, and software — is the property of Bulbula Commerce and is protected by applicable intellectual property laws.</p>
+<p style="color:#4b5563;line-height:1.8;margin-top:0.5rem">All content on this site — including text, graphics, logos, and software — is the property of __BRAND_COMPANY__ and is protected by applicable intellectual property laws.</p>
 
 <h2 style="font-size:1.25rem;font-weight:700;color:#111827;margin-top:2rem">6. Limitation of Liability</h2>
-<p style="color:#4b5563;line-height:1.8;margin-top:0.5rem">To the maximum extent permitted by law, Bulbula Commerce shall not be liable for any indirect, incidental, or consequential damages arising from your use of the platform.</p>
+<p style="color:#4b5563;line-height:1.8;margin-top:0.5rem">To the maximum extent permitted by law, __BRAND_COMPANY__ shall not be liable for any indirect, incidental, or consequential damages arising from your use of the platform.</p>
 
 <h2 style="font-size:1.25rem;font-weight:700;color:#111827;margin-top:2rem">7. Governing Law</h2>
 <p style="color:#4b5563;line-height:1.8;margin-top:0.5rem">These terms are governed by and construed in accordance with applicable laws. Any disputes shall be resolved through binding arbitration or in the courts of the relevant jurisdiction.</p>
 
 <h2 style="font-size:1.25rem;font-weight:700;color:#111827;margin-top:2rem">8. Changes to Terms</h2>
 <p style="color:#4b5563;line-height:1.8;margin-top:0.5rem">We reserve the right to update these terms at any time. Continued use of the platform after changes constitutes acceptance of the revised terms.</p>
-',
+'),
                         ],
                     ],
                 ]),
@@ -472,12 +472,12 @@ class UIEditorPageSeeder extends Seeder
         return [
             'version'  => '1.0',
             'sections' => [
-                $this->heroSection('track', 'Track Your Order', 'Enter your order number below to get real-time status updates on your shipment.', '#0c4a6e'),
+                $this->heroSection('track', 'Track Your Order', 'Enter your order number below to get real-time status updates on your shipment.', '#041735'),
                 $this->iconBoxSection('track', [
                     ['icon' => 'package', 'title' => 'Order Placed', 'description' => 'Your order has been received and is being prepared for dispatch.'],
                     ['icon' => 'truck', 'title' => 'In Transit', 'description' => 'Your package is on its way. Track it using the order number below.'],
                     ['icon' => 'check-circle', 'title' => 'Delivered', 'description' => 'Your order has been delivered. Please check with your household if you were away.'],
-                ], '#f0f9ff'),
+                ], '#fff3e9'),
             ],
         ];
     }

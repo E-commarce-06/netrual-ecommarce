@@ -128,10 +128,10 @@ const activityIconMap: Record<string, unknown> = { ShoppingCart, UserPlus, Packa
 
 const chartGridColor  = computed(() => isDark.value ? 'rgba(255,255,255,0.05)' : 'rgba(0,0,0,0.06)')
 const chartTickColor  = computed(() => isDark.value ? '#64748b' : '#94a3b8')
-const chartTooltipBg  = computed(() => isDark.value ? 'rgba(15,20,40,0.95)' : 'rgba(255,255,255,0.97)')
+const chartTooltipBg  = computed(() => isDark.value ? 'rgba(4,23,53,0.95)' : 'rgba(255,255,255,0.97)')
 const chartTooltipTitle = computed(() => isDark.value ? '#94a3b8' : '#64748b')
-const chartTooltipBody = computed(() => isDark.value ? '#fff' : '#0f172a')
-const chartTooltipBorder = computed(() => isDark.value ? 'rgba(99,102,241,0.3)' : 'rgba(99,102,241,0.2)')
+const chartTooltipBody = computed(() => isDark.value ? '#fff' : '#041735')
+const chartTooltipBorder = computed(() => isDark.value ? 'rgba(244,112,21,0.3)' : 'rgba(244,112,21,0.2)')
 
 // ─── Chart: 7-day Revenue Area ────────────────────────────────────────────────
 
@@ -141,13 +141,13 @@ const salesChartData = computed(() => ({
     label: 'Revenue',
     data: props.salesChart?.data ?? [],
     fill: true,
-    backgroundColor: isDark.value ? 'rgba(99,102,241,0.15)' : 'rgba(99,102,241,0.08)',
-    borderColor: '#6366f1',
+    backgroundColor: isDark.value ? 'rgba(244,112,21,0.15)' : 'rgba(244,112,21,0.08)',
+    borderColor: '#f47015',
     borderWidth: 2,
     tension: 0.45,
     pointRadius: 3,
-    pointBackgroundColor: '#6366f1',
-    pointBorderColor: isDark.value ? '#080d1a' : '#fff',
+    pointBackgroundColor: '#f47015',
+    pointBorderColor: isDark.value ? '#041735' : '#fff',
     pointBorderWidth: 2,
   }],
 }))
@@ -190,12 +190,12 @@ const dualChartData = computed(() => ({
       label: 'Revenue',
       data: props.salesChart?.data ?? [],
       fill: false,
-      borderColor: '#6366f1',
+      borderColor: '#f47015',
       borderWidth: 2,
       tension: 0.45,
       pointRadius: 3,
-      pointBackgroundColor: '#6366f1',
-      pointBorderColor: isDark.value ? '#080d1a' : '#fff',
+      pointBackgroundColor: '#f47015',
+      pointBorderColor: isDark.value ? '#041735' : '#fff',
       pointBorderWidth: 2,
       yAxisID: 'yRevenue',
     },
@@ -203,12 +203,12 @@ const dualChartData = computed(() => ({
       label: 'Orders',
       data: props.salesChart?.orders ?? [],
       fill: false,
-      borderColor: '#22d3ee',
+      borderColor: isDark.value ? '#9fb4cf' : '#041735',
       borderWidth: 2,
       tension: 0.45,
       pointRadius: 3,
-      pointBackgroundColor: '#22d3ee',
-      pointBorderColor: isDark.value ? '#080d1a' : '#fff',
+      pointBackgroundColor: isDark.value ? '#9fb4cf' : '#041735',
+      pointBorderColor: isDark.value ? '#041735' : '#fff',
       pointBorderWidth: 2,
       yAxisID: 'yOrders',
     },
@@ -243,14 +243,14 @@ const dualChartOptions = computed(() => ({
       type: 'linear' as const,
       position: 'left' as const,
       grid: { color: chartGridColor.value },
-      ticks: { color: '#818cf8', font: { size: 11 } },
+      ticks: { color: chartTickColor.value, font: { size: 11 } },
       border: { color: 'transparent' },
     },
     yOrders: {
       type: 'linear' as const,
       position: 'right' as const,
       grid: { drawOnChartArea: false },
-      ticks: { color: '#22d3ee', font: { size: 11 } },
+      ticks: { color: chartTickColor.value, font: { size: 11 } },
       border: { color: 'transparent' },
     },
   },
@@ -259,26 +259,26 @@ const dualChartOptions = computed(() => ({
 // ─── Colour helpers ───────────────────────────────────────────────────────────
 
 const statGlow: Record<string, string> = {
-  blue:   'dark:shadow-[0_0_24px_rgba(99,102,241,0.15)]   border-t-indigo-500',
+  blue:   'dark:shadow-[0_0_24px_rgba(244,112,21,0.15)] border-t-orange-500',
   green:  'dark:shadow-[0_0_24px_rgba(16,185,129,0.12)]   border-t-emerald-500',
   purple: 'dark:shadow-[0_0_24px_rgba(168,85,247,0.12)]   border-t-purple-500',
   orange: 'dark:shadow-[0_0_24px_rgba(249,115,22,0.12)]   border-t-orange-500',
 }
 const statIconBg: Record<string, string> = {
-  blue:   'bg-indigo-50  text-indigo-600  dark:bg-indigo-500/10  dark:text-indigo-400',
+  blue:   'bg-orange-50 text-orange-600 dark:bg-orange-500/10 dark:text-orange-400',
   green:  'bg-emerald-50 text-emerald-600 dark:bg-emerald-500/10 dark:text-emerald-400',
   purple: 'bg-purple-50  text-purple-600  dark:bg-purple-500/10  dark:text-purple-400',
   orange: 'bg-orange-50  text-orange-600  dark:bg-orange-500/10  dark:text-orange-400',
 }
 const activityDot: Record<string, string> = {
-  blue:   'bg-indigo-500',
+  blue:   'bg-orange-500',
   green:  'bg-emerald-500',
   red:    'bg-red-500',
   purple: 'bg-purple-500',
   orange: 'bg-orange-500',
 }
 const activityIconBg: Record<string, string> = {
-  blue:   'bg-indigo-50  text-indigo-600  dark:bg-indigo-500/15  dark:text-indigo-400',
+  blue:   'bg-orange-50 text-orange-600 dark:bg-orange-500/15 dark:text-orange-400',
   green:  'bg-emerald-50 text-emerald-600 dark:bg-emerald-500/15 dark:text-emerald-400',
   red:    'bg-red-50     text-red-600     dark:bg-red-500/15     dark:text-red-400',
   purple: 'bg-purple-50  text-purple-600  dark:bg-purple-500/15  dark:text-purple-400',
@@ -299,13 +299,13 @@ const maxProductSales = computed(() =>
       Dark:  deep navy + frosted glass panels + glow orbs
     -->
     <div class="relative min-h-screen -mx-6 -mt-6 px-6 pt-6 pb-10
-                bg-gray-50 dark:bg-[#080d1a] overflow-hidden transition-colors duration-300">
+                bg-gray-50 dark:bg-brand-navy overflow-hidden transition-colors duration-300">
 
       <!-- Ambient glow orbs (dark only) -->
       <div class="pointer-events-none absolute inset-0 overflow-hidden dark:block hidden">
-        <div class="absolute -top-40 -left-40 w-[480px] h-[480px] rounded-full bg-indigo-600/10 blur-[120px]"></div>
-        <div class="absolute top-60 right-0 w-[360px] h-[360px] rounded-full bg-cyan-500/[0.08] blur-[100px]"></div>
-        <div class="absolute bottom-0 left-1/3 w-[400px] h-[300px] rounded-full bg-violet-600/[0.08] blur-[120px]"></div>
+        <div class="absolute -top-40 -left-40 w-[480px] h-[480px] rounded-full bg-brand-orange/10 blur-[120px]"></div>
+        <div class="absolute top-60 right-0 w-[360px] h-[360px] rounded-full bg-brand-orange/[0.06] blur-[100px]"></div>
+        <div class="absolute bottom-0 left-1/3 w-[400px] h-[300px] rounded-full bg-orange-300/[0.06] blur-[120px]"></div>
       </div>
 
       <div class="relative z-10 space-y-5">
@@ -317,14 +317,14 @@ const maxProductSales = computed(() =>
           <div>
             <h2 class="text-lg font-semibold text-gray-900 dark:text-white tracking-tight">
               Welcome back,
-              <span class="text-indigo-600 dark:text-indigo-400">{{ auth?.user?.name || 'Admin' }}</span>
+              <span class="text-brand-navy dark:text-orange-300">{{ auth?.user?.name || 'Admin' }}</span>
             </h2>
             <p class="text-xs text-gray-500 dark:text-slate-500 mt-0.5">Here's what's happening with your store today.</p>
           </div>
           <div class="hidden md:flex items-center gap-2
                       bg-gray-50 border border-gray-200 rounded-xl px-4 py-2.5
                       dark:bg-white/[0.05] dark:border-white/[0.07]">
-            <Zap class="w-3.5 h-3.5 text-indigo-500 dark:text-indigo-400" />
+            <Zap class="w-3.5 h-3.5 text-brand-orange dark:text-orange-300" />
             <span class="text-xs font-medium text-gray-700 dark:text-slate-300">
               {{ new Date().toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' }) }}
             </span>
@@ -373,8 +373,8 @@ const maxProductSales = computed(() =>
                 <h3 class="text-sm font-semibold text-gray-900 dark:text-white">7-Day Revenue</h3>
                 <p class="text-xs text-gray-500 dark:text-slate-500 mt-0.5">Daily revenue over the past week</p>
               </div>
-              <div class="flex items-center gap-1.5 bg-indigo-50 border border-indigo-100 text-indigo-600
-                          dark:bg-indigo-500/10 dark:border-indigo-500/20 dark:text-indigo-400
+              <div class="flex items-center gap-1.5 bg-orange-50 border border-orange-100 text-orange-700
+                          dark:bg-orange-500/10 dark:border-orange-500/20 dark:text-orange-300
                           px-2.5 py-1.5 rounded-lg">
                 <Activity class="w-3.5 h-3.5" />
                 <span class="text-[11px] font-semibold">Revenue</span>
@@ -405,11 +405,11 @@ const maxProductSales = computed(() =>
                 <p class="text-xs text-gray-500 dark:text-slate-500 mt-0.5">Dual-axis comparison this week</p>
               </div>
               <div class="flex items-center gap-3 text-[11px] font-medium">
-                <span class="flex items-center gap-1 text-indigo-600 dark:text-indigo-400">
-                  <span class="w-2 h-2 rounded-full bg-indigo-500 inline-block"></span>Revenue
+                <span class="flex items-center gap-1 text-brand-orange dark:text-orange-300">
+                  <span class="w-2 h-2 rounded-full bg-orange-500 inline-block"></span>Revenue
                 </span>
-                <span class="flex items-center gap-1 text-cyan-600 dark:text-cyan-400">
-                  <span class="w-2 h-2 rounded-full bg-cyan-400 inline-block"></span>Orders
+                <span class="flex items-center gap-1 text-brand-navy dark:text-slate-300">
+                  <span class="w-2 h-2 rounded-full" :class="isDark ? 'bg-[#9fb4cf]' : 'bg-brand-navy'"></span>Orders
                 </span>
               </div>
             </div>
@@ -440,8 +440,8 @@ const maxProductSales = computed(() =>
                         border-b border-gray-100 dark:border-white/[0.06]">
               <h3 class="text-sm font-semibold text-gray-900 dark:text-white">Recent Orders</h3>
               <Link href="/admin/sales/orders"
-                class="group flex items-center text-xs font-medium text-indigo-600 hover:text-indigo-700
-                       dark:text-indigo-400 dark:hover:text-indigo-300 transition-colors">
+                class="group flex items-center text-xs font-medium text-brand-navy hover:text-brand-orange
+                       dark:text-orange-300 dark:hover:text-orange-200 transition-colors">
                 View All
                 <ChevronRight class="w-3.5 h-3.5 ml-0.5 group-hover:translate-x-0.5 transition-transform" />
               </Link>
@@ -477,8 +477,8 @@ const maxProductSales = computed(() =>
                     <td class="px-5 py-3.5 whitespace-nowrap">
                       <div class="flex items-center gap-2.5">
                         <div class="w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold
-                                    bg-indigo-100 text-indigo-700
-                                    dark:bg-gradient-to-br dark:from-indigo-500/30 dark:to-violet-500/30 dark:border dark:border-white/10 dark:text-slate-300">
+                                    bg-orange-100 text-brand-navy
+                                    dark:bg-orange-500/10 dark:border dark:border-orange-500/20 dark:text-orange-300">
                           {{ order.customer.charAt(0).toUpperCase() }}
                         </div>
                         <span class="text-sm text-gray-700 dark:text-slate-300">{{ order.customer }}</span>
@@ -492,14 +492,14 @@ const maxProductSales = computed(() =>
                         class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-semibold"
                         :class="{
                           'bg-emerald-50 text-emerald-700 border border-emerald-100 dark:bg-emerald-500/10 dark:text-emerald-400 dark:border-emerald-500/20': order.status === 'completed',
-                          'bg-indigo-50 text-indigo-700 border border-indigo-100 dark:bg-indigo-500/10 dark:text-indigo-400 dark:border-indigo-500/20': order.status === 'processing',
+                          'bg-orange-50 text-orange-700 border border-orange-100 dark:bg-orange-500/10 dark:text-orange-300 dark:border-orange-500/20': order.status === 'processing',
                           'bg-yellow-50 text-yellow-700 border border-yellow-100 dark:bg-yellow-500/10 dark:text-yellow-400 dark:border-yellow-500/20': order.status === 'pending',
                           'bg-red-50 text-red-700 border border-red-100 dark:bg-red-500/10 dark:text-red-400 dark:border-red-500/20': order.status === 'cancelled',
                         }"
                       >
                         <span class="w-1.5 h-1.5 rounded-full" :class="{
                           'bg-emerald-500': order.status === 'completed',
-                          'bg-indigo-500': order.status === 'processing',
+                          'bg-orange-500': order.status === 'processing',
                           'bg-yellow-500': order.status === 'pending',
                           'bg-red-500': order.status === 'cancelled',
                         }"></span>
@@ -548,8 +548,8 @@ const maxProductSales = computed(() =>
                     <div
                       class="h-full rounded-full transition-all duration-700"
                       :class="[
-                        index === 0 ? 'bg-gradient-to-r from-indigo-500 to-violet-500' :
-                        index === 1 ? 'bg-gradient-to-r from-cyan-500 to-blue-500' :
+                        index === 0 ? 'bg-gradient-to-r from-brand-navy to-brand-orange' :
+                        index === 1 ? 'bg-gradient-to-r from-orange-300 to-orange-500' :
                         index === 2 ? 'bg-gradient-to-r from-emerald-500 to-teal-500' :
                                       'bg-gray-300 dark:bg-white/20'
                       ]"
@@ -662,10 +662,10 @@ const maxProductSales = computed(() =>
           <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
             <Link href="/admin/catalog/products/create"
               class="group flex flex-col items-center justify-center gap-2.5 p-4 rounded-xl transition-all duration-200
-                     bg-gray-50 border border-gray-100 hover:border-indigo-200 hover:bg-indigo-50
-                     dark:bg-white/[0.03] dark:border-white/[0.07] dark:hover:border-indigo-500/40 dark:hover:bg-indigo-500/5">
+                     bg-gray-50 border border-gray-100 hover:border-orange-200 hover:bg-orange-50
+                     dark:bg-white/[0.03] dark:border-white/[0.07] dark:hover:border-orange-500/40 dark:hover:bg-orange-500/5">
               <div class="w-9 h-9 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform
-                          bg-indigo-100 text-indigo-600 dark:bg-indigo-500/10 dark:text-indigo-400">
+                          bg-orange-100 text-orange-600 dark:bg-orange-500/10 dark:text-orange-300">
                 <Plus class="w-4 h-4" />
               </div>
               <span class="text-[11px] font-medium text-gray-600 dark:text-slate-400">Add Product</span>
@@ -692,10 +692,10 @@ const maxProductSales = computed(() =>
             </Link>
             <Link href="/admin/reports"
               class="group flex flex-col items-center justify-center gap-2.5 p-4 rounded-xl transition-all duration-200
-                     bg-gray-50 border border-gray-100 hover:border-cyan-200 hover:bg-cyan-50
-                     dark:bg-white/[0.03] dark:border-white/[0.07] dark:hover:border-cyan-500/40 dark:hover:bg-cyan-500/5">
+                     bg-gray-50 border border-gray-100 hover:border-orange-200 hover:bg-orange-50
+                     dark:bg-white/[0.03] dark:border-white/[0.07] dark:hover:border-orange-500/40 dark:hover:bg-orange-500/5">
               <div class="w-9 h-9 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform
-                          bg-cyan-100 text-cyan-600 dark:bg-cyan-500/10 dark:text-cyan-400">
+                          bg-orange-100 text-orange-600 dark:bg-orange-500/10 dark:text-orange-300">
                 <BarChart3 class="w-4 h-4" />
               </div>
               <span class="text-[11px] font-medium text-gray-600 dark:text-slate-400">Reports</span>

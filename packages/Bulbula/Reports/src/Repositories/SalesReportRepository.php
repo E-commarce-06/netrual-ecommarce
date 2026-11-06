@@ -83,8 +83,8 @@ class SalesReportRepository
                 [
                     'label' => 'Revenue',
                     'data' => $results->pluck('revenue')->map(fn($v) => (float) $v)->toArray(),
-                    'borderColor' => '#3b82f6',
-                    'backgroundColor' => 'rgba(59, 130, 246, 0.1)',
+                    'borderColor' => '#F47015',
+                    'backgroundColor' => 'rgba(244, 112, 21, 0.1)',
                     'tension' => 0.4,
                 ]
             ]
@@ -118,7 +118,7 @@ class SalesReportRepository
         
         $colors = [
             'pending' => '#f59e0b',
-            'processing' => '#3b82f6',
+            'processing' => '#F47015',
             'completed' => '#10b981',
             'shipped' => '#06b6d4',
             'delivered' => '#8b5cf6',
@@ -172,7 +172,7 @@ class SalesReportRepository
                     'label' => 'Revenue',
                     'data' => $results->pluck('revenue')->map(fn($v) => (float) $v)->toArray(),
                     'backgroundColor' => [
-                        '#3b82f6', '#10b981', '#f59e0b', '#ef4444', '#8b5cf6'
+                        '#F47015', '#10b981', '#f59e0b', '#ef4444', '#8b5cf6'
                     ],
                 ]
             ]

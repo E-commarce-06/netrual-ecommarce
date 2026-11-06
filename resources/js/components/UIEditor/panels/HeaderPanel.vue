@@ -28,7 +28,7 @@ function bool(key: string, fallback: boolean): boolean {
       </label>
       <select
         :value="str('menu_source', 'header')"
-        class="w-full px-3 py-2 text-sm border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:outline-none"
+        class="w-full px-3 py-2 text-sm border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-brand-orange focus:outline-none"
         @change="update('menu_source', ($event.target as HTMLSelectElement).value)"
       >
         <option value="header">Header Menu (Storefront Navigation)</option>
@@ -70,9 +70,9 @@ function bool(key: string, fallback: boolean): boolean {
       <div v-if="str('logo_type', 'text') === 'text'" class="mb-3">
         <label class="block text-xs font-medium text-gray-600 dark:text-gray-400 mb-1">Store Name</label>
         <input
-          :value="str('logo_text', 'My Store')"
+          :value="str('logo_text', 'BNEO')"
           type="text"
-          class="w-full px-3 py-2 text-sm border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:outline-none"
+          class="w-full px-3 py-2 text-sm border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-brand-orange focus:outline-none"
           @input="update('logo_text', ($event.target as HTMLInputElement).value)"
         />
       </div>
@@ -83,8 +83,8 @@ function bool(key: string, fallback: boolean): boolean {
         <input
           :value="str('logo_image', '')"
           type="text"
-          placeholder="/images/logo.png"
-          class="w-full px-3 py-2 text-sm border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:outline-none font-mono"
+          placeholder="/logos/bneo-logo-primary.png"
+          class="w-full px-3 py-2 text-sm border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-brand-orange focus:outline-none font-mono"
           @input="update('logo_image', ($event.target as HTMLInputElement).value)"
         />
       </div>
@@ -95,7 +95,7 @@ function bool(key: string, fallback: boolean): boolean {
         <input
           :value="str('logo_url', '/')"
           type="text"
-          class="w-full px-3 py-2 text-sm border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:outline-none font-mono"
+          class="w-full px-3 py-2 text-sm border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-brand-orange focus:outline-none font-mono"
           @input="update('logo_url', ($event.target as HTMLInputElement).value)"
         />
       </div>
@@ -178,12 +178,12 @@ function bool(key: string, fallback: boolean): boolean {
         <div class="flex items-center gap-3">
           <input
             type="color"
-            :value="str('accent_color', '#2563eb')"
+            :value="str('accent_color', '#F47015')"
             class="w-7 h-7 rounded-md cursor-pointer border border-gray-300 dark:border-gray-600 p-0.5"
             @input="update('accent_color', ($event.target as HTMLInputElement).value)"
           />
           <span class="text-xs text-gray-700 dark:text-gray-300 flex-1">Accent (logo text, buttons)</span>
-          <code class="text-[11px] text-gray-400 dark:text-gray-500 font-mono">{{ str('accent_color', '#2563eb') }}</code>
+          <code class="text-[11px] text-gray-400 dark:text-gray-500 font-mono">{{ str('accent_color', '#F47015') }}</code>
         </div>
       </div>
     </div>

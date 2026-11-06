@@ -18,7 +18,7 @@ beforeEach(function () {
     ]);
 
     $this->theme = Theme::create([
-        'name'         => 'Bulbula Default',
+        'name'         => 'BNEO Storefront',
         'slug'         => 'bulbula-default',
         'catalog_slug' => 'bulbula-default',
         'version'      => '1.0.0',
@@ -38,7 +38,7 @@ test('admin can open theme settings with the theme schema', function () {
         ->component('Admin/Settings/Theme/Index')
         ->where('theme.slug', 'bulbula-default')
         ->has('sections')
-        ->where('values.colors.primary_color', '#2563eb')
+        ->where('values.colors.primary_color', '#041735')
     );
 });
 
@@ -63,7 +63,7 @@ test('admin can save theme colors and feature toggles', function () {
         ->and($saved['features']['sticky_header'])->toBeFalse()
         // Unsubmitted fields are persisted with their schema defaults so
         // the stored settings are always complete.
-        ->and($saved['colors']['secondary_color'])->toBe('#1e40af')
+        ->and($saved['colors']['secondary_color'])->toBe('#17355c')
         ->and($saved['typography']['font_family'])->toBe('Inter, sans-serif');
 });
 
@@ -77,5 +77,5 @@ test('invalid color values fall back to schema defaults', function () {
         ->assertRedirect();
 
     expect($this->theme->fresh()->settings['colors']['primary_color'])
-        ->toBe('#2563eb');
+        ->toBe('#041735');
 });

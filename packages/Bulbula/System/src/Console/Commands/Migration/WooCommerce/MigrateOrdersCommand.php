@@ -13,7 +13,7 @@ class MigrateOrdersCommand extends Command
 {
     protected $signature = 'wc:migrate:orders {--dry-run : Preview migration without making changes} {--batch=500 : Number of records per batch}';
     
-    protected $description = 'Migrate WooCommerce orders to Bulbula';
+    protected $description = 'Migrate WooCommerce orders to BNEO';
     
     private array $errors = [];
     private bool $hposEnabled;

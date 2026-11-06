@@ -25,7 +25,7 @@ class AdminLoginController extends Controller
         $storedLogo = $this->settingService->get('admin_logo');
         $adminLogo = $storedLogo
             ? Storage::disk('public')->url($storedLogo)
-            : '/logos/bulbula-transparent.png';
+            : config('brand.logo', '/logos/bneo-logo-primary.png');
 
         return Inertia::render('Admin/Auth/Login', [
             'adminLogo' => $adminLogo,

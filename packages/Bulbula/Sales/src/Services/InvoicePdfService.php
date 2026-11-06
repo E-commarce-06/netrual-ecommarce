@@ -100,12 +100,12 @@ class InvoicePdfService
                     text-align: center;
                     margin-bottom: 30px;
                     padding-bottom: 20px;
-                    border-bottom: 3px solid #3b82f6;
+                    border-bottom: 3px solid #f47015;
                 }
                 .company-name {
                     font-size: 28px;
                     font-weight: bold;
-                    color: #1e40af;
+                    color: #041735;
                     margin-bottom: 5px;
                 }
                 .invoice-title {
@@ -175,7 +175,7 @@ class InvoicePdfService
                 }
                 .total-row:last-child {
                     border-bottom: none;
-                    border-top: 2px solid #3b82f6;
+                    border-top: 2px solid #f47015;
                     font-weight: bold;
                     font-size: 16px;
                     margin-top: 10px;
@@ -200,8 +200,8 @@ class InvoicePdfService
                     color: #92400e;
                 }
                 .status-sent {
-                    background-color: #dbeafe;
-                    color: #1e40af;
+                    background-color: #fff1e7;
+                    color: #8c3e0a;
                 }
                 .status-paid {
                     background-color: #d1fae5;
@@ -215,7 +215,7 @@ class InvoicePdfService
                     margin-top: 30px;
                     padding: 15px;
                     background-color: #f8fafc;
-                    border-left: 3px solid #3b82f6;
+                    border-left: 3px solid #f47015;
                 }
                 .notes-title {
                     font-weight: bold;
@@ -234,7 +234,7 @@ class InvoicePdfService
         </head>
         <body>
             <div class="header">
-                <div class="company-name">Bulbula</div>
+                <div class="company-name">' . htmlspecialchars((string) config('brand.name', 'BNEO')) . '</div>
                 <div class="invoice-title">INVOICE</div>
             </div>
 

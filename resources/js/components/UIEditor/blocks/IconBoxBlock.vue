@@ -37,7 +37,7 @@ function getPath(icon: string) {
     <!-- Icon circle -->
     <div
       class="flex items-center justify-center rounded-full mb-3 flex-shrink-0"
-      :style="{ width: `${(settings.icon_size as number) ?? 48}px`, height: `${(settings.icon_size as number) ?? 48}px`, backgroundColor: `${settings.icon_color ?? '#3b82f6'}20` }"
+      :style="{ width: `${(settings.icon_size as number) ?? 48}px`, height: `${(settings.icon_size as number) ?? 48}px`, backgroundColor: `${settings.icon_color ?? '#F47015'}20` }"
     >
       <svg
         :width="((settings.icon_size as number) ?? 48) * 0.5"
@@ -45,7 +45,7 @@ function getPath(icon: string) {
         fill="none"
         stroke="currentColor"
         viewBox="0 0 24 24"
-        :style="{ color: settings.icon_color as string ?? '#3b82f6' }"
+        :style="{ color: settings.icon_color as string ?? '#F47015' }"
       >
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" :d="getPath(settings.icon as string)" />
       </svg>

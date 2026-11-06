@@ -4,8 +4,9 @@ import { ref, computed, onMounted, onUnmounted, watch } from 'vue';
 import CartIcon from './CartIcon.vue';
 import { useStorefrontMenu } from '@/composables/useStorefrontMenu';
 import { useWishlist } from '@/composables/useWishlist';
-import { Heart, Menu, Search, X } from 'lucide-vue-next';
+import { Heart, Menu, Moon, Search, Sun, X } from 'lucide-vue-next';
 import axios from 'axios';
+import { useAppearance } from '@/composables/useAppearance';
 import { useCurrency } from '@/composables/useCurrency';
 import { useThemeSettings } from '@/composables/useThemeSettings';
 
@@ -41,14 +42,33 @@ const props = withDefaults(defineProps<Props>(), {
 });
 
 const page = usePage();
+const brand = computed(() => (page.props.brand ?? {}) as Record<string, string>);
 // Store name: siteConfig from the server, else the brand name from config/brand.php.
-const siteName = computed(() => props.siteConfig?.name || (page.props.brand as any)?.name || '');
+const siteName = computed(() => props.siteConfig?.name || brand.value.name || 'BNEO');
+const siteLogo = computed(() => {
+    const logo = props.siteConfig?.logo?.trim();
+    if (!logo) return null;
+    return logo.startsWith('/') || /^https?:\/\//i.test(logo) ? logo : `/storage/${logo}`;
+});
 const auth = computed(() => page.props.auth as any);
 const user = computed(() => auth.value?.user);
 
 const { wishlistCount, fetchWishlist } = useWishlist();
 const { formatPrice } = useCurrency();
 const { primary, stickyHeader, wishlistEnabled } = useThemeSettings();
+const { appearance, updateAppearance } = useAppearance();
+
+const prefersDark = ref(false);
+let appearanceMediaQuery: MediaQueryList | null = null;
+const isDarkMode = computed(() =>
+    appearance.value === 'dark' || (appearance.value === 'system' && prefersDark.value),
+);
+const toggleAppearance = () => {
+    updateAppearance(isDarkMode.value ? 'light' : 'dark');
+};
+const handleSystemAppearanceChange = (event: MediaQueryListEvent) => {
+    prefersDark.value = event.matches;
+};
 
 const mobileMenuOpen = ref(false);
 const mobileSearchOpen = ref(false);
@@ -242,6 +262,10 @@ const handleClickOutside = (event: MouseEvent) => {
 
 onMounted(() => {
     document.addEventListener('click', handleClickOutside);
+    appearanceMediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+    prefersDark.value = appearanceMediaQuery.matches;
+    appearanceMediaQuery.addEventListener('change', handleSystemAppearanceChange);
+
     if (user.value) {
         fetchWishlist();
     }
@@ -249,6 +273,7 @@ onMounted(() => {
 
 onUnmounted(() => {
     document.removeEventListener('click', handleClickOutside);
+    appearanceMediaQuery?.removeEventListener('change', handleSystemAppearanceChange);
     document.body.style.overflow = '';
     if (debounceTimeout) {
         clearTimeout(debounceTimeout);
@@ -277,19 +302,23 @@ onUnmounted(() => {
                 <div class="flex items-center flex-1 md:flex-none">
                     <Link href="/" class="flex items-center" @click="closeMobileMenu">
                         <img
-                            v-if="siteConfig.logo"
-                            :src="`/storage/${siteConfig.logo}`"
+                            v-if="siteLogo"
+                            :src="siteLogo"
                             :alt="siteName"
-                            class="h-10 object-contain"
-                            :style="{ maxWidth: '200px' }"
+                            class="h-8 max-w-[200px] object-contain md:h-9"
                         />
-                        <h1
-                            v-else
-                            class="text-xl md:text-2xl font-bold"
-                            :style="{ color: primary }"
-                        >
-                            {{ siteName }}
-                        </h1>
+                        <template v-else>
+                            <img
+                                :src="brand.logo || '/logos/bneo-logo-primary.png'"
+                                :alt="siteName"
+                                class="h-8 max-w-[200px] object-contain dark:hidden md:h-9"
+                            />
+                            <img
+                                :src="brand.logo_dark || '/logos/bneo-logo-reversed.png'"
+                                :alt="siteName"
+                                class="hidden h-8 max-w-[200px] object-contain dark:block md:h-9"
+                            />
+                        </template>
                     </Link>
                 </div>
 
@@ -438,6 +467,17 @@ onUnmounted(() => {
 
                 <!-- Right Section -->
                 <div class="flex items-center space-x-2 md:space-x-4">
+                    <button
+                        type="button"
+                        class="rounded-lg p-2 text-slate-700 transition-colors hover:bg-slate-100 dark:text-slate-200 dark:hover:bg-slate-800"
+                        :aria-label="isDarkMode ? 'Switch to light mode' : 'Switch to dark mode'"
+                        :title="isDarkMode ? 'Switch to light mode' : 'Switch to dark mode'"
+                        @click="toggleAppearance"
+                    >
+                        <Sun v-if="isDarkMode" class="h-5 w-5" />
+                        <Moon v-else class="h-5 w-5" />
+                    </button>
+
                     <!-- Mobile search toggle -->
                     <button
                         type="button"
@@ -690,7 +730,7 @@ onUnmounted(() => {
             <Transition name="fade">
                 <div
                     v-if="mobileMenuOpen"
-                    class="fixed inset-0 z-[100] md:hidden"
+                    class="storefront-theme-scope fixed inset-0 z-[100] md:hidden"
                 >
                     <div class="absolute inset-0 bg-black/40" @click="closeMobileMenu" />
                     <aside class="absolute left-0 top-0 h-full w-[min(320px,88vw)] bg-white shadow-xl flex flex-col">

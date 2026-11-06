@@ -55,10 +55,10 @@ const subscribeNewsletter = async () => {
 <template>
     <Head title="Setup Complete" />
     
-    <div class="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center p-4">
+    <div class="theme-root min-h-screen flex items-center justify-center bg-background p-4 text-foreground">
         <div class="max-w-2xl w-full bg-white rounded-2xl shadow-2xl overflow-hidden">
             <!-- Header -->
-            <div class="bg-gradient-to-r from-green-600 to-emerald-600 p-6 text-white">
+            <div class="bg-brand-navy border-b-4 border-brand-orange p-6 text-white">
                 <div class="flex items-center justify-center mb-4">
                     <div class="w-20 h-20 bg-white rounded-full flex items-center justify-center">
                         <svg class="w-12 h-12 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -93,9 +93,9 @@ const subscribeNewsletter = async () => {
                 </div>
 
                 <!-- Next Steps -->
-                <div class="bg-blue-50 border-2 border-blue-200 rounded-lg p-6 mb-6">
+                <div class="bg-orange-50 border-2 border-orange-200 rounded-lg p-6 mb-6">
                     <h3 class="font-bold text-gray-800 mb-4 flex items-center">
-                        <svg class="w-5 h-5 text-blue-600 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg class="w-5 h-5 text-brand-orange mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
                         </svg>
                         Next Steps
@@ -143,7 +143,7 @@ const subscribeNewsletter = async () => {
                             'inline-flex items-center px-8 py-4 font-semibold rounded-lg shadow-lg transform transition-all duration-200',
                             completing
                                 ? 'bg-gray-400 text-gray-200 cursor-not-allowed'
-                                : 'bg-gradient-to-r from-green-600 to-emerald-600 text-white hover:from-green-700 hover:to-emerald-700 hover:scale-105'
+                                : 'bg-brand-orange text-brand-navy hover:bg-orange-500 hover:scale-105'
                         ]"
                     >
                         <svg v-if="completing" class="w-5 h-5 mr-2 animate-spin" fill="none" viewBox="0 0 24 24">
@@ -176,8 +176,8 @@ const subscribeNewsletter = async () => {
                     <!-- Form (idle / loading) -->
                     <template v-else>
                         <div class="flex items-start gap-3 mb-4">
-                            <div class="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
-                                <svg class="w-4 h-4 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <div class="w-8 h-8 bg-orange-100 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                                <svg class="w-4 h-4 text-brand-orange" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                                 </svg>
                             </div>
@@ -193,7 +193,7 @@ const subscribeNewsletter = async () => {
                                 type="text"
                                 placeholder="Your name (optional)"
                                 :disabled="nlState === 'loading'"
-                                class="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-50 bg-white"
+                                class="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-orange disabled:opacity-50 bg-white"
                             />
                             <div>
                                 <input
@@ -202,7 +202,7 @@ const subscribeNewsletter = async () => {
                                     placeholder="Your email address"
                                     required
                                     :disabled="nlState === 'loading'"
-                                    class="w-full px-3 py-2 text-sm border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-50 bg-white"
+                                    class="w-full px-3 py-2 text-sm border rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-orange disabled:opacity-50 bg-white"
                                     :class="nlErrors.email ? 'border-red-400' : 'border-gray-300'"
                                 />
                                 <p v-if="nlErrors.email" class="text-xs text-red-500 mt-1">{{ nlErrors.email[0] }}</p>
@@ -213,12 +213,12 @@ const subscribeNewsletter = async () => {
                                         v-model="nlConsent"
                                         type="checkbox"
                                         :disabled="nlState === 'loading'"
-                                        class="mt-0.5 h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+                                        class="mt-0.5 h-4 w-4 rounded border-gray-300 text-brand-orange focus:ring-brand-orange"
                                     />
                                     <span class="text-xs text-gray-600 leading-snug">
                                         I agree to receive developer updates from the {{ brand.company }} team.
                                         You can unsubscribe at any time.
-                                        <a href="https://example.com/privacy" target="_blank" rel="noopener noreferrer" class="text-blue-600 underline">Privacy Policy</a>
+                                        <a href="https://example.com/privacy" target="_blank" rel="noopener noreferrer" class="text-brand-navy underline hover:text-brand-orange dark:text-orange-300">Privacy Policy</a>
                                     </span>
                                 </label>
                                 <p v-if="nlErrors.consent" class="text-xs text-red-500 mt-1">{{ nlErrors.consent[0] }}</p>
@@ -227,7 +227,7 @@ const subscribeNewsletter = async () => {
                                 <button
                                     type="submit"
                                     :disabled="nlState === 'loading'"
-                                    class="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                                    class="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-white bg-brand-navy rounded-lg hover:bg-brand-navy/90 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
                                 >
                                     <svg v-if="nlState === 'loading'" class="w-4 h-4 animate-spin" fill="none" viewBox="0 0 24 24">
                                         <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>

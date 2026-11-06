@@ -1,8 +1,8 @@
 {
   "info": {
     "_postman_id": "bulbula-api-collection",
-    "name": "Bulbula eCommerce API",
-    "description": "Complete API collection for Bulbula eCommerce platform with Flutter app integration",
+    "name": "BNEO eCommerce API",
+    "description": "Complete API collection for BNEO eCommerce platform with Flutter app integration",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
   },
   "auth": {

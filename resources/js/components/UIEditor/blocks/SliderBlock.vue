@@ -28,8 +28,8 @@ const slides = computed<Slide[]>(() => {
         {
           id: 's1',
           image: '',
-          grad_from: '#1e3a5f',
-          grad_to: '#0ea5e9',
+          grad_from: '#041735',
+          grad_to: '#F47015',
           badge: 'New Arrivals',
           headline: 'Summer Collection 2026',
           subheading: 'Discover amazing products at unbeatable prices.',
@@ -43,7 +43,7 @@ const slides = computed<Slide[]>(() => {
 const failedImages = ref<Record<string, boolean>>({})
 
 function slideBackground(slide: Slide) {
-  return `linear-gradient(135deg, ${slide.grad_from ?? '#1e3a8a'} 0%, ${slide.grad_to ?? '#2563eb'} 100%)`
+  return `linear-gradient(135deg, ${slide.grad_from ?? '#041735'} 0%, ${slide.grad_to ?? '#F47015'} 100%)`
 }
 
 function imageFailed(slide: Slide) {

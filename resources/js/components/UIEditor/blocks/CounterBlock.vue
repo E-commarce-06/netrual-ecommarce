@@ -43,7 +43,7 @@ onMounted(() => {
   >
     <div
       class="text-5xl font-bold tabular-nums leading-none"
-      :style="{ color: (settings.color as string) || '#3b82f6' }"
+      :style="{ color: (settings.color as string) || '#F47015' }"
     >
       {{ (settings.prefix as string) || '' }}{{ displayValue.toLocaleString() }}{{ (settings.suffix as string) || '' }}
     </div>

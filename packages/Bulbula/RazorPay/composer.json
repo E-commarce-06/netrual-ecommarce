@@ -1,6 +1,6 @@
 {
   "name": "bulbula/razorpay",
-  "description": "Razorpay payment gateway integration for Bulbula",
+  "description": "Razorpay payment gateway integration for BNEO",
   "type": "library",
   "license": "MIT",
   "autoload": {

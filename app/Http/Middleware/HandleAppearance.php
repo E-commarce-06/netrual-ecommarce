@@ -20,26 +20,27 @@ class HandleAppearance
      */
     public function handle(Request $request, Closure $next): Response
     {
-        $appearance = $request->cookie('appearance') ?? 'system';
-        $forceLightStorefront = false;
-
-        // The storefront theme ships light-only CSS (no dark: variants). When the
-        // OS is in dark mode, the dark class and native form controls made text
-        // and backgrounds the same colour. Storefront pages are always light.
-        if (! $request->is('admin') && ! $request->is('admin/*')) {
-            $appearance = 'light';
-            $forceLightStorefront = true;
+        $appearance = $request->cookie('appearance', 'system');
+        if (! in_array($appearance, ['light', 'dark', 'system'], true)) {
+            $appearance = 'system';
         }
 
+        // Honor the same saved/system appearance on both the admin and storefront.
         View::share('appearance', $appearance);
-        View::share('forceLightStorefront', $forceLightStorefront);
 
         $storedFavicon = $this->settingService->get('site_favicon');
         $faviconUrl = $storedFavicon
             ? Storage::disk('public')->url($storedFavicon)
-            : '/logos/favicon.png';
+            : config('brand.favicon', '/logos/bneo-favicon-64.png');
+
+        $favicon32Url = $storedFavicon ? $faviconUrl : config('brand.favicon_32', $faviconUrl);
+        $appleTouchIconUrl = $storedFavicon
+            ? $faviconUrl
+            : config('brand.logo_icon', '/logos/bneo-app-icon.png');
 
         View::share('favicon', $faviconUrl);
+        View::share('favicon32', $favicon32Url);
+        View::share('appleTouchIcon', $appleTouchIconUrl);
 
         return $next($request);
     }

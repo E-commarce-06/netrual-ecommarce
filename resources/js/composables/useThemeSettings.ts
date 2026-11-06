@@ -18,9 +18,9 @@ export function useThemeSettings() {
         return theme?.settings ?? {}
     })
 
-    const primary = computed(() => String(settings.value['colors.primary'] ?? '#2563eb'))
-    const secondary = computed(() => String(settings.value['colors.secondary'] ?? '#1e40af'))
-    const accent = computed(() => String(settings.value['colors.accent'] ?? '#0ea5e9'))
+    const primary = computed(() => String(settings.value['colors.primary'] ?? '#041735'))
+    const secondary = computed(() => String(settings.value['colors.secondary'] ?? '#17355c'))
+    const accent = computed(() => String(settings.value['colors.accent'] ?? '#F47015'))
     const fontFamily = computed(() => String(settings.value['typography.font_family'] ?? 'Inter, sans-serif'))
     const containerWidth = computed(() => String(settings.value['layout.container_width'] ?? '1280px'))
     const stickyHeader = computed(() => settingBool(settings.value['features.sticky_header'], true))

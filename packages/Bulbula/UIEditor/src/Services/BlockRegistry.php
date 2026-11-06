@@ -48,7 +48,7 @@ class BlockRegistry
                 'sticky'             => true,
                 'background_color'   => '#ffffff',
                 'text_color'         => '#111827',
-                'accent_color'       => '#2563eb',
+                'accent_color'       => '#F47015',
             ],
         ]);
 
@@ -77,8 +77,8 @@ class BlockRegistry
                 'background_color'   => '#111827',
                 'text_color'         => '#9ca3af',
                 'heading_color'      => '#ffffff',
-                'accent_color'       => '#3b82f6',
-                'border_color'       => '#1f2937',
+                'accent_color'       => '#F47015',
+                'border_color'       => '#29415f',
             ],
         ]);
 
@@ -198,8 +198,8 @@ class BlockRegistry
                     [
                         'id'         => 's1',
                         'image'      => '',
-                        'grad_from'  => '#1e3a5f',
-                        'grad_to'    => '#0ea5e9',
+                        'grad_from'  => '#041735',
+                        'grad_to'    => '#F47015',
                         'badge'      => 'New Arrivals',
                         'headline'   => 'Summer Collection 2026',
                         'subheading' => 'Discover amazing products at unbeatable prices.',
@@ -217,7 +217,7 @@ class BlockRegistry
             'icon'     => 'mail',
             'category' => 'commerce',
             'defaults' => [
-                'bg_color'    => '#0f172a',
+                'bg_color'    => '#041735',
                 'layout'      => 'split',
                 'title'       => 'Join Thousands of Happy Shoppers',
                 'subtitle'    => 'Subscribe and get <strong>10% off</strong> your first order, plus exclusive deals and new arrivals straight to your inbox.',
@@ -260,7 +260,7 @@ class BlockRegistry
             'icon'     => 'code',
             'category' => 'content',
             'defaults' => [
-                'content' => '<p style="color: #3b82f6; font-weight: bold;">Hello from HTML block!</p>',
+                'content' => '<p style="color: #F47015; font-weight: bold;">Hello from HTML block!</p>',
             ],
         ]);
 
@@ -311,7 +311,7 @@ class BlockRegistry
             'category' => 'content',
             'defaults' => [
                 'icon'        => 'star',
-                'icon_color'  => '#3b82f6',
+                'icon_color'  => '#F47015',
                 'icon_size'   => 48,
                 'title'       => 'Feature Title',
                 'description' => 'A short description of this feature or service.',
@@ -332,7 +332,7 @@ class BlockRegistry
                 'label'  => 'Happy Customers',
                 'duration' => 2000,
                 'align'  => 'center',
-                'color'  => '#3b82f6',
+                'color'  => '#F47015',
             ],
         ]);
 

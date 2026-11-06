@@ -9,7 +9,7 @@ import { createPinia } from 'pinia';
 import { initializeTheme } from './composables/useAppearance';
 import { resolveTemplatePage } from './lib/resolveTemplatePage';
 
-const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
+const appName = import.meta.env.VITE_APP_NAME || 'BNEO';
 const pinia = createPinia();
 
 createInertiaApp({
@@ -56,15 +56,8 @@ createInertiaApp({
     },
 });
 
-// This will set light / dark mode on page load...
-const forceLightStorefront = typeof document !== 'undefined'
-    && document.body?.dataset?.forceLight === '1';
-
-if (forceLightStorefront) {
-    document.documentElement.classList.remove('dark');
-} else {
-    initializeTheme();
-}
+// Apply the saved appearance (or system preference) to both admin and storefront pages.
+initializeTheme();
 
 // Permanently fix 419 PAGE EXPIRED errors caused by stale CSRF tokens in the
 // Inertia SPA. Inertia v2 uses Axios internally but does NOT inject CSRF headers

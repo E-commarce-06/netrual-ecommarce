@@ -1,6 +1,6 @@
 {
     "name": "bulbula/marketing",
-    "description": "Marketing module with coupons, promotions, and campaigns for Bulbula E-commerce platform",
+    "description": "Marketing module with coupons, promotions, and campaigns for BNEO E-commerce platform",
     "type": "library",
     "license": "MIT",
     "autoload": {

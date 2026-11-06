@@ -1,11 +1,11 @@
 ﻿{
     "name": "bulbula/customer",
-    "description": "Customer Management Module for Bulbula Admin",
+    "description": "Customer Management Module for BNEO Admin",
     "type": "library",
     "license": "MIT",
     "authors": [
         {
-            "name": "Bulbula Team"
+            "name": "BNEO Team"
         }
     ],
     "require": {

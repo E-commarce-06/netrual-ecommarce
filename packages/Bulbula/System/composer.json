@@ -1,6 +1,6 @@
 {
     "name": "bulbula/system",
-    "description": "System management module for Bulbula ecommerce platform",
+    "description": "System management module for BNEO ecommerce platform",
     "type": "library",
     "require": {
         "php": "^8.3",

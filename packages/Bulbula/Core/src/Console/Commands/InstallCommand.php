@@ -16,7 +16,7 @@ class InstallCommand extends Command
     protected $signature = 'bulbula:install
                             {--skip-assets : Allow incomplete frontend assets (CI/dev only; not for production browser use)}';
 
-    protected $description = 'Run the Bulbula installation wizard';
+    protected $description = 'Run the BNEO installation wizard';
 
     public function handle(): int
     {
@@ -33,7 +33,7 @@ class InstallCommand extends Command
         $this->ensureEnvFile();
 
         // ── Step 2: App settings ─────────────────────────────────────────────
-        $appName = $this->ask('App name', 'Bulbula');
+        $appName = $this->ask('App name', config('brand.name', 'BNEO'));
         $appUrl = $this->ask('App URL', 'http://localhost:8000');
         $this->writeEnvValue('APP_NAME', $appName);
         $this->writeEnvValue('APP_URL', $appUrl);
@@ -254,18 +254,13 @@ class InstallCommand extends Command
     private function renderWelcomeBanner(): void
     {
         $this->newLine();
-        $this->line('<fg=cyan> ██████╗ █████╗ ██████╗ ████████╗██╗  ██╗██╗███████╗</fg=cyan>');
-        $this->line('<fg=cyan>██╔════╝██╔══██╗██╔══██╗╚══██╔══╝╚██╗██╔╝██║██╔════╝</fg=cyan>');
-        $this->line('<fg=cyan>██║     ███████║██████╔╝   ██║    ╚███╔╝ ██║███████╗</fg=cyan>');
-        $this->line('<fg=cyan>██║     ██╔══██║██╔══██╗   ██║    ██╔██╗ ██║╚════██║</fg=cyan>');
-        $this->line('<fg=cyan>╚██████╗██║  ██║██║  ██║   ██║   ██╔╝ ██╗██║███████║</fg=cyan>');
-        $this->line('<fg=cyan> ╚═════╝╚═╝  ╚═╝╚═╝  ╚═╝   ╚═╝   ╚═╝  ╚═╝╚═╝╚══════╝</fg=cyan>');
+        $this->line('<fg=cyan>  BNEO</fg=cyan>');
         $this->newLine();
         $this->line('<fg=green>  Open Source Laravel eCommerce Platform</fg=green>');
-        $this->line('<fg=gray>  Version '.config('app.version', '1.0.0').'  •  https://example.com</fg=gray>');
+        $this->line('<fg=gray>  Version '.config('app.version', '1.0.0').'  •  '.config('brand.homepage', '').'</fg=gray>');
         $this->newLine();
         $this->line('<fg=yellow>════════════════════════════════════════════════════</fg=yellow>');
-        $this->line('<fg=yellow>   Welcome to the Bulbula Installation Wizard</fg=yellow>');
+        $this->line('<fg=yellow>   Welcome to the BNEO Installation Wizard</fg=yellow>');
         $this->line('<fg=yellow>════════════════════════════════════════════════════</fg=yellow>');
         $this->newLine();
     }
@@ -281,7 +276,7 @@ class InstallCommand extends Command
     ): void {
         $this->newLine();
         $this->line('<fg=green>════════════════════════════════════════════════════</fg=green>');
-        $this->line('<fg=green>  ✔  Bulbula installation complete!</fg=green>');
+        $this->line('<fg=green>  ✔  BNEO installation complete!</fg=green>');
         $this->line('<fg=green>════════════════════════════════════════════════════</fg=green>');
         $this->newLine();
         $this->line('  Admin panel : <fg=cyan>'.rtrim($appUrl, '/').'/admin/login</fg=cyan>');

@@ -17,20 +17,20 @@ const startSetup = () => {
 <template>
     <Head title="Setup Wizard" />
 
-    <div class="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center p-4">
+    <div class="theme-root min-h-screen flex items-center justify-center bg-background p-4 text-foreground">
         <div class="max-w-2xl w-full bg-white rounded-2xl shadow-2xl overflow-hidden">
-            <div class="bg-gradient-to-r from-blue-600 to-indigo-600 px-8 py-8 text-white">
+            <div class="bg-brand-navy border-b-4 border-brand-orange px-8 py-8 text-white">
                 <div class="flex items-center justify-center mb-4">
                     <div class="w-20 h-20 bg-white rounded-full flex items-center justify-center">
                         <img
-                            src="/logos/logo_icon.png"
+                            src="/logos/bneo-app-icon.png"
                             :alt="`${brand.name} logo`"
                             class="w-12 h-12 object-contain"
                         />
                     </div>
                 </div>
                 <h1 class="text-4xl font-bold text-center mb-2">{{ appName }}</h1>
-                <p class="text-center text-blue-100">Version {{ appVersion }}</p>
+                <p class="text-center text-slate-200">Version {{ appVersion }}</p>
             </div>
 
             <div class="p-8">
@@ -94,7 +94,7 @@ const startSetup = () => {
                     <button
                         type="button"
                         @click="startSetup"
-                        class="inline-flex items-center px-8 py-4 bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-semibold rounded-lg shadow-lg hover:from-blue-700 hover:to-indigo-700 transform hover:scale-105 transition-all duration-200"
+                        class="inline-flex items-center px-8 py-4 bg-brand-orange text-brand-navy font-semibold rounded-lg shadow-lg hover:bg-orange-500 transform hover:scale-105 transition-all duration-200"
                     >
                         <span>Get Started</span>
                         <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">

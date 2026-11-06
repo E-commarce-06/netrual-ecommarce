@@ -3,7 +3,7 @@
     "name": "PhonePe Payment Gateway",
     "description": "Accept payments via PhonePe - UPI, credit cards, debit cards, net banking, and wallets for Indian customers",
     "version": "1.0.0",
-    "author": "Bulbula Commerce",
+    "author": "BNEO",
     "author_url": "https://example.com",
     "icon": "smartphone",
     "type": "extension",

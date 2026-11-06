@@ -694,7 +694,7 @@ TEXT;
             padding: 20px;
         }
         .header {
-            background-color: #3b82f6;
+            background-color: #041735;
             color: white;
             padding: 30px;
             text-align: center;
@@ -716,11 +716,11 @@ TEXT;
             padding: 20px;
             border-radius: 5px;
             margin: 20px 0;
-            border-left: 4px solid #3b82f6;
+            border-left: 4px solid #f47015;
         }
         .invoice-info h2 {
             margin-top: 0;
-            color: #1e40af;
+            color: #041735;
             font-size: 18px;
         }
         .info-row {
@@ -740,7 +740,7 @@ TEXT;
         .total-amount {
             font-size: 24px;
             font-weight: bold;
-            color: #1e40af;
+            color: #041735;
             text-align: center;
             padding: 20px;
             background-color: white;
@@ -750,8 +750,8 @@ TEXT;
         .button {
             display: inline-block;
             padding: 12px 30px;
-            background-color: #3b82f6;
-            color: white;
+            background-color: #f47015;
+            color: #041735;
             text-decoration: none;
             border-radius: 5px;
             font-weight: bold;

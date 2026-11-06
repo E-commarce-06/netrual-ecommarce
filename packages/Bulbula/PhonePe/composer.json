@@ -1,11 +1,11 @@
 ﻿{
     "name": "bulbula/phonepe",
-    "description": "PhonePe Payment Gateway for Bulbula E-Commerce Platform",
+    "description": "PhonePe Payment Gateway for BNEO E-Commerce Platform",
     "type": "library",
     "license": "MIT",
     "authors": [
         {
-            "name": "Bulbula Team",
+            "name": "BNEO Team",
             "email": "support@example.com"
         }
     ],

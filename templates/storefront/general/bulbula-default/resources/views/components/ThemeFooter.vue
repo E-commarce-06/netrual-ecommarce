@@ -44,20 +44,20 @@ const footerSections = computed(() => {
 </script>
 
 <template>
-    <footer class="bg-slate-900 text-slate-300 py-12">
+    <footer class="bg-brand-navy py-12 text-slate-300">
         <div class="mx-auto px-4 sm:px-6 lg:px-8" :style="containerStyle">
             <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
                 <div>
                     <h3 class="text-xl font-bold text-white mb-4">{{ siteName }}</h3>
                     <p class="text-sm leading-relaxed mb-4">{{ siteDescription }}</p>
                     <div class="flex items-center gap-3">
-                        <a href="#" class="p-2 rounded-full bg-slate-800 hover:bg-blue-600 transition-colors" aria-label="Facebook">
+                        <a href="#" class="p-2 rounded-full bg-slate-800 hover:bg-brand-orange transition-colors" aria-label="Facebook">
                             <Facebook class="w-4 h-4" />
                         </a>
-                        <a href="#" class="p-2 rounded-full bg-slate-800 hover:bg-blue-600 transition-colors" aria-label="Instagram">
+                        <a href="#" class="p-2 rounded-full bg-slate-800 hover:bg-brand-orange transition-colors" aria-label="Instagram">
                             <Instagram class="w-4 h-4" />
                         </a>
-                        <a href="#" class="p-2 rounded-full bg-slate-800 hover:bg-blue-600 transition-colors" aria-label="Twitter">
+                        <a href="#" class="p-2 rounded-full bg-slate-800 hover:bg-brand-orange transition-colors" aria-label="Twitter">
                             <Twitter class="w-4 h-4" />
                         </a>
                     </div>

@@ -1,6 +1,6 @@
 {
   "name": "bulbula/stripe",
-  "description": "Stripe payment gateway extension for Bulbula Commerce",
+  "description": "Stripe payment gateway extension for BNEO Commerce",
   "type": "bulbula-extension",
   "require": {
     "php": "^8.3",

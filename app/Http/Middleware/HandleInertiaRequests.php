@@ -61,8 +61,10 @@ class HandleInertiaRequests extends Middleware
             'powered_by' => config('brand.powered_by'),
             'copyright_holder' => config('brand.copyright_holder'),
             'logo' => config('brand.logo'),
+            'logo_dark' => config('brand.logo_dark'),
             'logo_icon' => config('brand.logo_icon'),
             'favicon' => config('brand.favicon'),
+            'favicon_32' => config('brand.favicon_32'),
             'support_email' => config('brand.support_email'),
         ];
     }

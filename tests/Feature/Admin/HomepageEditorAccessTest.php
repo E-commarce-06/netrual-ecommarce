@@ -96,8 +96,8 @@ test('admin can save and publish homepage hero slider changes', function () {
                                         [
                                             'id'         => 's1',
                                             'image'      => '',
-                                            'grad_from'  => '#1e3a8a',
-                                            'grad_to'    => '#2563eb',
+                                            'grad_from'  => '#041735',
+                                            'grad_to'    => '#F47015',
                                             'badge'      => 'Sale',
                                             'headline'   => 'Admin Edited Hero Headline',
                                             'subheading' => 'Managed from the admin panel.',

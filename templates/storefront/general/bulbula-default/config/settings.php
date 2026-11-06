@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Bulbula Default Theme Settings Schema
+ * BNEO Default Theme Settings Schema
  * 
  * Define the settings fields that will appear in the theme customizer
  */
@@ -19,21 +19,21 @@ return [
                     'type' => 'color',
                     'label' => 'Primary Color',
                     'description' => 'Main brand color used for buttons, links, etc.',
-                    'default' => '#2563eb',
+                    'default' => '#041735',
                 ],
                 [
                     'id' => 'secondary_color',
                     'type' => 'color',
                     'label' => 'Secondary Color',
                     'description' => 'Secondary color for accents',
-                    'default' => '#1e40af',
+                    'default' => '#17355c',
                 ],
                 [
                     'id' => 'accent_color',
                     'type' => 'color',
                     'label' => 'Accent Color',
                     'description' => 'Used for highlights and special elements',
-                    'default' => '#0ea5e9',
+                    'default' => '#F47015',
                 ],
                 [
                     'id' => 'success_color',

@@ -6,13 +6,13 @@
     <title>Frontend assets missing — {{ config('brand.name') }}</title>
     <style>
         :root {
-            --bg: #0f1419;
-            --panel: #1a2332;
-            --text: #e8eef7;
-            --muted: #9aa8bc;
-            --accent: #3b82f6;
-            --accent-hover: #2563eb;
-            --border: #2d3a4d;
+            --bg: #041735;
+            --panel: #0b2040;
+            --text: #f4f7fc;
+            --muted: #b1bfd2;
+            --accent: #f47015;
+            --accent-hover: #de5b09;
+            --border: #29415f;
             --warn: #f59e0b;
         }
         * { box-sizing: border-box; }
@@ -20,7 +20,7 @@
             margin: 0;
             min-height: 100vh;
             font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
-            background: radial-gradient(ellipse at top, #1e293b 0%, var(--bg) 55%);
+            background: radial-gradient(ellipse at top, #122b4d 0%, var(--bg) 55%);
             color: var(--text);
             line-height: 1.55;
             display: flex;
@@ -73,7 +73,7 @@
             display: inline-block;
             text-decoration: none;
             background: var(--accent);
-            color: #fff;
+            color: #041735;
             font-weight: 600;
             font-size: 0.9rem;
             padding: 0.65rem 1rem;

@@ -118,7 +118,7 @@ const totalResults = computed(() => {
 
                         <!-- Product Info -->
                         <div class="p-4">
-                            <h3 class="text-sm font-medium text-gray-900 group-hover:text-indigo-600 line-clamp-2">
+                            <h3 class="text-sm font-medium text-gray-900 group-hover:text-brand-orange line-clamp-2">
                                 {{ product.name }}
                             </h3>
                             

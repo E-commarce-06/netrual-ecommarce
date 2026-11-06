@@ -1,9 +1,9 @@
 {
-    "name": "Default Theme",
+    "name": "BNEO Storefront",
     "slug": "bulbula-default",
-    "description": "A vibrant, mobile-first storefront theme with UI Editor homepage layouts, quick view, and modern blue retail polish.",
+    "description": "A mobile-first BNEO storefront with navy and orange branding, quick view, and a responsive shopping experience.",
+    "author": "BNEO",
     "version": "2.0.0",
-    "author": "",
     "author_url": "https://example.com",
     "screenshot": "screenshots/theme-preview.svg",
     "is_default": true,
@@ -17,13 +17,13 @@
     ],
     "settings": {
         "colors": {
-            "primary": "#2563eb",
-            "secondary": "#1e40af",
-            "accent": "#0ea5e9",
+            "primary": "#041735",
+            "secondary": "#17355c",
+            "accent": "#F47015",
             "success": "#10b981",
             "danger": "#ef4444",
             "warning": "#f59e0b",
-            "info": "#3b82f6"
+            "info": "#46658a"
         },
         "typography": {
             "font_family": "Inter, sans-serif",

@@ -46,8 +46,8 @@ function addSlide() {
   const newSlide: Slide = {
     id: `s${Date.now()}`,
     image: '',
-    grad_from: '#1e3a5f',
-    grad_to: '#0ea5e9',
+    grad_from: '#041735',
+    grad_to: '#F47015',
     badge: '',
     headline: 'New Slide Headline',
     subheading: 'Add your subheading here.',
@@ -183,14 +183,14 @@ function duplicateSlide(idx: number) {
             <div>
               <label class="block text-xs font-medium text-gray-600 dark:text-gray-400 mb-1">Gradient From</label>
               <div class="flex gap-1 items-center">
-                <input type="color" :value="slide.grad_from || '#1e3a5f'" class="h-7 w-8 cursor-pointer rounded border" @input="updateSlide(idx, 'grad_from', ($event.target as HTMLInputElement).value)" />
+                <input type="color" :value="slide.grad_from || '#041735'" class="h-7 w-8 cursor-pointer rounded border" @input="updateSlide(idx, 'grad_from', ($event.target as HTMLInputElement).value)" />
                 <input type="text" :value="slide.grad_from" class="uie-input flex-1 text-xs" @input="updateSlide(idx, 'grad_from', ($event.target as HTMLInputElement).value)" />
               </div>
             </div>
             <div>
               <label class="block text-xs font-medium text-gray-600 dark:text-gray-400 mb-1">Gradient To</label>
               <div class="flex gap-1 items-center">
-                <input type="color" :value="slide.grad_to || '#0ea5e9'" class="h-7 w-8 cursor-pointer rounded border" @input="updateSlide(idx, 'grad_to', ($event.target as HTMLInputElement).value)" />
+                <input type="color" :value="slide.grad_to || '#F47015'" class="h-7 w-8 cursor-pointer rounded border" @input="updateSlide(idx, 'grad_to', ($event.target as HTMLInputElement).value)" />
                 <input type="text" :value="slide.grad_to" class="uie-input flex-1 text-xs" @input="updateSlide(idx, 'grad_to', ($event.target as HTMLInputElement).value)" />
               </div>
             </div>

@@ -110,13 +110,13 @@ const goBack = () => {
 <template>
     <Head title="Sample catalog" />
 
-    <div class="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center p-4">
+    <div class="theme-root min-h-screen flex items-center justify-center bg-background p-4 text-foreground">
         <div class="max-w-3xl w-full bg-white rounded-2xl shadow-2xl overflow-hidden">
-            <div class="bg-gradient-to-r from-blue-600 to-indigo-600 p-6 text-white">
+            <div class="bg-brand-navy border-b-4 border-brand-orange p-6 text-white">
                 <h1 class="text-3xl font-bold text-center">
                     {{ hasDemo ? 'Sample catalog' : 'Empty catalog' }}
                 </h1>
-                <p class="text-center text-blue-100 mt-2">
+                <p class="text-center text-slate-200 mt-2">
                     {{ hasDemo
                         ? 'Optionally load sample products for your chosen selling model'
                         : 'You chose a blank start — continue without sample products'
@@ -130,12 +130,12 @@ const goBack = () => {
                     <span class="text-sm font-medium text-gray-700">75%</span>
                 </div>
                 <div class="w-full bg-gray-200 rounded-full h-2">
-                    <div class="bg-blue-600 h-2 rounded-full transition-all duration-300" style="width: 75%"></div>
+                    <div class="bg-brand-orange h-2 rounded-full transition-all duration-300" style="width: 75%"></div>
                 </div>
             </div>
 
             <div class="p-8">
-                <div class="bg-blue-50 border-2 border-blue-200 rounded-lg p-4 mb-6">
+                <div class="bg-orange-50 border-2 border-orange-200 rounded-lg p-4 mb-6">
                     <p class="text-sm text-gray-600">Selected starter</p>
                     <p class="font-bold text-gray-800">{{ selectedBusinessType?.name }}</p>
                     <p class="text-sm text-gray-600 mt-1">{{ selectedBusinessType?.description }}</p>
@@ -147,7 +147,7 @@ const goBack = () => {
                             <input
                                 type="checkbox"
                                 v-model="importProducts"
-                                class="w-5 h-5 text-blue-600 border-gray-300 rounded focus:ring-blue-500 mt-0.5"
+                                class="w-5 h-5 text-brand-orange border-gray-300 rounded focus:ring-brand-orange mt-0.5"
                             />
                             <div>
                                 <h3 class="font-semibold text-gray-800 mb-1">Import sample products</h3>
@@ -176,8 +176,8 @@ const goBack = () => {
                 </div>
 
                 <div v-if="importing && !importSuccess" class="text-center py-8">
-                    <div class="inline-flex items-center justify-center w-16 h-16 bg-blue-100 rounded-full mb-4">
-                        <svg class="w-8 h-8 text-blue-600 animate-spin" fill="none" viewBox="0 0 24 24">
+                    <div class="inline-flex items-center justify-center w-16 h-16 bg-orange-100 rounded-full mb-4">
+                        <svg class="w-8 h-8 text-brand-orange animate-spin" fill="none" viewBox="0 0 24 24">
                             <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                             <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                         </svg>
@@ -232,7 +232,7 @@ const goBack = () => {
                     <button
                         type="button"
                         @click="hasDemo && importProducts ? startImport() : continueWithoutSamples()"
-                        class="inline-flex items-center px-6 py-2 bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-medium rounded-lg hover:from-blue-700 hover:to-indigo-700 transform hover:scale-105 transition-all duration-200"
+                        class="inline-flex items-center px-6 py-2 bg-brand-orange text-brand-navy font-medium rounded-lg hover:bg-orange-500 transform hover:scale-105 transition-all duration-200"
                     >
                         {{ hasDemo && importProducts ? 'Import samples' : 'Continue' }}
                     </button>

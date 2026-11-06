@@ -164,7 +164,7 @@ const discountPercentage = (product: Product) => {
                         </div>
                     </div>
                     <div class="p-4">
-                        <h3 class="font-medium text-gray-900 mb-2 line-clamp-2 group-hover:text-indigo-600 transition-colors">
+                        <h3 class="font-medium text-gray-900 mb-2 line-clamp-2 group-hover:text-brand-orange transition-colors">
                             {{ product.name }}
                         </h3>
                         <div class="flex items-center justify-between">

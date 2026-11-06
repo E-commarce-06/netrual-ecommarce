@@ -12,7 +12,7 @@ class MigrateCategoriesCommand extends Command
 {
     protected $signature = 'wc:migrate:categories {--dry-run : Preview migration without making changes}';
     
-    protected $description = 'Migrate WooCommerce product categories to Bulbula';
+    protected $description = 'Migrate WooCommerce product categories to BNEO';
     
     private array $errors = [];
     

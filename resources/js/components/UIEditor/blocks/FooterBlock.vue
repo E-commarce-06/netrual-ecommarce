@@ -18,11 +18,11 @@ const menuItems = ref<MenuItem[]>([])
 const loading   = ref(false)
 
 // ── Computed settings ─────────────────────────────────────────────
-const bgColor       = computed(() => (props.settings.background_color as string) || '#111827')
+const bgColor       = computed(() => (props.settings.background_color as string) || '#041735')
 const textColor     = computed(() => (props.settings.text_color        as string) || '#9ca3af')
 const headingColor  = computed(() => (props.settings.heading_color     as string) || '#ffffff')
-const accentColor   = computed(() => (props.settings.accent_color      as string) || '#3b82f6')
-const borderColor   = computed(() => (props.settings.border_color      as string) || '#1f2937')
+const accentColor   = computed(() => (props.settings.accent_color      as string) || '#F47015')
+const borderColor   = computed(() => (props.settings.border_color      as string) || '#29415f')
 
 const logoType    = computed(() => (props.settings.logo_type   as string) || 'text')
 const logoText    = computed(() => (props.settings.logo_text   as string) || 'My Store')
@@ -139,7 +139,7 @@ const activeSocials = computed(() =>
             :style="{
               display: 'flex', alignItems: 'center', justifyContent: 'center',
               width: '34px', height: '34px', borderRadius: '8px',
-              background: '#1f2937', color: textColor, textDecoration: 'none',
+              background: '#29415f', color: textColor, textDecoration: 'none',
               transition: 'background .2s',
             }"
           >
@@ -221,7 +221,7 @@ const activeSocials = computed(() =>
               display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
               padding: '3px 8px', border: `1px solid ${borderColor}`, borderRadius: '5px',
               fontSize: '10px', fontWeight: '700', color: headingColor,
-              letterSpacing: '.5px', background: '#1f2937',
+              letterSpacing: '.5px', background: '#29415f',
             }"
           >{{ card }}</span>
         </div>
