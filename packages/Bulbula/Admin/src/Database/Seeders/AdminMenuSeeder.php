@@ -309,7 +309,7 @@ class AdminMenuSeeder extends Seeder
                 'key' => 'content-homepage',
                 'title' => 'Homepage',
                 'icon' => 'home',
-                'route' => 'admin.uieditor.homepage.editor',
+                'route' => 'admin.content.homepage.index',
                 'parent_id' => $contentId,
                 'order' => 0,
                 'location' => 'admin',

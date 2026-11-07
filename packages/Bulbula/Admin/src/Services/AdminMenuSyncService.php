@@ -187,7 +187,7 @@ class AdminMenuSyncService
             [
                 'title' => 'Homepage',
                 'icon' => 'home',
-                'route' => 'admin.uieditor.homepage.editor',
+                'route' => 'admin.content.homepage.index',
                 'url' => null,
                 'parent_id' => $contentId,
                 'order' => 0,

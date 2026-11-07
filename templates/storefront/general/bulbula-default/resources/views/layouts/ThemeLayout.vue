@@ -10,9 +10,36 @@ import { ChevronUp } from 'lucide-vue-next';
 const page = usePage();
 const { cssVars, backToTop, containerWidth } = useThemeSettings();
 
-const theme = computed(() => page.props.theme);
-const siteConfig = computed(() => page.props.siteConfig);
-const categories = computed(() => page.props.categories || []);
+interface SiteConfig {
+    name: string;
+    url: string;
+    description: string;
+    logo?: string | null;
+}
+
+interface StorefrontCategory {
+    id: number;
+    name: string;
+    slug: string;
+    image?: string | null;
+    products_count?: number;
+}
+
+const theme = computed(() => (page.props as Record<string, unknown>).theme);
+const siteConfig = computed<SiteConfig>(() => {
+    const config = (page.props as Record<string, unknown>).siteConfig;
+    return config && typeof config === 'object'
+        ? config as SiteConfig
+        : { name: '', url: '/', description: '' };
+});
+const homepageSettings = computed(() => {
+    const settings = (page.props as Record<string, unknown>).homepageSettings;
+    return settings && typeof settings === 'object' ? settings as Record<string, unknown> : null;
+});
+const categories = computed<StorefrontCategory[]>(() => {
+    const value = (page.props as Record<string, unknown>).categories;
+    return Array.isArray(value) ? value as StorefrontCategory[] : [];
+});
 const footerRaw = computed(() => (page.props as Record<string, unknown>).footerRegion ?? null);
 
 function parseRegion(v: unknown): Record<string, unknown> | null {
@@ -53,6 +80,13 @@ onUnmounted(() => {
         class="theme-root min-h-screen flex flex-col bg-background text-foreground"
         :style="cssVars"
     >
+        <div
+            v-if="homepageSettings?.announcement_enabled && homepageSettings.announcement_text"
+            class="relative z-40 bg-brand-orange px-4 py-2 text-center text-[11px] font-bold tracking-[0.08em] text-brand-navy sm:text-xs"
+        >
+            {{ homepageSettings.announcement_text }}
+        </div>
+
         <ThemeHeader
             :theme="theme"
             :site-config="siteConfig"

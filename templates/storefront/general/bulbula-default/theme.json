@@ -4,6 +4,7 @@
     "description": "A mobile-first BNEO storefront with navy and orange branding, quick view, and a responsive shopping experience.",
     "author": "BNEO",
     "version": "2.0.0",
+    "native_homepage": true,
     "author_url": "https://example.com",
     "screenshot": "screenshots/theme-preview.svg",
     "is_default": true,

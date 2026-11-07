@@ -10,14 +10,21 @@
                     <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">Update "{{ page.title }}" content page</p>
                 </div>
                 <div class="flex gap-2">
-                    <!-- Block Editor button -->
                     <a
+                        v-if="!page.is_homepage"
                         :href="`/admin/uieditor/pages/${page.id}/editor`"
-                        class="flex items-center gap-2 px-4 py-2 text-sm font-medium text-white bg-indigo-600 rounded-lg hover:bg-indigo-700 transition-colors"
+                        class="flex items-center gap-2 px-4 py-2 text-sm font-medium text-brand-navy bg-brand-orange rounded-lg hover:bg-orange-500 transition-colors"
                     >
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 5a1 1 0 011-1h4a1 1 0 011 1v4a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM14 5a1 1 0 011-1h4a1 1 0 011 1v4a1 1 0 01-1 1h-4a1 1 0 01-1-1V5zM4 15a1 1 0 011-1h4a1 1 0 011 1v4a1 1 0 01-1 1H5a1 1 0 01-1-1v-4zM14 15a1 1 0 011-1h4a1 1 0 011 1v4a1 1 0 01-1 1h-4a1 1 0 01-1-1v-4z"/></svg>
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 5a1 1 0 011-1h4a1 1 0 011 1v4a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM14 5a1 1 0 011-1h4a1 1 0 011 1v4a1 1 0 01-1 1h-4a1 1 0 01-1-1V5zM4 15a1 1 0 011-1h4a1 1 0 011 1v4a1 1 0 01-1 1H5a1 1 0 01-1-1v-4zM14 15a1 1 0 011-1h4a1 1 0 011 1v4a1 1 0 01-1-1h-4a1 1 0 01-1-1v-4z"/></svg>
                         Block Editor
                     </a>
+                    <Link
+                        v-else
+                        href="/admin/content/homepage"
+                        class="flex items-center gap-2 px-4 py-2 text-sm font-semibold text-brand-navy bg-brand-orange rounded-lg hover:bg-orange-500 transition-colors"
+                    >
+                        Manage Homepage
+                    </Link>
                     <a
                         :href="page.url"
                         target="_blank"
@@ -42,15 +49,15 @@
             </div>
 
             <!-- Info Banner -->
-            <div v-if="page.is_homepage" class="bg-indigo-50 dark:bg-indigo-900/20 border border-indigo-200 dark:border-indigo-800 rounded-lg p-4">
+            <div v-if="page.is_homepage" class="bg-orange-50 dark:bg-orange-900/20 border border-orange-200 dark:border-orange-800 rounded-lg p-4">
                 <div class="flex gap-3">
-                    <svg class="w-5 h-5 text-indigo-600 dark:text-indigo-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg class="w-5 h-5 text-orange-600 dark:text-orange-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
                     </svg>
                     <div class="flex-1">
-                        <h4 class="text-sm font-medium text-indigo-900 dark:text-indigo-200">Homepage</h4>
-                        <div class="mt-1 text-xs text-indigo-700 dark:text-indigo-300 space-y-1">
-                            <p>This is your store homepage. Use the <strong>Block Editor</strong> button above to design the page layout with drag-and-drop blocks.</p>
+                        <h4 class="text-sm font-medium text-gray-900 dark:text-white">Homepage</h4>
+                        <div class="mt-1 text-xs text-gray-700 dark:text-gray-300 space-y-1">
+                            <p>The live homepage uses the custom storefront layout. Manage its hero, images and product sections from <Link href="/admin/content/homepage" class="font-semibold text-orange-700 underline dark:text-orange-300">Homepage settings</Link>.</p>
                             <p>The URL key is fixed to <strong>home</strong> and cannot be changed.</p>
                         </div>
                     </div>

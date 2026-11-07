@@ -112,7 +112,8 @@ class HomeService extends ShopService
             $blocksUpdatedAt = Block::whereIn('identifier', $blockIdentifiers)->max('updated_at');
             $blocksVersion = $blocksUpdatedAt ? (int) strtotime((string) $blocksUpdatedAt) : 0;
 
-            return $this->remember('homepage.data.v5.' . $activeThemeSlug . '.' . $blocksVersion, 3600, function () use ($featuredCount, $blockIdentifiers, $heroCandidateGroups, $sectionCandidateGroups) {
+            // Homepage data contains catalog snapshots, so keep it fresh as stock changes.
+            return $this->remember('homepage.data.v6.' . $activeThemeSlug . '.' . $blocksVersion, 300, function () use ($featuredCount, $blockIdentifiers, $heroCandidateGroups, $sectionCandidateGroups) {
                 // Get active CMS blocks for homepage
                 $blocks = Block::whereIn('identifier', $blockIdentifiers)
                     ->active()

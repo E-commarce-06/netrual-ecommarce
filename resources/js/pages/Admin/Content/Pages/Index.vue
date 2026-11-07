@@ -18,24 +18,24 @@
                 </Link>
             </div>
 
-            <!-- Homepage design shortcut -->
+            <!-- Custom homepage manager -->
             <div
                 v-if="homepagePage"
-                class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 rounded-xl border border-blue-200 bg-blue-50 px-5 py-4 dark:border-blue-800 dark:bg-blue-900/20"
+                class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 rounded-xl border border-orange-200 bg-orange-50 px-5 py-4 dark:border-orange-800 dark:bg-orange-900/20"
             >
                 <div>
-                    <p class="text-sm font-semibold text-blue-900 dark:text-blue-100">Homepage design</p>
-                    <p class="text-sm text-blue-700 dark:text-blue-300">
-                        Edit the hero slider, discount banners, blue announcement bar and every other homepage section visually.
+                    <p class="text-sm font-semibold text-gray-900 dark:text-white">Homepage</p>
+                    <p class="text-sm text-gray-700 dark:text-gray-300">
+                        Update the hero, imagery, section titles and visibility with a straightforward settings editor.
                     </p>
                 </div>
-                <a
-                    :href="`/admin/uieditor/pages/${homepagePage.id}/editor`"
-                    class="inline-flex shrink-0 items-center px-4 py-2 bg-blue-600 border border-transparent rounded-lg font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition"
+                <Link
+                    href="/admin/content/homepage"
+                    class="inline-flex shrink-0 items-center px-4 py-2 bg-brand-orange border border-transparent rounded-lg font-semibold text-xs text-brand-navy uppercase tracking-widest hover:bg-orange-500 focus:outline-none focus:ring-2 focus:ring-brand-orange focus:ring-offset-2 transition"
                 >
                     <LayoutGrid class="w-4 h-4 mr-2" />
-                    Design Homepage
-                </a>
+                    Manage Homepage
+                </Link>
             </div>
 
             <!-- Statistics Cards -->
@@ -295,17 +295,24 @@
                                             >
                                                 <ExternalLink class="w-4 h-4" />
                                             </a>
+                                            <Link
+                                                v-if="page.is_homepage"
+                                                href="/admin/content/homepage"
+                                                class="p-2 rounded-lg text-orange-700 bg-orange-50 hover:bg-orange-100 dark:text-orange-300 dark:bg-orange-900/30 dark:hover:bg-orange-900/50"
+                                                title="Manage Homepage settings"
+                                            >
+                                                <LayoutGrid class="w-4 h-4" />
+                                            </Link>
                                             <a
+                                                v-else
                                                 :href="`/admin/uieditor/pages/${page.id}/editor`"
-                                                class="p-2 rounded-lg transition-colors"
-                                                :class="page.is_homepage
-                                                    ? 'text-blue-600 bg-blue-50 hover:bg-blue-100 dark:text-blue-300 dark:bg-blue-900/30 dark:hover:bg-blue-900/50'
-                                                    : 'text-gray-400 hover:text-blue-600 hover:bg-blue-50 dark:hover:bg-blue-900/20'"
-                                                :title="page.is_homepage ? 'Design Homepage in Block Editor (hero, banners, sections)' : 'Open in Block Editor'"
+                                                class="p-2 rounded-lg text-gray-400 hover:text-blue-600 hover:bg-blue-50 dark:hover:bg-blue-900/20 transition-colors"
+                                                title="Open in Block Editor"
                                             >
                                                 <LayoutGrid class="w-4 h-4" />
                                             </a>
                                             <Link
+                                                v-if="!page.is_homepage"
                                                 :href="pageRoutes.edit({ page: page.id }).url"
                                                 class="p-2 text-gray-400 hover:text-indigo-600 hover:bg-indigo-50 dark:hover:bg-indigo-900/20 rounded-lg transition-colors"
                                                 title="Edit Page"

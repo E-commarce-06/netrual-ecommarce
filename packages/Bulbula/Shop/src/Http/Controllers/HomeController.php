@@ -53,12 +53,16 @@ class HomeController extends Controller
     public function index()
     {
         $data = $this->homeService->getHomepageData();
+        $homepageSettings = $this->homepageSettings();
         $homepageLayout = $this->usesNativeHomepage()
             ? null
             : $this->layoutService->getPublishedHomepage();
+        $siteName = $this->settingService->get('site_name') ?: config('brand.name');
+        $siteDescription = $this->settingService->get('site_tagline') ?: config('brand.tagline');
         
         // Use ThemeViewResolver to get correct view path
         return Inertia::render($this->themeResolver->resolve('Home/Index'), [
+            'homepageSettings' => $homepageSettings,
             // 'theme' prop is shared via HandleInertiaRequests middleware (flattened settings)
             'featuredProducts' => $data['featured_products'],
             'heroProducts' => $data['hero_products'] ?? [],
@@ -70,18 +74,26 @@ class HomeController extends Controller
             'cmsBlocks' => $data['blocks'] ?? [],
             'layoutData' => $homepageLayout?->layout_data,
             'siteConfig' => [
-                'name' => $this->settingService->get('site_name') ?: config('brand.name'),
+                'name' => $siteName,
                 'url' => config('app.url'),
-                'description' => $this->settingService->get('site_tagline') ?: config('brand.tagline'),
+                'description' => $siteDescription,
                 'logo' => $this->settingService->get('site_logo') ?? null,
                 'favicon' => $this->settingService->get('site_favicon') ?? null,
             ],
             'seo' => [
-                'title' => config('app.name') . ' - ' . trans('shop::shop.homepage.title'),
-                'description' => 'Welcome to our online store',
-                'keywords' => 'ecommerce, shop, products',
+                'title' => $siteName . ' — Shop online',
+                'description' => $homepageSettings['hero_description'] ?? $siteDescription,
+                'keywords' => 'online store, products, shopping',
             ],
         ]);
+    }
+
+    protected function homepageSettings(): array
+    {
+        $defaults = (array) config('shop.homepage.content_defaults', []);
+        $saved = $this->settingService->get('homepage_content', []);
+
+        return array_replace($defaults, is_array($saved) ? $saved : []);
     }
 
     protected function usesNativeHomepage(): bool

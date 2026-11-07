@@ -47,11 +47,9 @@ class ThemeSeeder extends Seeder
         Artisan::call('theme:discover');
         $this->command->info('  ↳ Theme assets published to public/templates/'.$slug.'/.');
 
-        // ── 1b. Homepage CMS page (block-editor entry point) ─────────────
-        // The editor opens the homepage through a CMS page flagged
-        // is_homepage = true. Seed it alongside the layout so installs made
-        // through the web setup wizard (which seeds pages separately) still
-        // get an editable homepage.
+        // ── 1b. Homepage CMS page metadata ────────────────────────────────
+        // Keep the homepage row flagged for the Content → Pages list and
+        // legacy CMS integrations; storefront content is managed separately.
         if (! Page::homepage()->exists()) {
             Page::firstOrCreate(
                 ['url_key' => 'home'],
@@ -69,7 +67,7 @@ class ThemeSeeder extends Seeder
                 ->where('is_homepage', false)
                 ->update(['is_homepage' => true]);
 
-            $this->command->info('  ↳ Homepage CMS page seeded (block-editor entry point).');
+            $this->command->info('  ↳ Homepage CMS page metadata seeded.');
         }
 
         // ── 2. Homepage UIEditor layout ────────────────────────────────────
@@ -77,7 +75,9 @@ class ThemeSeeder extends Seeder
         // This allows admins to customise the homepage without it being overwritten on re-seed.
         $existingPublished = PageLayout::homepage()->published()->first();
 
-        if ($existingPublished) {
+        if ($themeConfig['native_homepage'] ?? false) {
+            $this->command->info('  ↳ Native homepage enabled — skipping legacy homepage layout seed.');
+        } elseif ($existingPublished) {
             $this->command->info('  ↳ Homepage layout already published — skipping homepage seed.');
         } else {
             $themeDataPath = $themePath . '/data/theme-data.json';

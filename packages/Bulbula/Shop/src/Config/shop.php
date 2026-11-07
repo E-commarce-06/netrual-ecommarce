@@ -44,9 +44,39 @@ return [
         // CMS Block identifier used for the storefront hero banner.
         // You can point this to a theme/demo identifier (e.g. 'fashion-hero-banner').
         'hero_block_identifier' => 'homepage-hero',
-        // Optional: multiple CMS block identifiers for hero slides.
-        // Example: ['fashion-hero-banner', 'fashion-hero-banner-2']
+        // Optional: multiple CMS block identifiers for legacy/editor hero slides.
         'hero_block_identifiers' => [],
+
+        // Simple, structured content for the native storefront homepage.
+        // These values can be edited from Admin → Content → Homepage.
+        'content_defaults' => [
+            'announcement_enabled' => true,
+            'announcement_text' => 'Good finds. Thoughtfully chosen.',
+            'hero_eyebrow' => 'THE BNEO EDIT',
+            'hero_title' => 'Find your next favourite.',
+            'hero_description' => 'Discover thoughtfully chosen products that bring a little more ease and character to your everyday.',
+            'hero_primary_text' => 'Shop all products',
+            'hero_primary_url' => '/products',
+            'hero_secondary_text' => 'Browse categories',
+            'hero_secondary_url' => '#categories',
+            'hero_image' => '',
+            'show_trust_strip' => true,
+            'categories_enabled' => true,
+            'categories_title' => 'Shop by category',
+            'featured_enabled' => true,
+            'featured_title' => 'Picked for you',
+            'featured_count' => 4,
+            'new_arrivals_enabled' => true,
+            'new_arrivals_title' => 'Fresh finds',
+            'new_arrivals_count' => 4,
+            'promo_enabled' => true,
+            'promo_eyebrow' => 'THE BNEO SELECTION',
+            'promo_title' => 'Make everyday feel a little better.',
+            'promo_description' => 'Explore a considered mix of useful, beautiful things for the moments that make up your day.',
+            'promo_cta_text' => 'Explore the collection',
+            'promo_cta_url' => '/products',
+            'promo_image' => '',
+        ],
     ],
 
     /*
