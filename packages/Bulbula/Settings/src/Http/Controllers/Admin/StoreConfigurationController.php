@@ -23,7 +23,8 @@ class StoreConfigurationController
         return Inertia::render('Admin/Settings/StoreConfiguration/Index', [
             'settings' => [
                 // Store Details
-                'store_name' => (string) $this->settingService->get('store_name', ''),
+                'store_name' => (string) ($this->settingService->get('store_name')
+                    ?: $this->settingService->get('site_name', '')),
                 'store_description' => (string) $this->settingService->get('store_description', ''),
                 'business_registration' => (string) $this->settingService->get('business_registration', ''),
                 'vat_number' => (string) $this->settingService->get('vat_number', ''),
@@ -149,6 +150,9 @@ class StoreConfigurationController
                 
                 $this->settingService->set($key, $value, $type, 'store');
             }
+
+            // Keep the storefront identity consistent across Store Configuration and General Settings.
+            $this->settingService->set('site_name', $validated['store_name'], 'string', 'general');
 
             return redirect()->route('admin.settings.store.index')->with('success', 'Store configuration saved successfully.');
         } catch (\Illuminate\Validation\ValidationException $e) {

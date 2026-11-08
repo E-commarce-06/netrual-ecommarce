@@ -10,10 +10,21 @@ import { initializeTheme, updateThemeForRoute } from './composables/useAppearanc
 import { resolveTemplatePage } from './lib/resolveTemplatePage';
 
 const appName = import.meta.env.VITE_APP_NAME || 'BNEO';
+let storefrontName = '';
+const isAdminRoute = () => typeof window !== 'undefined' && /^\/admin(?:\/|$)/.test(window.location.pathname);
+const readStorefrontName = (pageProps: Record<string, any>) => {
+    const siteConfig = pageProps.siteConfig as { name?: unknown } | undefined;
+    return typeof siteConfig?.name === 'string' ? siteConfig.name.trim() : '';
+};
 const pinia = createPinia();
 
 createInertiaApp({
-    title: (title) => (title ? `${title} - ${appName}` : appName),
+    title: (title) => {
+        const brandName = !isAdminRoute() && storefrontName ? storefrontName : appName;
+        if (!title) return brandName;
+        if (!isAdminRoute() && brandName && title.toLocaleLowerCase().includes(brandName.toLocaleLowerCase())) return title;
+        return `${title} - ${brandName}`;
+    },
     resolve: (name) => {
         // Legacy Theme:: / themes/ component names → templates/{slug}/pages/...
         if (name.startsWith('themes/')) {
@@ -46,6 +57,7 @@ createInertiaApp({
         )
     },
     setup({ el, App, props, plugin }) {
+        storefrontName = readStorefrontName(props.initialPage.props as Record<string, any>);
         createApp({ render: () => h(App, props) })
             .use(plugin)
             .use(pinia)
@@ -73,6 +85,7 @@ initializeTheme();
 // axios.defaults, this X-CSRF-TOKEN arrives on every subsequent POST/PUT/DELETE.
 router.on('navigate', (event) => {
     const pageUrl = event.detail.page.url;
+    storefrontName = readStorefrontName(event.detail.page.props as Record<string, any>);
     updateThemeForRoute(new URL(pageUrl, window.location.origin).pathname);
 
     const token = (event.detail.page.props as Record<string, unknown>).csrf_token as string | undefined;

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Head } from '@inertiajs/vue3'
+import { Head, usePage } from '@inertiajs/vue3'
 import { computed, ref } from 'vue'
 import {
   ArrowRight,
@@ -94,6 +94,8 @@ const props = withDefaults(defineProps<Props>(), {
   categories: () => [],
 })
 
+const page = usePage()
+const brand = computed(() => (page.props.brand ?? {}) as Record<string, string>)
 const showQuickView = ref(false)
 const selectedProductSlug = ref<string | null>(null)
 
@@ -121,7 +123,7 @@ const heroSecondaryUrl = computed(() => {
 
   return fallback === '#categories' && !hasCategories ? '/products' : fallback
 })
-const siteName = computed(() => props.siteConfig?.name || 'BNEO')
+const siteName = computed(() => props.siteConfig?.name || brand.value.name || 'Store')
 
 const categoryTints = [
   'from-orange-200 via-orange-100 to-amber-50',
@@ -272,7 +274,7 @@ function openQuickView(slug: string) {
                 <div class="absolute left-[23%] top-[19%] h-36 w-36 rounded-[2rem] border border-white/35 bg-white/20 rotate-[-12deg] shadow-xl sm:h-48 sm:w-48" />
                 <div class="absolute left-[42%] top-[34%] h-36 w-36 rounded-[2rem] border border-white/40 bg-[#fff9ef]/65 rotate-[9deg] shadow-2xl sm:h-48 sm:w-48" />
                 <div class="absolute left-[31%] top-[48%] h-28 w-28 rounded-full bg-[#12213a]/90 shadow-xl sm:h-36 sm:w-36" />
-                <span class="absolute bottom-8 right-8 text-[2rem] font-black tracking-[-0.08em] text-white/70 sm:text-5xl">BNEO</span>
+                <span class="absolute bottom-8 right-8 text-[2rem] font-black tracking-[-0.08em] text-white/70 sm:text-5xl">{{ siteName }}</span>
               </div>
               <div class="absolute inset-0 bg-gradient-to-t from-[#7e421b]/25 to-transparent md:bg-gradient-to-l md:from-transparent md:to-[#e88b36]/15" />
               <div v-if="promoProduct" class="absolute bottom-5 left-5 right-5 rounded-2xl border border-white/25 bg-[#10213d]/85 p-3 text-white shadow-lg backdrop-blur-xl sm:bottom-7 sm:left-7 sm:right-auto sm:max-w-[250px] sm:p-4">

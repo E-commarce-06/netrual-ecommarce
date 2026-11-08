@@ -4,7 +4,9 @@ use Bulbula\Core\Services\SettingService;
 use Inertia\Testing\AssertableInertia as Assert;
 use Illuminate\Support\Facades\Mail;
 
-test('contact us is a public page with store contact details', function () {
+test('contact us uses the same admin-configured name as the rest of the storefront', function () {
+    app(SettingService::class)->set('site_name', 'BNEO', 'string', 'general');
+    app(SettingService::class)->set('store_name', 'Arkeonet Commerce', 'string', 'store');
     app(SettingService::class)->set('support_email', 'support@example.test');
     app(SettingService::class)->set('store_phone', '+251 911 234 567');
     app(SettingService::class)->set('store_whatsapp', '+251 911 234 567');
@@ -13,6 +15,8 @@ test('contact us is a public page with store contact details', function () {
         ->assertOk()
         ->assertInertia(fn (Assert $page) => $page
             ->component('templates/bulbula-default/pages/Contact/Index')
+            ->where('siteConfig.name', 'Arkeonet Commerce')
+            ->where('storeName', 'Arkeonet Commerce')
             ->where('supportEmail', 'support@example.test')
             ->where('phone', '+251 911 234 567')
             ->where('whatsapp', '+251 911 234 567')

@@ -42,8 +42,8 @@ const props = withDefaults(defineProps<Props>(), {
 
 const page = usePage();
 const brand = computed(() => (page.props.brand ?? {}) as Record<string, string>);
-// Store name: siteConfig from the server, else the brand name from config/brand.php.
-const siteName = computed(() => props.siteConfig?.name || brand.value.name || 'BNEO');
+// Store name: the admin-configured storefront name, with the platform brand as a last resort.
+const siteName = computed(() => props.siteConfig?.name || brand.value.name || 'Store');
 const siteLogo = computed(() => {
     const logo = props.siteConfig?.logo?.trim();
     if (!logo) return null;
@@ -289,12 +289,10 @@ onUnmounted(() => {
                             :alt="siteName"
                             class="h-8 max-w-[200px] object-contain md:h-9"
                         />
-                        <img
+                        <span
                             v-else
-                            :src="brand.logo || '/logos/bneo-logo-primary.png'"
-                            :alt="siteName"
-                            class="h-8 max-w-[200px] object-contain md:h-9"
-                        />
+                            class="max-w-[200px] truncate text-lg font-bold tracking-tight text-slate-900 md:text-xl"
+                        >{{ siteName }}</span>
                     </Link>
                 </div>
 

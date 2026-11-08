@@ -138,7 +138,7 @@ const footerSections = computed(() => {
                 <div class="text-center text-sm">
                     <p>&copy; {{ currentYear }} {{ siteName }}. All rights reserved.</p>
                     <p v-if="showPlatformBranding" class="mt-1 text-slate-500">
-                        Powered by <span class="text-slate-400 font-medium">{{ brand.powered_by }}</span>
+                        Powered by <span class="text-slate-400 font-medium">{{ siteName }}</span>
                     </p>
                 </div>
             </div>

@@ -26,7 +26,8 @@ class GeneralSettingsController extends Controller
         return Inertia::render('Admin/Settings/General/Index', [
             'settings' => [
                 // Site Information
-                'site_name' => (string) $this->settingService->get('site_name', ''),
+                'site_name' => (string) ($this->settingService->get('store_name')
+                    ?: $this->settingService->get('site_name', '')),
                 'site_tagline' => (string) $this->settingService->get('site_tagline', ''),
                 'admin_email' => (string) $this->settingService->get('admin_email', ''),
                 'contact_phone' => (string) $this->settingService->get('contact_phone', ''),
@@ -191,10 +192,11 @@ class GeneralSettingsController extends Controller
             $validated['mobile_auth_logo'] = $request->input('mobile_auth_logo');
         }
 
-        // Save all settings
+        // Keep the storefront identity consistent across General Settings and Store Configuration.
         foreach ($validated as $key => $value) {
             $this->settingService->set($key, $value, 'string', 'general');
         }
+        $this->settingService->set('store_name', $validated['site_name'], 'string', 'store');
 
         return back()->with('success', 'General settings saved successfully.');
     }

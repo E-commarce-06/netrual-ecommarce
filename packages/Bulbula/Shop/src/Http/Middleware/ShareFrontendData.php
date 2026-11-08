@@ -44,7 +44,9 @@ class ShareFrontendData
         // Core frontend data (shared across ALL themes)
         $sharedData = [
             'siteConfig' => [
-                'name' => $this->settingService->get('site_name') ?: config('brand.name'),
+                'name' => $this->settingService->get('store_name')
+                    ?: $this->settingService->get('site_name')
+                    ?: config('brand.name'),
                 'url' => config('app.url'),
                 'description' => $this->settingService->get('site_tagline') ?: config('brand.tagline'),
                 'logo' => $this->settingService->get('site_logo') ?? null,

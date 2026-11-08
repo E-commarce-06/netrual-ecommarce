@@ -284,6 +284,7 @@ watch(() => form.store_email, (newEmail) => {
                         required
                       />
                       <p v-if="form.errors.store_name" class="mt-1 text-sm text-red-600 dark:text-red-400">{{ form.errors.store_name }}</p>
+                      <p v-else class="mt-1 text-xs text-gray-500 dark:text-gray-400">This is the storefront name and stays in sync with General Settings.</p>
                     </div>
 
                     <div>
