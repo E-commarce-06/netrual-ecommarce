@@ -1,5 +1,7 @@
-@php($isAdminArea = request()->is('admin', 'admin/*'))
-@php($initialAppearance = $isAdminArea ? ($appearance ?? 'system') : 'light')
+@php
+    $isAdminArea = request()->is('admin', 'admin/*');
+    $initialAppearance = $isAdminArea ? ($appearance ?? 'system') : 'light';
+@endphp
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}" @class(['dark' => $initialAppearance === 'dark'])>
     <head>
