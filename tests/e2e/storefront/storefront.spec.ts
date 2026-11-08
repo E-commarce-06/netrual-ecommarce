@@ -104,6 +104,26 @@ test('products listing: mobile filters are hidden behind a button, desktop shows
     }
 });
 
+test('products listing: narrow phones get readable cards and an uncramped toolbar', async ({ page }) => {
+    await page.setViewportSize({ width: 320, height: 800 });
+    await page.goto('/products', { waitUntil: 'networkidle' });
+
+    const cards = page.locator('.storefront-product-card');
+    await expect(cards.first()).toBeVisible();
+    const firstCard = await cards.nth(0).boundingBox();
+    const secondCard = await cards.nth(1).boundingBox();
+    expect(firstCard).not.toBeNull();
+    expect(secondCard).not.toBeNull();
+    expect(firstCard!.width).toBeGreaterThan(270);
+    expect(secondCard!.y).toBeGreaterThan(firstCard!.y + firstCard!.height);
+
+    const sortSelect = page.locator('select').first();
+    const sortBox = await sortSelect.boundingBox();
+    expect(sortBox).not.toBeNull();
+    expect(sortBox!.width).toBeGreaterThan(150);
+    expect(sortBox!.x + sortBox!.width).toBeLessThanOrEqual(320);
+});
+
 test('products listing: mobile product grid starts above the filters', async ({ page, viewport, isMobile }) => {
     test.skip(!(isMobile || (viewport && viewport.width < 1024)), 'mobile only');
     await page.goto('/products', { waitUntil: 'networkidle' });

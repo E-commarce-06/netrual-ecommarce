@@ -96,7 +96,7 @@ const handleSortChange = (event: Event) => {
     const sort = (event.target as HTMLSelectElement).value;
     const params = new URLSearchParams(window.location.search);
     params.set('sort', sort);
-    
+
     isLoading.value = true;
     router.get(`/products?${params.toString()}`, {}, {
         preserveState: true,
@@ -111,7 +111,7 @@ const handleSortChange = (event: Event) => {
 const handleFilterClick = (filterType: string, filterValue: string, event: Event) => {
     event.preventDefault();
     const params = new URLSearchParams(window.location.search);
-    
+
     // Set or update the filter parameter
     if (filterValue) {
         params.set(filterType, filterValue);
@@ -482,47 +482,51 @@ const activeFilterBadges = computed(() => {
                     <!-- Main Content -->
                     <main class="flex-1">
                         <!-- Toolbar -->
-                        <div class="bg-white rounded-2xl shadow-md p-4 mb-6 flex items-center justify-between">
-                            <!-- Mobile filter trigger -->
-                            <button
-                                type="button"
-                                class="lg:hidden inline-flex items-center gap-2 px-3 py-2 rounded-lg border border-gray-300 text-sm font-medium text-gray-900 bg-white"
-                                aria-controls="product-filters"
-                                :aria-expanded="mobileFiltersOpen ? 'true' : 'false'"
-                                @click="mobileFiltersOpen = true"
-                            >
-                                Filters
-                            </button>
+                        <div class="mb-6 flex flex-wrap items-center gap-3 rounded-2xl bg-white p-3 shadow-md sm:flex-nowrap sm:justify-between sm:p-4">
+                            <div class="flex w-full items-center justify-between gap-3 sm:w-auto sm:flex-1 sm:justify-start">
+                                <!-- Mobile filter trigger -->
+                                <button
+                                    type="button"
+                                    class="lg:hidden inline-flex items-center gap-2 px-3 py-2 rounded-lg border border-gray-300 text-sm font-medium text-gray-900 bg-white"
+                                    aria-controls="product-filters"
+                                    :aria-expanded="mobileFiltersOpen ? 'true' : 'false'"
+                                    @click="mobileFiltersOpen = true"
+                                >
+                                    Filters
+                                </button>
 
-                            <!-- View Toggle -->
-                            <div class="flex gap-2">
-                                <button
-                                    @click="viewMode = 'grid'"
-                                    class="p-2 rounded-lg transition-colors"
-                                    :class="viewMode === 'grid' ? 'bg-indigo-600 text-white' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'"
-                                >
-                                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                                        <path d="M5 3a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2V5a2 2 0 00-2-2H5zM5 11a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2v-2a2 2 0 00-2-2H5zM11 5a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V5zM11 13a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
-                                    </svg>
-                                </button>
-                                <button
-                                    @click="viewMode = 'list'"
-                                    class="p-2 rounded-lg transition-colors"
-                                    :class="viewMode === 'list' ? 'bg-indigo-600 text-white' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'"
-                                >
-                                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                                        <path fill-rule="evenodd" d="M3 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd" />
-                                    </svg>
-                                </button>
+                                <!-- View Toggle -->
+                                <div class="flex shrink-0 gap-2">
+                                    <button
+                                        @click="viewMode = 'grid'"
+                                        class="p-2 rounded-lg transition-colors"
+                                        :class="viewMode === 'grid' ? 'bg-indigo-600 text-white' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'"
+                                        aria-label="Grid view"
+                                    >
+                                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                                            <path d="M5 3a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2V5a2 2 0 00-2-2H5zM5 11a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2v-2a2 2 0 00-2-2H5zM11 5a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V5zM11 13a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
+                                        </svg>
+                                    </button>
+                                    <button
+                                        @click="viewMode = 'list'"
+                                        class="p-2 rounded-lg transition-colors"
+                                        :class="viewMode === 'list' ? 'bg-indigo-600 text-white' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'"
+                                        aria-label="List view"
+                                    >
+                                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                                            <path fill-rule="evenodd" d="M3 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd" />
+                                        </svg>
+                                    </button>
+                                </div>
                             </div>
 
                             <!-- Sort Dropdown -->
-                            <div class="flex items-center gap-3">
-                                <label class="text-sm font-medium text-gray-700">Sort by:</label>
+                            <div class="flex w-full min-w-0 items-center gap-2 sm:w-auto">
+                                <label class="shrink-0 text-sm font-medium text-gray-700">Sort by:</label>
                                 <select
                                     :value="activeFilters.sort || 'newest'"
                                     @change="handleSortChange"
-                                    class="px-4 py-2 border border-gray-300 rounded-lg bg-white text-gray-900 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+                                    class="min-w-0 flex-1 rounded-lg border border-gray-300 bg-white px-3 py-2 text-gray-900 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500 sm:w-52 sm:flex-none sm:px-4"
                                 >
                                     <option
                                         v-for="option in sortOptions"
@@ -538,7 +542,7 @@ const activeFilterBadges = computed(() => {
                         <!-- Product Grid -->
                         <div
                             :class="{
-                                'grid grid-cols-2 gap-3 sm:gap-6 lg:grid-cols-3': viewMode === 'grid',
+                                'grid grid-cols-1 min-[400px]:grid-cols-2 gap-3 sm:gap-6 lg:grid-cols-3': viewMode === 'grid',
                                 'grid grid-cols-1 gap-3 sm:gap-6': viewMode === 'list'
                             }"
                         >
