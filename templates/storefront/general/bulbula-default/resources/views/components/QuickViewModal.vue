@@ -3,6 +3,10 @@
         <Transition name="modal">
             <div
                 v-if="isOpen"
+                role="dialog"
+                aria-modal="true"
+                aria-label="Product quick view"
+                :aria-busy="loading"
                 class="storefront-theme-scope fixed inset-0 z-50 overflow-y-auto"
                 @click.self="close"
             >
@@ -152,8 +156,10 @@
                                     </div>
 
                                     <!-- Short Description -->
-                                    <div v-if="product.short_description" class="text-gray-600 leading-relaxed">
-                                        {{ product.short_description }}
+                                    <div v-if="shortDescriptionParagraphs.length" class="space-y-2 text-gray-600 leading-relaxed">
+                                        <p v-for="(paragraph, index) in shortDescriptionParagraphs" :key="index">
+                                            {{ paragraph }}
+                                        </p>
                                     </div>
 
                                     <!-- Configurable Attributes -->
@@ -341,6 +347,7 @@ import { ref, watch, computed } from 'vue';
 import axios from 'axios';
 import { useCartStore } from '@/Stores/cartStore';
 import { useCurrency } from '@/composables/useCurrency';
+import { toProductDescriptionParagraphs } from '@/lib/productDescription';
 
 const { formatPrice } = useCurrency();
 
@@ -398,6 +405,7 @@ const cartStore = useCartStore();
 
 const loading = ref(false);
 const product = ref<Product | null>(null);
+const shortDescriptionParagraphs = computed(() => toProductDescriptionParagraphs(product.value?.short_description));
 const configurableAttributes = ref<Attribute[]>([]);
 const selectedAttributes = ref<Record<number, number>>({});
 const quantity = ref(1);

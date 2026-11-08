@@ -6,6 +6,7 @@ import ThemeLayout from '../../layouts/ThemeLayout.vue';
 import ProductCard from '../../components/ProductCard.vue';
 import QuickViewModal from '../../components/QuickViewModal.vue';
 import { useCurrency } from '@/composables/useCurrency';
+import { toProductDescriptionParagraphs } from '@/lib/productDescription';
 
 const { formatPrice } = useCurrency();
 
@@ -113,27 +114,8 @@ const isZoomed = ref(false);
 const zoomPosition = ref({ x: 50, y: 50 });
 const mainImageRef = ref<HTMLElement | null>(null);
 
-// Stored descriptions can contain HTML (e.g. <p>). Convert them to plain
-// paragraphs so tags are never shown as text. Output is rendered with {{ }},
-// so it is escaped by Vue and no v-html is needed.
-function toParagraphs(raw: string | null | undefined): string[] {
-    if (!raw) return [];
-    const decode = (s: string) => s
-        .replace(/&nbsp;/gi, ' ')
-        .replace(/&lt;/gi, '<')
-        .replace(/&gt;/gi, '>')
-        .replace(/&quot;/gi, '"')
-        .replace(/&#39;/gi, "'")
-        .replace(/&amp;/gi, '&');
-    return raw
-        .replace(/<br\s*\/?>/gi, '\n')
-        .split(/<\/p>|\n{2,}/i)
-        .map(part => decode(part.replace(/<[^>]*>/g, '')).replace(/\s+/g, ' ').trim())
-        .filter(Boolean);
-}
-
-const shortDescriptionParagraphs = computed(() => toParagraphs(props.product.short_description));
-const descriptionParagraphs = computed(() => toParagraphs(props.product.description));
+const shortDescriptionParagraphs = computed(() => toProductDescriptionParagraphs(props.product.short_description));
+const descriptionParagraphs = computed(() => toProductDescriptionParagraphs(props.product.description));
 
 // Only fields the page already receives. Weight/dimensions are not provided
 // by the controller, so they are not shown.

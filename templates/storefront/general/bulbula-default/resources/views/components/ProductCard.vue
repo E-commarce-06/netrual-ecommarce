@@ -9,7 +9,7 @@ import { Heart } from 'lucide-vue-next';
 import ThemePlaceholderIcon from './ThemePlaceholderIcon.vue';
 
 const { formatPrice } = useCurrency();
-const { toggleWishlist, isInWishlist, loading: wishlistLoading } = useWishlist();
+const { toggleWishlist, isInWishlist, isWishlistPending } = useWishlist();
 const { primary, wishlistEnabled, quickViewEnabled } = useThemeSettings();
 
 interface ProductBadge {
@@ -160,9 +160,12 @@ const handleWishlistToggle = async () => {
                 <button
                     v-if="product.in_stock && wishlistEnabled"
                     @click.prevent="handleWishlistToggle"
-                    :disabled="wishlistLoading"
-                    class="absolute top-4 right-4 p-2 bg-white/90 hover:bg-white rounded-full shadow-md transition-all hover:scale-110 disabled:opacity-50 z-10"
-                    title="Add to wishlist"
+                    :disabled="isWishlistPending(product.id)"
+                    :aria-pressed="isInWishlist(product.id)"
+                    :aria-label="isInWishlist(product.id) ? 'Remove from wishlist' : 'Add to wishlist'"
+                    :aria-busy="isWishlistPending(product.id)"
+                    class="absolute top-4 right-4 p-2 bg-white/90 hover:bg-white rounded-full shadow-md transition-all hover:scale-110 disabled:opacity-70 z-10"
+                    :title="isInWishlist(product.id) ? 'Remove from wishlist' : 'Add to wishlist'"
                 >
                     <Heart
                         :class="{ 'fill-red-500 text-red-500': isInWishlist(product.id), 'text-gray-600': !isInWishlist(product.id) }"

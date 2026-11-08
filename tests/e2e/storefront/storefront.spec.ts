@@ -31,6 +31,19 @@ test('product page shows no raw HTML tags in descriptions', async ({ page }) => 
     expect(body).not.toMatch(/<\/?[a-z][^>]*>/i);
 });
 
+test('quick view shows product descriptions without raw HTML tags', async ({ page }) => {
+    await page.goto('/products', { waitUntil: 'networkidle' });
+    const quickViewButton = page.getByRole('button', { name: 'Quick View' }).first();
+    await expect(quickViewButton).toBeAttached();
+    await quickViewButton.click();
+
+    const dialog = page.getByRole('dialog', { name: 'Product quick view' });
+    await expect(dialog).toBeVisible();
+    await expect(dialog.getByText('View Full Details')).toBeVisible();
+    const text = await dialog.innerText();
+    expect(text).not.toMatch(/<\/?[a-z][^>]*>/i);
+});
+
 test('product images that are rendered actually load', async ({ page }) => {
     const failed: string[] = [];
     page.on('response', (r) => {
