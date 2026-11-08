@@ -73,7 +73,9 @@ class StoreConfigurationController
     public function save(Request $request)
     {
         try {
-            if ($request->input('_section') === 'checkout') {
+            $section = $request->input('_section');
+
+            if ($section === 'checkout') {
                 $validated = $request->validate([
                     'checkout_allow_guest' => 'nullable|boolean',
                     'checkout_require_account' => 'nullable|boolean',
@@ -87,32 +89,28 @@ class StoreConfigurationController
                     ->with('success', 'Store configuration saved successfully.');
             }
 
-            $validated = $request->validate([
+            $rules = [
                 // Store Details
                 'store_name' => 'required|string|max:255',
                 'store_description' => 'nullable|string',
                 'business_registration' => 'nullable|string|max:255',
                 'vat_number' => 'nullable|string|max:255',
                 'store_license' => 'nullable|string|max:255',
-                
+                'store_timezone' => 'required|string|max:50',
+
                 // Contact Information
                 'store_email' => 'required|email|max:255',
                 'support_email' => 'nullable|email|max:255',
                 'store_phone' => 'required|string|max:50',
                 'store_phone_alt' => 'nullable|string|max:50',
                 'store_whatsapp' => 'nullable|string|max:50',
-                
-                // Address Information
                 'store_address_1' => 'required|string|max:255',
                 'store_address_2' => 'nullable|string|max:255',
                 'store_city' => 'required|string|max:100',
                 'store_state' => 'required|string|max:100',
                 'store_postal_code' => 'required|string|max:20',
                 'store_country' => 'required|string|max:100',
-                
-                // Store Timezone
-                'store_timezone' => 'required|string|max:50',
-                
+
                 // Social Media
                 'social_facebook' => 'nullable|url|max:255',
                 'social_instagram' => 'nullable|url|max:255',
@@ -121,19 +119,36 @@ class StoreConfigurationController
                 'social_youtube' => 'nullable|url|max:255',
                 'social_tiktok' => 'nullable|url|max:255',
                 'social_pinterest' => 'nullable|url|max:255',
-                
+
                 // Policies
                 'policy_privacy' => 'nullable|string',
                 'policy_terms' => 'nullable|string',
                 'policy_return' => 'nullable|string',
                 'policy_shipping' => 'nullable|string',
-                
-                // Checkout Options
+
+                // Checkout Options (kept for legacy full-form requests)
                 'checkout_allow_guest' => 'nullable|boolean',
                 'checkout_require_account' => 'nullable|boolean',
-            ]);
+            ];
 
-            if (empty($validated['support_email'])) {
+            $sectionFields = [
+                'details' => ['store_name', 'store_description', 'business_registration', 'vat_number', 'store_license', 'store_timezone'],
+                'contact' => ['store_email', 'support_email', 'store_phone', 'store_phone_alt', 'store_whatsapp', 'store_address_1', 'store_address_2', 'store_city', 'store_state', 'store_postal_code', 'store_country'],
+                'social' => ['social_facebook', 'social_instagram', 'social_twitter', 'social_linkedin', 'social_youtube', 'social_tiktok', 'social_pinterest'],
+                'policies' => ['policy_privacy', 'policy_terms', 'policy_return', 'policy_shipping'],
+            ];
+
+            // Validate only the active tab so unrelated required fields in hidden tabs
+            // cannot block a save. Requests without a section retain full-form validation.
+            if (is_string($section) && isset($sectionFields[$section])) {
+                $rules = array_intersect_key($rules, array_flip($sectionFields[$section]));
+            }
+
+            $validated = $request->validate($rules);
+
+            if (array_key_exists('support_email', $validated)
+                && empty($validated['support_email'])
+                && ! empty($validated['store_email'] ?? null)) {
                 $validated['support_email'] = $validated['store_email'];
             }
 
@@ -151,8 +166,10 @@ class StoreConfigurationController
                 $this->settingService->set($key, $value, $type, 'store');
             }
 
-            // Keep the storefront identity consistent across Store Configuration and General Settings.
-            $this->settingService->set('site_name', $validated['store_name'], 'string', 'general');
+            // Keep the storefront identity consistent when the Store Name was part of this save.
+            if (array_key_exists('store_name', $validated)) {
+                $this->settingService->set('site_name', $validated['store_name'], 'string', 'general');
+            }
 
             return redirect()->route('admin.settings.store.index')->with('success', 'Store configuration saved successfully.');
         } catch (\Illuminate\Validation\ValidationException $e) {

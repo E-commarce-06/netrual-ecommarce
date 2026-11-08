@@ -30,6 +30,25 @@ test('both admin screens display the same name when legacy settings differ', fun
         );
 });
 
+test('saving Store Details is not blocked by unrelated incomplete tabs', function () {
+    $this->actingAs($this->admin, 'admin')
+        ->post(route('admin.settings.store.save'), [
+            '_section' => 'details',
+            'store_name' => 'Arkeonet Commerce',
+            'store_timezone' => 'Africa/Addis_Ababa',
+            'store_email' => '',
+            'store_address_1' => '',
+            'social_facebook' => 'not-a-url',
+        ])
+        ->assertRedirect(route('admin.settings.store.index'))
+        ->assertSessionHas('success');
+
+    $settings = app(SettingService::class);
+
+    expect($settings->get('store_name'))->toBe('Arkeonet Commerce')
+        ->and($settings->get('site_name'))->toBe('Arkeonet Commerce');
+});
+
 test('saving General Settings keeps the Store Configuration name in sync', function () {
     $this->actingAs($this->admin, 'admin')
         ->post(route('admin.settings.general.save'), [

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, watch } from 'vue'
-import { Head, useForm, router } from '@inertiajs/vue3'
+import { Head, useForm } from '@inertiajs/vue3'
 import AdminLayout from '@/layouts/AdminLayout.vue'
 import TiptapEditor from '@/components/Admin/TiptapEditor.vue'
 import {
@@ -127,32 +127,14 @@ const form = useForm({
 })
 
 const save = () => {
-  if (activeTab.value === 'checkout') {
-    router.post('/admin/settings/store', {
-      _section: 'checkout',
-      checkout_allow_guest: form.checkout_allow_guest,
-      checkout_require_account: form.checkout_require_account,
-    }, {
+  form
+    .transform((data) => ({ ...data, _section: activeTab.value }))
+    .post('/admin/settings/store', {
       preserveScroll: true,
       onSuccess: () => {
-        // Toast shown automatically via flash message
-      },
-      onError: () => {
-        // Errors handled by Inertia form
+        // Toast notification is shown automatically through the shared flash message.
       },
     })
-    return
-  }
-
-  form.post('/admin/settings/store', {
-    preserveScroll: true,
-    onSuccess: () => {
-      // Toast notification will be shown automatically via flash message
-    },
-    onError: () => {
-      // Errors handled by Inertia form
-    },
-  })
 }
 
 watch(() => form.store_email, (newEmail) => {
