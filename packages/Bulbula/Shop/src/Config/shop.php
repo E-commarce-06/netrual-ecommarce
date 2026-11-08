@@ -59,7 +59,7 @@ return [
             'hero_primary_url' => '/products',
             'hero_secondary_text' => 'Browse categories',
             'hero_secondary_url' => '#categories',
-            'hero_image' => '',
+            'hero_image' => '/images/bneo-ethiopian-family-shopping.jpg',
             'show_trust_strip' => true,
             'categories_enabled' => true,
             'categories_title' => 'Shop by category',

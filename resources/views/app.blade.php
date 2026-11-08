@@ -1,21 +1,25 @@
+@php($isAdminArea = request()->is('admin', 'admin/*'))
+@php($initialAppearance = $isAdminArea ? ($appearance ?? 'system') : 'light')
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" @class(['dark' => ($appearance ?? 'system') == 'dark'])>
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" @class(['dark' => $initialAppearance === 'dark'])>
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
-        {{-- Inline script to detect system dark mode preference and apply it immediately --}}
+        {{-- Storefronts are light-only; admin routes may still honor the saved appearance. --}}
         <script>
             (function() {
-                const appearance = '{{ $appearance ?? "system" }}';
+                const isAdminArea = @json($isAdminArea);
+                const appearance = @json($initialAppearance);
 
-                if (appearance === 'system') {
-                    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+                if (!isAdminArea) {
+                    document.documentElement.classList.remove('dark');
+                    return;
+                }
 
-                    if (prefersDark) {
-                        document.documentElement.classList.add('dark');
-                    }
+                if (appearance === 'system' && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                    document.documentElement.classList.add('dark');
                 }
             })();
         </script>

@@ -6,7 +6,7 @@ import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 import type { DefineComponent } from 'vue';
 import { createApp, h } from 'vue';
 import { createPinia } from 'pinia';
-import { initializeTheme } from './composables/useAppearance';
+import { initializeTheme, updateThemeForRoute } from './composables/useAppearance';
 import { resolveTemplatePage } from './lib/resolveTemplatePage';
 
 const appName = import.meta.env.VITE_APP_NAME || 'BNEO';
@@ -69,6 +69,9 @@ initializeTheme();
 // Axios's default headers. Because Inertia's own getHeaders() is merged with
 // axios.defaults, this X-CSRF-TOKEN arrives on every subsequent POST/PUT/DELETE.
 router.on('navigate', (event) => {
+    const pageUrl = event.detail.page.url;
+    updateThemeForRoute(new URL(pageUrl, window.location.origin).pathname);
+
     const token = (event.detail.page.props as Record<string, unknown>).csrf_token as string | undefined;
     if (token) {
         // 1. Keep <meta name="csrf-token"> in sync (used by non-Inertia forms)

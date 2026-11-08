@@ -48,10 +48,19 @@ const getStoredAppearance = () => {
     return localStorage.getItem('appearance') as Appearance | null;
 };
 
-const handleSystemThemeChange = () => {
-    const currentAppearance = getStoredAppearance();
+const isAdminPath = (path: string) => /^\/admin(?:\/|$)/.test(path);
 
-    updateTheme(currentAppearance || 'system');
+export function updateThemeForRoute(path: string) {
+    if (!isAdminPath(path)) {
+        updateTheme('light');
+        return;
+    }
+
+    updateTheme(getStoredAppearance() || 'system');
+}
+
+const handleSystemThemeChange = () => {
+    updateThemeForRoute(window.location.pathname);
 };
 
 export function initializeTheme() {
@@ -59,11 +68,9 @@ export function initializeTheme() {
         return;
     }
 
-    // Initialize theme from saved preference or default to system...
-    const savedAppearance = getStoredAppearance();
-    updateTheme(savedAppearance || 'system');
+    // Public storefronts stay light; saved/system appearance applies only in admin.
+    updateThemeForRoute(window.location.pathname);
 
-    // Set up system theme change listener...
     mediaQuery()?.addEventListener('change', handleSystemThemeChange);
 }
 
