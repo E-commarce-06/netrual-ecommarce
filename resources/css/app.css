@@ -1180,3 +1180,36 @@ html:not(.dark) .admin-contrast-scope :is(.bg-gray-800, .bg-gray-900).text-gray-
 ):hover {
     color: var(--brand-orange) !important;
 }
+
+/* Give storefront cards and their primary action clear separation in dark mode. */
+.dark .theme-root .storefront-product-card {
+    background-color: var(--store-surface-muted) !important;
+    border-color: var(--store-border) !important;
+}
+
+.dark .theme-root .storefront-product-card:hover h3 {
+    color: var(--brand-orange) !important;
+}
+
+.dark .theme-root .storefront-quick-view {
+    background-color: #f4f7fc !important;
+    color: var(--brand-navy) !important;
+}
+
+.dark .theme-root .storefront-quick-view:hover {
+    background-color: #ffffff !important;
+}
+
+.dark .theme-root .storefront-add-to-cart:not(:disabled) {
+    background-color: var(--brand-orange) !important;
+    color: var(--brand-navy) !important;
+}
+
+.dark .theme-root .storefront-add-to-cart:not(:disabled):hover {
+    background-color: color-mix(in srgb, var(--brand-orange) 84%, #ffffff) !important;
+}
+
+.dark .theme-root .storefront-add-to-cart:disabled {
+    background-color: #2b3e59 !important;
+    color: #cbd5e1 !important;
+}

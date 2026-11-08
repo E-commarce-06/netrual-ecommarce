@@ -116,7 +116,7 @@ const handleWishlistToggle = async () => {
 </script>
 
 <template>
-    <div class="group relative bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-2xl transition-all duration-300">
+    <div class="storefront-product-card group relative flex h-full flex-col overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg">
         <Link :href="`/product/${product.slug}`" class="block">
             <div class="relative aspect-square bg-gradient-to-br from-orange-50 to-slate-100 dark:from-[#122b4d] dark:to-[#0b2040] overflow-hidden">
                 <img
@@ -140,7 +140,7 @@ const handleWishlistToggle = async () => {
                         {{ badge.text }}
                     </span>
 
-                    <span v-if="hasDiscount" class="px-3 py-1 bg-red-500 text-white text-sm font-bold rounded-full">
+                    <span v-if="hasDiscount" class="px-3 py-1 bg-red-700 text-white text-sm font-bold rounded-full">
                         -{{ discountPercentage }}%
                     </span>
 
@@ -148,9 +148,9 @@ const handleWishlistToggle = async () => {
                         v-if="product.type && (product.type === 'virtual' || product.type === 'downloadable' || product.type === 'quote')"
                         class="px-3 py-1 text-xs font-medium rounded-full inline-flex items-center"
                         :class="{
-                            'bg-blue-500 text-white': product.type === 'virtual',
-                            'bg-cyan-500 text-white': product.type === 'downloadable',
-                            'bg-amber-500 text-white': product.type === 'quote',
+                            'bg-blue-700 text-white': product.type === 'virtual',
+                            'bg-cyan-700 text-white': product.type === 'downloadable',
+                            'bg-amber-700 text-white': product.type === 'quote',
                         }"
                     >
                         {{ product.type === 'downloadable' ? 'Digital' : product.type === 'quote' ? 'Quote' : 'Virtual' }}
@@ -182,7 +182,7 @@ const handleWishlistToggle = async () => {
                 >
                     <button
                         @click.prevent="emit('quickView', product.slug)"
-                        class="pointer-events-auto px-6 py-3 bg-white text-gray-900 rounded-lg font-semibold hover:bg-gray-100 transition-all transform hover:scale-105 cursor-pointer"
+                        class="storefront-quick-view pointer-events-auto px-6 py-3 bg-white text-gray-900 rounded-lg font-semibold hover:bg-gray-100 transition-all transform hover:scale-105 cursor-pointer"
                     >
                         Quick View
                     </button>
@@ -190,7 +190,7 @@ const handleWishlistToggle = async () => {
             </div>
         </Link>
 
-        <div class="p-4">
+        <div class="flex flex-1 flex-col p-3.5 sm:p-4">
             <div v-if="product.brand" class="mb-2">
                 <Link
                     :href="`/brands/${product.brand.slug}`"
@@ -202,7 +202,7 @@ const handleWishlistToggle = async () => {
 
             <Link :href="`/product/${product.slug}`">
                 <h3
-                    class="font-semibold text-gray-900 mb-2 transition-colors line-clamp-2 min-h-[3rem] group-hover:text-[var(--theme-primary)]"
+                    class="mb-2 min-h-[2.75rem] line-clamp-2 text-sm font-semibold leading-snug text-gray-900 transition-colors group-hover:text-[var(--theme-primary)] sm:min-h-[3rem] sm:text-base"
                 >
                     {{ product.name }}
                 </h3>
@@ -217,11 +217,11 @@ const handleWishlistToggle = async () => {
 
             <div class="mb-3">
                 <div class="flex items-baseline gap-2">
-                    <span v-if="isQuoteProduct" class="text-xl font-bold text-gray-900">
+                    <span v-if="isQuoteProduct" class="text-base font-bold text-gray-900 sm:text-lg">
                         Price on request
                     </span>
                     <template v-else>
-                        <span class="text-2xl font-bold text-gray-900">
+                        <span class="text-xl font-bold text-gray-900 sm:text-2xl">
                             {{ formatPrice(displayPrice) }}
                         </span>
                         <span v-if="hasDiscount" class="text-sm text-gray-500 line-through">
@@ -234,7 +234,7 @@ const handleWishlistToggle = async () => {
             <Link
                 v-if="isQuoteProduct"
                 :href="`/product/${product.slug}`"
-                class="w-full py-3 px-4 rounded-lg font-semibold transition-all flex items-center justify-center gap-2 cursor-pointer text-white hover:shadow-lg bg-amber-600 hover:bg-amber-500"
+                class="w-full py-3 px-4 rounded-lg font-semibold transition-all flex items-center justify-center gap-2 cursor-pointer text-[#10213d] hover:shadow-lg bg-[#f39a3c] hover:bg-[#ffad55]"
             >
                 Request Quote
             </Link>
@@ -242,7 +242,7 @@ const handleWishlistToggle = async () => {
                 v-else
                 @click="handleAddToCart"
                 :disabled="!product.in_stock || addingToCart"
-                class="w-full py-3 px-4 rounded-lg font-semibold transition-all disabled:cursor-not-allowed flex items-center justify-center gap-2 cursor-pointer text-white hover:shadow-lg"
+                class="storefront-add-to-cart min-h-11 w-full rounded-lg px-3 py-2.5 text-xs font-bold transition-all disabled:cursor-not-allowed flex items-center justify-center gap-2 cursor-pointer text-white hover:shadow-lg sm:px-4 sm:text-sm"
                 :style="product.in_stock ? { backgroundColor: primary } : undefined"
                 :class="{ 'bg-gray-300 text-gray-500': !product.in_stock, 'animate-pulse': addingToCart }"
             >

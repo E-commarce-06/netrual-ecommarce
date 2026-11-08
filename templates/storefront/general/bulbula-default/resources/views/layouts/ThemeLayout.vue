@@ -82,7 +82,7 @@ onUnmounted(() => {
     >
         <div
             v-if="homepageSettings?.announcement_enabled && homepageSettings.announcement_text"
-            class="relative z-40 bg-brand-orange px-4 py-2 text-center text-[11px] font-bold tracking-[0.08em] text-brand-navy sm:text-xs"
+            class="relative z-40 bg-brand-orange px-4 py-2 text-center text-xs font-bold tracking-wide text-brand-navy sm:py-2.5 sm:text-sm"
         >
             {{ homepageSettings.announcement_text }}
         </div>

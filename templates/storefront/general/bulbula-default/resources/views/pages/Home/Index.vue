@@ -4,13 +4,11 @@ import { computed, ref } from 'vue'
 import {
   ArrowRight,
   ArrowUpRight,
-  BadgeCheck,
   Box,
   ChevronRight,
   Headphones,
   PackageCheck,
   ShieldCheck,
-  Sparkles,
   Truck,
 } from 'lucide-vue-next'
 import ThemeLayout from '../../layouts/ThemeLayout.vue'
@@ -101,12 +99,25 @@ const selectedProductSlug = ref<string | null>(null)
 
 const categories = computed(() => props.featuredCategories.length ? props.featuredCategories : props.categories)
 const featuredProducts = computed(() => props.featuredProducts.slice(0, Math.max(2, Number(props.homepageSettings.featured_count) || 4)))
-const newProducts = computed(() => props.newProducts.slice(0, Math.max(2, Number(props.homepageSettings.new_arrivals_count) || 4)))
+const newProducts = computed(() => {
+  const count = Math.max(2, Number(props.homepageSettings.new_arrivals_count) || 4)
+  const featuredIds = new Set(featuredProducts.value.map((product) => product.id))
+
+  return props.newProducts.filter((product) => !featuredIds.has(product.id)).slice(0, count)
+})
 const heroImage = computed(() => props.homepageSettings.hero_image || props.heroProducts.find((product) => product.image)?.image || props.featuredProducts.find((product) => product.image)?.image || '')
-const promoImage = computed(() => props.homepageSettings.promo_image || props.bannerProduct?.image || props.offerProducts.find((product) => product.image)?.image || '')
+const promoProduct = computed(() => {
+  if (props.homepageSettings.promo_image) return null
+
+  return [props.bannerProduct, ...props.offerProducts].find((product) => product?.image && product.image !== heroImage.value) || null
+})
+const promoImage = computed(() => props.homepageSettings.promo_image || promoProduct.value?.image || '')
 const heroSecondaryUrl = computed(() => {
   const target = props.homepageSettings.hero_secondary_url
-  return !props.homepageSettings.categories_enabled && target === '#categories' ? '/products' : target || '#categories'
+  const fallback = target || '#categories'
+  const hasCategories = props.homepageSettings.categories_enabled && categories.value.length > 0
+
+  return fallback === '#categories' && !hasCategories ? '/products' : fallback
 })
 const siteName = computed(() => props.siteConfig?.name || 'BNEO')
 
@@ -163,11 +174,7 @@ function openQuickView(slug: string) {
                   <ChevronRight class="h-4 w-4" />
                 </a>
               </div>
-              <div class="mt-8 flex flex-wrap items-center gap-x-5 gap-y-2 text-xs font-medium text-blue-100/65 sm:mt-10">
-                <span class="inline-flex items-center gap-2"><BadgeCheck class="h-4 w-4 text-orange-300" /> Thoughtfully selected</span>
-                <span class="hidden h-4 w-px bg-white/20 sm:block" />
-                <span class="inline-flex items-center gap-2"><Sparkles class="h-4 w-4 text-orange-300" /> New discoveries, often</span>
-              </div>
+
             </div>
 
             <div class="relative min-h-[330px] overflow-hidden sm:min-h-[410px] lg:min-h-0">
@@ -178,19 +185,10 @@ function openQuickView(slug: string) {
                 <div class="absolute bottom-[12%] left-[10%] h-32 w-32 rounded-[2rem] border border-white/10 bg-white/[0.05] rotate-[-12deg] sm:h-44 sm:w-44" />
               </div>
               <div class="absolute inset-0 bg-gradient-to-t from-[#081a33]/80 via-[#081a33]/15 to-transparent lg:bg-gradient-to-r lg:from-[#0b2040]/35 lg:via-transparent lg:to-transparent" />
-              <div class="absolute inset-x-5 bottom-5 flex items-end justify-between gap-3 sm:inset-x-8 sm:bottom-8">
-                <div class="max-w-[17rem] rounded-2xl border border-white/20 bg-[#0b2040]/55 p-4 text-white shadow-xl backdrop-blur-xl sm:p-5">
-                  <p class="text-[10px] font-bold uppercase tracking-[0.18em] text-orange-200">A little more considered</p>
-                  <p class="mt-2 text-sm font-semibold leading-5 sm:text-base">{{ heroProducts[0]?.name || 'Good things for everyday living' }}</p>
-                  <p class="mt-1 text-xs text-white/65">Discover pieces worth keeping close.</p>
-                </div>
-                <div class="hidden h-14 w-14 items-center justify-center rounded-2xl border border-white/20 bg-white/10 text-white backdrop-blur-lg sm:flex">
-                  <Box class="h-6 w-6" />
-                </div>
-              </div>
-              <div class="pointer-events-none absolute right-6 top-6 hidden rounded-full border border-white/20 bg-white/10 px-4 py-2 text-[10px] font-bold uppercase tracking-[0.15em] text-white backdrop-blur-lg sm:block lg:right-10 lg:top-10">
-                Curated for real life
-              </div>
+              <a v-if="heroProducts[0]" :href="`/product/${heroProducts[0].slug}`" class="absolute bottom-5 left-5 right-5 flex items-center justify-between gap-4 rounded-2xl border border-white/20 bg-[#0b2040]/80 p-4 text-white shadow-xl backdrop-blur-xl transition hover:bg-[#0b2040]/95 sm:bottom-8 sm:left-8 sm:right-auto sm:max-w-[20rem] sm:p-5">
+                <span class="min-w-0 block line-clamp-2 text-sm font-semibold leading-5 sm:text-base">{{ heroProducts[0].name }}</span>
+                <ArrowUpRight class="h-5 w-5 shrink-0 text-orange-200" />
+              </a>
             </div>
           </div>
         </div>
@@ -200,36 +198,33 @@ function openQuickView(slug: string) {
       <section v-if="homepageSettings.show_trust_strip" class="px-4 pb-10 sm:px-6 lg:px-10 lg:pb-14">
         <div class="mx-auto grid max-w-[1240px] grid-cols-2 gap-3 rounded-2xl border border-[#e9e5dd] bg-white px-4 py-5 shadow-sm sm:grid-cols-4 sm:gap-5 sm:px-7">
           <div class="flex items-center gap-3 px-1 py-1">
-            <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-orange-50 text-orange-700"><Truck class="h-5 w-5" /></span>
-            <div><p class="text-xs font-bold text-[#12213a] sm:text-sm">Reliable delivery</p><p class="mt-0.5 text-[10px] text-gray-500 sm:text-xs">To your doorstep</p></div>
+            <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-orange-50 text-orange-700 dark:bg-orange-500/10 dark:text-orange-300"><Truck class="h-5 w-5" /></span>
+            <div><p class="text-sm font-bold text-[#12213a] dark:text-white">Reliable delivery</p><p class="mt-0.5 text-xs text-gray-500">To your doorstep</p></div>
           </div>
           <div class="flex items-center gap-3 px-1 py-1">
-            <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-blue-50 text-blue-800"><ShieldCheck class="h-5 w-5" /></span>
-            <div><p class="text-xs font-bold text-[#12213a] sm:text-sm">Secure checkout</p><p class="mt-0.5 text-[10px] text-gray-500 sm:text-xs">Shop with confidence</p></div>
+            <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-blue-50 text-blue-800 dark:bg-orange-500/10 dark:text-orange-300"><ShieldCheck class="h-5 w-5" /></span>
+            <div><p class="text-sm font-bold text-[#12213a] dark:text-white">Secure checkout</p><p class="mt-0.5 text-xs text-gray-500">Shop with confidence</p></div>
           </div>
           <div class="flex items-center gap-3 px-1 py-1">
-            <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-emerald-50 text-emerald-700"><PackageCheck class="h-5 w-5" /></span>
-            <div><p class="text-xs font-bold text-[#12213a] sm:text-sm">Easy returns</p><p class="mt-0.5 text-[10px] text-gray-500 sm:text-xs">Simple, stress-free</p></div>
+            <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-emerald-50 text-emerald-700 dark:bg-orange-500/10 dark:text-orange-300"><PackageCheck class="h-5 w-5" /></span>
+            <div><p class="text-sm font-bold text-[#12213a] dark:text-white">Easy returns</p><p class="mt-0.5 text-xs text-gray-500">Simple, stress-free</p></div>
           </div>
           <div class="flex items-center gap-3 px-1 py-1">
-            <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-violet-50 text-violet-700"><Headphones class="h-5 w-5" /></span>
-            <div><p class="text-xs font-bold text-[#12213a] sm:text-sm">Here to help</p><p class="mt-0.5 text-[10px] text-gray-500 sm:text-xs">Friendly support</p></div>
+            <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-violet-50 text-violet-700 dark:bg-orange-500/10 dark:text-orange-300"><Headphones class="h-5 w-5" /></span>
+            <div><p class="text-sm font-bold text-[#12213a] dark:text-white">Customer support</p><p class="mt-0.5 text-xs text-gray-500">Friendly support</p></div>
           </div>
         </div>
       </section>
 
       <!-- Categories -->
-      <section v-if="homepageSettings.categories_enabled" id="categories" class="scroll-mt-24 px-4 pb-14 sm:px-6 lg:px-10 lg:pb-20">
+      <section v-if="homepageSettings.categories_enabled && categories.length" id="categories" class="scroll-mt-24 px-4 pb-12 sm:px-6 lg:px-10 lg:pb-16">
         <div class="mx-auto max-w-[1320px]">
-          <div class="mb-6 flex items-end justify-between gap-4 sm:mb-8">
-            <div>
-              <p class="mb-2 text-[10px] font-bold uppercase tracking-[0.2em] text-orange-700">Find your corner</p>
-              <h2 class="text-2xl font-semibold tracking-tight text-[#12213a] sm:text-3xl lg:text-4xl">{{ homepageSettings.categories_title }}</h2>
-            </div>
-            <a href="/products" class="hidden items-center gap-2 text-sm font-semibold text-[#12213a] transition hover:text-orange-700 sm:inline-flex">View all <ArrowUpRight class="h-4 w-4" /></a>
+          <div class="mb-5 flex items-end justify-between gap-4 sm:mb-7">
+            <h2 class="text-2xl font-semibold tracking-tight text-[#12213a] sm:text-3xl lg:text-4xl">{{ homepageSettings.categories_title }}</h2>
+            <a href="/products" class="inline-flex shrink-0 items-center gap-1.5 rounded-full border border-[#d9d4ca] px-3 py-2 text-xs font-semibold text-[#12213a] transition hover:border-orange-300 hover:bg-orange-50 sm:px-4 sm:text-sm">View all <ArrowUpRight class="h-4 w-4" /></a>
           </div>
-          <div v-if="categories.length" class="grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4 lg:grid-cols-4">
-            <a v-for="(category, index) in categories.slice(0, 8)" :key="category.id" :href="`/category/${category.slug}`" class="group relative isolate flex min-h-[190px] flex-col justify-between overflow-hidden rounded-2xl border border-black/5 bg-gradient-to-br p-4 shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-lg sm:min-h-[235px] sm:rounded-3xl sm:p-6" :class="categoryTint(index)">
+          <div class="grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4 lg:grid-cols-4 xl:grid-cols-5">
+            <a v-for="(category, index) in categories.slice(0, 8)" :key="category.id" :href="`/category/${category.slug}`" class="group relative isolate flex min-h-[170px] flex-col justify-between overflow-hidden rounded-2xl border border-black/5 bg-gradient-to-br p-4 shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-lg sm:min-h-[200px] sm:rounded-3xl sm:p-5" :class="categoryTint(index)">
               <img v-if="category.image" :src="category.image" :alt="category.name" class="absolute inset-0 -z-10 h-full w-full object-cover transition duration-500 group-hover:scale-105" loading="lazy" />
               <div v-if="category.image" class="absolute inset-0 -z-10 bg-gradient-to-t from-[#0b2040]/85 via-[#0b2040]/10 to-black/5" />
               <div v-else class="absolute -right-7 -top-8 -z-10 h-36 w-36 rounded-full border border-white/60 bg-white/30 transition duration-500 group-hover:scale-110 sm:h-48 sm:w-48" />
@@ -243,32 +238,18 @@ function openQuickView(slug: string) {
               <span class="absolute right-4 top-4 flex h-8 w-8 items-center justify-center rounded-full bg-white/70 text-[#12213a] transition group-hover:translate-x-0.5 group-hover:bg-white sm:right-5 sm:top-5"><ArrowUpRight class="h-4 w-4" /></span>
             </a>
           </div>
-          <div v-else class="rounded-2xl border border-dashed border-[#d9d4ca] bg-white/70 px-6 py-10 text-center">
-            <Box class="mx-auto h-7 w-7 text-gray-400" />
-            <p class="mt-3 text-sm font-semibold text-[#12213a]">Categories will appear here</p>
-            <p class="mt-1 text-xs text-gray-500">Add active categories to your catalog to help shoppers browse.</p>
-          </div>
         </div>
       </section>
 
       <!-- Featured products -->
-      <section v-if="homepageSettings.featured_enabled" class="bg-white px-4 py-14 sm:px-6 sm:py-16 lg:px-10 lg:py-20">
+      <section v-if="homepageSettings.featured_enabled && featuredProducts.length" class="bg-white px-4 py-11 sm:px-6 sm:py-14 lg:px-10 lg:py-16">
         <div class="mx-auto max-w-[1320px]">
-          <div class="mb-7 flex items-end justify-between gap-4 sm:mb-9">
-            <div>
-              <p class="mb-2 text-[10px] font-bold uppercase tracking-[0.2em] text-orange-700">Chosen with care</p>
-              <h2 class="text-2xl font-semibold tracking-tight text-[#12213a] sm:text-3xl lg:text-4xl">{{ homepageSettings.featured_title }}</h2>
-              <p class="mt-2 max-w-xl text-sm leading-6 text-gray-500">A few standout finds from across the store.</p>
-            </div>
-            <a href="/products" class="hidden items-center gap-2 rounded-full border border-[#d9d4ca] px-4 py-2.5 text-sm font-semibold text-[#12213a] transition hover:border-orange-300 hover:bg-orange-50 sm:inline-flex">Explore all <ArrowRight class="h-4 w-4" /></a>
+          <div class="mb-5 flex flex-col gap-3 sm:mb-7 sm:flex-row sm:items-end sm:justify-between">
+            <h2 class="text-2xl font-semibold tracking-tight text-[#12213a] dark:text-white sm:text-3xl lg:text-4xl">{{ homepageSettings.featured_title }}</h2>
+            <a href="/products" class="inline-flex self-start items-center gap-2 rounded-full border border-[#d9d4ca] px-4 py-2.5 text-sm font-semibold text-[#12213a] transition hover:border-orange-300 hover:bg-orange-50 dark:border-white/20 dark:text-white dark:hover:bg-white/5">View all <ArrowRight class="h-4 w-4" /></a>
           </div>
-          <div v-if="featuredProducts.length" class="grid grid-cols-2 gap-3 sm:gap-5 lg:grid-cols-4">
+          <div class="grid grid-cols-2 gap-3 sm:gap-5 lg:grid-cols-4">
             <ProductCard v-for="product in featuredProducts" :key="product.id" :product="product" @quick-view="openQuickView" />
-          </div>
-          <div v-else class="rounded-2xl border border-dashed border-[#d9d4ca] bg-[#fbfaf7] px-6 py-10 text-center">
-            <Sparkles class="mx-auto h-7 w-7 text-orange-500" />
-            <p class="mt-3 text-sm font-semibold text-[#12213a]">Featured products will show here</p>
-            <p class="mt-1 text-xs text-gray-500">Mark a few products as featured in your catalog to fill this section.</p>
           </div>
         </div>
       </section>
@@ -281,7 +262,7 @@ function openQuickView(slug: string) {
             <div class="relative z-10 flex flex-col items-start justify-center px-6 py-10 sm:px-10 sm:py-14 lg:px-16">
               <span class="rounded-full border border-[#562d0e]/15 bg-white/20 px-3.5 py-2 text-[10px] font-bold uppercase tracking-[0.2em] text-[#562d0e]">{{ homepageSettings.promo_eyebrow }}</span>
               <h2 class="mt-5 max-w-xl text-3xl font-semibold leading-tight tracking-[-0.035em] text-[#17243b] sm:text-4xl lg:text-5xl">{{ homepageSettings.promo_title }}</h2>
-              <p class="mt-4 max-w-lg text-sm leading-7 text-[#482f1e]/80 sm:text-base">{{ homepageSettings.promo_description }}</p>
+              <p class="mt-4 max-w-lg text-sm leading-7 text-[#482f1e] sm:text-base">{{ homepageSettings.promo_description }}</p>
               <a :href="homepageSettings.promo_cta_url || '/products'" class="mt-7 inline-flex items-center gap-3 rounded-xl bg-[#10213d] px-5 py-3.5 text-sm font-bold text-white shadow-md transition hover:-translate-y-0.5 hover:bg-[#18345c]">
                 {{ homepageSettings.promo_cta_text }} <ArrowRight class="h-4 w-4" />
               </a>
@@ -295,9 +276,8 @@ function openQuickView(slug: string) {
                 <span class="absolute bottom-8 right-8 text-[2rem] font-black tracking-[-0.08em] text-white/70 sm:text-5xl">BNEO</span>
               </div>
               <div class="absolute inset-0 bg-gradient-to-t from-[#7e421b]/25 to-transparent md:bg-gradient-to-l md:from-transparent md:to-[#e88b36]/15" />
-              <div v-if="bannerProduct" class="absolute bottom-5 left-5 right-5 rounded-2xl border border-white/25 bg-[#10213d]/70 p-3 text-white shadow-lg backdrop-blur-xl sm:bottom-7 sm:left-7 sm:right-auto sm:max-w-[250px] sm:p-4">
-                <p class="text-[9px] font-bold uppercase tracking-[0.16em] text-orange-200">Featured find</p>
-                <p class="mt-1 line-clamp-1 text-sm font-semibold">{{ bannerProduct.name }}</p>
+              <div v-if="promoProduct" class="absolute bottom-5 left-5 right-5 rounded-2xl border border-white/25 bg-[#10213d]/85 p-3 text-white shadow-lg backdrop-blur-xl sm:bottom-7 sm:left-7 sm:right-auto sm:max-w-[250px] sm:p-4">
+                <p class="line-clamp-1 text-sm font-semibold">{{ promoProduct.name }}</p>
               </div>
             </div>
           </div>
@@ -305,38 +285,15 @@ function openQuickView(slug: string) {
       </section>
 
       <!-- New arrivals -->
-      <section v-if="homepageSettings.new_arrivals_enabled" class="bg-white px-4 pb-14 sm:px-6 sm:pb-16 lg:px-10 lg:pb-20">
+      <section v-if="homepageSettings.new_arrivals_enabled && newProducts.length" class="bg-white px-4 pb-11 sm:px-6 sm:pb-14 lg:px-10 lg:pb-16">
         <div class="mx-auto max-w-[1320px]">
-          <div class="mb-7 flex items-end justify-between gap-4 sm:mb-9">
-            <div>
-              <p class="mb-2 text-[10px] font-bold uppercase tracking-[0.2em] text-orange-700">Just landed</p>
-              <h2 class="text-2xl font-semibold tracking-tight text-[#12213a] sm:text-3xl lg:text-4xl">{{ homepageSettings.new_arrivals_title }}</h2>
-              <p class="mt-2 max-w-xl text-sm leading-6 text-gray-500">The latest additions, automatically refreshed from your catalog.</p>
-            </div>
-            <a href="/products?sort=newest" class="hidden items-center gap-2 rounded-full border border-[#d9d4ca] px-4 py-2.5 text-sm font-semibold text-[#12213a] transition hover:border-orange-300 hover:bg-orange-50 sm:inline-flex">See what's new <ArrowRight class="h-4 w-4" /></a>
+          <div class="mb-5 flex flex-col gap-3 sm:mb-7 sm:flex-row sm:items-end sm:justify-between">
+            <h2 class="text-2xl font-semibold tracking-tight text-[#12213a] dark:text-white sm:text-3xl lg:text-4xl">{{ homepageSettings.new_arrivals_title }}</h2>
+            <a href="/products?sort=newest" class="inline-flex self-start items-center gap-2 rounded-full border border-[#d9d4ca] px-4 py-2.5 text-sm font-semibold text-[#12213a] transition hover:border-orange-300 hover:bg-orange-50 dark:border-white/20 dark:text-white dark:hover:bg-white/5">Shop new arrivals <ArrowRight class="h-4 w-4" /></a>
           </div>
-          <div v-if="newProducts.length" class="grid grid-cols-2 gap-3 sm:gap-5 lg:grid-cols-4">
+          <div class="grid grid-cols-2 gap-3 sm:gap-5 lg:grid-cols-4">
             <ProductCard v-for="product in newProducts" :key="product.id" :product="product" @quick-view="openQuickView" />
           </div>
-          <div v-else class="rounded-2xl border border-dashed border-[#d9d4ca] bg-[#fbfaf7] px-6 py-10 text-center">
-            <PackageCheck class="mx-auto h-7 w-7 text-orange-500" />
-            <p class="mt-3 text-sm font-semibold text-[#12213a]">New arrivals will show here</p>
-            <p class="mt-1 text-xs text-gray-500">Add products to your catalog and this collection will update automatically.</p>
-          </div>
-        </div>
-      </section>
-
-      <!-- Closing CTA -->
-      <section class="px-4 py-14 sm:px-6 lg:px-10 lg:py-20">
-        <div class="mx-auto flex max-w-[1320px] flex-col items-start justify-between gap-6 rounded-[2rem] border border-[#dce4eb] bg-[#eef3f6] px-6 py-9 sm:flex-row sm:items-center sm:px-10 sm:py-11 lg:px-14">
-          <div>
-            <p class="text-[10px] font-bold uppercase tracking-[0.2em] text-orange-700">A good place to begin</p>
-            <h2 class="mt-2 text-2xl font-semibold tracking-tight text-[#12213a] sm:text-3xl">Make room for something lovely.</h2>
-            <p class="mt-2 max-w-2xl text-sm leading-6 text-gray-600">Browse useful, beautiful finds selected to make the everyday a little better.</p>
-          </div>
-          <a href="/products" class="inline-flex shrink-0 items-center gap-3 rounded-xl bg-[#10213d] px-5 py-3.5 text-sm font-bold text-white transition hover:bg-[#18345c]">
-            Browse the store <ArrowRight class="h-4 w-4" />
-          </a>
         </div>
       </section>
     </div>
