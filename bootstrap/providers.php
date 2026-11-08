@@ -15,6 +15,7 @@ return [
     Bulbula\Razorpay\Providers\RazorpayServiceProvider::class,
     Bulbula\PhonePe\Providers\PhonePeServiceProvider::class,
     Bulbula\Sales\Providers\SalesServiceProvider::class,
+    Bulbula\Support\Providers\SupportServiceProvider::class,
     Bulbula\Customer\Providers\CustomerServiceProvider::class,
     Bulbula\Setup\Providers\SetupServiceProvider::class,  // Must be before CMS to prevent catch-all route conflict
     Bulbula\Blog\Providers\BlogServiceProvider::class,

@@ -81,6 +81,22 @@ test('slow navigation shows a visible, non-blocking progress line without copy',
     await expect(page.locator('#app')).toHaveAttribute('aria-busy', 'false');
 });
 
+test('help center searches answers and filters by topic', async ({ page }) => {
+    await page.goto('/help', { waitUntil: 'networkidle' });
+    await expect(page.getByRole('heading', { name: 'How can we help?' })).toBeVisible();
+    await expect(page.getByRole('link', { name: /Track an order/ })).toBeVisible();
+
+    const search = page.getByRole('searchbox', { name: 'Search help articles' });
+    await search.fill('refund');
+    await expect(page.getByRole('button', { name: 'How do I request a return?' })).toBeVisible();
+    await expect(page.getByText(/answers found/)).toBeVisible();
+
+    await search.clear();
+    await page.getByRole('button', { name: 'Payments & billing' }).click();
+    await expect(page.getByRole('heading', { name: 'Payments & billing' })).toBeVisible();
+    await expect(page.getByRole('heading', { name: 'Orders & tracking' })).toHaveCount(0);
+});
+
 test('product images that are rendered actually load', async ({ page }) => {
     const failed: string[] = [];
     page.on('response', (r) => {

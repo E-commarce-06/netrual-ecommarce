@@ -266,12 +266,20 @@ const formatPrice = (price: number) => {
               <p class="text-sm text-blue-800 mb-4">
                 Our support team is here to assist you with any questions.
               </p>
-              <a
-                href="/contact"
-                class="inline-block w-full text-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-sm font-medium"
-              >
-                Contact Support
-              </a>
+              <div class="flex flex-col gap-2">
+                <Link
+                  href="/account/support"
+                  class="inline-block w-full text-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-sm font-medium"
+                >
+                  My Support Requests
+                </Link>
+                <Link
+                  href="/help"
+                  class="inline-block w-full text-center px-4 py-2 border border-blue-200 text-blue-800 rounded-lg hover:bg-blue-100 transition-colors text-sm font-medium"
+                >
+                  Browse Help Center
+                </Link>
+              </div>
             </div>
           </div>
         </div>

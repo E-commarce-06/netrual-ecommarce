@@ -108,19 +108,27 @@ const formatAddress = (address?: Address) => {
             </svg>
             Back to Orders
           </Link>
-          <div class="flex items-center justify-between">
+          <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
             <div>
               <h1 class="text-3xl font-bold mb-2">Order #{{ order.order_number }}</h1>
               <p class="text-gray-600">Placed on {{ order.created_at }}</p>
             </div>
-            <span
-              :class="[
-                'px-4 py-2 rounded-full text-sm font-medium border',
-                getStatusColor(order.status)
-              ]"
-            >
-              {{ order.status.charAt(0).toUpperCase() + order.status.slice(1) }}
-            </span>
+            <div class="flex flex-col items-end gap-2 sm:flex-row sm:items-center">
+              <span
+                :class="[
+                  'px-4 py-2 rounded-full text-sm font-medium border',
+                  getStatusColor(order.status)
+                ]"
+              >
+                {{ order.status.charAt(0).toUpperCase() + order.status.slice(1) }}
+              </span>
+              <Link
+                :href="`/account/support/create?order=${order.id}`"
+                class="text-sm font-medium text-blue-700 hover:text-blue-900"
+              >
+                Need help with this order?
+              </Link>
+            </div>
           </div>
         </div>
 

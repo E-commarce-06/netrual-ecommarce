@@ -75,6 +75,7 @@
             "Bulbula\\PayUMoney\\": "packages/Bulbula/PayUMoney/src/",
             "Bulbula\\PhonePe\\": "packages/Bulbula/PhonePe/src/",
             "Bulbula\\Sales\\": "packages/Bulbula/Sales/src/",
+            "Bulbula\\Support\\": "packages/Bulbula/Support/src/",
             "Bulbula\\Customer\\": "packages/Bulbula/Customer/src/",
             "Bulbula\\CMS\\": "packages/Bulbula/CMS/src/",
             "Bulbula\\UIEditor\\": "packages/Bulbula/UIEditor/src/",
