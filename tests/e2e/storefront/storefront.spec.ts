@@ -44,6 +44,42 @@ test('quick view shows product descriptions without raw HTML tags', async ({ pag
     expect(text).not.toMatch(/<\/?[a-z][^>]*>/i);
 });
 
+test('footer advertises exactly the active payment methods from the server', async ({ page }) => {
+    await page.goto('/', { waitUntil: 'networkidle' });
+
+    const pageData = await page.locator('#app').getAttribute('data-page');
+    expect(pageData).toBeTruthy();
+    const props = JSON.parse(pageData as string).props;
+    const expectedNames = (props.activePaymentMethods ?? []).map((method: { name: string }) => method.name);
+    const renderedNames = await page.locator('[data-payment-method]').allTextContents();
+
+    expect(renderedNames).toEqual(expectedNames);
+    await expect(page.locator('footer')).not.toContainText('Visa · Mastercard · PayPal · Stripe');
+});
+
+test('slow navigation shows clear accessible feedback without blocking the page', async ({ page }) => {
+    await page.goto('/', { waitUntil: 'networkidle' });
+    const href = await firstProductHref(page);
+
+    await page.route(`**${href}**`, async route => {
+        await new Promise(resolve => setTimeout(resolve, 900));
+        await route.continue();
+    });
+
+    const productLink = page.locator(`a[href='${href}']`).first();
+    await productLink.click();
+
+    const status = page.getByRole('status');
+    await expect(status).toHaveText('Loading page. You can still use the page.');
+    await expect(status).toHaveCSS('pointer-events', 'none');
+    await expect(status).toHaveCSS('position', 'fixed');
+    await expect(page.locator('#nprogress .bar')).toHaveCSS('height', '6px');
+
+    await page.waitForURL(`**${href}`);
+    await expect(status).toHaveText('Page loaded.');
+    await expect(page.locator('#app')).toHaveAttribute('aria-busy', 'false');
+});
+
 test('product images that are rendered actually load', async ({ page }) => {
     const failed: string[] = [];
     page.on('response', (r) => {

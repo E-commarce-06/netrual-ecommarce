@@ -69,6 +69,13 @@
         @inertiaHead
     </head>
     <body class="font-sans antialiased">
+        <div
+            id="navigation-progress-status"
+            class="navigation-progress-status"
+            role="status"
+            aria-live="polite"
+            aria-atomic="true"
+        ></div>
         @inertia
         @php
             if (app()->bound('bulbula.hook')) {

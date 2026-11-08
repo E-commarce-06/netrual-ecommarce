@@ -52,7 +52,10 @@ createInertiaApp({
             .mount(el);
     },
     progress: {
-        color: '#4B5563',
+        delay: 150,
+        color: '#041735',
+        includeCSS: true,
+        showSpinner: false,
     },
 });
 
@@ -62,7 +65,7 @@ initializeTheme();
 // Permanently fix 419 PAGE EXPIRED errors caused by stale CSRF tokens in the
 // Inertia SPA. Inertia v2 uses Axios internally but does NOT inject CSRF headers
 // itself — it relies on Axios's XSRF-TOKEN cookie auto-read, which can silently
-// fail when using full absolute URLs (Axios same-origin check).  
+// fail when using full absolute URLs (Axios same-origin check).
 //
 // The robust solution: after every Inertia navigation (including the first), pull
 // the fresh token from the server's shared props and inject it DIRECTLY into
@@ -80,4 +83,60 @@ router.on('navigate', (event) => {
         // 2. Inject into Axios defaults so every Inertia XHR carries the header
         axios.defaults.headers.common['X-CSRF-TOKEN'] = token;
     }
+});
+
+// A delayed text status complements Inertia's progress bar without covering the
+// page, moving focus, or intercepting clicks. Fast visits stay visually quiet.
+const navigationStatus = document.getElementById('navigation-progress-status');
+let navigationStatusDelay: ReturnType<typeof setTimeout> | undefined;
+let navigationStatusDismiss: ReturnType<typeof setTimeout> | undefined;
+let activeNavigationVisits = 0;
+let navigationStatusVisible = false;
+
+router.on('start', () => {
+    activeNavigationVisits += 1;
+
+    if (navigationStatusDelay) clearTimeout(navigationStatusDelay);
+    if (navigationStatusDismiss) clearTimeout(navigationStatusDismiss);
+
+    if (navigationStatusVisible && navigationStatus) {
+        navigationStatus.textContent = 'Loading page. You can still use the page.';
+        document.getElementById('app')?.setAttribute('aria-busy', 'true');
+        return;
+    }
+
+    navigationStatus?.classList.remove('is-visible');
+    if (navigationStatus) navigationStatus.textContent = '';
+
+    navigationStatusDelay = setTimeout(() => {
+        if (activeNavigationVisits === 0 || !navigationStatus) return;
+
+        navigationStatus.textContent = 'Loading page. You can still use the page.';
+        navigationStatus.classList.add('is-visible');
+        navigationStatusVisible = true;
+        document.getElementById('app')?.setAttribute('aria-busy', 'true');
+    }, 450);
+});
+
+router.on('finish', (event) => {
+    activeNavigationVisits = Math.max(0, activeNavigationVisits - 1);
+    if (activeNavigationVisits > 0) return;
+
+    if (navigationStatusDelay) clearTimeout(navigationStatusDelay);
+    document.getElementById('app')?.setAttribute('aria-busy', 'false');
+
+    if (!navigationStatusVisible || !navigationStatus) return;
+
+    navigationStatusVisible = false;
+    if (!event.detail.visit.completed) {
+        navigationStatus.classList.remove('is-visible');
+        navigationStatus.textContent = '';
+        return;
+    }
+
+    navigationStatus.textContent = 'Page loaded.';
+    navigationStatusDismiss = setTimeout(() => {
+        navigationStatus.classList.remove('is-visible');
+        navigationStatus.textContent = '';
+    }, 1200);
 });

@@ -5,6 +5,8 @@ namespace Bulbula\Shop\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use Bulbula\Core\Models\Extension;
+use Bulbula\Core\Models\PaymentMethod;
 use Bulbula\Core\Models\Theme;
 use Bulbula\CMS\Services\StorefrontMenuService;
 use Bulbula\Shop\Repositories\CategoryRepository;
@@ -48,7 +50,41 @@ class ShareFrontendData
                 'logo' => $this->settingService->get('site_logo') ?? null,
                 'favicon' => $this->settingService->get('site_favicon') ?? null,
             ],
-            
+
+            // Advertise active methods, and only when a gateway extension is active.
+            'activePaymentMethods' => function () {
+                try {
+                    $methods = PaymentMethod::query()
+                        ->where('is_active', true)
+                        ->orderBy('sort_order')
+                        ->get(['code', 'name']);
+
+                    $extensionMethods = $methods->reject(
+                        fn ($method) => in_array($method->code, ['cod', 'bank_transfer'], true)
+                    );
+                    $activeExtensionCodes = $extensionMethods->isEmpty()
+                        ? []
+                        : Extension::query()
+                            ->where('active', true)
+                            ->whereIn('code', $extensionMethods->map(fn ($method) => 'bulbula-' . $method->code)->all())
+                            ->pluck('code')
+                            ->all();
+
+                    return $methods
+                        ->filter(fn ($method) => in_array($method->code, ['cod', 'bank_transfer'], true)
+                            || in_array('bulbula-' . $method->code, $activeExtensionCodes, true))
+                        ->map(fn ($method) => [
+                            'code' => $method->code,
+                            'name' => $method->name,
+                        ])
+                        ->values()
+                        ->all();
+                } catch (\Throwable) {
+                    // The storefront may be visited before payment tables exist during setup.
+                    return [];
+                }
+            },
+
             // Share categories for header navigation
             'categories' => function () {
                 try {

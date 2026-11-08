@@ -5,6 +5,11 @@ import { useThemeSettings } from '@/composables/useThemeSettings';
 import { computed } from 'vue';
 import { CreditCard, Facebook, Instagram, Twitter } from 'lucide-vue-next';
 
+interface ActivePaymentMethod {
+    code: string;
+    name: string;
+}
+
 interface Props {
     theme?: any;
     siteConfig?: {
@@ -31,6 +36,18 @@ const brand = computed(() => (page.props.brand ?? {}) as Record<string, string>)
 // Name and description: from siteConfig, else the brand values in config/brand.php.
 const siteName = computed(() => props.siteConfig?.name || brand.value.name || '');
 const siteDescription = computed(() => props.siteConfig?.description || brand.value.tagline || '');
+const activePaymentMethods = computed<ActivePaymentMethod[]>(() => {
+    const sharedMethods = (page.props as Record<string, unknown>).activePaymentMethods;
+    if (!Array.isArray(sharedMethods)) return [];
+
+    return sharedMethods.filter((method: unknown): method is ActivePaymentMethod => {
+        if (!method || typeof method !== 'object') return false;
+        const candidate = method as Record<string, unknown>;
+        return typeof candidate.code === 'string'
+            && typeof candidate.name === 'string'
+            && candidate.name.trim().length > 0;
+    });
+});
 const { menus, loading, getMenuUrl } = useStorefrontMenu();
 const { showPlatformBranding, accent } = useThemeSettings();
 
@@ -104,9 +121,19 @@ const footerSections = computed(() => {
             </div>
 
             <div class="border-t border-slate-800 mt-8 pt-6 flex flex-col md:flex-row items-center justify-between gap-4">
-                <div class="flex items-center gap-2 text-slate-500">
-                    <CreditCard class="w-4 h-4" :style="{ color: accent }" />
-                    <span class="text-xs">Visa · Mastercard · PayPal · Stripe</span>
+                <div
+                    v-if="activePaymentMethods.length"
+                    role="group"
+                    aria-label="Accepted payment methods"
+                    class="flex flex-wrap items-center gap-2 text-slate-300"
+                >
+                    <CreditCard class="h-4 w-4 shrink-0" aria-hidden="true" :style="{ color: accent }" />
+                    <template v-for="(method, index) in activePaymentMethods" :key="method.code">
+                        <span :data-payment-method="method.code" class="text-xs">{{ method.name }}</span>
+                        <span v-if="index < activePaymentMethods.length - 1" aria-hidden="true" class="text-xs">
+                            ·
+                        </span>
+                    </template>
                 </div>
                 <div class="text-center text-sm">
                     <p>&copy; {{ currentYear }} {{ siteName }}. All rights reserved.</p>
