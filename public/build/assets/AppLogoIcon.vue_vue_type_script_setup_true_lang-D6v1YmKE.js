@@ -1,1 +1,0 @@
-import{d as e,o as s,m as a,a9 as n}from"./app-Bd4fZcm-.js";const c=e({inheritAttrs:!1,__name:"AppLogoIcon",props:{className:{}},setup(r){return(o,t)=>(s(),a("img",n({src:"/logos/bneo-app-icon.png",alt:"BNEO logo",class:["object-contain",o.className]},o.$attrs),null,16))}});export{c as _};
