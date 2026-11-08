@@ -85,58 +85,19 @@ router.on('navigate', (event) => {
     }
 });
 
-// A delayed text status complements Inertia's progress bar without covering the
-// page, moving focus, or intercepting clicks. Fast visits stay visually quiet.
-const navigationStatus = document.getElementById('navigation-progress-status');
-let navigationStatusDelay: ReturnType<typeof setTimeout> | undefined;
-let navigationStatusDismiss: ReturnType<typeof setTimeout> | undefined;
+// Expose navigation activity to assistive technology without adding visible copy
+// or preventing users from interacting with the current page.
 let activeNavigationVisits = 0;
-let navigationStatusVisible = false;
 
 router.on('start', () => {
     activeNavigationVisits += 1;
-
-    if (navigationStatusDelay) clearTimeout(navigationStatusDelay);
-    if (navigationStatusDismiss) clearTimeout(navigationStatusDismiss);
-
-    if (navigationStatusVisible && navigationStatus) {
-        navigationStatus.textContent = 'Loading page. You can still use the page.';
-        document.getElementById('app')?.setAttribute('aria-busy', 'true');
-        return;
-    }
-
-    navigationStatus?.classList.remove('is-visible');
-    if (navigationStatus) navigationStatus.textContent = '';
-
-    navigationStatusDelay = setTimeout(() => {
-        if (activeNavigationVisits === 0 || !navigationStatus) return;
-
-        navigationStatus.textContent = 'Loading page. You can still use the page.';
-        navigationStatus.classList.add('is-visible');
-        navigationStatusVisible = true;
-        document.getElementById('app')?.setAttribute('aria-busy', 'true');
-    }, 450);
+    document.getElementById('app')?.setAttribute('aria-busy', 'true');
 });
 
-router.on('finish', (event) => {
+router.on('finish', () => {
     activeNavigationVisits = Math.max(0, activeNavigationVisits - 1);
-    if (activeNavigationVisits > 0) return;
-
-    if (navigationStatusDelay) clearTimeout(navigationStatusDelay);
-    document.getElementById('app')?.setAttribute('aria-busy', 'false');
-
-    if (!navigationStatusVisible || !navigationStatus) return;
-
-    navigationStatusVisible = false;
-    if (!event.detail.visit.completed) {
-        navigationStatus.classList.remove('is-visible');
-        navigationStatus.textContent = '';
-        return;
-    }
-
-    navigationStatus.textContent = 'Page loaded.';
-    navigationStatusDismiss = setTimeout(() => {
-        navigationStatus.classList.remove('is-visible');
-        navigationStatus.textContent = '';
-    }, 1200);
+    document.getElementById('app')?.setAttribute(
+        'aria-busy',
+        activeNavigationVisits > 0 ? 'true' : 'false',
+    );
 });

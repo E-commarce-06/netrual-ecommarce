@@ -57,7 +57,7 @@ test('footer advertises exactly the active payment methods from the server', asy
     await expect(page.locator('footer')).not.toContainText('Visa · Mastercard · PayPal · Stripe');
 });
 
-test('slow navigation shows clear accessible feedback without blocking the page', async ({ page }) => {
+test('slow navigation shows a visible, non-blocking progress line without copy', async ({ page }) => {
     await page.goto('/', { waitUntil: 'networkidle' });
     const href = await firstProductHref(page);
 
@@ -69,14 +69,15 @@ test('slow navigation shows clear accessible feedback without blocking the page'
     const productLink = page.locator(`a[href='${href}']`).first();
     await productLink.click();
 
-    const status = page.getByRole('status');
-    await expect(status).toHaveText('Loading page. You can still use the page.');
-    await expect(status).toHaveCSS('pointer-events', 'none');
-    await expect(status).toHaveCSS('position', 'fixed');
-    await expect(page.locator('#nprogress .bar')).toHaveCSS('height', '6px');
+    const progressBar = page.locator('#nprogress .bar');
+    await expect(progressBar).toBeVisible();
+    await expect(progressBar).toHaveCSS('height', '8px');
+    await expect(progressBar).toHaveCSS('background-color', 'rgb(4, 23, 53)');
+    await expect(page.locator('#nprogress')).toHaveCSS('pointer-events', 'none');
+    await expect(page.locator('#navigation-progress-status')).toHaveCount(0);
+    await expect(page.locator('#app')).toHaveAttribute('aria-busy', 'true');
 
     await page.waitForURL(`**${href}`);
-    await expect(status).toHaveText('Page loaded.');
     await expect(page.locator('#app')).toHaveAttribute('aria-busy', 'false');
 });
 
