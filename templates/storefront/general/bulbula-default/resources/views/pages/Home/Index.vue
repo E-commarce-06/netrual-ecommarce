@@ -149,43 +149,45 @@ function openQuickView(slug: string) {
       <!-- Hero -->
       <section class="px-4 pb-8 pt-5 sm:px-6 sm:pb-10 sm:pt-7 lg:px-10 lg:pb-12 lg:pt-9">
         <div class="mx-auto max-w-[1440px]">
-          <div class="relative isolate grid min-h-[570px] overflow-hidden rounded-[2rem] bg-[#0b2040] shadow-[0_28px_80px_-28px_rgba(11,32,64,0.48)] lg:min-h-[600px] lg:grid-cols-[0.95fr_1.05fr]">
-            <div class="pointer-events-none absolute -left-32 -top-40 h-[28rem] w-[28rem] rounded-full bg-[#ef8a24]/20 blur-3xl" />
-            <div class="pointer-events-none absolute -bottom-48 left-[35%] h-[28rem] w-[28rem] rounded-full bg-[#4580a7]/20 blur-3xl" />
+          <div class="relative isolate grid overflow-hidden rounded-[2.25rem] border border-[#e9dfd0] bg-[#f1ebdf] shadow-[0_28px_80px_-28px_rgba(11,32,64,0.28)] lg:min-h-[600px] lg:grid-cols-[0.78fr_1.22fr]">
+            <div class="pointer-events-none absolute -left-24 -top-24 h-72 w-72 rounded-full border border-[#e88b36]/20 bg-white/35" />
+            <div class="pointer-events-none absolute -bottom-24 left-[24%] h-64 w-64 rounded-full bg-[#e88b36]/10 blur-3xl" />
 
-            <div class="relative z-10 flex flex-col items-start justify-center px-6 py-12 sm:px-10 sm:py-14 lg:px-14 lg:py-16 xl:px-20">
-              <p class="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/[0.08] px-3.5 py-2 text-[10px] font-bold uppercase tracking-[0.2em] text-orange-200 sm:text-xs">
-                <span class="h-1.5 w-1.5 rounded-full bg-[#f4a04a] shadow-[0_0_12px_rgba(244,160,74,0.9)]" />
-                {{ homepageSettings.hero_eyebrow }}
-              </p>
-              <h1 class="mt-6 max-w-2xl whitespace-pre-line text-[2.65rem] font-semibold leading-[1.04] tracking-[-0.045em] text-white sm:mt-7 sm:text-5xl md:text-6xl lg:text-[3.6rem] xl:text-[4.25rem]">
-                {{ homepageSettings.hero_title }}
-              </h1>
-              <p class="mt-5 max-w-xl text-base leading-7 text-blue-100/75 sm:text-lg sm:leading-8">
-                {{ homepageSettings.hero_description }}
-              </p>
-              <div class="mt-8 flex w-full flex-col gap-3 sm:w-auto sm:flex-row sm:flex-wrap">
-                <a :href="homepageSettings.hero_primary_url || '/products'" class="group inline-flex min-h-12 items-center justify-center gap-3 rounded-xl bg-[#f39a3c] px-5 py-3 text-sm font-bold text-[#10213d] shadow-lg shadow-orange-950/20 transition hover:-translate-y-0.5 hover:bg-[#ffad55]">
-                  {{ homepageSettings.hero_primary_text || 'Shop all products' }}
-                  <ArrowRight class="h-4 w-4 transition-transform group-hover:translate-x-1" />
-                </a>
-                <a v-if="homepageSettings.hero_secondary_text" :href="heroSecondaryUrl" class="inline-flex min-h-12 items-center justify-center gap-2 rounded-xl border border-white/25 bg-white/[0.06] px-5 py-3 text-sm font-semibold text-white transition hover:border-white/50 hover:bg-white/10">
-                  {{ homepageSettings.hero_secondary_text }}
-                  <ChevronRight class="h-4 w-4" />
-                </a>
+            <div class="relative z-20 order-1 flex items-center px-5 py-8 sm:px-8 sm:py-10 lg:col-start-1 lg:row-start-1 lg:px-10 lg:py-12 xl:px-14">
+              <div class="relative w-full max-w-[560px] rounded-[1.75rem] border border-white/80 bg-[#fffdf8]/95 p-6 shadow-[0_22px_70px_-32px_rgba(11,32,64,0.28)] backdrop-blur sm:p-9 lg:translate-x-16 lg:p-11">
+                <span class="pointer-events-none absolute -right-3 -top-3 hidden h-10 w-10 rounded-2xl bg-[#f39a3c] shadow-lg shadow-orange-950/20 lg:block" aria-hidden="true" />
+                <p class="inline-flex items-center gap-2 rounded-full border border-[#e8c8a6] bg-white px-3.5 py-2 text-[10px] font-bold uppercase tracking-[0.2em] text-[#8a4b16] sm:text-xs">
+                  <span class="h-1.5 w-1.5 rounded-full bg-[#e88b36]" />
+                  {{ homepageSettings.hero_eyebrow }}
+                </p>
+                <h1 class="mt-5 max-w-[12ch] whitespace-pre-line text-[2.65rem] font-semibold leading-[1.02] tracking-[-0.045em] text-[#10213d] sm:mt-6 sm:text-5xl md:text-6xl lg:text-[3.9rem] xl:text-[4.35rem]">
+                  {{ homepageSettings.hero_title }}
+                </h1>
+                <p class="mt-4 max-w-lg text-base leading-7 text-[#44546a] sm:text-lg sm:leading-8">
+                  {{ homepageSettings.hero_description }}
+                </p>
+                <div class="mt-7 flex w-full flex-col gap-3 sm:w-auto sm:flex-row sm:flex-wrap">
+                  <a :href="homepageSettings.hero_primary_url || '/products'" class="group inline-flex min-h-12 items-center justify-center gap-3 rounded-xl bg-[#f39a3c] px-5 py-3 text-sm font-bold text-[#10213d] shadow-lg shadow-orange-950/20 transition hover:-translate-y-0.5 hover:bg-[#ffad55]">
+                    {{ homepageSettings.hero_primary_text || 'Shop all products' }}
+                    <ArrowRight class="h-4 w-4 transition-transform group-hover:translate-x-1" />
+                  </a>
+                  <a v-if="homepageSettings.hero_secondary_text" :href="heroSecondaryUrl" class="inline-flex min-h-12 items-center justify-center gap-2 rounded-xl border border-[#cbd3dc] bg-white px-5 py-3 text-sm font-semibold text-[#10213d] transition hover:border-[#10213d] hover:bg-[#10213d] hover:text-white">
+                    {{ homepageSettings.hero_secondary_text }}
+                    <ChevronRight class="h-4 w-4" />
+                  </a>
+                </div>
               </div>
-
             </div>
 
-            <div class="relative min-h-[330px] overflow-hidden sm:min-h-[410px] lg:min-h-0">
+            <div class="relative order-2 min-h-[300px] overflow-hidden sm:min-h-[390px] lg:col-start-2 lg:row-start-1 lg:min-h-[600px]">
               <img v-if="heroImage" :src="heroImage" :alt="homepageSettings.hero_title" class="absolute inset-0 h-full w-full object-cover object-center" fetchpriority="high" />
-              <div v-else class="absolute inset-0 bg-[radial-gradient(circle_at_70%_35%,rgba(243,154,60,0.48),transparent_24%),radial-gradient(circle_at_38%_72%,rgba(74,130,169,0.45),transparent_35%),linear-gradient(135deg,#102c50,#07172e)]">
-                <div class="absolute right-[8%] top-[13%] h-56 w-56 rounded-full border border-white/10 bg-white/[0.04] sm:h-72 sm:w-72" />
-                <div class="absolute right-[18%] top-[24%] h-40 w-40 rounded-full border border-orange-200/25 bg-orange-300/10 shadow-[0_0_90px_rgba(243,154,60,0.17)] sm:h-52 sm:w-52" />
-                <div class="absolute bottom-[12%] left-[10%] h-32 w-32 rounded-[2rem] border border-white/10 bg-white/[0.05] rotate-[-12deg] sm:h-44 sm:w-44" />
+              <div v-else class="absolute inset-0 bg-[radial-gradient(circle_at_70%_35%,rgba(243,154,60,0.48),transparent_24%),radial-gradient(circle_at_38%_72%,rgba(74,130,169,0.35),transparent_35%),linear-gradient(135deg,#f2c879,#e88b36)]">
+                <div class="absolute right-[8%] top-[13%] h-56 w-56 rounded-full border border-white/35 bg-white/10 sm:h-72 sm:w-72" />
+                <div class="absolute right-[18%] top-[24%] h-40 w-40 rounded-full border border-white/40 bg-white/15 shadow-[0_0_90px_rgba(243,154,60,0.17)] sm:h-52 sm:w-52" />
+                <div class="absolute bottom-[12%] left-[10%] h-32 w-32 rounded-[2rem] border border-white/35 bg-white/15 rotate-[-12deg] sm:h-44 sm:w-44" />
               </div>
-              <div class="absolute inset-0 bg-gradient-to-t from-[#081a33]/80 via-[#081a33]/15 to-transparent lg:bg-gradient-to-r lg:from-[#0b2040]/35 lg:via-transparent lg:to-transparent" />
-              <a v-if="heroProducts[0]" :href="`/product/${heroProducts[0].slug}`" class="absolute bottom-5 left-5 right-5 flex items-center justify-between gap-4 rounded-2xl border border-white/20 bg-[#0b2040]/80 p-4 text-white shadow-xl backdrop-blur-xl transition hover:bg-[#0b2040]/95 sm:bottom-8 sm:left-8 sm:right-auto sm:max-w-[20rem] sm:p-5">
+              <div class="absolute inset-0 bg-gradient-to-t from-[#081a33]/65 via-[#081a33]/5 to-transparent lg:bg-gradient-to-l lg:from-[#081a33]/10 lg:via-transparent lg:to-transparent" />
+              <a v-if="heroProducts[0]" :href="`/product/${heroProducts[0].slug}`" class="absolute bottom-4 left-4 right-4 flex items-center justify-between gap-4 rounded-2xl border border-white/30 bg-[#0b2040]/90 p-4 text-white shadow-xl backdrop-blur-xl transition hover:bg-[#0b2040] sm:bottom-6 sm:left-6 sm:right-6 sm:p-5 lg:bottom-8 lg:left-auto lg:right-8 lg:max-w-[20rem]">
                 <span class="min-w-0 block line-clamp-2 text-sm font-semibold leading-5 sm:text-base">{{ heroProducts[0].name }}</span>
                 <ArrowUpRight class="h-5 w-5 shrink-0 text-orange-200" />
               </a>
@@ -242,8 +244,8 @@ function openQuickView(slug: string) {
       </section>
 
       <!-- Featured products -->
-      <section v-if="homepageSettings.featured_enabled && featuredProducts.length" class="bg-white px-4 py-11 sm:px-6 sm:py-14 lg:px-10 lg:py-16">
-        <div class="mx-auto max-w-[1320px]">
+      <section v-if="homepageSettings.featured_enabled && featuredProducts.length" class="px-4 py-8 sm:px-6 sm:py-10 lg:px-10 lg:py-12">
+        <div class="mx-auto max-w-[1320px] rounded-[2rem] border border-[#e9e5dd] bg-white px-4 py-6 shadow-sm sm:px-6 sm:py-8 lg:px-8 lg:py-9 dark:border-white/10">
           <div class="mb-5 flex flex-col gap-3 sm:mb-7 sm:flex-row sm:items-end sm:justify-between">
             <h2 class="text-2xl font-semibold tracking-tight text-[#12213a] dark:text-white sm:text-3xl lg:text-4xl">{{ homepageSettings.featured_title }}</h2>
             <a href="/products" class="inline-flex self-start items-center gap-2 rounded-full border border-[#d9d4ca] px-4 py-2.5 text-sm font-semibold text-[#12213a] transition hover:border-orange-300 hover:bg-orange-50 dark:border-white/20 dark:text-white dark:hover:bg-white/5">View all <ArrowRight class="h-4 w-4" /></a>
@@ -285,8 +287,8 @@ function openQuickView(slug: string) {
       </section>
 
       <!-- New arrivals -->
-      <section v-if="homepageSettings.new_arrivals_enabled && newProducts.length" class="bg-white px-4 pb-11 sm:px-6 sm:pb-14 lg:px-10 lg:pb-16">
-        <div class="mx-auto max-w-[1320px]">
+      <section v-if="homepageSettings.new_arrivals_enabled && newProducts.length" class="px-4 pb-10 sm:px-6 sm:pb-12 lg:px-10 lg:pb-14">
+        <div class="mx-auto max-w-[1320px] rounded-[2rem] border border-[#e9e5dd] bg-white px-4 py-6 shadow-sm sm:px-6 sm:py-8 lg:px-8 lg:py-9 dark:border-white/10">
           <div class="mb-5 flex flex-col gap-3 sm:mb-7 sm:flex-row sm:items-end sm:justify-between">
             <h2 class="text-2xl font-semibold tracking-tight text-[#12213a] dark:text-white sm:text-3xl lg:text-4xl">{{ homepageSettings.new_arrivals_title }}</h2>
             <a href="/products?sort=newest" class="inline-flex self-start items-center gap-2 rounded-full border border-[#d9d4ca] px-4 py-2.5 text-sm font-semibold text-[#12213a] transition hover:border-orange-300 hover:bg-orange-50 dark:border-white/20 dark:text-white dark:hover:bg-white/5">Shop new arrivals <ArrowRight class="h-4 w-4" /></a>
