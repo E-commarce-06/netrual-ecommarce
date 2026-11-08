@@ -97,6 +97,17 @@ test('help center searches answers and filters by topic', async ({ page }) => {
     await expect(page.getByRole('heading', { name: 'Orders & tracking' })).toHaveCount(0);
 });
 
+test('contact us is public and provides a working message form', async ({ page }) => {
+    await page.goto('/contact-us', { waitUntil: 'networkidle' });
+    await expect(page.getByRole('heading', { name: 'Contact us' })).toBeVisible();
+    await expect(page.getByLabel('Your name')).toBeVisible();
+    await expect(page.getByLabel('Email address')).toBeVisible();
+    await expect(page.getByLabel('Subject')).toBeVisible();
+    await expect(page.getByLabel('How can we help?')).toBeVisible();
+    await expect(page.getByRole('button', { name: 'Send message' })).toBeVisible();
+    await expect(page.getByRole('link', { name: 'Visit Help Center' })).toHaveAttribute('href', '/help');
+});
+
 test('product images that are rendered actually load', async ({ page }) => {
     const failed: string[] = [];
     page.on('response', (r) => {

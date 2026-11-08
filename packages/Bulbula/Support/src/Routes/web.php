@@ -3,12 +3,18 @@
 declare(strict_types=1);
 
 use Bulbula\Support\Http\Controllers\Admin\SupportTicketController as AdminSupportTicketController;
+use Bulbula\Support\Http\Controllers\ContactController;
 use Bulbula\Support\Http\Controllers\HelpCenterController;
 use Bulbula\Support\Http\Controllers\SupportTicketController;
 use Illuminate\Support\Facades\Route;
 
-// Register before the CMS catch-all so /help always resolves to the live center.
+// Register these customer-service pages before the CMS catch-all.
 Route::middleware('web')->group(function (): void {
+    Route::get('/contact-us', [ContactController::class, 'index'])->name('contact.index');
+    Route::post('/contact-us', [ContactController::class, 'send'])
+        ->middleware('throttle:5,1')
+        ->name('contact.send');
+
     Route::get('/help', [HelpCenterController::class, 'index'])->name('help.index');
 
     Route::middleware('auth')->prefix('account/support')->name('shop.account.support.')->group(function (): void {
