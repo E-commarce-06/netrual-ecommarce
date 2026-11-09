@@ -59,6 +59,16 @@ class AppSettingsController extends Controller
                 'description' => (string) $this->settingService->get('store_description', ''),
                 'logo_url' => $siteLogo,
                 'auth_logo_url' => $mobileAuthLogo ?: $siteLogo,
+                'colors' => [
+                    'primary' => $this->mobileBrandColor(
+                        $this->settingService->get('mobile_primary_color', '#1268C4'),
+                        '#1268C4',
+                    ),
+                    'accent' => $this->mobileBrandColor(
+                        $this->settingService->get('mobile_accent_color', '#0C62B8'),
+                        '#0C62B8',
+                    ),
+                ],
             ],
             'support' => [
                 'email' => $supportEmail,
@@ -99,6 +109,29 @@ class AppSettingsController extends Controller
             'data'    => $settings,
         ])->header('Cache-Control', 'public, max-age=60')
           ->header('ETag', '"' . $mobileConfig['revision'] . '"');
+    }
+
+    /**
+     * Expose only full six-digit RGB colors; malformed settings fall back safely.
+     */
+    protected function mobileBrandColor($value, string $fallback): string
+    {
+        $color = trim((string) $value);
+        if (preg_match('/^#[0-9A-Fa-f]{6}$/', $color) !== 1) {
+            return $fallback;
+        }
+
+        $channels = [];
+        foreach ([1, 3, 5] as $offset) {
+            $channel = hexdec(substr($color, $offset, 2)) / 255;
+            $channels[] = $channel <= 0.04045
+                ? $channel / 12.92
+                : (($channel + 0.055) / 1.055) ** 2.4;
+        }
+        $luminance = 0.2126 * $channels[0] + 0.7152 * $channels[1] + 0.0722 * $channels[2];
+        $contrastWithWhite = 1.05 / ($luminance + 0.05);
+
+        return $contrastWithWhite >= 4.5 ? strtoupper($color) : $fallback;
     }
 
     /**

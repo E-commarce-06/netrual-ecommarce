@@ -1485,7 +1485,7 @@ Fetch store branding and public policy/contact information before authentication
 GET /api/v1/app/settings
 ```
 
-The response preserves the existing flat `data` fields and adds a `mobile_config` object with `schema_version`, a content-derived `revision`, `brand`, `support`, `store`, and `policies`. It is a public allowlist: it must not contain payment secrets, admin credentials, or an API-origin override. Logo values are public HTTPS URLs when configured; the mobile client rejects non-HTTPS asset URLs.
+The response preserves the existing flat `data` fields and adds a `mobile_config` object with `schema_version`, a content-derived `revision`, `brand`, `support`, `store`, and `policies`. `brand.colors` contains the validated primary/accent RGB colors managed from Store Configuration; both are checked for at least 4.5:1 contrast against white text, with bundled color fallbacks on invalid values. It is a public allowlist: it must not contain payment secrets, admin credentials, or an API-origin override. Logo values are public HTTPS URLs when configured; insecure or malformed asset URLs are omitted.
 
 The web admin remains the source of truth: store details/policies are edited in Store Configuration, while site and mobile-auth logos are edited in General Settings. The auth logo falls back to the site logo when no mobile-specific logo is configured.
 

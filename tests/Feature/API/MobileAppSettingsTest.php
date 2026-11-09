@@ -15,6 +15,8 @@ test('public app settings exposes a versioned mobile-safe configuration projecti
     $settings->set('store_phone', '+251 911 000 000', 'string', 'store');
     $settings->set('store_country', 'Ethiopia', 'string', 'store');
     $settings->set('store_timezone', 'Africa/Addis_Ababa', 'string', 'store');
+    $settings->set('mobile_primary_color', '#1A2B3C', 'string', 'store');
+    $settings->set('mobile_accent_color', '#095AB1', 'string', 'store');
     $settings->set('policy_privacy', 'Privacy text.', 'string', 'store');
     $settings->set('policy_terms', 'Terms text.', 'string', 'store');
     $settings->set('policy_return', 'Returns text.', 'string', 'store');
@@ -36,6 +38,8 @@ test('public app settings exposes a versioned mobile-safe configuration projecti
         ->assertJsonPath('data.mobile_config.brand.name', 'BNEO')
         ->assertJsonPath('data.mobile_config.brand.tagline', 'Shop Easly!')
         ->assertJsonPath('data.mobile_config.brand.description', 'A local Ethiopian marketplace.')
+        ->assertJsonPath('data.mobile_config.brand.colors.primary', '#1A2B3C')
+        ->assertJsonPath('data.mobile_config.brand.colors.accent', '#095AB1')
         ->assertJsonPath('data.mobile_config.support.email', 'help@example.test')
         ->assertJsonPath('data.mobile_config.support.phone', '+251 911 000 000')
         ->assertJsonPath('data.mobile_config.store.country', 'Ethiopia')
@@ -65,5 +69,18 @@ test('public app settings falls back to the general site name and site logo when
 
     expect($config['brand']['name'])->toBe('BNEO')
         ->and($config['brand']['auth_logo_url'])->toBe($config['brand']['logo_url'])
+        ->and($config['brand']['colors']['primary'])->toBe('#1268C4')
+        ->and($config['brand']['colors']['accent'])->toBe('#0C62B8')
         ->and($config['revision'])->toBeString();
+});
+
+test('public app settings falls back when stored brand colors are malformed or lack white-text contrast', function () {
+    $settings = app(SettingService::class);
+    $settings->set('mobile_primary_color', '#FFFFFF', 'string', 'store');
+    $settings->set('mobile_accent_color', 'not-a-color', 'string', 'store');
+
+    $config = $this->getJson('/api/v1/app/settings')->assertOk()->json('data.mobile_config');
+
+    expect($config['brand']['colors']['primary'])->toBe('#1268C4')
+        ->and($config['brand']['colors']['accent'])->toBe('#0C62B8');
 });

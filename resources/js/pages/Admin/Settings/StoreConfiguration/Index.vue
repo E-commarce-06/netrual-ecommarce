@@ -1,11 +1,12 @@
 <script setup lang="ts">
-import { ref, watch } from 'vue'
+import { computed, ref, watch } from 'vue'
 import { Head, useForm } from '@inertiajs/vue3'
 import AdminLayout from '@/layouts/AdminLayout.vue'
 import TiptapEditor from '@/components/Admin/TiptapEditor.vue'
 import {
   Store,
   MapPin,
+  Palette,
   Phone,
   Share2,
   ShoppingBag,
@@ -40,6 +41,8 @@ interface Props {
     store_postal_code: string
     store_country: string
     store_timezone: string
+    mobile_primary_color: string
+    mobile_accent_color: string
     social_facebook: string
     social_instagram: string
     social_twitter: string
@@ -75,6 +78,8 @@ const props = withDefaults(defineProps<Props>(), {
     store_postal_code: '',
     store_country: '',
     store_timezone: 'UTC',
+    mobile_primary_color: '#1268C4',
+    mobile_accent_color: '#0C62B8',
     social_facebook: '',
     social_instagram: '',
     social_twitter: '',
@@ -111,6 +116,8 @@ const form = useForm({
   store_postal_code: props.settings.store_postal_code || '',
   store_country: props.settings.store_country || '',
   store_timezone: props.settings.store_timezone || 'UTC',
+  mobile_primary_color: props.settings.mobile_primary_color || '#1268C4',
+  mobile_accent_color: props.settings.mobile_accent_color || '#0C62B8',
   social_facebook: props.settings.social_facebook || '',
   social_instagram: props.settings.social_instagram || '',
   social_twitter: props.settings.social_twitter || '',
@@ -126,7 +133,37 @@ const form = useForm({
   checkout_require_account: props.settings.checkout_require_account ?? false,
 })
 
+const contrastWithWhite = (hex: string): number => {
+  if (!/^#[0-9A-Fa-f]{6}$/.test(hex)) return 0
+  const linearChannel = (start: number) => {
+    const channel = parseInt(hex.slice(start, start + 2), 16) / 255
+    return channel <= 0.04045 ? channel / 12.92 : ((channel + 0.055) / 1.055) ** 2.4
+  }
+  const luminance =
+    0.2126 * linearChannel(1) +
+    0.7152 * linearChannel(3) +
+    0.0722 * linearChannel(5)
+  return 1.05 / (luminance + 0.05)
+}
+
+const primaryContrast = computed(() => contrastWithWhite(form.mobile_primary_color))
+const accentContrast = computed(() => contrastWithWhite(form.mobile_accent_color))
+
 const save = () => {
+  if (activeTab.value === 'mobile') {
+    form.clearErrors('mobile_primary_color', 'mobile_accent_color')
+    let hasContrastErrors = false
+    if (primaryContrast.value < 4.5) {
+      form.setError('mobile_primary_color', 'White text contrast must be at least 4.5:1.')
+      hasContrastErrors = true
+    }
+    if (accentContrast.value < 4.5) {
+      form.setError('mobile_accent_color', 'White text contrast must be at least 4.5:1.')
+      hasContrastErrors = true
+    }
+    if (hasContrastErrors) return
+  }
+
   form
     .transform((data) => ({ ...data, _section: activeTab.value }))
     .post('/admin/settings/store', {
@@ -153,7 +190,7 @@ watch(() => form.store_email, (newEmail) => {
         <div>
           <h1 class="text-2xl font-bold text-gray-900 dark:text-white">Store Configuration</h1>
           <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">
-            Manage store details, contact information, social media links, and policies
+            Manage store details, mobile app brand colors, contact information, social media links, and policies
           </p>
         </div>
         <div>
@@ -228,6 +265,19 @@ watch(() => form.store_email, (newEmail) => {
               >
                 <ShoppingBag class="w-4 h-4 mr-2" :class="activeTab === 'checkout' ? 'text-blue-500' : 'text-gray-400 group-hover:text-gray-500'" />
                 Checkout
+              </button>
+              <button
+                type="button"
+                @click="activeTab = 'mobile'"
+                :class="[
+                  activeTab === 'mobile'
+                    ? 'border-blue-500 text-blue-600 dark:text-blue-400'
+                    : 'border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 hover:border-gray-300 dark:hover:border-gray-600',
+                  'group inline-flex items-center py-4 px-1 border-b-2 font-medium text-sm transition-colors duration-200 whitespace-nowrap'
+                ]"
+              >
+                <Palette class="w-4 h-4 mr-2" :class="activeTab === 'mobile' ? 'text-blue-500' : 'text-gray-400 group-hover:text-gray-500'" />
+                Mobile App
               </button>
               <button
                 type="button"
@@ -355,6 +405,78 @@ watch(() => form.store_email, (newEmail) => {
                   placeholder="Brief description of your business for SEO purposes..."
                 ></textarea>
                 <p v-if="form.errors.store_description" class="mt-1 text-sm text-red-600 dark:text-red-400">{{ form.errors.store_description }}</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Mobile App Branding Tab -->
+          <div v-show="activeTab === 'mobile'" class="p-6 sm:p-8">
+            <div class="max-w-3xl space-y-6">
+              <div>
+                <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2 flex items-center gap-2">
+                  <Palette class="w-5 h-5 text-gray-400" />
+                  Mobile App Brand Colors
+                </h3>
+                <p class="text-sm text-gray-500 dark:text-gray-400">
+                  These public colors are delivered to the mobile app with its store branding. Choose shades that keep white button text legible.
+                </p>
+              </div>
+
+              <div class="grid grid-cols-1 gap-6 sm:grid-cols-2">
+                <div>
+                  <label for="mobile_primary_color" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                    Primary Color
+                  </label>
+                  <div class="flex items-center gap-3">
+                    <input
+                      id="mobile_primary_color"
+                      v-model="form.mobile_primary_color"
+                      type="color"
+                      class="h-11 w-16 cursor-pointer rounded border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 p-1"
+                    />
+                    <span class="font-mono text-sm text-gray-700 dark:text-gray-300">{{ form.mobile_primary_color }}</span>
+                  </div>
+                  <p class="mt-1 text-xs" :class="primaryContrast >= 4.5 ? 'text-gray-500 dark:text-gray-400' : 'text-amber-600 dark:text-amber-400'">
+                    White-text contrast: {{ primaryContrast.toFixed(2) }}:1 (minimum 4.5:1)
+                  </p>
+                  <p v-if="form.errors.mobile_primary_color" class="mt-1 text-sm text-red-600 dark:text-red-400">{{ form.errors.mobile_primary_color }}</p>
+                </div>
+
+                <div>
+                  <label for="mobile_accent_color" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                    Accent Color
+                  </label>
+                  <div class="flex items-center gap-3">
+                    <input
+                      id="mobile_accent_color"
+                      v-model="form.mobile_accent_color"
+                      type="color"
+                      class="h-11 w-16 cursor-pointer rounded border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 p-1"
+                    />
+                    <span class="font-mono text-sm text-gray-700 dark:text-gray-300">{{ form.mobile_accent_color }}</span>
+                  </div>
+                  <p class="mt-1 text-xs" :class="accentContrast >= 4.5 ? 'text-gray-500 dark:text-gray-400' : 'text-amber-600 dark:text-amber-400'">
+                    White-text contrast: {{ accentContrast.toFixed(2) }}:1 (minimum 4.5:1)
+                  </p>
+                  <p v-if="form.errors.mobile_accent_color" class="mt-1 text-sm text-red-600 dark:text-red-400">{{ form.errors.mobile_accent_color }}</p>
+                </div>
+              </div>
+
+              <div class="rounded-lg border border-gray-200 dark:border-gray-700 p-4">
+                <p class="mb-3 text-xs font-medium uppercase tracking-wide text-gray-500 dark:text-gray-400">Preview</p>
+                <button
+                  type="button"
+                  class="rounded-lg px-4 py-2 text-sm font-semibold text-white"
+                  :style="{ backgroundColor: form.mobile_primary_color }"
+                >
+                  Primary button
+                </button>
+                <span
+                  class="ml-3 rounded-lg px-4 py-2 text-sm font-semibold text-white"
+                  :style="{ backgroundColor: form.mobile_accent_color }"
+                >
+                  Accent
+                </span>
               </div>
             </div>
           </div>

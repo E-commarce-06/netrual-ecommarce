@@ -47,6 +47,8 @@ class StoreConfigurationController
                 
                 // Store Timezone
                 'store_timezone' => (string) $this->settingService->get('store_timezone', 'UTC'),
+                'mobile_primary_color' => (string) $this->settingService->get('mobile_primary_color', '#1268C4'),
+                'mobile_accent_color' => (string) $this->settingService->get('mobile_accent_color', '#0C62B8'),
                 
                 // Social Media
                 'social_facebook' => (string) $this->settingService->get('social_facebook', ''),
@@ -97,6 +99,24 @@ class StoreConfigurationController
                 'vat_number' => 'nullable|string|max:255',
                 'store_license' => 'nullable|string|max:255',
                 'store_timezone' => 'required|string|max:50',
+                'mobile_primary_color' => [
+                    'required',
+                    'regex:/^#[0-9A-Fa-f]{6}$/',
+                    function ($attribute, $value, $fail) {
+                        if (! $this->hasWhiteTextContrast((string) $value)) {
+                            $fail('The primary color must provide at least 4.5:1 contrast with white text.');
+                        }
+                    },
+                ],
+                'mobile_accent_color' => [
+                    'required',
+                    'regex:/^#[0-9A-Fa-f]{6}$/',
+                    function ($attribute, $value, $fail) {
+                        if (! $this->hasWhiteTextContrast((string) $value)) {
+                            $fail('The accent color must provide at least 4.5:1 contrast with white text.');
+                        }
+                    },
+                ],
 
                 // Contact Information
                 'store_email' => 'required|email|max:255',
@@ -133,6 +153,7 @@ class StoreConfigurationController
 
             $sectionFields = [
                 'details' => ['store_name', 'store_description', 'business_registration', 'vat_number', 'store_license', 'store_timezone'],
+                'mobile' => ['mobile_primary_color', 'mobile_accent_color'],
                 'contact' => ['store_email', 'support_email', 'store_phone', 'store_phone_alt', 'store_whatsapp', 'store_address_1', 'store_address_2', 'store_city', 'store_state', 'store_postal_code', 'store_country'],
                 'social' => ['social_facebook', 'social_instagram', 'social_twitter', 'social_linkedin', 'social_youtube', 'social_tiktok', 'social_pinterest'],
                 'policies' => ['policy_privacy', 'policy_terms', 'policy_return', 'policy_shipping'],
@@ -178,5 +199,23 @@ class StoreConfigurationController
             Log::error('Store configuration save error: ' . $e->getMessage());
             return redirect()->back()->with('error', 'Failed to save store configuration. Please try again.');
         }
+    }
+
+    protected function hasWhiteTextContrast(string $color): bool
+    {
+        if (preg_match('/^#[0-9A-Fa-f]{6}$/', $color) !== 1) {
+            return false;
+        }
+
+        $channels = [];
+        foreach ([1, 3, 5] as $offset) {
+            $channel = hexdec(substr($color, $offset, 2)) / 255;
+            $channels[] = $channel <= 0.04045
+                ? $channel / 12.92
+                : (($channel + 0.055) / 1.055) ** 2.4;
+        }
+        $luminance = 0.2126 * $channels[0] + 0.7152 * $channels[1] + 0.0722 * $channels[2];
+
+        return 1.05 / ($luminance + 0.05) >= 4.5;
     }
 }
