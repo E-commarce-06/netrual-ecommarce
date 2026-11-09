@@ -1475,6 +1475,20 @@ GET /api/v1/search/suggestions?q=yo
 
 ---
 
+### Mobile App Configuration
+
+#### Get Public Mobile Configuration
+
+Fetch store branding and public policy/contact information before authentication.
+
+```http
+GET /api/v1/app/settings
+```
+
+The response preserves the existing flat `data` fields and adds a `mobile_config` object with `schema_version`, a content-derived `revision`, `brand`, `support`, `store`, and `policies`. It is a public allowlist: it must not contain payment secrets, admin credentials, or an API-origin override. Logo values are public HTTPS URLs when configured; the mobile client rejects non-HTTPS asset URLs.
+
+The web admin remains the source of truth: store details/policies are edited in Store Configuration, while site and mobile-auth logos are edited in General Settings. The auth logo falls back to the site logo when no mobile-specific logo is configured.
+
 ### Banners API
 
 #### Get Banners
