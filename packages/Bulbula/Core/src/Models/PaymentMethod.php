@@ -105,12 +105,19 @@ class PaymentMethod extends Model
     public function isAvailableForCountry(string $countryCode): bool
     {
         $allowedCountries = $this->getConfigValue('allowed_countries', ['*']);
-
-        if (in_array('*', $allowedCountries)) {
+        if (is_string($allowedCountries)) {
+            $allowedCountries = array_filter(array_map('trim', explode(',', $allowedCountries)));
+        }
+        if (!is_array($allowedCountries) || $allowedCountries === []) {
             return true;
         }
 
-        return in_array($countryCode, $allowedCountries);
+        $allowedCountries = array_map('strtoupper', $allowedCountries);
+        if (in_array('*', $allowedCountries, true)) {
+            return true;
+        }
+
+        return in_array(strtoupper($countryCode), $allowedCountries, true);
     }
 
     /**

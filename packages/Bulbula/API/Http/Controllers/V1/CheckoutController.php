@@ -11,11 +11,14 @@ use Bulbula\Cart\Models\Cart;
 use Bulbula\Shop\Models\Order;
 use Bulbula\Shop\Models\OrderItem;
 use Bulbula\Sales\Services\OrderService;
+use Bulbula\Sales\Services\ManualPaymentService;
 use Bulbula\Shop\Models\Address;
 use Bulbula\Customer\Models\Customer;
 use Bulbula\Customer\Models\CustomerAddress;
 use Bulbula\Core\Models\PaymentMethod;
+use Bulbula\Core\Models\ShippingMethod;
 use Bulbula\Core\Models\Currency;
+use Bulbula\Core\Models\Extension;
 use Bulbula\Core\Services\PaymentGatewayManager;
 use Bulbula\Cart\Services\CartShippingCalculator;
 use Bulbula\Cart\Support\CartTypeHelper;
@@ -118,25 +121,49 @@ class CheckoutController extends Controller
      */
     public function getShippingMethods(Request $request)
     {
-        // TODO: Implement shipping method calculation based on cart and address
-        $shippingMethods = [
-            [
-                'id' => 1,
-                'code' => 'standard',
-                'name' => 'Standard Shipping',
-                'description' => 'Delivery in 5-7 business days',
-                'price' => 5.00,
-                'currency' => 'USD',
-            ],
-            [
-                'id' => 2,
-                'code' => 'express',
-                'name' => 'Express Shipping',
-                'description' => 'Delivery in 2-3 business days',
-                'price' => 15.00,
-                'currency' => 'USD',
-            ],
-        ];
+        $cart = Cart::with(['items.product'])
+            ->where('user_id', $request->user()->id)
+            ->first();
+
+        if (!$cart || $cart->items->isEmpty()) {
+            return ApiResponse::error('Cart is empty', null, 400, 'CART_EMPTY');
+        }
+
+        $items = $cart->items
+            ->map(fn ($item) => ['price' => $item->price, 'quantity' => $item->quantity])
+            ->toArray();
+        $shippingAddress = null;
+        if ($request->filled('shipping_address_id')) {
+            if (!filter_var($request->query('shipping_address_id'), FILTER_VALIDATE_INT)) {
+                return ApiResponse::error('Invalid shipping address', null, 422, 'INVALID_ADDRESS');
+            }
+            $customer = Customer::where('user_id', $request->user()->id)->first();
+            $shippingAddress = $customer
+                ? CustomerAddress::where('id', $request->query('shipping_address_id'))
+                    ->where('customer_id', $customer->id)
+                    ->first()
+                : null;
+            if (!$shippingAddress) {
+                return ApiResponse::error('Invalid shipping address', null, 422, 'INVALID_ADDRESS');
+            }
+        }
+        $shippingContext = $shippingAddress ? [
+            'country' => $shippingAddress->country,
+            'state' => $shippingAddress->state,
+        ] : [];
+        $options = app(CartShippingCalculator::class)->calculate($items, $shippingContext)['options'] ?? [];
+        $currency = Currency::getDefault();
+
+        $shippingMethods = collect($options)->map(fn (array $option) => [
+            'id' => $option['id'] ?? null,
+            'code' => $option['code'] ?? null,
+            'name' => $option['name'] ?? 'Shipping',
+            'description' => $option['description'] ?? '',
+            'price' => (float) ($option['cost'] ?? 0),
+            'cost' => (float) ($option['cost'] ?? 0),
+            'currency' => $currency?->code ?? 'USD',
+            'estimated_days' => $option['estimated_days'] ?? null,
+        ])->values();
 
         return ApiResponse::success($shippingMethods, 'Shipping methods retrieved successfully');
     }
@@ -154,70 +181,113 @@ class CheckoutController extends Controller
             return ApiResponse::validationError($validator);
         }
 
-        session(['checkout.shipping_method' => $request->shipping_method_code]);
+        $shippingMethod = ShippingMethod::where('code', $request->shipping_method_code)
+            ->where('status', 'active')
+            ->first();
+
+        if (!$shippingMethod) {
+            return ApiResponse::error('Shipping method is not available', null, 422, 'SHIPPING_METHOD_UNAVAILABLE');
+        }
 
         return ApiResponse::success([
-            'shipping_method' => $request->shipping_method_code,
-        ], 'Shipping method set successfully');
+            'shipping_method' => $shippingMethod->code,
+        ], 'Shipping method selected successfully');
     }
 
     /**
-     * Get available payment methods.
+     * Get active payment methods and a safe mobile capability projection.
+     * Gateway secrets and raw configuration are never returned here.
      */
     public function getPaymentMethods()
     {
-        // Get active payment methods from database
+        $manualPaymentService = app(ManualPaymentService::class);
         $paymentMethods = PaymentMethod::where('is_active', true)
             ->orderBy('sort_order')
             ->orderBy('name')
             ->get()
-            ->map(function ($method) {
+            ->filter(fn (PaymentMethod $method) => $this->isPaymentMethodExtensionActive($method))
+            ->map(function (PaymentMethod $method) use ($manualPaymentService) {
+                $mobileFlow = $this->mobileFlowFor($method->code);
                 $data = [
                     'code' => $method->code,
                     'name' => $method->name,
                     'description' => $method->description,
                     'type' => $method->type,
                     'icon' => $method->getConfigValue('icon', 'payment'),
+                    'instructions' => $method->instructions,
+                    'is_default' => (bool) $method->is_default,
+                    'mobile_flow' => $mobileFlow,
+                    'mobile_supported' => $mobileFlow !== null,
+                    'mobile_support_reason' => $mobileFlow === null
+                        ? 'This payment method is enabled for the storefront but is not yet supported in the mobile app.'
+                        : null,
+                    'limits' => [
+                        'minimum' => $method->getConfigValue('min_order_amount'),
+                        'maximum' => $method->getConfigValue('max_order_amount'),
+                    ],
                 ];
 
-                // Add gateway credentials for mobile app if it's an online payment method
-                if (in_array($method->code, ['razorpay', 'stripe', 'paypal'])) {
-                    $data['gateway_config'] = [
-                        'key' => $method->getConfigValue('api_key') ?? $method->getConfigValue('public_key'),
-                        'environment' => $method->getConfigValue('mode', 'sandbox'),
+                if ($method->code === 'bank_transfer') {
+                    $destinations = $manualPaymentService->publicDestinations($method);
+                    $data['manual_payment'] = [
+                        'destinations' => $destinations,
+                        'verification_days' => (int) $method->getConfigValue('verification_days', 3),
                     ];
-
-                    // Add Razorpay specific config
-                    if ($method->code === 'razorpay') {
-                        $data['gateway_config']['key_id'] = $method->getConfigValue('key_id');
-                        $data['gateway_config']['currency'] = $method->getConfigValue('currency', 'INR');
-                        $data['gateway_config']['name'] = $method->getConfigValue('merchant_name', config('app.name'));
-                        $data['gateway_config']['logo'] = $method->getConfigValue('merchant_logo');
-                        $data['gateway_config']['theme_color'] = $method->getConfigValue('theme_color', '#3399cc');
-                    }
-
-                    // Add Stripe specific config
-                    if ($method->code === 'stripe') {
-                        $defaultCurrency = Currency::getDefault();
-                        $data['gateway_config']['publishable_key'] = $method->getConfigValue('publishable_key');
-                        $data['gateway_config']['currency'] = $defaultCurrency ? $defaultCurrency->code : 'USD';
+                    if ($destinations === []) {
+                        $data['mobile_supported'] = false;
+                        $data['mobile_support_reason'] = 'No active bank or wallet transfer account is configured.';
                     }
                 }
 
                 return $data;
-            });
+            })
+            ->values();
 
         return ApiResponse::success($paymentMethods, 'Payment methods retrieved successfully');
     }
 
+    /** Map configured methods to implemented mobile checkout flows. */
+    private function mobileFlowFor(string $code): ?string
+    {
+        return match ($code) {
+            'cod' => 'cash_on_delivery',
+            'bank_transfer' => 'manual_transfer',
+            'razorpay' => 'razorpay',
+            'stripe' => 'stripe',
+            'paypal' => 'paypal',
+            'phonepe' => 'phonepe',
+            default => null,
+        };
+    }
+
+    /** Match the admin payment-method list by excluding inactive extensions. */
+    private function isPaymentMethodExtensionActive(PaymentMethod $method): bool
+    {
+        if (in_array($method->code, ['cod', 'bank_transfer'], true)) {
+            return true;
+        }
+
+        return Extension::where('code', 'bulbula-' . $method->code)
+            ->where('active', true)
+            ->exists();
+    }
+
     /**
-     * Get available payment method codes for validation.
+     * Get mobile-supported active payment method codes for validation.
      */
     protected function getAvailablePaymentMethodCodes(): array
     {
         return PaymentMethod::where('is_active', true)
+            ->get()
+            ->filter(fn (PaymentMethod $method) =>
+                $this->isPaymentMethodExtensionActive($method)
+                && $this->mobileFlowFor($method->code) !== null
+                && ($method->code !== 'bank_transfer'
+                    || app(ManualPaymentService::class)->publicDestinations($method) !== [])
+            )
             ->pluck('code')
-            ->toArray();
+            ->values()
+            ->all();
     }
 
     /**
@@ -229,6 +299,8 @@ class CheckoutController extends Controller
 
         $validator = Validator::make($request->all(), [
             'payment_method_code' => 'required|string|in:' . implode(',', $availableCodes),
+            'shipping_address_id' => 'nullable|integer',
+            'shipping_method_code' => 'nullable|string|max:100',
         ]);
 
         if ($validator->fails()) {
@@ -244,8 +316,6 @@ class CheckoutController extends Controller
             return ApiResponse::error('Payment method not available', null, 400, 'PAYMENT_METHOD_NOT_AVAILABLE');
         }
 
-        session(['checkout.payment_method' => $request->payment_method_code]);
-
         // Prepare response with payment method details
         $response = [
             'payment_method' => $request->payment_method_code,
@@ -257,8 +327,9 @@ class CheckoutController extends Controller
 
         // Add gateway credentials for mobile app if it's an online payment method
         if (in_array($request->payment_method_code, ['razorpay', 'stripe', 'paypal', 'phonepe'])) {
+            // Never return generic api_key/configuration values: gateway config may
+            // contain private credentials. Add only provider-specific public fields.
             $response['gateway_config'] = [
-                'key' => $paymentMethod->getConfigValue('api_key') ?? $paymentMethod->getConfigValue('public_key'),
                 'environment' => $paymentMethod->getConfigValue('mode', 'sandbox'),
             ];
 
@@ -271,60 +342,13 @@ class CheckoutController extends Controller
                 $response['gateway_config']['theme_color'] = $paymentMethod->getConfigValue('theme_color', '#3399cc');
             }
 
-            // PhonePe — generate OAuth token + SDK order token for Flutter SDK
-            // Flutter SDK needs merchant_id + order_token + environment, NOT raw credentials.
+            // PhonePe credentials/tokens are generated with the actual order,
+            // not during method selection. The mobile app only needs the environment here.
             if ($request->payment_method_code === 'phonepe') {
                 $mode = strtolower((string) $paymentMethod->getConfigValue('mode', 'production'));
-                $env  = $mode === 'test' ? 'UAT' : 'PRODUCTION';
-                $defaultCurrency = Currency::getDefault();
                 $merchantId = $paymentMethod->getConfigValue($mode === 'test' ? 'test_merchant_id' : 'merchant_id');
-
-                try {
-                    // Determine amount from cart (in paisa; minimum 100 = ₹1)
-                    $cart = Cart::with('items')->where('user_id', $request->user()->id)->first();
-                    $amountInPaisa  = 100; // PhonePe minimum
-                    $merchantOrderRef = 'CART_' . $request->user()->id . '_' . time();
-
-                    if ($cart && ! $cart->items->isEmpty()) {
-                        $subtotal      = $cart->items->sum(fn ($item) => $item->price * $item->quantity);
-                        $shippingCost  = session('checkout.shipping_cost', 0);
-                        $amountInPaisa = max(100, (int) round(($subtotal + $shippingCost) * 100));
-                    }
-
-                    /** @var \Bulbula\PhonePe\Services\PhonePeGateway $gateway */
-                    $gateway = app(PaymentGatewayManager::class)->get('phonepe');
-
-                    // Step 1 — OAuth token
-                    $authData = $gateway->generateAccessToken();
-
-                    // Step 2 — SDK order token
-                    $orderData = $gateway->createSdkOrderToken(
-                        $authData['access_token'],
-                        $merchantOrderRef,
-                        $amountInPaisa
-                    );
-
-                    $response['gateway_config'] = [
-                        'merchant_id'       => $merchantId,
-                        'order_token'       => $orderData['token'],
-                        'phonepe_order_id'  => $orderData['orderId'],
-                        'expires_at'        => $orderData['expireAt'] ?? null,
-                        'merchant_order_id' => $merchantOrderRef,
-                        'environment'       => $env,
-                        'mode'              => $mode,
-                        'currency'          => $defaultCurrency?->code ?? 'INR',
-                    ];
-                } catch (\Throwable $e) {
-                    Log::error('PhonePe setPaymentMethod: token generation failed', [
-                        'error' => $e->getMessage(),
-                    ]);
-                    return ApiResponse::error(
-                        'Could not initialize PhonePe payment: ' . $e->getMessage(),
-                        null,
-                        502,
-                        'PHONEPE_INIT_FAILED'
-                    );
-                }
+                $response['gateway_config']['merchant_id'] = $merchantId;
+                $response['gateway_config']['environment'] = $mode === 'test' ? 'UAT' : 'PRODUCTION';
             }
 
             // Add additional Stripe specific config and create payment intent
@@ -348,15 +372,67 @@ class CheckoutController extends Controller
 
                 // Create Stripe payment intent
                 try {
-                    // Get cart total for payment intent
+                    // Recalculate the intent total from the same cart, shipping
+                    // choice, and discount rules used by placeOrder. Do not depend
+                    // on an API session/cookie for mobile checkout state.
                     $cart = Cart::with(['items.product'])->where('user_id', $request->user()->id)->first();
-                    
-                    if ($cart && !$cart->items->isEmpty()) {
-                        $subtotal = $cart->items->sum(fn($item) => $item->price * $item->quantity);
-                        $shippingCost = session('checkout.shipping_cost', 0);
-                        $total = $subtotal + $shippingCost;
+                    if (!$cart || $cart->items->isEmpty()) {
+                        return ApiResponse::error('Cart is empty', null, 400, 'CART_EMPTY');
+                    }
 
-                        // Initialize Stripe with secret key
+                    $subtotal = $cart->items->sum(fn ($item) => $item->price * $item->quantity);
+                    $cartItemsArray = $cart->items
+                        ->map(fn ($item) => ['price' => $item->price, 'quantity' => $item->quantity])
+                        ->toArray();
+                    $cartTypeItems = $cart->items->map(function ($item) {
+                        $product = $item->product;
+                        return [
+                            'type' => $product?->type ?? 'simple',
+                            'requires_shipping' => $product?->requiresShipping() ?? true,
+                        ];
+                    })->toArray();
+                    $requiresShipping = CartTypeHelper::cartRequiresShipping($cartTypeItems);
+                    $shippingAddressModel = null;
+                    $shippingCost = 0.0;
+
+                    if ($requiresShipping) {
+                        $customer = Customer::where('user_id', $request->user()->id)->first();
+                        $shippingAddressModel = $request->shipping_address_id && $customer
+                            ? CustomerAddress::where('id', $request->shipping_address_id)
+                                ->where('customer_id', $customer->id)
+                                ->first()
+                            : null;
+                        if (!$shippingAddressModel) {
+                            return ApiResponse::error('A valid shipping address is required for Stripe checkout', null, 422, 'INVALID_ADDRESS');
+                        }
+
+                        $shippingOptions = app(CartShippingCalculator::class)->calculate($cartItemsArray, [
+                            'country' => $shippingAddressModel->country,
+                            'state' => $shippingAddressModel->state,
+                        ])['options'] ?? [];
+                        $requestedShippingCode = $request->input('shipping_method_code');
+                        $shippingOption = $requestedShippingCode
+                            ? collect($shippingOptions)->firstWhere('code', $requestedShippingCode)
+                            : collect($shippingOptions)->sortBy('cost')->first();
+                        if (!$shippingOption) {
+                            return ApiResponse::error('Selected shipping method is unavailable', null, 422, 'SHIPPING_METHOD_UNAVAILABLE');
+                        }
+                        $shippingCost = (float) ($shippingOption['cost'] ?? 0);
+                    }
+
+                    $discount = (float) ($cart->discount_amount ?? 0);
+                    $total = max(0, $subtotal + $shippingCost - $discount);
+                    if ($total <= 0) {
+                        return ApiResponse::error('Invalid payment amount', null, 400, 'INVALID_AMOUNT');
+                    }
+                    if (!$paymentMethod->isAvailableForAmount((float) $total)) {
+                        return ApiResponse::error('Stripe is not available for this order total', null, 422, 'PAYMENT_METHOD_LIMIT');
+                    }
+                    if ($shippingAddressModel && !$paymentMethod->isAvailableForCountry($shippingAddressModel->country)) {
+                        return ApiResponse::error('Stripe is not available in the shipping country', null, 422, 'PAYMENT_METHOD_COUNTRY');
+                    }
+
+                    // Initialize Stripe with secret key
                         Stripe::setApiKey($stripeSecretKey);
                         
                         // Set API version for consistency
@@ -373,8 +449,17 @@ class CheckoutController extends Controller
                         // Get user information
                         $user = $request->user();
 
-                        // Get shipping address from session
-                        $shippingAddress = session('checkout.shipping_address');
+                        $shippingAddress = $shippingAddressModel ? [
+                            'first_name' => $shippingAddressModel->first_name,
+                            'last_name' => $shippingAddressModel->last_name,
+                            'phone' => $shippingAddressModel->phone,
+                            'address_line_1' => $shippingAddressModel->address_line_1,
+                            'address_line_2' => $shippingAddressModel->address_line_2,
+                            'city' => $shippingAddressModel->city,
+                            'state' => $shippingAddressModel->state,
+                            'postal_code' => $shippingAddressModel->postal_code,
+                            'country' => $shippingAddressModel->country,
+                        ] : null;
 
                         // Create payment intent with automatic_payment_methods for mobile
                         $paymentIntentData = [
@@ -387,7 +472,13 @@ class CheckoutController extends Controller
                             'metadata' => [
                                 'user_id' => $user->id,
                                 'user_email' => $user->email,
-                                'cart_id' => $cart->id,
+                                'cart_id' => (string) $cart->id,
+                                'shipping_address_id' => $shippingAddressModel
+                                    ? (string) $shippingAddressModel->id
+                                    : '',
+                                'shipping_method_code' => (string) ($shippingOption['code'] ?? ''),
+                                'shipping_cost' => number_format($shippingCost, 2, '.', ''),
+                                'discount' => number_format($discount, 2, '.', ''),
                                 'integration' => 'mobile_app',
                             ],
                         ];
@@ -431,7 +522,6 @@ class CheckoutController extends Controller
                         $response['gateway_config']['payment_intent_id'] = $paymentIntent->id;
                         $response['gateway_config']['amount'] = $amount;
                         $response['gateway_config']['status'] = $paymentIntent->status;
-                    }
                 } catch (\Stripe\Exception\ApiErrorException $e) {
                     \Log::error('Stripe API Error: ' . $e->getMessage(), [
                         'type' => $e->getError()->type ?? null,
@@ -463,21 +553,68 @@ class CheckoutController extends Controller
             return ApiResponse::error('Cart is empty', null, 400, 'CART_EMPTY');
         }
 
-        $subtotal = $cart->items->sum(fn($item) => $item->price * $item->quantity);
-        $cartItemsArray = $cart->items->map(fn($i) => ['price' => $i->price, 'quantity' => $i->quantity])->toArray();
-        $shippingOption = app(CartShippingCalculator::class)->getCheapestOption($cartItemsArray);
-        $shippingCost = $shippingOption['cost'] ?? 5.00;
+        $subtotal = $cart->items->sum(fn ($item) => $item->price * $item->quantity);
+        $cartItemsArray = $cart->items
+            ->map(fn ($item) => ['price' => $item->price, 'quantity' => $item->quantity])
+            ->toArray();
+        $cartTypeItems = $cart->items->map(function ($item) {
+            $product = $item->product;
+            return [
+                'type' => $product?->type ?? 'simple',
+                'requires_shipping' => $product?->requiresShipping() ?? true,
+            ];
+        })->toArray();
+        $requiresShipping = CartTypeHelper::cartRequiresShipping($cartTypeItems);
+        $shippingOption = null;
+        $shippingAddress = null;
+        if ($request->filled('shipping_address_id')) {
+            if (!filter_var($request->query('shipping_address_id'), FILTER_VALIDATE_INT)) {
+                return ApiResponse::error('Invalid shipping address', null, 422, 'INVALID_ADDRESS');
+            }
+            $customer = Customer::where('user_id', $request->user()->id)->first();
+            $shippingAddress = $customer
+                ? CustomerAddress::where('id', $request->query('shipping_address_id'))
+                    ->where('customer_id', $customer->id)
+                    ->first()
+                : null;
+            if (!$shippingAddress) {
+                return ApiResponse::error('Invalid shipping address', null, 422, 'INVALID_ADDRESS');
+            }
+        }
+        $shippingContext = $shippingAddress ? [
+            'country' => $shippingAddress->country,
+            'state' => $shippingAddress->state,
+        ] : [];
+
+        if ($requiresShipping) {
+            $options = app(CartShippingCalculator::class)->calculate($cartItemsArray, $shippingContext)['options'] ?? [];
+            $requestedCode = $request->query('shipping_method_code');
+            $shippingOption = $requestedCode
+                ? collect($options)->firstWhere('code', $requestedCode)
+                : collect($options)->sortBy('cost')->first();
+
+            if ($requestedCode && !$shippingOption) {
+                return ApiResponse::error('Selected shipping method is no longer available', null, 422, 'SHIPPING_METHOD_UNAVAILABLE');
+            }
+            if (!$shippingOption) {
+                return ApiResponse::error('No shipping methods are available for this cart', null, 422, 'NO_SHIPPING_METHODS');
+            }
+        }
+
+        $shippingCost = (float) ($shippingOption['cost'] ?? 0);
         $tax = 0.00; // Tax calculated server-side at order placement
         $discount = $cart->discount_amount ?? 0;
         $total = $subtotal + $shippingCost + $tax - $discount;
+        $currency = Currency::getDefault();
 
         return ApiResponse::success([
             'subtotal' => $subtotal,
             'shipping_cost' => $shippingCost,
+            'shipping_method' => $shippingOption['code'] ?? null,
             'tax' => $tax,
             'discount' => $discount,
             'total' => $total,
-            'currency' => 'USD',
+            'currency' => $currency?->code ?? 'USD',
             'items_count' => $cart->items->sum('quantity'),
         ], 'Checkout summary retrieved successfully');
     }
@@ -513,6 +650,7 @@ class CheckoutController extends Controller
             'payment_method' => 'required|string|in:' . implode(',', $availablePaymentMethods),
             'notes' => 'nullable|string|max:500',
             'billing_address_id' => 'nullable|exists:customer_addresses,id',
+            'shipping_method_code' => 'nullable|string|max:100',
         ];
 
         if ($requiresShipping) {
@@ -551,33 +689,57 @@ class CheckoutController extends Controller
         }
         $billingAddress = $billingAddress ?: $shippingAddress;
 
-        // Calculate totals
-        $subtotal = $cart->items->sum(function ($item) {
-            return $item->price * $item->quantity;
-        });
-
+        // Recalculate the selected shipping option on the server; never trust a
+        // client-submitted cost or an API session value.
+        $subtotal = $cart->items->sum(fn ($item) => $item->price * $item->quantity);
+        $cartItemsArray = $cart->items
+            ->map(fn ($item) => ['price' => $item->price, 'quantity' => $item->quantity])
+            ->toArray();
+        $selectedShippingMethod = null;
         $shippingCost = 0.00;
         if ($requiresShipping && $shippingAddress) {
-            $cartItemsArray = $cart->items->map(fn($i) => ['price' => $i->price, 'quantity' => $i->quantity])->toArray();
-            $shippingOption = app(CartShippingCalculator::class)->getCheapestOption($cartItemsArray, [
+            $options = app(CartShippingCalculator::class)->calculate($cartItemsArray, [
                 'country' => $shippingAddress->country,
-                'state'   => $shippingAddress->state,
-            ]);
-            $shippingCost = $shippingOption['cost'] ?? 0.00;
+                'state' => $shippingAddress->state,
+            ])['options'] ?? [];
+            $requestedCode = $request->input('shipping_method_code');
+            $selectedShippingMethod = $requestedCode
+                ? collect($options)->firstWhere('code', $requestedCode)
+                : collect($options)->sortBy('cost')->first();
+
+            if ($requestedCode && !$selectedShippingMethod) {
+                return ApiResponse::error('Selected shipping method is no longer available', null, 422, 'SHIPPING_METHOD_UNAVAILABLE');
+            }
+            if (!$selectedShippingMethod) {
+                return ApiResponse::error('No shipping methods are available for this cart', null, 422, 'NO_SHIPPING_METHODS');
+            }
+            $shippingCost = (float) ($selectedShippingMethod['cost'] ?? 0);
         }
         $tax = 0.00;
-        $total = $subtotal + $shippingCost + $tax;
+        $discount = (float) ($cart->discount_amount ?? 0);
+        $total = max(0, $subtotal + $shippingCost + $tax - $discount);
+        $selectedPaymentMethod = PaymentMethod::where('code', $request->payment_method)
+            ->where('is_active', true)
+            ->first();
+        if (!$selectedPaymentMethod || !$selectedPaymentMethod->isAvailableForAmount((float) $total)) {
+            return ApiResponse::error('Selected payment method is not available for this order total', null, 422, 'PAYMENT_METHOD_LIMIT');
+        }
+        if ($shippingAddress && !$selectedPaymentMethod->isAvailableForCountry($shippingAddress->country)) {
+            return ApiResponse::error('Selected payment method is not available in the shipping country', null, 422, 'PAYMENT_METHOD_COUNTRY');
+        }
 
-        $order = DB::transaction(function () use ($request, $cart, $customer, $shippingAddress, $billingAddress, $subtotal, $shippingCost, $tax, $total, $requiresShipping) {
+        $order = DB::transaction(function () use ($request, $cart, $customer, $shippingAddress, $billingAddress, $subtotal, $shippingCost, $tax, $discount, $total, $requiresShipping, $selectedShippingMethod) {
             $order = Order::create([
                 'user_id' => $request->user()->id,
                 'customer_id' => $customer->id,
                 'order_number' => Order::generateOrderNumber(),
                 'status' => 'pending',
                 'payment_method' => $request->payment_method,
+                'shipping_method' => $selectedShippingMethod['name'] ?? null,
                 'subtotal' => $subtotal,
                 'shipping_cost' => $shippingCost,
                 'tax' => $tax,
+                'discount' => $discount,
                 'total' => $total,
                 'notes' => $request->notes,
                 'customer_email' => $customer->email ?? $request->user()->email,
@@ -680,9 +842,11 @@ class CheckoutController extends Controller
             'order_number'    => $order->order_number,
             'status'          => $order->status,
             'payment_method'  => $order->payment_method,
+            'shipping_method' => $selectedShippingMethod['code'] ?? null,
             'subtotal'        => (float) $subtotal,
             'shipping_cost'   => (float) $shippingCost,
             'tax'             => (float) $tax,
+            'discount'        => (float) $discount,
             'grand_total'     => (float) $total,
             'currency'        => $currency?->code ?? 'INR',
             'currency_symbol' => $currency?->symbol ?? '₹',

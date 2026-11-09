@@ -3,6 +3,7 @@
 namespace Bulbula\API\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
+use Bulbula\Sales\Models\ManualPaymentSubmission;
 
 class OrderResource extends JsonResource
 {
@@ -50,6 +51,23 @@ class OrderResource extends JsonResource
                 'method_title' => ucwords(str_replace('_', ' ', $this->payment_method ?? '')),
                 'status' => $this->payment_status ?? 'pending',
             ],
+            'manual_payment' => $this->when(
+                $this->payment_method === 'bank_transfer'
+                    && $this->relationLoaded('latestManualPaymentSubmission'),
+                function () {
+                    $submission = $this->latestManualPaymentSubmission;
+                    return [
+                        'status' => $submission?->status,
+                        'review_note' => $submission?->status === ManualPaymentSubmission::STATUS_REJECTED
+                            ? $submission->review_note
+                            : null,
+                        'submitted_at' => $submission?->created_at?->toIso8601String(),
+                        'can_resubmit' => $submission?->status === ManualPaymentSubmission::STATUS_REJECTED
+                            && $this->payment_status === 'failed'
+                            && $this->status === 'pending',
+                    ];
+                }
+            ),
             'shipping_address' => $this->whenLoaded('shippingAddress', fn() => 
                 $this->shippingAddress ? new AddressResource($this->shippingAddress) : null
             ),
